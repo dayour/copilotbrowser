@@ -25,10 +25,10 @@
 import { test, expect } from '@copilotbrowser/test';
 
 // Import from compiled output (consistent with other tests in this directory).
-import { ToolRouter, passthroughStrategy } from '../../packages/CopilotBrowser/lib/mcp/browser/toolRouter';
+import { ToolRouter, passthroughStrategy } from '../../packages/copilotbrowser/lib/mcp/browser/toolRouter';
 
-import type { ToolRoutingStrategy, ToolListingContext, ToolDispatchContext } from '../../packages/CopilotBrowser/lib/mcp/browser/toolRouter';
-import type { Tool } from '../../packages/CopilotBrowser/lib/mcp/browser/tools/tool';
+import type { ToolRoutingStrategy, ToolListingContext, ToolDispatchContext } from '../../packages/copilotbrowser/lib/mcp/browser/toolRouter';
+import type { Tool } from '../../packages/copilotbrowser/lib/mcp/browser/tools/tool';
 
 // ---------------------------------------------------------------------------
 // Helpers

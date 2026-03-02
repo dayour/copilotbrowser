@@ -432,11 +432,17 @@ async function startMcpServer() {
 
   let intentionallyStopped = false;
 
+  // On Windows we use shell: true, so args containing spaces must be quoted.
+  const useShell = process.platform === 'win32';
+  const spawnArgs = useShell
+    ? args.map(a => a.includes(' ') ? `"${a}"` : a)
+    : args;
+
   try {
-    const proc = spawn(command, args, {
+    const proc = spawn(command, spawnArgs, {
       cwd,
       env: { ...process.env, ...buildMcpEnv(config) },
-      shell: process.platform === 'win32',
+      shell: useShell,
     });
 
     proc.stdout?.on('data', (d: Buffer) => outputChannel.append(d.toString()));

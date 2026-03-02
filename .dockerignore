@@ -18,8 +18,15 @@ copilotbrowser-report/
 # Browser patches (not needed at runtime)
 browser_patches/
 
-# Documentation source
+# Documentation source (re-include API dirs needed by generate_types)
 docs/
+!docs/src/
+!docs/src/api/
+!docs/src/api/**
+!docs/src/test-api/
+!docs/src/test-api/**
+!docs/src/test-reporter-api/
+!docs/src/test-reporter-api/**
 
 # Examples
 examples/

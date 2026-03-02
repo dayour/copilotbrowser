@@ -30,6 +30,7 @@ import navigate from './tools/navigate';
 import network from './tools/network';
 import pdf from './tools/pdf';
 import performance from './tools/performance';
+import profile from './tools/profile';
 import route from './tools/route';
 import runCode from './tools/runCode';
 import followMe from './tools/followMe';
@@ -66,6 +67,7 @@ export const browserTools: Tool<any>[] = [
   ...network,
   ...pdf,
   ...performance,
+  ...profile,
   ...route,
   ...runCode,
   ...followMe,

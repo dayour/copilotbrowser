@@ -51,17 +51,17 @@ const ignores = [
   "examples",
   "packages/*/lib/",
   "packages/copilotbrowser-core/bundles/zip/src/third_party/",
-  "packages/CopilotBrowser-core/bundles/zip/src/third_party/",
+  "packages/copilotbrowser-core/bundles/zip/src/third_party/",
   "packages/copilotbrowser-core/src/generated/*",
-  "packages/CopilotBrowser-core/src/generated/*",
+  "packages/copilotbrowser-core/src/generated/*",
   "packages/copilotbrowser-core/src/third_party/",
-  "packages/CopilotBrowser-core/src/third_party/",
+  "packages/copilotbrowser-core/src/third_party/",
   "packages/copilotbrowser-core/types/*",
-  "packages/CopilotBrowser-core/types/*",
+  "packages/copilotbrowser-core/types/*",
   "packages/copilotbrowser-ct-core/src/generated/*",
-  "packages/CopilotBrowser-ct-core/src/generated/*",
+  "packages/copilotbrowser-ct-core/src/generated/*",
   "packages/copilotbrowser/bundles/expect/third_party/",
-  "packages/CopilotBrowser/bundles/expect/third_party/",
+  "packages/copilotbrowser/bundles/expect/third_party/",
   "packages/html-reporter/bundle.ts",
   "packages/html-reporter/copilotbrowser.config.ts",
   "packages/html-reporter/copilotbrowser/*",
@@ -387,7 +387,7 @@ export default [
   {
     files: [
       "packages/copilotbrowser-core/src/utils/**/*.ts",
-      "packages/CopilotBrowser-core/src/utils/**/*.ts",
+      "packages/copilotbrowser-core/src/utils/**/*.ts",
     ],
     languageOptions: languageOptionsWithTsConfig,
     rules: {
@@ -418,8 +418,8 @@ export default [
     files: [
       "packages/copilotbrowser-core/src/client/**/*.ts",
       "packages/copilotbrowser-core/src/protocol/**/*.ts",
-      "packages/CopilotBrowser-core/src/client/**/*.ts",
-      "packages/CopilotBrowser-core/src/protocol/**/*.ts",
+      "packages/copilotbrowser-core/src/client/**/*.ts",
+      "packages/copilotbrowser-core/src/protocol/**/*.ts",
     ],
     languageOptions: languageOptionsWithTsConfig,
     rules: {

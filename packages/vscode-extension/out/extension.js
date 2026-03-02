@@ -339,11 +339,15 @@ async function startMcpServer() {
     outputChannel.appendLine(`Starting HTTP MCP server on port ${httpPort}: ${command} ${args.join(' ')}`);
     outputChannel.show(true);
     let intentionallyStopped = false;
+    const useShell = process.platform === 'win32';
+    const spawnArgs = useShell
+        ? args.map(a => a.includes(' ') ? `"${a}"` : a)
+        : args;
     try {
-        const proc = (0, child_process_1.spawn)(command, args, {
+        const proc = (0, child_process_1.spawn)(command, spawnArgs, {
             cwd,
             env: { ...process.env, ...buildMcpEnv(config) },
-            shell: process.platform === 'win32',
+            shell: useShell,
         });
         proc.stdout?.on('data', (d) => outputChannel.append(d.toString()));
         proc.stderr?.on('data', (d) => outputChannel.append(d.toString()));

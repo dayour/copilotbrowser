@@ -209,9 +209,14 @@ class PersistentContextFactory implements BrowserContextFactory {
 
     const browserType = copilotbrowser[this.config.browser.browserName];
     for (let i = 0; i < 5; i++) {
+      const existingArgs = this.config.browser.launchOptions.args ?? [];
+      const profileArgs = this.config.browser.profileDirectory && this.config.browser.browserName === 'chromium'
+        ? [`--profile-directory=${this.config.browser.profileDirectory}`]
+        : [];
       const launchOptions: LaunchOptions & BrowserContextOptions = {
         tracesDir,
         ...this.config.browser.launchOptions,
+        args: [...existingArgs, ...profileArgs],
         ...await browserContextOptionsFromConfig(this.config, clientInfo),
         handleSIGINT: false,
         handleSIGTERM: false,

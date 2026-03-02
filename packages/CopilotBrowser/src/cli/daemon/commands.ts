@@ -47,6 +47,7 @@ const open = declareCommand({
     headed: z.boolean().optional().describe('Run browser in headed mode'),
     persistent: z.boolean().optional().describe('Use persistent browser profile'),
     profile: z.string().optional().describe('Use persistent browser profile, store profile in specified directory.'),
+    snapshotMode: z.enum(['full', 'incremental', 'none']).optional().describe('Snapshot mode after actions. "incremental" returns only changes (default). "full" returns complete tree. "none" disables auto-snapshots.'),
   }),
   toolName: ({ url }) => url ? 'browser_navigate' : 'browser_snapshot',
   toolParams: ({ url }) => ({ url: url || 'about:blank' }),
@@ -318,9 +319,11 @@ const snapshot = declareCommand({
   args: z.object({}),
   options: z.object({
     filename: z.string().optional().describe('Save snapshot to markdown file instead of returning it in the response.'),
+    filter: z.enum(['all', 'interactive', 'landmark']).optional().describe('Filter snapshot content. "interactive" returns only actionable elements (buttons, links, inputs). "landmark" returns headings, navigation, and interactive elements. Default is "all".'),
+    maxlength: z.preprocess(val => val !== undefined ? Number(val) : undefined, z.number().optional()).describe('Maximum character length of the snapshot. Truncates if exceeded.'),
   }),
   toolName: 'browser_snapshot',
-  toolParams: ({ filename }) => ({ filename }),
+  toolParams: ({ filename, filter, maxlength }) => ({ filename, filter, maxLength: maxlength }),
 });
 
 const evaluate = declareCommand({

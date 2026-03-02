@@ -53,6 +53,12 @@ export type Config = {
     userDataDir?: string;
 
     /**
+     * Browser profile directory name within the user data dir (e.g. "Default", "Profile 1").
+     * Chromium-based browsers only.
+     */
+    profileDirectory?: string;
+
+    /**
      * Launch options passed to
      * @see https://dayour.github.io/copilotbrowser/docs/api/class-browsertype#browser-type-launch-persistent-context
      *

@@ -15,7 +15,7 @@
  */
 
 import { browserTest as test, expect } from '../config/browserTest';
-import { resolveLLMProvider } from '../../packages/CopilotBrowser/src/agents/llmProvider';
+import { resolveLLMProvider } from '../../packages/copilotbrowser/src/agents/llmProvider';
 
 test('resolves inline provider and applies policy', () => {
   const resolved = resolveLLMProvider({

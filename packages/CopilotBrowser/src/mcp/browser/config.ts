@@ -62,6 +62,7 @@ export type CLIOptions = {
   outputDir?: string;
   outputMode?: 'file' | 'stdout';
   port?: number;
+  profileDirectory?: string;
   proxyBypass?: string;
   proxyServer?: string;
   saveSession?: boolean;
@@ -273,6 +274,7 @@ export function configFromCLIOptions(cliOptions: CLIOptions): Config & { configF
       browserName,
       isolated: cliOptions.isolated,
       userDataDir: cliOptions.userDataDir,
+      profileDirectory: cliOptions.profileDirectory,
       launchOptions,
       contextOptions,
       cdpEndpoint: cliOptions.cdpEndpoint,
@@ -361,6 +363,7 @@ export function configFromEnv(): Config & { configFile?: string } {
   options.timeoutNavigation = numberParser(process.env.copilotbrowser_MCP_TIMEOUT_NAVIGATION);
   options.userAgent = envToString(process.env.copilotbrowser_MCP_USER_AGENT);
   options.userDataDir = envToString(process.env.copilotbrowser_MCP_USER_DATA_DIR);
+  options.profileDirectory = envToString(process.env.copilotbrowser_MCP_PROFILE_DIRECTORY);
   options.viewportSize = resolutionParser('--viewport-size', process.env.copilotbrowser_MCP_VIEWPORT_SIZE);
   return configFromCLIOptions(options);
 }

@@ -3,10 +3,6 @@
     "darbot-browser-mcp": {
       "command": "darbot-browser-mcp",
       "args": []
-    },
-    "copilotbrowser": {
-      "command": "node",
-      "args": ["E:\\copilotbrowser\\packages\\copilotbrowser\\cli.js", "run-mcp-server", "--browser", "msedge"]
     }
   }
 }

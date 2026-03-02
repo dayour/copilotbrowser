@@ -37,17 +37,6 @@ services:
     # Optional: persist browser downloads across container recreations
     volumes:
       - copilotbrowser-browsers:/ms-copilotbrowser
-      - ${OUTPUT_DIR:-/tmp/copilotbrowser-output}:/output
-
-    # Resource limits for controlled environments
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: 2G
-        reservations:
-          cpus: '0.5'
-          memory: 512M
 
     # Security: drop capabilities not needed for headless browser
     cap_drop:

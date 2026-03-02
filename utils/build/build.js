@@ -146,7 +146,7 @@ class ProgramStep extends Step {
     // To avoid DEP0190 (Node ≥22 warns when args array + shell: true), we
     // join the args into the command string so spawn receives a single
     // string command with no separate args array.
-    const needsShell = process.platform === 'win32' && command.endsWith('.cmd');
+    const needsShell = process.platform === 'win32' ? command.endsWith('.cmd') : !!step.shell;
     const spawnArgs = needsShell ? [] : step.args;
     const spawnCommand = needsShell ? [command, ...step.args].join(' ') : command;
 
@@ -356,14 +356,17 @@ class GroupStep extends Step {
 /** @type {Step[]} */
 const updateSteps = [];
 
-// Update test runner.
-updateSteps.push(new ProgramStep({
-  command: 'npm',
-  args: ['ci', '--save=false', '--fund=false', '--audit=false'],
-  shell: true,
-  cwd: path.join(__dirname, '..', '..', 'tests', 'copilotbrowser-test', 'stable-test-runner'),
-  concurrent: true,
-}));
+// Update test runner (skip if tests/ directory is excluded, e.g. in Docker).
+const testRunnerCwd = path.join(__dirname, '..', '..', 'tests', 'copilotbrowser-test', 'stable-test-runner');
+if (fs.existsSync(path.join(testRunnerCwd, 'package.json'))) {
+  updateSteps.push(new ProgramStep({
+    command: 'npm',
+    args: ['ci', '--save=false', '--fund=false', '--audit=false'],
+    shell: true,
+    cwd: testRunnerCwd,
+    concurrent: true,
+  }));
+}
 
 // Update bundles.
 for (const bundle of bundles) {

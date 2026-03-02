@@ -44,4 +44,4 @@ if [ -n "$OUTPUT_DIR" ]; then
 fi
 
 echo "Starting copilotbrowser MCP Server on $HOST:$PORT (browser: $BROWSER)"
-exec copilotbrowser $ARGS "$@"
+exec node /app/packages/copilotbrowser/cli.js $ARGS "$@"

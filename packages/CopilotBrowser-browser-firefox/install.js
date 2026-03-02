@@ -14,14 +14,8 @@
  * limitations under the License.
  */
 
-let install;
+const { isLikelyNpxGlobal } = require('copilotbrowser-core/lib/utils');
+const { installBrowsersForNpmInstall } = require('copilotbrowser-core/lib/server');
 
-try {
-  if (!require('copilotbrowser-core/lib/utils').isLikelyNpxGlobal())
-    install = require('copilotbrowser-core/lib/server').installBrowsersForNpmInstall;
-} catch (e) {
-  // Dev build, don't install browsers by default.
-}
-
-if (install)
-  install(['firefox']);
+if (!isLikelyNpxGlobal())
+  installBrowsersForNpmInstall(['firefox']);

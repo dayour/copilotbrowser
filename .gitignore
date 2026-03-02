@@ -38,3 +38,8 @@ test-results
 .tsbuildinfo
 copilotbrowser.env
 /firefox/
+
+.fake
+.copilotbrowser-mcp/
+packages/vscode-extension/server/
+packages/vscode-extension/resources/

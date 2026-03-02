@@ -55,6 +55,7 @@ export function decorateMCPCommand(command: Command, version: string) {
       .option('--output-dir <path>', 'path to the directory for output files.')
       .option('--output-mode <mode>', 'whether to save snapshots, console messages, network logs to a file or to the standard output. Can be "file" or "stdout". Default is "stdout".', enumParser.bind(null, '--output-mode', ['file', 'stdout']))
       .option('--port <port>', 'port to listen on for SSE transport.')
+      .option('--profile-directory <name>', 'browser profile directory name within the user data dir (e.g. "Default", "Profile 1"). Chromium-based browsers only.')
       .option('--proxy-bypass <bypass>', 'comma-separated domains to bypass proxy, for example ".com,chromium.org,.domain.com"')
       .option('--proxy-server <proxy>', 'specify proxy server, for example "http://myproxy:3128" or "socks5://myproxy:8080"')
       .option('--sandbox', 'enable the sandbox for all process types that are normally not sandboxed.')

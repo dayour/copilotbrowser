@@ -68,7 +68,7 @@ export async function resolveCLIConfig(daemonSession: string): Promise<FullConfi
     extension: sessionConfig.cli.extension,
     userDataDir: sessionConfig.cli.profile,
     outputMode: 'file',
-    snapshotMode: 'full',
+    snapshotMode: sessionConfig.cli.snapshotMode ?? 'incremental',
   });
 
   const envOverrides = configFromEnv();
