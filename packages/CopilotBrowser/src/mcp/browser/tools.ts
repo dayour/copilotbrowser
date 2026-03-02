@@ -33,6 +33,8 @@ import performance from './tools/performance';
 import route from './tools/route';
 import runCode from './tools/runCode';
 import followMe from './tools/followMe';
+import multiAction from './tools/multiAction';
+import observe from './tools/observe';
 import scroll from './tools/scroll';
 import snapshot from './tools/snapshot';
 import screenshot from './tools/screenshot';
@@ -67,6 +69,8 @@ export const browserTools: Tool<any>[] = [
   ...route,
   ...runCode,
   ...followMe,
+  ...multiAction,
+  ...observe,
   ...scroll,
   ...screenshot,
   ...snapshot,

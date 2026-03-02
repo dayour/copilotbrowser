@@ -240,10 +240,25 @@ async function runBuild() {
     for (const file of resolved)
       copyFile(file, from, to);
   }
-  for (const step of steps)
-    await step.run();
+
+  // Run non-concurrent (sequential) steps first — these include npm ci,
+  // code-generation, and other prerequisites that must complete in order.
+  for (const step of steps) {
+    if (!step.concurrent)
+      await step.run();
+  }
+
+  // Run concurrent steps (esbuild, vite) in parallel.
+  const concurrentSteps = steps.filter(s => s.concurrent);
+  if (concurrentSteps.length > 0) {
+    console.log(`==== Running ${concurrentSteps.length} concurrent build steps in parallel`);
+    const start = Date.now();
+    await Promise.all(concurrentSteps.map(s => s.run()));
+    console.log(`==== All concurrent steps finished in ${Date.now() - start} ms`);
+  }
+
   for (const onChange of onChanges)
-    runOnChangeStep(onChange);
+    await runOnChangeStep(onChange);
 }
 
 /**
@@ -396,8 +411,10 @@ class EsbuildStep extends Step {
    * @param {import('esbuild').BuildOptions} options
    */
   constructor(options) {
-    // Starting esbuild steps in parallel showed longer overall time.
-    super({ concurrent: false });
+    // Esbuild steps run concurrently; they are batched together via
+    // runBuild()/runWatch() so that all sequential prerequisites
+    // (npm ci, code-gen, etc.) complete first.
+    super({ concurrent: true });
     this._options = options;
   }
 

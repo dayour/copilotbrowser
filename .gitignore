@@ -35,5 +35,6 @@ test-results
 /tests/installation/.registry.json
 .cache/
 .eslintcache
+.tsbuildinfo
 copilotbrowser.env
 /firefox/

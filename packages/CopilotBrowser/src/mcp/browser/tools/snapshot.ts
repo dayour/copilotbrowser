@@ -28,6 +28,7 @@ const snapshot = defineTool({
     inputSchema: z.object({
       filename: z.string().optional().describe('Save snapshot to markdown file instead of returning it in the response.'),
       maxLength: z.number().optional().describe('Maximum character length of the snapshot. If the snapshot exceeds this limit, it will be truncated.'),
+      filter: z.enum(['all', 'interactive', 'landmark']).optional().describe('Filter snapshot content. "interactive" returns only buttons, links, inputs, selects, and checkboxes. "landmark" returns headings, navigation, and interactive elements. Default is "all" (full tree).'),
     }),
     type: 'readOnly',
   },
@@ -37,6 +38,8 @@ const snapshot = defineTool({
     response.setIncludeFullSnapshot(params.filename);
     if (params.maxLength !== undefined)
       response.setSnapshotMaxLength(params.maxLength);
+    if (params.filter && params.filter !== 'all')
+      response.setSnapshotFilter(params.filter);
   },
 });
 

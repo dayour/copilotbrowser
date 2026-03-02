@@ -106,14 +106,51 @@ export class BrowserServerBackend implements ServerBackend {
       responseObject = await response.serialize();
       this._sessionLog?.logResponse(name, parsedArguments, responseObject);
     } catch (error: any) {
+      // Structured error recovery: give LLMs actionable state instead of raw stack traces
+      const browserState = this._detectBrowserState(context);
+      const suggestion = this._recoverySuggestion(name, browserState, error);
+      const errorText = [
+        `### Error`,
+        `**Tool:** ${name}`,
+        `**Error:** ${error.message || String(error)}`,
+        `**Browser state:** ${browserState}`,
+        `**Recovery:** ${suggestion}`,
+      ].join('\n');
       return {
-        content: [{ type: 'text' as const, text: `### Error\n${String(error)}` }],
+        content: [{ type: 'text' as const, text: errorText }],
         isError: true,
       };
     } finally {
       context.setRunningTool(undefined);
     }
     return responseObject;
+  }
+
+  private _detectBrowserState(context: Context): 'alive' | 'no-page' | 'dead' {
+    try {
+      const tab = context.currentTab();
+      if (!tab)
+        return 'no-page';
+      tab.page.url();
+      return 'alive';
+    } catch {
+      return 'dead';
+    }
+  }
+
+  private _recoverySuggestion(toolName: string, browserState: string, error: any): string {
+    if (browserState === 'dead')
+      return 'Browser context is dead. Call browser_navigate to open a new page, which will create a fresh context.';
+    if (browserState === 'no-page')
+      return 'No open page. Call browser_navigate with a URL to open one.';
+    const msg = String(error.message || error);
+    if (msg.includes('Timeout'))
+      return 'Action timed out. The page may be loading or unresponsive. Try browser_wait_for or browser_snapshot to check page state.';
+    if (msg.includes('modal state'))
+      return 'A dialog or file chooser is blocking. Use browser_handle_dialog or browser_file_upload first.';
+    if (msg.includes('Ref') && msg.includes('not found'))
+      return 'Element ref is stale. Call browser_snapshot to get fresh refs after page changes.';
+    return 'Retry the action, or call browser_snapshot to inspect current page state before proceeding.';
   }
 
   serverClosed() {

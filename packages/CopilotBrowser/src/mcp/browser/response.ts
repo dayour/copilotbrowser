@@ -48,6 +48,7 @@ export class Response {
   private _includeSnapshot: 'none' | 'full' | 'incremental' = 'none';
   private _includeSnapshotFileName: string | undefined;
   private _snapshotMaxLength: number | undefined;
+  private _snapshotFilter: 'interactive' | 'landmark' | undefined;
 
   readonly toolName: string;
   readonly toolArgs: Record<string, any>;
@@ -129,6 +130,10 @@ export class Response {
     this._snapshotMaxLength = maxLength;
   }
 
+  setSnapshotFilter(filter: 'interactive' | 'landmark') {
+    this._snapshotFilter = filter;
+  }
+
   async serialize(): Promise<CallToolResult> {
     const redactText = (text: string): string => {
       for (const [secretName, secretValue] of Object.entries(this._context.config.secrets ?? {}))
@@ -204,7 +209,9 @@ export class Response {
 
     // Handle tab snapshot
     if (tabSnapshot && this._includeSnapshot !== 'none') {
-      const snapshot = this._includeSnapshot === 'full' ? tabSnapshot.ariaSnapshot : tabSnapshot.ariaSnapshotDiff ?? tabSnapshot.ariaSnapshot;
+      let snapshot = this._includeSnapshot === 'full' ? tabSnapshot.ariaSnapshot : tabSnapshot.ariaSnapshotDiff ?? tabSnapshot.ariaSnapshot;
+      if (this._snapshotFilter)
+        snapshot = filterSnapshot(snapshot, this._snapshotFilter);
       if (this._context.config.outputMode === 'file' || this._includeSnapshotFileName) {
         const resolvedFile = await this.resolveClientFile({ prefix: 'page', ext: 'yml', suggestedFilename: this._includeSnapshotFileName }, 'Snapshot');
         await fs.promises.writeFile(resolvedFile.fileName, snapshot, 'utf-8');
@@ -315,4 +322,20 @@ export function parseResponse(response: CallToolResult) {
     attachments,
     text,
   };
+}
+
+const interactiveRoles = /^\s*- (button|link|textbox|combobox|checkbox|radio|slider|switch|spinbutton|searchbox|menuitem|option|tab )\b/;
+const landmarkRoles = /^\s*- (heading|banner|navigation|main|contentinfo|complementary|region|form|search|button|link|textbox|combobox|checkbox|radio|slider|switch|spinbutton|searchbox|menuitem|option|tab )\b/;
+
+function filterSnapshot(snapshot: string, filter: 'interactive' | 'landmark'): string {
+  const pattern = filter === 'interactive' ? interactiveRoles : landmarkRoles;
+  const lines = snapshot.split('\n');
+  const result: string[] = [];
+  for (const line of lines) {
+    if (pattern.test(line))
+      result.push(line);
+  }
+  if (!result.length)
+    return '(no matching elements found with filter: ' + filter + ')';
+  return result.join('\n');
 }
