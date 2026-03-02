@@ -174,6 +174,7 @@ function findcopilotbrowserCli(workspaceRoot: string): string | undefined {
   // the returned path is always absolute and not bound to any hard-coded
   // drive letter or directory name.
   const candidates = [
+    path.join(workspaceRoot, 'packages', 'copilotbrowser', 'cli.js'),
     path.join(workspaceRoot, 'node_modules', 'copilotbrowser', 'cli.js'),
     // Global/npm-link installs expose the package under a scoped dir too
     path.join(workspaceRoot, 'node_modules', '@copilotbrowser', 'test', 'cli.js'),

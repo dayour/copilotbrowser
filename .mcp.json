@@ -5,8 +5,8 @@
       "args": []
     },
     "copilotbrowser": {
-      "command": "npx",
-      "args": ["copilotbrowser", "run-mcp-server", "--browser", "msedge"]
+      "command": "node",
+      "args": ["E:\\copilotbrowser\\packages\\copilotbrowser\\cli.js", "run-mcp-server", "--browser", "msedge"]
     }
   }
 }
