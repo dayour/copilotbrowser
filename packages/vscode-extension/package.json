@@ -1,8 +1,8 @@
 {
   "name": "copilotbrowser-vscode",
   "private": true,
-  "displayName": "copilotbrowser",
-  "description": "Browser automation, MCP server, and test tooling for VS Code — control Chrome, Firefox, and WebKit from AI coding assistants",
+  "displayName": "copilotbrowser Browser Automation",
+  "description": "Self-contained browser automation MCP server for VS Code — control Chrome, Firefox, Edge, and WebKit from AI coding assistants. No separate install needed.",
   "version": "2.0.0",
   "publisher": "dayour",
   "icon": "icon.png",
@@ -12,6 +12,13 @@
     "url": "https://github.com/dayour/copilotbrowser.git"
   },
   "homepage": "https://github.com/dayour/copilotbrowser",
+  "bugs": {
+    "url": "https://github.com/dayour/copilotbrowser/issues"
+  },
+  "galleryBanner": {
+    "color": "#0d1117",
+    "theme": "dark"
+  },
   "engines": {
     "vscode": "^1.99.0"
   },
@@ -23,7 +30,7 @@
   ],
   "keywords": [
     "mcp",
-    "ai",
+    "autopilot",
     "copilot",
     "browser",
     "automation",
@@ -33,16 +40,46 @@
     "firefox",
     "webkit",
     "copilotbrowser",
-    "copilotbrowser"
-  ],
-  "enabledApiProposals": [
-    "mcpServerDefinitionProviders"
+    "playwright"
   ],
   "activationEvents": [
     "onStartupFinished"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "copilotbrowser",
+          "title": "CopilotBrowser Browser Automation",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "copilotbrowser": [
+        {
+          "id": "copilotbrowser.targetsView",
+          "name": "Targets",
+          "type": "tree"
+        },
+        {
+          "id": "copilotbrowser.configView",
+          "name": "Configuration",
+          "type": "tree"
+        },
+        {
+          "id": "copilotbrowser.toolsView",
+          "name": "Tools",
+          "type": "tree"
+        },
+        {
+          "id": "copilotbrowser.helpView",
+          "name": "Helpful Links",
+          "type": "tree"
+        }
+      ]
+    },
     "mcpServerDefinitionProviders": [
       {
         "id": "copilotbrowser",
@@ -81,6 +118,30 @@
         "icon": "$(inspect)"
       },
       {
+        "command": "copilotbrowser.startMcpServer",
+        "title": "Start MCP Server",
+        "category": "copilotbrowser",
+        "icon": "$(run)"
+      },
+      {
+        "command": "copilotbrowser.stopMcpServer",
+        "title": "Stop MCP Server",
+        "category": "copilotbrowser",
+        "icon": "$(stop)"
+      },
+      {
+        "command": "copilotbrowser.restartMcpServer",
+        "title": "Restart MCP Server",
+        "category": "copilotbrowser",
+        "icon": "$(debug-restart)"
+      },
+      {
+        "command": "copilotbrowser.showStatus",
+        "title": "Show MCP Server Status",
+        "category": "copilotbrowser",
+        "icon": "$(info)"
+      },
+      {
         "command": "copilotbrowser.refreshMcp",
         "title": "Refresh MCP Server",
         "category": "copilotbrowser",
@@ -91,6 +152,84 @@
         "title": "Show MCP Server Configuration",
         "category": "copilotbrowser",
         "icon": "$(settings-gear)"
+      },
+      {
+        "command": "copilotbrowser.openSettings",
+        "title": "Open Extension Settings",
+        "category": "copilotbrowser",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "copilotbrowser.openDocumentation",
+        "title": "Open Documentation",
+        "category": "copilotbrowser",
+        "icon": "$(book)"
+      },
+      {
+        "command": "copilotbrowser.reportBug",
+        "title": "Report a Bug",
+        "category": "copilotbrowser",
+        "icon": "$(bug)"
+      },
+      {
+        "command": "copilotbrowser.showOutput",
+        "title": "Show Output",
+        "category": "copilotbrowser",
+        "icon": "$(output)"
+      },
+      {
+        "command": "copilotbrowser.refreshSidebar",
+        "title": "Refresh",
+        "category": "copilotbrowser",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "copilotbrowser.config.setBrowser",
+        "title": "Set Browser",
+        "category": "copilotbrowser",
+        "icon": "$(globe)"
+      },
+      {
+        "command": "copilotbrowser.config.toggleHeadless",
+        "title": "Toggle Headless Mode",
+        "category": "copilotbrowser",
+        "icon": "$(eye)"
+      },
+      {
+        "command": "copilotbrowser.config.toggleNoSandbox",
+        "title": "Toggle No Sandbox",
+        "category": "copilotbrowser",
+        "icon": "$(shield)"
+      },
+      {
+        "command": "copilotbrowser.config.setCapabilities",
+        "title": "Set MCP Capabilities",
+        "category": "copilotbrowser",
+        "icon": "$(symbol-misc)"
+      },
+      {
+        "command": "copilotbrowser.config.toggleAutoStart",
+        "title": "Toggle Auto Start",
+        "category": "copilotbrowser",
+        "icon": "$(zap)"
+      },
+      {
+        "command": "copilotbrowser.config.toggleProfileMode",
+        "title": "Toggle Profile Mode (Isolated / Connected)",
+        "category": "copilotbrowser",
+        "icon": "$(account)"
+      },
+      {
+        "command": "copilotbrowser.config.setConnectedProfile",
+        "title": "Select Connected Profile",
+        "category": "copilotbrowser",
+        "icon": "$(person)"
+      },
+      {
+        "command": "copilotbrowser.installCliSkills",
+        "title": "Install CLI Skills",
+        "category": "copilotbrowser",
+        "icon": "$(extensions)"
       }
     ],
     "configuration": {
@@ -113,7 +252,7 @@
         },
         "copilotbrowser.mcp.browser": {
           "type": "string",
-          "default": "chromium",
+          "default": "msedge",
           "enum": ["chromium", "chrome", "msedge", "firefox", "webkit"],
           "enumDescriptions": [
             "Chromium (bundled)",
@@ -126,7 +265,7 @@
         },
         "copilotbrowser.mcp.headless": {
           "type": "boolean",
-          "default": true,
+          "default": false,
           "description": "Run browser in headless mode when serving MCP requests."
         },
         "copilotbrowser.mcp.capabilities": {
@@ -135,7 +274,7 @@
             "type": "string",
             "enum": ["vision", "pdf", "devtools"]
           },
-          "default": [],
+          "default": ["vision"],
           "description": "Additional MCP capabilities to enable: vision (screenshot-based), pdf, devtools."
         },
         "copilotbrowser.mcp.extraArgs": {
@@ -143,6 +282,41 @@
           "items": { "type": "string" },
           "default": [],
           "description": "Extra command-line arguments to pass to the copilotbrowser MCP server."
+        },
+        "copilotbrowser.mcp.noSandbox": {
+          "type": "boolean",
+          "default": false,
+          "description": "Disable the sandbox for browser processes. Enable if you see sandbox-related errors."
+        },
+        "copilotbrowser.mcp.profileMode": {
+          "type": "string",
+          "default": "isolated",
+          "enum": ["isolated", "connected"],
+          "enumDescriptions": [
+            "Isolated: use a clean temporary browser profile — no saved cookies, logins, or extensions.",
+            "Connected: reuse your installed browser profile so you are already signed in with your accounts."
+          ],
+          "markdownDescription": "Browser profile mode for the MCP server.\n\n- **isolated** — fresh temporary profile each session (safe, no side-effects).\n- **connected** — reuse your existing browser profile so you stay logged in. Requires Microsoft Edge or Chrome."
+        },
+        "copilotbrowser.mcp.connectedUserDataDir": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Path to the browser user-data directory used in **Connected** profile mode. Leave blank to use the OS default:\n- Windows Edge: `%LOCALAPPDATA%\\Microsoft\\Edge\\User Data`\n- macOS Edge: `~/Library/Application Support/Microsoft Edge`\n- Linux Edge: `~/.config/microsoft-edge`"
+        },
+        "copilotbrowser.mcp.connectedProfile": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "Edge/Chrome profile folder to use in **Connected** mode (e.g. `Default`, `Profile 1`, `Profile 2`). Leave blank to use the default profile. Run **CopilotBrowser: Select Connected Profile** to pick from your installed profiles."
+        },
+        "copilotbrowser.autoStart": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically start the copilotbrowser MCP server when VS Code starts."
+        },
+        "copilotbrowser.autoConfigureMCP": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically configure MCP settings (chat.mcp.servers) when the extension is first activated."
         }
       }
     },
@@ -161,21 +335,111 @@
       ],
       "commandPalette": [
         {
+          "command": "copilotbrowser.showStatus",
+          "when": "true"
+        },
+        {
           "command": "copilotbrowser.refreshMcp",
           "when": "true"
         },
         {
           "command": "copilotbrowser.showMcpConfig",
           "when": "true"
+        },
+        {
+          "command": "copilotbrowser.refreshSidebar",
+          "when": "false"
+        },
+        {
+          "command": "copilotbrowser.openDocumentation",
+          "when": "false"
+        },
+        {
+          "command": "copilotbrowser.reportBug",
+          "when": "false"
+        },
+        {
+          "command": "copilotbrowser.showOutput",
+          "when": "false"
+        },
+        {
+          "command": "copilotbrowser.config.setBrowser",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.config.toggleHeadless",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.config.toggleNoSandbox",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.config.setCapabilities",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.config.toggleAutoStart",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.config.toggleProfileMode",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.config.setConnectedProfile",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.installCliSkills",
+          "when": "true"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "copilotbrowser.refreshSidebar",
+          "when": "view == copilotbrowser.targetsView",
+          "group": "navigation"
+        },
+        {
+          "command": "copilotbrowser.openSettings",
+          "when": "view == copilotbrowser.configView",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "copilotbrowser.startMcpServer",
+          "when": "view == copilotbrowser.targetsView && viewItem == mcpStopped",
+          "group": "inline@1"
+        },
+        {
+          "command": "copilotbrowser.stopMcpServer",
+          "when": "view == copilotbrowser.targetsView && viewItem == mcpRunning",
+          "group": "inline@1"
+        },
+        {
+          "command": "copilotbrowser.restartMcpServer",
+          "when": "view == copilotbrowser.targetsView && viewItem == mcpRunning",
+          "group": "inline@2"
+        },
+        {
+          "command": "copilotbrowser.showMcpConfig",
+          "when": "view == copilotbrowser.targetsView && (viewItem == mcpRunning || viewItem == mcpStopped)",
+          "group": "inline@3"
         }
       ]
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run compile && npm run bundle-server",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
+    "bundle-server": "node scripts/bundle-server.js",
     "package": "vsce package --no-dependencies"
+  },
+  "dependencies": {
+    "copilotbrowser": "2.0.0"
   },
   "devDependencies": {
     "@types/vscode": "^1.99.0",

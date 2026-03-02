@@ -5,6 +5,7 @@
 .vscode/**
 .vscode-test/**
 src/**
+scripts/**
 node_modules/**
 tsconfig.json
 **/*.map
@@ -13,5 +14,6 @@ pnpm-lock.yaml
 **/.npmignore
 *.vsix
 
-# Keep compiled output
+# Keep compiled output and bundled server
 !out/**
+!server/**
