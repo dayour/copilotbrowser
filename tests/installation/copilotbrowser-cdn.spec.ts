@@ -20,7 +20,6 @@ import type { AddressInfo } from 'net';
 
 const CDNS = [
   'https://github.com/dayour/copilotbrowser/releases/download', // GitHub Releases CDN
-  'https://copilotbrowser.download.prss.microsoft.com/dbazure/download/copilotbrowser', // PRSS CDN
 ];
 
 const DL_STAT_BLOCK = /^.*from url: (.*)$\n^.*to location: (.*)$\n^.*response status code: (.*)$\n^.*is chunked: (.*)$\n^.*total bytes: (\d+)$\n^.*download complete, size: (\d+)$\n^.*SUCCESS downloading.*\(copilotbrowser ([a-zA-Z-]+) v\d+\).*$/gm;

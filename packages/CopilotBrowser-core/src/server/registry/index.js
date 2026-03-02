@@ -79,7 +79,6 @@ const PACKAGE_PATH = path_1.default.join(__dirname, '..', '..', '..');
 const BIN_PATH = path_1.default.join(__dirname, '..', '..', '..', 'bin');
 const copilotbrowser_CDN_MIRRORS = [
     'https://github.com/dayour/copilotbrowser/releases/download', // GitHub Releases CDN
-    'https://copilotbrowser.download.prss.microsoft.com/dbazure/download/copilotbrowser', // PRSS CDN
 ];
 if (process.env.PW_TEST_CDN_THAT_SHOULD_WORK) {
     for (let i = 0; i < copilotbrowser_CDN_MIRRORS.length; i++) {
