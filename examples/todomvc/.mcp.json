@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "copilotbrowser-test": {
+      "command": "npx",
+      "args": [
+        "copilotbrowser",
+        "run-test-mcp-server"
+      ]
+    }
+  }
+}

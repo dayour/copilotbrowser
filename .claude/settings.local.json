@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wmic:*)",
+      "Bash(powershell -Command \"Get-CimInstance Win32_Processor | Select-Object Name,NumberOfCores,NumberOfLogicalProcessors,MaxClockSpeed | Format-List\")",
+      "Bash(dir:*)",
+      "Bash(ls:*)",
+      "Bash(node:*)"
+    ]
+  }
+}

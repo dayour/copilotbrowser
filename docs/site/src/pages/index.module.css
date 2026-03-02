@@ -1,0 +1,659 @@
+.heroBanner {
+  padding: 5rem 0 4rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+@media screen and (max-width: 996px) {
+  .heroBanner { padding: 3rem 1rem; }
+}
+
+.heroLogo {
+  width: 120px;
+  height: 120px;
+  margin-bottom: 1.25rem;
+  border-radius: 24px;
+  filter: drop-shadow(0 8px 24px rgba(0, 184, 232, 0.40));
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btnOutline {
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.3) !important;
+  background: transparent !important;
+}
+.btnOutline:hover {
+  border-color: rgba(255,255,255,0.6) !important;
+  background: rgba(255,255,255,0.06) !important;
+}
+
+.heroCode {
+  margin-top: 1.5rem;
+  display: inline-block;
+  background: rgba(0,0,0,0.50);
+  border: 1px solid rgba(0, 184, 232, 0.25);
+  border-radius: 8px;
+  padding: 0.5rem 1.25rem;
+  font-family: 'Cascadia Code', 'Fira Code', monospace;
+  font-size: 0.9rem;
+  color: #7ee8ff;
+  letter-spacing: 0.02em;
+}
+
+/* Shared section */
+.section {
+  padding: 4rem 0;
+}
+.sectionAlt {
+  background: var(--ifm-background-surface-color, #f8fafc);
+}
+.sectionSub {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 1.1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Feature grid */
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+@media screen and (max-width: 768px) {
+  .featureGrid { grid-template-columns: 1fr; }
+}
+.featureCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+.featureCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 184, 232, 0.10);
+  border-color: var(--ifm-color-primary-light);
+}
+.featureIcon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+.featureTitle {
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
+}
+.featureDesc {
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0;
+}
+
+/* Platform / Install grid */
+.platformGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .platformGrid { grid-template-columns: 1fr; }
+}
+.platformCard {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  text-decoration: none !important;
+  color: inherit !important;
+}
+.platformCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 184, 232, 0.08);
+  border-color: var(--ifm-color-primary-light);
+}
+.platformIcon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+.platformDesc {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-600);
+  margin: 0.25rem 0 0;
+}
+.platformCta {
+  margin-left: auto;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ifm-color-primary);
+  flex-shrink: 0;
+}
+
+/* Language grid */
+.langGrid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.langCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem 2.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
+  text-decoration: none !important;
+  color: inherit !important;
+  min-width: 160px;
+}
+.langCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 184, 232, 0.08);
+  border-color: var(--ifm-color-primary-light);
+}
+
+/* Quick start steps */
+.quickGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+@media screen and (max-width: 768px) {
+  .quickGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media screen and (max-width: 480px) {
+  .quickGrid { grid-template-columns: 1fr; }
+}
+.quickStep {
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+.stepNum {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+}
+.codeSnippet {
+  display: block;
+  background: var(--ifm-background-surface-color, #f1f5f9);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow-x: auto;
+  margin-top: 0.5rem;
+}
+/* =========================================
+   Hero refinements
+   ========================================= */
+.heroHeadline {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+@media screen and (max-width: 768px) {
+  .heroHeadline { font-size: 2.2rem; }
+}
+.heroSubtitle {
+  font-size: 1.2rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   Workflow section (dark)
+   ========================================= */
+.sectionDark {
+  background: #080d14;
+  background-image: linear-gradient(rgba(0, 184, 232, 0.035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 184, 232, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: #e6edf3;
+}
+[data-theme='light'] .sectionDark {
+  background: #080d14;
+  background-image: linear-gradient(rgba(0, 184, 232, 0.035) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(0, 184, 232, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  color: #e6edf3;
+}
+.workflowList {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+.workflowBlock {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+.workflowBlockReverse {
+  direction: rtl;
+}
+.workflowBlockReverse > * {
+  direction: ltr;
+}
+@media screen and (max-width: 996px) {
+  .workflowBlock,
+  .workflowBlockReverse {
+    grid-template-columns: 1fr;
+    direction: ltr;
+  }
+  .workflowBlockReverse > * { direction: ltr; }
+}
+.workflowText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.workflowIcon {
+  font-size: 2.5rem;
+}
+.workflowHeadline {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f0f6ff;
+  margin: 0;
+  line-height: 1.25;
+}
+.workflowBody {
+  font-size: 1rem;
+  color: rgba(230, 237, 243, 0.75);
+  line-height: 1.7;
+  margin: 0;
+}
+.workflowCtas {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.workflowLink {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #00c8e8 !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(0,200,240,0.3);
+  padding-bottom: 2px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.workflowLink:hover {
+  color: #5dd8f8 !important;
+  border-color: #5dd8f8;
+}
+.workflowCode {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 184, 232, 0.20);
+  background: #161b22;
+}
+.workflowPre {
+  margin: 0;
+  padding: 1.5rem;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  overflow-x: auto;
+  color: #c9d1d9;
+  background: transparent;
+}
+
+/* =========================================
+   Final CTA
+   ========================================= */
+.finalCta {
+  padding: 5rem 0;
+  background: #080d14;
+  background-image: radial-gradient(ellipse 90% 70% at 50% 110%, rgba(0, 130, 170, 0.40) 0%, transparent 70%);
+  border-top: 1px solid rgba(0, 184, 232, 0.12);
+  text-align: center;
+}
+.finalCtaInner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.finalCtaHeadline {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .finalCtaHeadline { font-size: 1.9rem; }
+}
+.finalCtaBody {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+}
+.btnOutlineLight {
+  color: #fff !important;
+  border: 1px solid rgba(255,255,255,0.4) !important;
+  background: transparent !important;
+}
+.btnOutlineLight:hover {
+  background: rgba(255,255,255,0.08) !important;
+  border-color: rgba(255,255,255,0.7) !important;
+}
+
+/* ─── Galaxy nebula animated background ──────────────────────────────────── */
+/* Matches the near-black + dark-teal + subtle-purple look of the brand banners */
+@keyframes nebulaFloat {
+  0%   { transform: translate(0, 0)     scale(1);    opacity: 0.55; }
+  33%  { transform: translate(30px,-25px) scale(1.06); opacity: 0.65; }
+  66%  { transform: translate(-18px,22px) scale(0.97); opacity: 0.48; }
+  100% { transform: translate(0, 0)     scale(1);    opacity: 0.55; }
+}
+.auroraBlob1,
+.auroraBlob2,
+.auroraBlob3 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+  animation: nebulaFloat linear infinite;
+}
+/* Primary teal nebula — left/center, like the brand banners */
+.auroraBlob1 {
+  width: 600px; height: 480px;
+  background: rgba(0, 90, 110, 0.50);
+  top: -120px; left: -80px;
+  animation-duration: 20s;
+}
+/* Deep purple undertone — far right (barely visible, like the banners) */
+.auroraBlob2 {
+  width: 380px; height: 380px;
+  background: rgba(15, 0, 45, 0.40);
+  top: 80px; right: -60px;
+  animation-duration: 26s;
+  animation-delay: -8s;
+}
+/* Secondary teal — bottom sweep */
+.auroraBlob3 {
+  width: 440px; height: 320px;
+  background: rgba(0, 70, 95, 0.40);
+  bottom: -60px; left: 38%;
+  animation-duration: 30s;
+  animation-delay: -14s;
+}
+
+/* ─── Star field ─────────────────────────────────────────────────────────── */
+/* Tiny white dots scattered in the hero, matching the banner star specks */
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 22%, rgba(255,255,255,0.65) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 10%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 28%, rgba(255,255,255,0.70) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 82% 15%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(1px 1px at 22% 68%, rgba(255,255,255,0.50) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 52% 52%, rgba(255,255,255,0.60) 0%, transparent 100%),
+    radial-gradient(1px 1px at 73% 78%, rgba(255,255,255,0.45) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 88% 60%, rgba(255,255,255,0.50) 0%, transparent 100%),
+    radial-gradient(1px 1px at 8%  88%, rgba(255,255,255,0.40) 0%, transparent 100%),
+    radial-gradient(0.6px 0.6px at 33% 42%, rgba(255,255,255,0.55) 0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 18%, rgba(255,255,255,0.60) 0%, transparent 100%),
+    radial-gradient(1px 1px at 95% 40%, rgba(255,255,255,0.40) 0%, transparent 100%),
+    radial-gradient(0.8px 0.8px at 48% 85%, rgba(255,255,255,0.45) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Cyber retro scanlines ───────────────────────────────────────────────── */
+.heroBanner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 3px,
+    rgba(0, 0, 0, 0.04) 3px,
+    rgba(0, 0, 0, 0.04) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+
+/* ─── BlurText hero headline ──────────────────────────────────────────────── */
+@keyframes wordIn {
+  from { opacity: 0; filter: blur(8px); transform: translateY(12px); }
+  to   { opacity: 1; filter: blur(0);   transform: translateY(0); }
+}
+.heroWord {
+  display: inline-block;
+  opacity: 0;
+  animation: wordIn 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+  animation-delay: var(--word-delay, 150ms);
+}
+
+/* ─── ScrollReveal ────────────────────────────────────────────────────────── */
+.revealWrap {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.55s cubic-bezier(0.22,1,0.36,1), transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Icon wrapper variants ───────────────────────────────────────────────── */
+.iconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px; height: 52px;
+  border-radius: 12px;
+  background: rgba(0, 184, 232, 0.10);
+  border: 1px solid rgba(79, 70, 229, 0.25);
+  color: #00c8e8;
+  margin-bottom: 0.85rem;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+}
+.featureCard:hover .iconWrap {
+  background: rgba(0, 184, 232, 0.18);
+  border-color: rgba(0, 200, 240, 0.55);
+  color: #7ee8ff;
+  transform: scale(1.08);
+}
+
+.platformIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: rgba(0, 184, 232, 0.08);
+  border: 1px solid rgba(0, 184, 232, 0.16);
+  color: #00c8e8;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.platformCard:hover .platformIconWrap {
+  background: rgba(0, 184, 232, 0.16);
+  color: #7ee8ff;
+  transform: scale(1.1) rotate(-4deg);
+}
+
+.langIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; height: 60px;
+  border-radius: 14px;
+  background: rgba(0, 184, 232, 0.10);
+  border: 1px solid rgba(0, 184, 232, 0.18);
+  color: #00c8e8;
+  margin-bottom: 0.75rem;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+}
+.langCard:hover .langIconWrap {
+  background: rgba(0, 184, 232, 0.16);
+  border-color: rgba(0, 200, 240, 0.55);
+  color: #7ee8ff;
+  transform: scale(1.12) rotate(6deg);
+}
+
+.workflowIconWrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 60px; height: 60px;
+  border-radius: 14px;
+  background: rgba(0, 184, 232, 0.12);
+  border: 1px solid rgba(0, 184, 232, 0.28);
+  color: #5dd8f8;
+  margin-bottom: 1rem;
+}
+
+/* ─── HerosubTitle colour fix ─────────────────────────────────────────────── */
+.heroHeadline {
+  font-size: 3.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff !important;
+  line-height: 1.12;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .heroHeadline { font-size: 2.1rem; }
+}
+
+/* ─── Cyber accent: cyan brand color on key headline word ────────────────── */
+.cyanAccent {
+  color: #00c8e8;
+  text-shadow: 0 0 28px rgba(0, 200, 232, 0.45);
+}
+
+/* ─── Section sub on dark bg ─────────────────────────────────────────────── */
+.sectionSubLight {
+  color: rgba(255,255,255,0.55);
+  font-size: 1.1rem;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ─── Workflow code block: cyan border ───────────────────────────────────── */
+.workflowCode {
+  border-color: rgba(0, 184, 232, 0.18) !important;
+  background: #05080f !important;
+}
+
+/* ─── Step numbers: cyan ─────────────────────────────────────────────────── */
+.stepNum {
+  background: rgba(0, 184, 232, 0.18);
+  border: 1px solid rgba(0, 184, 232, 0.35);
+  color: #00c8e8;
+}
+
+/* ─── sectionAlt: slightly lighter than deep black ──────────────────────── */
+[data-theme='dark'] .sectionAlt {
+  background: #0a1220;
+}
+
+/* ─── HeroHeadline final override ────────────────────────────────────────── */
+.heroHeadline {
+  font-size: 3.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #fff !important;
+  line-height: 1.12;
+  margin-bottom: 1rem;
+}
+@media screen and (max-width: 768px) {
+  .heroHeadline { font-size: 2.1rem; }
+}
+
+/* ─── Voxel decorative accents ───────────────────────────────────────────── */
+.voxelScene {
+  display: grid;
+  grid-template-columns: repeat(var(--vx-cols, 7), var(--vx-size, 11px));
+  gap: 2px;
+  transform: rotateX(55deg) rotateZ(-45deg);
+  pointer-events: none;
+  user-select: none;
+}
+.voxel {
+  width: var(--vx-size, 11px);
+  height: var(--vx-size, 11px);
+  background: rgba(0, 184, 232, 0.40);
+  border: 1px solid rgba(0, 200, 232, 0.28);
+  border-radius: 1px;
+  box-shadow:
+    inset 1px 1px 0 rgba(255, 255, 255, 0.10),
+    2px 2px 0 rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transform: scale(0.1) translateY(-14px);
+  transition:
+    opacity 0.28s ease var(--vx-d, 0ms),
+    transform 0.44s cubic-bezier(0.34, 1.56, 0.64, 1) var(--vx-d, 0ms);
+}
+.voxelOn {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+.voxelHead {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.voxelRow {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 52px;
+  margin-bottom: 1.25rem;
+  overflow: visible;
+}
+.finalCtaVoxelBg {
+  position: absolute;
+  top: 24px;
+  right: 40px;
+  opacity: 0.15;
+  pointer-events: none;
+}
+@media screen and (max-width: 768px) {
+  .finalCtaVoxelBg { display: none; }
+}

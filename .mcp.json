@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "darbot-browser-mcp": {
+      "command": "darbot-browser-mcp",
+      "args": []
+    },
+    "copilotbrowser": {
+      "command": "npx",
+      "args": ["copilotbrowser", "run-mcp-server", "--browser", "msedge"]
+    }
+  }
+}

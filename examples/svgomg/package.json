@@ -1,0 +1,16 @@
+{
+  "name": "svgomg-tests",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "copilotbrowser test",
+    "ctest": "copilotbrowser test --project=chromium",
+    "ftest": "copilotbrowser test --project=firefox",
+    "wtest": "copilotbrowser test --project=webkit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@copilotbrowser/test": "^1.17.1"
+  }
+}

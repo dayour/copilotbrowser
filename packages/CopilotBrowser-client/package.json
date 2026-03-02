@@ -1,0 +1,35 @@
+{
+  "name": "@copilotbrowser/client",
+  "private": true,
+  "version": "0.0.0",
+  "description": "A thin client for copilotbrowser",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://copilotbrowser.dev",
+  "engines": {
+    "node": ">=18"
+  },
+  "author": {
+    "name": "Microsoft Corporation"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "esbuild": "node build.js",
+    "build": "npm run esbuild",
+    "watch": "npm run esbuild -- --watch"
+  },
+  "dependencies": {
+    "copilotbrowser-core": "2.0.0"
+  }
+}

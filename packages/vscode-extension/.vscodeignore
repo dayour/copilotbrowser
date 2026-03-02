@@ -1,0 +1,17 @@
+# Never walk up into the monorepo workspace root
+../
+
+# Dev/source artifacts
+.vscode/**
+.vscode-test/**
+src/**
+node_modules/**
+tsconfig.json
+**/*.map
+**/*.ts
+pnpm-lock.yaml
+**/.npmignore
+*.vsix
+
+# Keep compiled output
+!out/**

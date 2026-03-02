@@ -1,0 +1,5 @@
+copilotbrowser
+Copyright (c) DarbotLabs
+
+This software contains code derived from the Puppeteer and copilotbrowser projects (https://github.com/puppeteer/puppeteer), (https://github.com/microsoft/copilotbrowser)
+available under the Apache 2.0 license (https://github.com/puppeteer/puppeteer/blob/master/LICENSE) (https://github.com/microsoft/copilotbrowser/blob/main/LICENSE).

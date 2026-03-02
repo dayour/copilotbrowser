@@ -1,0 +1,6 @@
+{
+  "hints": {
+    "compat-api/css": "off",
+    "no-inline-styles": "off"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "name": "@copilotbrowser/experimental-ct-core",
+  "version": "2.0.0",
+  "description": "copilotbrowser Component Testing Helpers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://github.com/dayour/copilotbrowser",
+  "engines": {
+    "node": ">=25.6.1"
+  },
+  "author": {
+    "name": "Daryl Yourk"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./lib/mount": "./lib/mount.js",
+    "./lib/program": "./lib/program.js",
+    "./types/component": {
+      "types": "./types/component.d.ts"
+    }
+  },
+  "dependencies": {
+    "copilotbrowser-core": "2.0.0",
+    "vite": "^6.4.1",
+    "copilotbrowser": "2.0.0"
+  }
+}

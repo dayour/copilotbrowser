@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+  <title>copilotbrowser</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .titlebar {
+      background: #11111b;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      -webkit-app-region: drag;
+    }
+    .titlebar img { width: 24px; height: 24px; }
+    .titlebar h1 { font-size: 14px; font-weight: 500; color: #cdd6f4; }
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      gap: 32px;
+    }
+    .logo { width: 96px; height: 96px; opacity: 0.8; }
+    .welcome {
+      text-align: center;
+      max-width: 480px;
+    }
+    .welcome h2 { font-size: 24px; font-weight: 600; margin-bottom: 8px; color: #cdd6f4; }
+    .welcome p { color: #a6adc8; line-height: 1.6; }
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 480px;
+      width: 100%;
+    }
+    .action-btn {
+      padding: 16px;
+      border: 1px solid #313244;
+      border-radius: 8px;
+      background: #181825;
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      color: #cdd6f4;
+    }
+    .action-btn:hover { background: #1e1e2e; border-color: #45475a; }
+    .action-btn h3 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+    .action-btn p { font-size: 12px; color: #a6adc8; }
+    .action-btn.full { grid-column: 1 / -1; }
+    .status-bar {
+      background: #11111b;
+      padding: 4px 16px;
+      font-size: 12px;
+      color: #6c7086;
+      display: flex;
+      justify-content: space-between;
+    }
+    #project-path { color: #89b4fa; }
+    #output {
+      display: none;
+      background: #11111b;
+      color: #a6adc8;
+      padding: 12px;
+      margin: 0 24px;
+      border-radius: 6px;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 12px;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .navbar {
+      background: #181825;
+      padding: 6px 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      border-bottom: 1px solid #313244;
+      -webkit-app-region: no-drag;
+    }
+    .nav-btn {
+      width: 32px;
+      height: 28px;
+      border: none;
+      border-radius: 6px;
+      background: transparent;
+      color: #cdd6f4;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav-btn:hover:not(:disabled) { background: #313244; }
+    .nav-btn:active:not(:disabled) { background: #45475a; }
+    .nav-btn:disabled { color: #45475a; cursor: default; }
+    .security-chip {
+      min-width: 80px;
+      padding: 0 10px;
+      height: 24px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #313244;
+      color: #cdd6f4;
+      border: 1px solid #45475a;
+      flex-shrink: 0;
+    }
+    .security-chip.secure {
+      background: #22331f;
+      color: #a6e3a1;
+      border-color: #3c5d34;
+    }
+    .security-chip.insecure {
+      background: #402222;
+      color: #f28fad;
+      border-color: #5b2d2d;
+    }
+    .security-chip.warning {
+      background: #453814;
+      color: #f9e2af;
+      border-color: #7a5f1a;
+    }
+    .address-bar {
+      flex: 1;
+      height: 28px;
+      min-width: 0;
+      border: 1px solid #313244;
+      border-radius: 14px;
+      background: #11111b;
+      color: #cdd6f4;
+      padding: 0 14px;
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+    }
+    .address-bar:focus { border-color: #89b4fa; }
+    .address-bar::placeholder { color: #6c7086; }
+  </style>
+</head>
+<body>
+  <div class="titlebar">
+    <img src="../build/icon.png" alt="copilotbrowser">
+    <h1>copilotbrowser</h1>
+  </div>
+
+  <div class="navbar" id="navbar" style="display:none;">
+    <button class="nav-btn" id="nav-back" title="Back" disabled>&#8592;</button>
+    <button class="nav-btn" id="nav-forward" title="Forward" disabled>&#8594;</button>
+    <button class="nav-btn" id="nav-reload" title="Reload">&#8635;</button>
+    <span class="security-chip" id="security-chip" aria-live="polite">--</span>
+    <input class="address-bar" id="address-bar" type="text" placeholder="Enter a URL..." spellcheck="false" autocomplete="off">
+  </div>
+
+  <div class="main">
+    <img class="logo" src="../build/icon.png" alt="">
+    <div class="welcome">
+      <h2>Welcome to copilotbrowser</h2>
+      <p>Open a project directory to get started with browser automation and testing.</p>
+    </div>
+    <div class="actions">
+      <button class="action-btn full" id="btn-open">
+        <h3>Open Project</h3>
+        <p>Open a copilotbrowser test project directory</p>
+      </button>
+      <button class="action-btn" id="btn-codegen">
+        <h3>Record Test</h3>
+        <p>Generate tests by recording actions</p>
+      </button>
+      <button class="action-btn" id="btn-inspector">
+        <h3>Inspector</h3>
+        <p>Inspect page and generate selectors</p>
+      </button>
+      <button class="action-btn" id="btn-trace">
+        <h3>Trace Viewer</h3>
+        <p>View test execution traces</p>
+      </button>
+      <button class="action-btn" id="btn-install">
+        <h3>Install Browsers</h3>
+        <p>Download Chromium, Firefox, WebKit</p>
+      </button>
+    </div>
+    <pre id="output"></pre>
+  </div>
+
+  <div class="status-bar">
+    <span>copilotbrowser v2.0.0</span>
+    <span id="project-path">No project open</span>
+  </div>
+
+  <script>
+    let projectPath = null;
+
+    window.copilotbrowser.onProjectOpened((path) => {
+      projectPath = path;
+      document.getElementById('project-path').textContent = path;
+    });
+
+    window.copilotbrowser.onAction((action) => {
+      handleAction(action);
+    });
+
+    document.getElementById('btn-open').addEventListener('click', () => {
+      // Triggered via File > Open menu (native dialog)
+    });
+
+    document.getElementById('btn-codegen').addEventListener('click', () => handleAction('codegen'));
+    document.getElementById('btn-inspector').addEventListener('click', () => handleAction('inspector'));
+    document.getElementById('btn-trace').addEventListener('click', () => handleAction('trace'));
+    document.getElementById('btn-install').addEventListener('click', () => handleAction('install'));
+
+    async function handleAction(action) {
+      if (!projectPath && action !== 'install') return;
+      const output = document.getElementById('output');
+      output.style.display = 'block';
+      output.textContent = `Running: copilotbrowser ${action}...\n`;
+
+      const bin = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+      const argMap = {
+        codegen: ['copilotbrowser', 'codegen'],
+        inspector: ['copilotbrowser', 'open', '--inspector'],
+        trace: ['copilotbrowser', 'show-trace'],
+        install: ['copilotbrowser', 'install'],
+      };
+
+      try {
+        const result = await window.copilotbrowser.runCommand(bin, argMap[action], projectPath || '.');
+        output.textContent += result.stdout || '';
+        if (result.stderr) output.textContent += result.stderr;
+        output.textContent += `\nExited with code ${result.code}`;
+      } catch (err) {
+        output.textContent += `Error: ${err}`;
+      }
+    }
+
+    // --- Navigation UI ---
+    (function initNavigation() {
+      const navbar = document.getElementById('navbar');
+      const navBack = document.getElementById('nav-back');
+      const navForward = document.getElementById('nav-forward');
+      const navReload = document.getElementById('nav-reload');
+      const securityChip = document.getElementById('security-chip');
+      const addressBar = document.getElementById('address-bar');
+
+      let currentNavState = {
+        url: '',
+        canGoBack: false,
+        canGoForward: false,
+        isLoading: false,
+        scheme: '',
+        isSecure: false,
+        certificateError: null,
+        loadError: null,
+      };
+
+      function updateNavUI() {
+        navBack.disabled = !currentNavState.canGoBack;
+        navForward.disabled = !currentNavState.canGoForward;
+        navReload.textContent = currentNavState.isLoading ? '\u00D7' : '\u21BB';
+        navReload.title = currentNavState.isLoading ? 'Stop loading' : 'Reload';
+        updateSecurityChip();
+        if (document.activeElement !== addressBar) {
+          addressBar.value = (currentNavState.url && currentNavState.url !== 'about:blank')
+            ? currentNavState.url : '';
+        }
+      }
+
+      function updateSecurityChip() {
+        const hasError = Boolean(currentNavState.certificateError || currentNavState.loadError);
+        const scheme = currentNavState.scheme || '';
+        securityChip.classList.remove('secure', 'insecure', 'warning');
+
+        if (!currentNavState.url || currentNavState.url === 'about:blank') {
+          securityChip.textContent = 'No page';
+          securityChip.classList.add('warning');
+          return;
+        }
+
+        if (hasError) {
+          const desc = currentNavState.certificateError?.error || currentNavState.loadError?.errorDescription;
+          securityChip.textContent = desc ? `Error: ${desc}` : 'Error';
+          securityChip.classList.add('insecure');
+          return;
+        }
+
+        if (currentNavState.isSecure) {
+          securityChip.textContent = 'Secure (HTTPS)';
+          securityChip.classList.add('secure');
+          return;
+        }
+
+        // Non-HTTPS but no error
+        securityChip.textContent = scheme ? `${scheme.toUpperCase()}` : 'Unknown';
+        securityChip.classList.add('warning');
+      }
+
+      navBack.addEventListener('click', () => window.copilotbrowser.nav.goBack());
+      navForward.addEventListener('click', () => window.copilotbrowser.nav.goForward());
+      navReload.addEventListener('click', () => {
+        if (currentNavState.isLoading) {
+          window.copilotbrowser.nav.stop();
+        } else {
+          window.copilotbrowser.nav.reload();
+        }
+      });
+
+      addressBar.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          const url = addressBar.value.trim();
+          if (url) {
+            window.copilotbrowser.nav.navigate(url);
+            addressBar.blur();
+          }
+        } else if (e.key === 'Escape') {
+          addressBar.value = currentNavState.url || '';
+          addressBar.blur();
+        }
+      });
+
+      addressBar.addEventListener('focus', () => addressBar.select());
+
+      document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
+          e.preventDefault();
+          if (navbar.style.display !== 'none') {
+            addressBar.focus();
+          }
+        }
+      });
+
+      window.copilotbrowser.tabs.list().then((state) => {
+        if (!state.enabled) return;
+        navbar.style.display = 'flex';
+
+        window.copilotbrowser.nav.onState((navState) => {
+          currentNavState = {
+            url: navState.url || '',
+            canGoBack: Boolean(navState.canGoBack),
+            canGoForward: Boolean(navState.canGoForward),
+            isLoading: Boolean(navState.isLoading),
+            scheme: navState.scheme || '',
+            isSecure: Boolean(navState.isSecure),
+            certificateError: navState.certificateError || null,
+            loadError: navState.loadError || null,
+          };
+          updateNavUI();
+        });
+
+        window.copilotbrowser.tabs.onState((tabState) => {
+          if (!tabState.activeTabId) {
+            currentNavState = {
+              url: '',
+              canGoBack: false,
+              canGoForward: false,
+              isLoading: false,
+              scheme: '',
+              isSecure: false,
+              certificateError: null,
+              loadError: null,
+            };
+            updateNavUI();
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

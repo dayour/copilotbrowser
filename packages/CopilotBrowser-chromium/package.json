@@ -1,0 +1,35 @@
+{
+  "name": "copilotbrowser-chromium",
+  "version": "2.0.0",
+  "description": "A high-level API to automate Chromium",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://github.com/dayour/copilotbrowser",
+  "engines": {
+    "node": ">=25.6.1"
+  },
+  "author": {
+    "name": "Daryl Yourk"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "copilotbrowser": "cli.js"
+  },
+  "scripts": {
+    "install": "node install.js"
+  },
+  "dependencies": {
+    "copilotbrowser-core": "2.0.0"
+  }
+}

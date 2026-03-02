@@ -1,0 +1,10 @@
+{
+  "name": "copilotbrowser-chrome-extension",
+  "private": true,
+  "version": "2.0.0",
+  "description": "copilotbrowser Chrome extension for browser automation and testing",
+  "author": {
+    "name": "Daryl Yourk"
+  },
+  "license": "Apache-2.0"
+}

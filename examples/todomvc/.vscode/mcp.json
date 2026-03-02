@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "copilotbrowser-test": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "copilotbrowser",
+        "run-test-mcp-server"
+      ]
+    }
+  },
+  "inputs": []
+}

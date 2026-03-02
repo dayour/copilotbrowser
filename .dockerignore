@@ -1,0 +1,56 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Git
+.git/
+.gitignore
+
+# Build cache
+.cache/
+**/.cache/
+
+# Test artifacts
+test-results/
+copilotbrowser-report/
+
+
+# Browser patches (not needed at runtime)
+browser_patches/
+
+# Documentation source
+docs/
+
+# Examples
+examples/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment files (mount these at runtime)
+.env
+.env.*
+
+# TypeScript build info (regenerated during build)
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Test config files
+tests/
+
+# Coverage
+coverage/
+
+# Package lock files are in root
+# Only root package-lock.json is needed

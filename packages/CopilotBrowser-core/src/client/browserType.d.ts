@@ -1,0 +1,54 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { Browser } from './browser';
+import { BrowserContext } from './browserContext';
+import { ChannelOwner } from './channelOwner';
+import type { copilotbrowser } from './copilotbrowser';
+import type { ConnectOptions, LaunchOptions, LaunchPersistentContextOptions, LaunchServerOptions } from './types';
+import type * as api from '../../types/types';
+import type * as channels from '@protocol/channels';
+import type { ChildProcess } from 'child_process';
+export interface BrowserServerLauncher {
+    launchServer(options?: LaunchServerOptions): Promise<api.BrowserServer>;
+}
+export interface BrowserServer extends api.BrowserServer {
+    process(): ChildProcess;
+    wsEndpoint(): string;
+    close(): Promise<void>;
+    kill(): Promise<void>;
+}
+export declare class BrowserType extends ChannelOwner<channels.BrowserTypeChannel> {
+    _serverLauncher?: BrowserServerLauncher;
+    _contexts: Set<BrowserContext>;
+    _copilotbrowser: copilotbrowser;
+    static from(browserType: channels.BrowserTypeChannel): BrowserType;
+    executablePath(): string;
+    name(): string;
+    launch(options?: LaunchOptions): Promise<Browser>;
+    launchServer(options?: LaunchServerOptions): Promise<api.BrowserServer>;
+    launchPersistentContext(userDataDir: string, options?: LaunchPersistentContextOptions): Promise<BrowserContext>;
+    connect(options: api.ConnectOptions & {
+        wsEndpoint: string;
+    }): Promise<Browser>;
+    connect(wsEndpoint: string, options?: api.ConnectOptions): Promise<Browser>;
+    _connect(params: ConnectOptions): Promise<Browser>;
+    connectOverCDP(options: api.ConnectOverCDPOptions & {
+        wsEndpoint?: string;
+    }): Promise<api.Browser>;
+    connectOverCDP(endpointURL: string, options?: api.ConnectOverCDPOptions): Promise<api.Browser>;
+    _connectOverCDP(endpointURL: string, params?: api.ConnectOverCDPOptions): Promise<Browser>;
+    _connectOverCDPTransport(transport: any): Promise<Browser>;
+}

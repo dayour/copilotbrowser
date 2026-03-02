@@ -1,0 +1,206 @@
+[
+  {
+    "file": "README.md",
+    "bytes": 1455
+  },
+  {
+    "file": "app/copilotbrowser.ico",
+    "bytes": 73780
+  },
+  {
+    "file": "app/app-icon-128.png",
+    "bytes": 15527
+  },
+  {
+    "file": "app/app-icon-256.png",
+    "bytes": 45386
+  },
+  {
+    "file": "app/app-icon-512.png",
+    "bytes": 133879
+  },
+  {
+    "file": "assets-manifest.json",
+    "bytes": 3520
+  },
+  {
+    "file": "favicons/android-chrome-192x192.png",
+    "bytes": 29007
+  },
+  {
+    "file": "favicons/android-chrome-512x512.png",
+    "bytes": 133879
+  },
+  {
+    "file": "favicons/apple-touch-icon.png",
+    "bytes": 26319
+  },
+  {
+    "file": "favicons/browserconfig.xml",
+    "bytes": 221
+  },
+  {
+    "file": "favicons/favicon-16x16.png",
+    "bytes": 744
+  },
+  {
+    "file": "favicons/favicon-32x32.png",
+    "bytes": 1914
+  },
+  {
+    "file": "favicons/favicon-48x48.png",
+    "bytes": 3462
+  },
+  {
+    "file": "favicons/favicon.ico",
+    "bytes": 72477
+  },
+  {
+    "file": "favicons/mstile-150x150.png",
+    "bytes": 19939
+  },
+  {
+    "file": "favicons/site.webmanifest",
+    "bytes": 385
+  },
+  {
+    "file": "github/github-readme-banner-1600x400.png",
+    "bytes": 172019
+  },
+  {
+    "file": "github/github-social-preview-1280x640.png",
+    "bytes": 206787
+  },
+  {
+    "file": "icons/copilotbrowser-icon-1024.png",
+    "bytes": 412843
+  },
+  {
+    "file": "icons/copilotbrowser-icon-128.png",
+    "bytes": 15527
+  },
+  {
+    "file": "icons/copilotbrowser-icon-16.png",
+    "bytes": 744
+  },
+  {
+    "file": "icons/copilotbrowser-icon-2048.png",
+    "bytes": 926702
+  },
+  {
+    "file": "icons/copilotbrowser-icon-256.png",
+    "bytes": 45386
+  },
+  {
+    "file": "icons/copilotbrowser-icon-32.png",
+    "bytes": 1914
+  },
+  {
+    "file": "icons/copilotbrowser-icon-48.png",
+    "bytes": 3462
+  },
+  {
+    "file": "icons/copilotbrowser-icon-512.png",
+    "bytes": 133879
+  },
+  {
+    "file": "icons/copilotbrowser-icon-64.png",
+    "bytes": 5342
+  },
+  {
+    "file": "icons/copilotbrowser-icon-galaxy-1024.png",
+    "bytes": 469357
+  },
+  {
+    "file": "icons/copilotbrowser-icon-galaxy-2048.png",
+    "bytes": 995450
+  },
+  {
+    "file": "icons/copilotbrowser-icon-galaxy-512.png",
+    "bytes": 162537
+  },
+  {
+    "file": "logos/copilotbrowser-horizontal-darkmode-3200x1024.png",
+    "bytes": 478255
+  },
+  {
+    "file": "logos/copilotbrowser-horizontal-darkmode.png",
+    "bytes": 165392
+  },
+  {
+    "file": "logos/copilotbrowser-horizontal-galaxy-3200x1024.png",
+    "bytes": 737025
+  },
+  {
+    "file": "logos/copilotbrowser-horizontal-galaxy.png",
+    "bytes": 250618
+  },
+  {
+    "file": "logos/copilotbrowser-horizontal-lightmode.png",
+    "bytes": 159253
+  },
+  {
+    "file": "logos/copilotbrowser-logo-1024-darkbg.png",
+    "bytes": 638955
+  },
+  {
+    "file": "logos/copilotbrowser-logo-1024-galaxy.png",
+    "bytes": 514793
+  },
+  {
+    "file": "logos/copilotbrowser-logo-1024-transparent.png",
+    "bytes": 645527
+  },
+  {
+    "file": "logos/copilotbrowser-vertical-darkmode-2048.png",
+    "bytes": 848785
+  },
+  {
+    "file": "logos/copilotbrowser-vertical-darkmode.png",
+    "bytes": 333381
+  },
+  {
+    "file": "logos/copilotbrowser-vertical-galaxy-2048.png",
+    "bytes": 982982
+  },
+  {
+    "file": "logos/copilotbrowser-vertical-galaxy.png",
+    "bytes": 392672
+  },
+  {
+    "file": "logos/copilotbrowser-vertical-lightmode.png",
+    "bytes": 326889
+  },
+  {
+    "file": "logos/copilotbrowser-wordmark-darkmode.png",
+    "bytes": 99210
+  },
+  {
+    "file": "logos/copilotbrowser-wordmark-lightmode.png",
+    "bytes": 89272
+  },
+  {
+    "file": "mono/copilotbrowser-icon-mono-black-1024.png",
+    "bytes": 10657
+  },
+  {
+    "file": "mono/copilotbrowser-icon-mono-white-1024.png",
+    "bytes": 10640
+  },
+  {
+    "file": "mono/copilotbrowser-icon-outline-white-1024.png",
+    "bytes": 13316
+  },
+  {
+    "file": "npm/npm-readme-banner-1200x300.png",
+    "bytes": 107816
+  },
+  {
+    "file": "nuget/nuget-icon-128.png",
+    "bytes": 15527
+  },
+  {
+    "file": "nuget/nuget-icon-64.png",
+    "bytes": 5342
+  }
+]

@@ -1,0 +1,17 @@
+{
+  "name": "todomvc-test",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "copilotbrowser test",
+    "ctest": "copilotbrowser test --project=chromium",
+    "ftest": "copilotbrowser test --project=firefox",
+    "wtest": "copilotbrowser test --project=webkit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@copilotbrowser/test": "^1.38.0",
+    "dotenv": "^17.2.3"
+  }
+}

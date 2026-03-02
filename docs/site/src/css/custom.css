@@ -1,0 +1,171 @@
+/**
+ * copilotbrowser brand theme
+ * Primary accent: cyber cyan (#00b8e8) — matches the "Browser" wordmark
+ * Background: near-black deep space (#080d14)
+ */
+
+:root {
+  /* Cyan primary — light mode */
+  --ifm-color-primary: #0099bb;
+  --ifm-color-primary-dark: #0087a8;
+  --ifm-color-primary-darker: #007d9e;
+  --ifm-color-primary-darkest: #006482;
+  --ifm-color-primary-light: #00afd4;
+  --ifm-color-primary-lighter: #00b8e0;
+  --ifm-color-primary-lightest: #1ecef4;
+  --ifm-code-font-size: 95%;
+  --ifm-font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 184, 232, 0.1);
+  --ifm-navbar-height: 3.75rem;
+  --ifm-footer-background-color: #050a10;
+  /* Brand tokens */
+  --cb-cyan: #00b8e8;
+  --cb-cyan-dim: rgba(0, 184, 232, 0.18);
+  --cb-cyan-border: rgba(0, 184, 232, 0.28);
+  --cb-cyan-glow: rgba(0, 184, 232, 0.35);
+  --cb-bg: #080d14;
+  --cb-surface: #0c1521;
+  --cb-surface2: #101b2a;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #00c8f0;
+  --ifm-color-primary-dark: #00b0d4;
+  --ifm-color-primary-darker: #00a4c8;
+  --ifm-color-primary-darkest: #0088a4;
+  --ifm-color-primary-light: #1ad5ff;
+  --ifm-color-primary-lighter: #35dbff;
+  --ifm-color-primary-lightest: #6ae8ff;
+  --ifm-background-color: #080d14;
+  --ifm-background-surface-color: #0c1521;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 200, 240, 0.12);
+  --ifm-footer-background-color: #050a10;
+  --ifm-toc-border-color: rgba(0, 184, 232, 0.12);
+}
+
+/* ── Navbar ──────────────────────────────────────────────────────────────── */
+.navbar {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+[data-theme='dark'] .navbar {
+  background-color: rgba(8, 13, 20, 0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 184, 232, 0.10);
+}
+.navbar__logo img {
+  height: 2rem;
+}
+.navbar__title {
+  font-weight: 700;
+}
+[data-theme='dark'] .navbar__link {
+  color: rgba(255, 255, 255, 0.82);
+}
+[data-theme='dark'] .navbar__link:hover,
+[data-theme='dark'] .navbar__link--active {
+  color: #00c8f0;
+}
+
+/* ── Hero ────────────────────────────────────────────────────────────────── */
+.hero--primary {
+  background: #080d14;
+  color: #fff;
+}
+.hero--primary .button--secondary {
+  background-color: #fff;
+  color: #080d14;
+  border: none;
+  font-weight: 700;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.hero--primary .button--secondary:hover {
+  background-color: #d0f5ff;
+  color: #080d14;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 184, 232, 0.4);
+}
+
+/* ── Footer ─────────────────────────────────────────────────────────────── */
+.footer--dark {
+  background: linear-gradient(180deg, #080d14 0%, #050a10 100%);
+  border-top: 1px solid rgba(0, 184, 232, 0.08);
+}
+.footer--dark .footer__title {
+  color: #00c8f0;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.footer--dark .footer__link-item {
+  color: rgba(255, 255, 255, 0.55);
+}
+.footer--dark .footer__link-item:hover {
+  color: #00c8f0;
+}
+
+/* ── Sidebar ─────────────────────────────────────────────────────────────── */
+[data-theme='dark'] .menu {
+  background-color: #0a1220;
+}
+[data-theme='dark'] .menu__link--active {
+  color: #00c8f0;
+  background: rgba(0, 184, 232, 0.08);
+}
+
+/* ── Code blocks ─────────────────────────────────────────────────────────── */
+[data-theme='dark'] pre {
+  background-color: #0a1018 !important;
+  border: 1px solid rgba(0, 184, 232, 0.10);
+}
+
+/* ── Docs markdown ───────────────────────────────────────────────────────── */
+.markdown a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.table-of-contents__link--active {
+  font-weight: 600;
+  color: #00c8f0 !important;
+}
+
+/* Fix TOC overflow: truncate long entries */
+.table-of-contents {
+  max-width: 260px;
+  font-size: 0.75rem;
+}
+.table-of-contents__link {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  direction: rtl;
+  text-align: left;
+}
+
+/* Fix code block overflow */
+.markdown pre,
+.markdown code[class*='language-'] {
+  max-width: 100%;
+}
+.markdown pre {
+  overflow-x: auto;
+}
+div[class^='codeBlockContainer'],
+div[class*=' codeBlockContainer'] {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* API docs: reduce oversized h2/h3 headings */
+.markdown h2 {
+  font-size: 1.4rem;
+  border-top: 1px solid var(--ifm-color-emphasis-300);
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+}
+.markdown h3 {
+  font-size: 1.15rem;
+}

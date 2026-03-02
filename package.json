@@ -1,0 +1,119 @@
+{
+  "name": "copilotbrowser-core",
+  "private": true,
+  "version": "2.0.0",
+  "description": "A high-level API to automate web browsers",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://github.com/dayour/copilotbrowser",
+  "engines": {
+    "node": ">=25.6.1"
+  },
+  "author": {
+    "name": "Daryl Yourk"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "ctest": "copilotbrowser test --config=tests/library/copilotbrowser.config.ts --project=chromium-*",
+    "ftest": "copilotbrowser test --config=tests/library/copilotbrowser.config.ts --project=firefox-*",
+    "wtest": "copilotbrowser test --config=tests/library/copilotbrowser.config.ts --project=webkit-*",
+    "atest": "copilotbrowser test --config=tests/android/copilotbrowser.config.ts",
+    "etest": "copilotbrowser test --config=tests/electron/copilotbrowser.config.ts",
+    "itest": "copilotbrowser test --config=tests/installation/copilotbrowser.config.ts",
+    "stest": "copilotbrowser test --config=tests/stress/copilotbrowser.config.ts",
+    "biditest": "copilotbrowser test --config=tests/bidi/copilotbrowser.config.ts",
+    "ttest": "node ./tests/copilotbrowser-test/stable-test-runner/node_modules/@copilotbrowser/test/cli test --config=tests/copilotbrowser-test/copilotbrowser.config.ts",
+    "ct": "copilotbrowser test tests/components/test-all.spec.js --reporter=list",
+    "test": "copilotbrowser test --config=tests/library/copilotbrowser.config.ts",
+    "test-mcp": "copilotbrowser test --config=tests/mcp/copilotbrowser.config.ts",
+    "ctest-mcp": "copilotbrowser test --config=tests/mcp/copilotbrowser.config.ts --project=chrome",
+    "eslint": "eslint --cache",
+    "tsc": "tsc -p . && tsc -p packages/html-reporter/",
+    "doc": "node utils/doclint/cli.js",
+    "lint": "npm run eslint && npm run tsc && npm run doc && npm run check-deps && node utils/generate_channels.js && node utils/generate_types/ && npm run lint-tests && npm run test-types && npm run lint-packages",
+    "lint-packages": "node utils/workspace.js --ensure-consistent",
+    "lint-tests": "node utils/lint_tests.js",
+    "flint": "concurrently \"npm run eslint\" \"npm run tsc\" \"npm run doc\" \"npm run check-deps\" \"node utils/generate_channels.js\" \"node utils/generate_types/\" \"npm run lint-tests\" \"npm run test-types\" \"npm run lint-packages\" \"node utils/doclint/linting-code-snippets/cli.js --js-only\"",
+    "clean": "node utils/build/clean.js",
+    "build": "node utils/build/build.js",
+    "watch": "node utils/build/build.js --watch --lint",
+    "test-types": "node utils/generate_types/ && tsc -p utils/generate_types/test/tsconfig.json && tsc -p ./tests/",
+    "roll": "node utils/roll_browser.js",
+    "check-deps": "node utils/check_deps.js",
+    "build-android-driver": "./utils/build_android_driver.sh",
+    "innerloop": "copilotbrowser run-server --reuse-browser",
+    "copilotbrowser-cli": "node packages/copilotbrowser/lib/cli/client/program.js",
+    "test-copilotbrowser-cli": "copilotbrowser test --config=tests/mcp/copilotbrowser.config.ts --project=chrome cli-",
+    "copilotbrowser-cli-readme": "node utils/generate_cli_help.js --readme"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@actions/core": "^3.0.0",
+    "@actions/github": "^9.0.0",
+    "@babel/code-frame": "^7.29.0",
+    "@eslint/compat": "^2.0.2",
+    "@eslint/js": "^10.0.1",
+    "@lowire/loop": "^0.0.26",
+    "@modelcontextprotocol/sdk": "^1.27.0",
+    "@octokit/graphql-schema": "^15.26.1",
+    "@stylistic/eslint-plugin": "^5.9.0",
+    "@types/codemirror": "^5.60.17",
+    "@types/formidable": "^3.4.6",
+    "@types/mdast": "^4.0.4",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^25.2.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.1",
+    "@types/xml2js": "^0.4.14",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "@typescript-eslint/utils": "^8.56.1",
+    "@vitejs/plugin-basic-ssl": "^2.1.4",
+    "@vitejs/plugin-react": "^5.1.4",
+    "@zip.js/zip.js": "^2.8.20",
+    "chokidar": "^5.0.0",
+    "chromium-bidi": "^15.0.0",
+    "colors": "^1.4.0",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "dotenv": "^17.3.1",
+    "electron": "^40.6.0",
+    "esbuild": "^0.27.3",
+    "eslint": "^10.0.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-notice": "^1.0.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "formidable": "^3.5.4",
+    "license-checker-rseidelsohn": "^4.4.2",
+    "mime": "^4.1.0",
+    "node-stream-zip": "^1.15.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "ssim.js": "^3.5.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "ws": "^8.19.0",
+    "xml2js": "^0.6.2",
+    "yaml": "2.8.2",
+    "zod": "^4.3.6"
+  },
+  "overrides": {
+    "eslint-plugin-react": {
+      "eslint": "$eslint"
+    },
+    "eslint-plugin-import": {
+      "eslint": "$eslint"
+    },
+    "eslint-plugin-react-hooks": {
+      "eslint": "$eslint"
+    },
+    "glob": "^13.0.5",
+    "boolean": "npm:empty-module@0.0.2"
+  }
+}

@@ -1,0 +1,133 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/dayour/copilotbrowser/examples/agent-builder/agent-spec.schema.json",
+  "title": "CopilotStudioAgentSpec",
+  "description": "Intake specification for autonomous Copilot Studio agent creation via copilotbrowser automation",
+  "type": "object",
+  "required": ["name", "shortDescription", "instructions", "environment"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Display name of the agent in Copilot Studio"
+    },
+    "shortDescription": {
+      "type": "string",
+      "maxLength": 300,
+      "description": "1-2 sentence description used as the natural language creation prompt. Copilot Studio AI uses this to bootstrap the agent."
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "Full agent description shown in the agent catalog"
+    },
+    "instructions": {
+      "type": "string",
+      "description": "Full system prompt / instructions for the agent in Markdown. Include purpose, tone, rules, step-by-step workflows, and error handling."
+    },
+    "model": {
+      "type": "string",
+      "enum": ["GPT-4.1 (Default)", "GPT-4o", "GPT-4o mini", "o1", "o3-mini"],
+      "default": "GPT-4.1 (Default)",
+      "description": "AI model the agent uses for reasoning and responding"
+    },
+    "environment": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Copilot Studio / Power Platform environment ID (GUID)",
+          "pattern": "^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+        },
+        "baseUrl": {
+          "type": "string",
+          "format": "uri",
+          "default": "https://copilotstudio.microsoft.com",
+          "description": "Override the Copilot Studio base URL (e.g. preview environment)"
+        }
+      }
+    },
+    "knowledge": {
+      "type": "object",
+      "description": "Knowledge sources that inform the agent's responses",
+      "properties": {
+        "webSearch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable the agent to search all public websites"
+        },
+        "websites": {
+          "type": "array",
+          "items": { "type": "string", "format": "uri" },
+          "description": "Specific public websites to index as knowledge sources"
+        },
+        "sharepoint": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url"],
+            "properties": {
+              "url": { "type": "string", "format": "uri" },
+              "name": { "type": "string" }
+            }
+          },
+          "description": "SharePoint sites to index (requires authentication)"
+        },
+        "dataverse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["tableName"],
+            "properties": {
+              "tableName": { "type": "string" },
+              "displayName": { "type": "string" }
+            }
+          },
+          "description": "Dataverse tables to use as knowledge sources"
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "description": "MCP servers or Power Platform connectors to wire up as agent tools",
+      "items": {
+        "type": "object",
+        "required": ["type", "name"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["mcp-server", "flow", "power-automate", "custom-connector"],
+            "description": "Type of tool integration"
+          },
+          "name": { "type": "string", "description": "Tool display name" },
+          "description": { "type": "string" },
+          "connectionId": { "type": "string", "description": "Pre-configured connection ID" }
+        }
+      }
+    },
+    "channels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["teams", "webchat", "sharepoint", "m365-copilot", "custom"]
+      },
+      "description": "Deployment channels for the agent"
+    },
+    "validation": {
+      "type": "object",
+      "description": "Post-creation smoke test configuration",
+      "properties": {
+        "testMessage": {
+          "type": "string",
+          "description": "A test message to send to the agent to verify it responds correctly"
+        },
+        "expectedKeywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Keywords that should appear in the test response"
+        }
+      }
+    }
+  }
+}

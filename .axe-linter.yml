@@ -1,0 +1,6 @@
+# Axe Linter configuration for copilotbrowser
+# Disable rules that conflict with React's legitimate use of inline styles
+# for dynamic values (positions, dimensions, etc.)
+rules:
+  no-inline-styles: off
+  image-alt: off

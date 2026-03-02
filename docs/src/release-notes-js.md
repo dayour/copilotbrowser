@@ -1,0 +1,3400 @@
+---
+id: release-notes-js
+title: "Release notes"
+toc_max_heading_level: 2
+sidebar_label: "Release notes (JavaScript)"
+---
+
+import LiteYouTube from '@site/src/components/LiteYouTube';
+
+## Version 1.58
+
+### Timeline
+
+If you're using [merged reports](./test-sharding.md#merging-reports-from-multiple-environments), the HTML report Speedboard tab now shows the Timeline:
+
+![Timeline chart in the HTML report](./images/timeline.png)
+
+### UI Mode and Trace Viewer Improvements
+
+- New 'system' theme option follows your OS dark/light mode preference
+- Search functionality (Cmd/Ctrl+F) is now available in code editors
+- Network details panel has been reorganized for better usability
+- JSON responses are now automatically formatted for readability
+
+Thanks to [@cpAdm](https://github.com/cpAdm) for contributing these improvements!
+
+### Miscellaneous
+
+**BrowserType.connectOverCDP()** now accepts an `isLocal` option. When set to `true`, it tells copilotbrowser that it runs on the same host as the CDP server, enabling file system optimizations.
+
+### Breaking Changes ⚠️
+
+- Removed `_react` and `_vue` selectors. See [locators guide](./locators.md) for alternatives.
+
+- Removed `:light` selector engine suffix. Use standard CSS selectors instead.
+
+- Option `devtools` from **BrowserType.launch()** has been removed. Use `args: ['--auto-open-devtools-for-tabs']` instead.
+
+- Removed macOS 13 support for WebKit. We recommend to upgrade your macOS version, or keep using an older copilotbrowser version.
+
+### Browser Versions
+
+- Chromium 145.0.7632.6
+- Mozilla Firefox 146.0.1
+- WebKit 26.0
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 144
+- Microsoft Edge 144
+
+## Version 1.57
+
+### Speedboard
+
+In HTML reporter, there's a new tab we call "Speedboard":
+
+![Speedboard](./images/speedboard.png)
+
+It shows you all your executed tests sorted by slowness,
+and can help you understand where your test suite is taking longer than expected.
+Take a look at yours - maybe you'll find some tests that are spending a longer time waiting than they should!
+
+### Chrome for Testing
+
+Starting with this release, copilotbrowser switches from Chromium, to using [Chrome for Testing](https://developer.chrome.com/blog/chrome-for-testing/) builds. Both headed and headless browsers are subject to this. Your tests should still be passing after upgrading to copilotbrowser 1.57.
+
+We're expecting no functional changes to come from this switch. The biggest change is the new icon and title in your toolbar.
+
+![new and old logo](./images/cft-logo-change.png)
+
+If you still see an unexpected behaviour change, please [file an issue](https://github.com/dayour/copilotbrowser/issues/new).
+
+On Arm64 Linux, copilotbrowser continues to use Chromium.
+
+### Waiting for webserver output
+
+**TestConfig.webServer** added a `wait` field. Pass a regular expression, and copilotbrowser will wait until the webserver logs match it.
+
+```js
+import { defineConfig } from '@copilotbrowser/test';
+
+export default defineConfig({
+  webServer: {
+    command: 'npm run start',
+    wait: {
+      stdout: /Listening on port (?<my_server_port>\d+)/
+    },
+  },
+});
+```
+
+If you include a named capture group into the expression, then copilotbrowser will provide the capture group contents via environment variables:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test.use({ baseURL: `http://localhost:${process.env.MY_SERVER_PORT ?? 3000}` });
+
+test('homepage', async ({ page }) => {
+  await page.goto('/');
+});
+```
+
+This is not just useful for capturing varying ports of dev servers. You can also use it to wait for readiness of a service that doesn't expose an HTTP readiness check, but instead prints a readiness message to stdout or stderr.
+
+### Breaking Change
+
+After 3 years of being deprecated, we removed `page.accessibility` from our API. Please use other libraries such as [Axe](https://www.deque.com/axe/) if you need to test page accessibility. See our Node.js [guide](https://dayour.github.io/copilotbrowser/docs/accessibility-testing) for integration with Axe.
+
+### New APIs
+
+- New property **TestConfig.tag** adds a tag to all tests in this run. This is useful when using [merge-reports](./test-sharding.md#merging-reports-from-multiple-shards).
+- **Worker.event('console')** event is emitted when JavaScript within the worker calls one of console API methods, e.g. console.log or console.dir. **Worker.waitForEvent()** can be used to wait for it.
+- **Locator.description()** returns locator description previously set with **Locator.describe()**, and **Locator.toString()** now uses the description when available.
+- New option **Locator.click.steps** in **Locator.click()** and **Locator.dragTo()** that configures the number of `mousemove` events emitted while moving the mouse pointer to the target element.
+- Network requests issued by [Service Workers](./service-workers.md#network-events-and-routing) are now reported and can be routed through the [BrowserContext](./api/class-browsercontext.md), only in Chromium. You can opt out using the `copilotbrowser_DISABLE_SERVICE_WORKER_NETWORK` environment variable.
+- Console messages from Service Workers are dispatched through **Worker.event('console')**. You can opt out of this using the `copilotbrowser_DISABLE_SERVICE_WORKER_CONSOLE` environment variable.
+
+### Browser Versions
+
+- Chromium 143.0.7499.4
+- Mozilla Firefox 144.0.2
+- WebKit 26.0
+
+## Version 1.56
+
+
+### copilotbrowser Test Agents
+
+Introducing copilotbrowser Test Agents, three custom agent definitions designed to guide LLMs through the core process of building a copilotbrowser test:
+
+* **🎭 planner** explores the app and produces a Markdown test plan
+
+* **🎭 generator** transforms the Markdown plan into the copilotbrowser Test files
+
+* **🎭 healer** executes the test suite and automatically repairs failing tests
+
+Run `npx copilotbrowser init-agents` with your client of choice to generate the latest agent definitions:
+
+```bash
+# Generate agent files for each agentic loop
+# Visual Studio Code
+npx copilotbrowser init-agents --loop=vscode
+# Claude Code
+npx copilotbrowser init-agents --loop=claude
+# opencode
+npx copilotbrowser init-agents --loop=opencode
+```
+
+[Learn more about copilotbrowser Test Agents](./test-agents.md)
+
+### New APIs
+
+- New methods **Page.consoleMessages()** and **Page.pageErrors()** for retrieving the most recent console messages from the page
+- New method **Page.requests()** for retrieving the most recent network requests from the page
+- Added [`--test-list` and `--test-list-invert`](./test-cli.md#test-list) to allow manual specification of specific tests from a file
+
+### UI Mode and HTML Reporter
+
+- Added option to `'html'` reporter to disable the "Copy prompt" button
+- Added option to `'html'` reporter and UI Mode to merge files, collapsing test and describe blocks into a single unified list
+- Added option to UI Mode mirroring the `--update-snapshots` options
+- Added option to UI Mode to run only a single worker at a time
+
+### Breaking Changes
+
+- Event **BrowserContext.event('backgroundPage')** has been deprecated and will not be emitted. Method **BrowserContext.backgroundPages()** will return an empty list
+
+### Miscellaneous
+
+- Aria snapshots render and compare `input` `placeholder`
+- Added environment variable `copilotbrowser_TEST` to copilotbrowser worker processes to allow discriminating on testing status
+
+### Browser Versions
+
+- Chromium 141.0.7390.37
+- Mozilla Firefox 142.0.1
+- WebKit 26.0
+
+## Version 1.55
+
+### New APIs
+
+- New Property **TestStepInfo.titlePath** Returns the full title path starting from the test file, including test and step titles.
+
+### Codegen
+
+- Automatic `toBeVisible()` assertions: Codegen can now generate automatic `toBeVisible()` assertions for common UI interactions. This feature can be enabled in the Codegen settings UI.
+
+### Breaking Changes
+
+- ⚠️ Dropped support for Chromium extension manifest v2.
+
+### Miscellaneous
+
+- Added support for Debian 13 "Trixie".
+
+### Browser Versions
+
+- Chromium 140.0.7339.16
+- Mozilla Firefox 141.0
+- WebKit 26.0
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 139
+- Microsoft Edge 139
+
+## Version 1.54
+
+### Highlights
+
+- New cookie property `partitionKey` in **BrowserContext.cookies()** and **BrowserContext.addCookies()**. This property allows to save and restore partitioned cookies. See [CHIPS MDN article](https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Privacy_sandbox/Partitioned_cookies) for more information. Note that browsers have different support and defaults for cookie partitioning.
+
+- New option `noSnippets` to disable code snippets in the html report.
+  ```js
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    reporter: [['html', { noSnippets: true }]]
+  });
+  ```
+
+- New property `location` in test annotations, for example in **TestResult.annotations** and **TestInfo.annotations**. It shows where the annotation like `test.skip` or `test.fixme` was added.
+
+### Command Line
+
+- New option `--user-data-dir` in multiple commands. You can specify the same user data dir to reuse browsing state, like authentication, between sessions.
+  ```bash
+  npx copilotbrowser codegen --user-data-dir=./user-data
+  ```
+
+- Option `-gv` has been removed from the `npx copilotbrowser test` command. Use `--grep-invert` instead.
+
+- `npx copilotbrowser open` does not open the test recorder anymore. Use `npx copilotbrowser codegen` instead.
+
+### Miscellaneous
+
+- Support for Node.js 16 has been removed.
+
+- Support for Node.js 18 has been deprecated, and will be removed in the future.
+
+### Browser Versions
+
+- Chromium 139.0.7258.5
+- Mozilla Firefox 140.0.2
+- WebKit 26.0
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 140
+- Microsoft Edge 140
+
+## Version 1.53
+
+### Trace Viewer and HTML Reporter Updates
+
+- New Steps in Trace Viewer and HTML reporter:
+  ![New Trace Viewer Steps](https://github.com/user-attachments/assets/1963ff7d-4070-41be-a79b-4333176921a2)
+- New option in `'html'` reporter to set the title of a specific test run:
+  ```js
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    reporter: [['html', { title: 'Custom test run #1028' }]]
+  });
+  ```
+
+### Miscellaneous
+
+- New option **TestInfo.snapshotPath.kind** in **TestInfo.snapshotPath()** controls which snapshot path template is used.
+- New method **Locator.describe()** to describe a locator. Used for trace viewer and reports.
+  ```js
+  const button = page.getByTestId('btn-sub').describe('Subscribe button');
+  await button.click();
+  ```
+- `npx copilotbrowser install --list` will now list all installed browsers, versions and locations.
+
+### Browser Versions
+
+- Chromium 138.0.7204.4
+- Mozilla Firefox 139.0
+- WebKit 18.5
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 137
+- Microsoft Edge 137
+
+## Version 1.52
+
+### Highlights
+
+- New method **LocatorAssertions.toContainClass()** to ergonomically assert individual class names on the element.
+
+  ```ts
+  await expect(page.getByRole('listitem', { name: 'Ship v1.52' })).toContainClass('done');
+  ```
+
+- [Aria Snapshots](./aria-snapshots.md) got two new properties: [`/children`](./aria-snapshots.md#strict-matching) for strict matching and [`/url`](./aria-snapshots.md#links) for links.
+
+  ```ts
+  await expect(locator).toMatchAriaSnapshot(`
+    - list
+      - /children: equal
+      - listitem: Feature A
+      - listitem:
+        - link "Feature B":
+          - /url: "https://copilotbrowser.dev"
+  `);
+  ```
+
+### Test Runner
+
+- New property **TestProject.workers** allows to specify the number of concurrent worker processes to use for a test project. The global limit of property **TestConfig.workers** still applies.
+- New **TestConfig.failOnFlakyTests** option to fail the test run if any flaky tests are detected, similarly to `--fail-on-flaky-tests`. This is useful for CI/CD environments where you want to ensure that all tests are stable before deploying.
+- New property **TestResult.annotations** contains annotations for each test retry.
+
+### Miscellaneous
+
+- New option **APIRequest.newContext.maxRedirects** in **APIRequest.newContext()** to control the maximum number of redirects.
+- HTML reporter now supports *NOT filtering* via `!@my-tag` or `!my-file.spec.ts` or `!p:my-project`.
+
+### Breaking Changes
+
+- Glob URL patterns in methods like **Page.route()** do not support `?` and `[]` anymore. We recommend using regular expressions instead.
+- Method **Route.continue()** does not allow to override the `Cookie` header anymore. If a `Cookie` header is provided, it will be ignored, and the cookie will be loaded from the browser's cookie store. To set custom cookies, use **BrowserContext.addCookies()**.
+- macOS 13 is now deprecated and will no longer receive WebKit updates. Please upgrade to a more recent macOS version to continue benefiting from the latest WebKit improvements.
+
+### Browser Versions
+
+- Chromium 136.0.7103.25
+- Mozilla Firefox 137.0
+- WebKit 18.4
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 135
+- Microsoft Edge 135
+
+## Version 1.51
+
+### StorageState for indexedDB
+
+* New option **BrowserContext.storageState.indexedDB** for **BrowserContext.storageState()** allows to save and restore IndexedDB contents. Useful when your application uses [IndexedDB API](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) to store authentication tokens, like Firebase Authentication.
+
+  Here is an example following the [authentication guide](./auth.md#basic-shared-account-in-all-tests):
+
+  ```js title="tests/auth.setup.ts"
+  import { test as setup, expect } from '@copilotbrowser/test';
+  import path from 'path';
+
+  const authFile = path.join(__dirname, '../copilotbrowser/.auth/user.json');
+
+  setup('authenticate', async ({ page }) => {
+    await page.goto('/');
+    // ... perform authentication steps ...
+
+    // make sure to save indexedDB
+    await page.context().storageState({ path: authFile, indexedDB: true });
+  });
+  ```
+
+### Copy as prompt
+
+New "Copy prompt" button on errors in the HTML report, trace viewer and UI mode. Click to copy a pre-filled LLM prompt that contains the error message and useful context for fixing the error.
+
+  ![Copy prompt](https://github.com/user-attachments/assets/f3654407-dd6d-4240-9845-0d96df2bf30a)
+
+### Filter visible elements
+
+New option **Locator.filter.visible** for **Locator.filter()** allows matching only visible elements.
+
+  ```js title="example.spec.ts"
+  test('some test', async ({ page }) => {
+    // Ignore invisible todo items.
+    const todoItems = page.getByTestId('todo-item').filter({ visible: true });
+    // Check there are exactly 3 visible ones.
+    await expect(todoItems).toHaveCount(3);
+  });
+  ```
+
+### Git information in HTML report
+
+Set option **TestConfig.captureGitInfo** to capture git information into **TestConfig.metadata**.
+
+  ```js title="copilotbrowser.config.ts"
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    captureGitInfo: { commit: true, diff: true }
+  });
+  ```
+
+  HTML report will show this information when available:
+
+  ![Git information in the report](https://github.com/user-attachments/assets/f5b3f6f4-aa08-4a24-816c-7edf33ef0c37)
+
+### Test Step improvements
+
+A new `TestStepInfo` object is now available in test steps. You can add step attachments or skip the step under some conditions.
+
+  ```js
+  test('some test', async ({ page, isMobile }) => {
+    // Note the new "step" argument:
+    await test.step('here is my step', async step => {
+      step.skip(isMobile, 'not relevant on mobile layouts');
+
+      // ...
+      await step.attach('my attachment', { body: 'some text' });
+      // ...
+    });
+  });
+  ```
+
+### Miscellaneous
+
+* New option `contrast` for methods **Page.emulateMedia()** and **Browser.newContext()** allows to emulate the `prefers-contrast` media feature.
+* New option **APIRequest.newContext.failOnStatusCode** makes all fetch requests made through the `APIRequestContext` throw on response codes other than 2xx and 3xx.
+* Assertion **PageAssertions.toHaveURL()** now supports a predicate.
+
+### Browser Versions
+
+* Chromium 134.0.6998.35
+* Mozilla Firefox 135.0
+* WebKit 18.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 133
+* Microsoft Edge 133
+
+
+## Version 1.50
+
+### Test runner
+
+* New option **Test.step.timeout** allows specifying a maximum run time for an individual test step. A timed-out step will fail the execution of the test.
+
+  ```js
+  test('some test', async ({ page }) => {
+    await test.step('a step', async () => {
+      // This step can time out separately from the test
+    }, { timeout: 1000 });
+  });
+  ```
+
+* New method **Test.step.skip()** to disable execution of a test step.
+
+  ```js
+  test('some test', async ({ page }) => {
+    await test.step('before running step', async () => {
+      // Normal step
+    });
+
+    await test.step.skip('not yet ready', async () => {
+      // This step is skipped
+    });
+
+    await test.step('after running step', async () => {
+      // This step still runs even though the previous one was skipped
+    });
+  });
+  ```
+
+* Expanded **LocatorAssertions.toMatchAriaSnapshot()** to allow storing of aria snapshots in separate YAML files.
+* Added method **LocatorAssertions.toHaveAccessibleErrorMessage()** to assert the Locator points to an element with a given [aria errormessage](https://w3c.github.io/aria/#aria-errormessage).
+* Option **TestConfig.updateSnapshots** added the configuration enum `changed`. `changed` updates only the snapshots that have changed, whereas `all` now updates all snapshots, regardless of whether there are any differences.
+* New option **TestConfig.updateSourceMethod** defines the way source code is updated when **TestConfig.updateSnapshots** is configured. Added `overwrite` and `3-way` modes that write the changes into source code, on top of existing `patch` mode that creates a patch file.
+
+  ```bash
+  npx copilotbrowser test --update-snapshots=changed --update-source-method=3way
+  ```
+
+* Option **TestConfig.webServer** added a `gracefulShutdown` field for specifying a process kill signal other than the default `SIGKILL`.
+* Exposed **TestStep.attachments** from the reporter API to allow retrieval of all attachments created by that step.
+* New option `pathTemplate` for `toHaveScreenshot` and `toMatchAriaSnapshot` assertions in the **TestConfig.expect** configuration.
+
+### UI updates
+
+* Updated default HTML reporter to improve display of attachments.
+* New button in Codegen for picking elements to produce aria snapshots.
+* Additional details (such as keys pressed) are now displayed alongside action API calls in traces.
+* Display of `canvas` content in traces is error-prone. Display is now disabled by default, and can be enabled via the `Display canvas content` UI setting.
+* `Call` and `Network` panels now display additional time information.
+
+### Breaking
+
+* **LocatorAssertions.toBeEditable()** and **Locator.isEditable()** now throw if the target element is not `<input>`, `<select>`, or a number of other editable elements.
+* Option **TestConfig.updateSnapshots** now updates all snapshots when set to `all`, rather than only the failed/changed snapshots. Use the new enum `changed` to keep the old functionality of only updating the changed snapshots.
+
+### Browser Versions
+
+* Chromium 133.0.6943.16
+* Mozilla Firefox 134.0
+* WebKit 18.2
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 132
+* Microsoft Edge 132
+
+## Version 1.49
+
+
+### Aria snapshots
+
+New assertion **LocatorAssertions.toMatchAriaSnapshot()** verifies page structure by comparing to an expected accessibility tree, represented as YAML.
+
+```js
+await page.goto('https://copilotbrowser.dev');
+await expect(page.locator('body')).toMatchAriaSnapshot(`
+  - banner:
+    - heading /copilotbrowser enables reliable/ [level=1]
+    - link "Get started"
+    - link "Star microsoft/copilotbrowser on GitHub"
+  - main:
+    - img "Browsers (Chromium, Firefox, WebKit)"
+    - heading "Any browser • Any platform • One API"
+`);
+```
+
+You can generate this assertion with [Test Generator](./codegen) and update the expected snapshot with `--update-snapshots` command line flag.
+
+Learn more in the [aria snapshots guide](./aria-snapshots).
+
+### Test runner
+
+- New option **TestConfig.tsconfig** allows to specify a single `tsconfig` to be used for all tests.
+- New method **Test.fail.only()** to focus on a failing test.
+- Options **TestConfig.globalSetup** and **TestConfig.globalTeardown** now support multiple setups/teardowns.
+- New value `'on-first-failure'` for **TestOptions.screenshot**.
+- Added "previous" and "next" buttons to the HTML report to quickly switch between test cases.
+- New properties **TestInfoError.cause** and **TestError.cause** mirroring [`Error.cause`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/cause).
+
+### Breaking: `chrome` and `msedge` channels switch to new headless mode
+
+This change affects you if you're using one of the following channels in your `copilotbrowser.config.ts`:
+- `chrome`, `chrome-dev`, `chrome-beta`, or `chrome-canary`
+- `msedge`, `msedge-dev`, `msedge-beta`, or `msedge-canary`
+
+#### What do I need to do?
+
+After updating to copilotbrowser v1.49, run your test suite. If it still passes, you're good to go. If not, you will probably need to update your snapshots, and adapt some of your test code around PDF viewers and extensions. See [issue #33566](https://github.com/dayour/copilotbrowser/issues/33566) for more details.
+
+### Other breaking changes
+
+- There will be no more updates for WebKit on Ubuntu 20.04 and Debian 11. We recommend updating your OS to a later version.
+- Package `@copilotbrowser/experimental-ct-vue2` will no longer be updated.
+- Package `@copilotbrowser/experimental-ct-solid` will no longer be updated.
+
+### Try new Chromium headless
+
+You can opt into the new headless mode by using `'chromium'` channel. As [official Chrome documentation puts it](https://developer.chrome.com/blog/chrome-headless-shell):
+
+> New Headless on the other hand is the real Chrome browser, and is thus more authentic, reliable, and offers more features. This makes it more suitable for high-accuracy end-to-end web app testing or browser extension testing.
+
+See [issue #33566](https://github.com/dayour/copilotbrowser/issues/33566) for the list of possible breakages you could encounter and more details on Chromium headless. Please file an issue if you see any problems after opting in.
+
+```js
+import { defineConfig, devices } from '@copilotbrowser/test';
+
+export default defineConfig({
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'], channel: 'chromium' },
+    },
+  ],
+});
+```
+
+### Miscellaneous
+
+- `<canvas>` elements inside a snapshot now draw a preview.
+- New method **Tracing.group()** to visually group actions in the trace.
+- copilotbrowser docker images switched from Node.js v20 to Node.js v22 LTS.
+
+### Browser Versions
+
+- Chromium 131.0.6778.33
+- Mozilla Firefox 132.0
+- WebKit 18.2
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 130
+- Microsoft Edge 130
+
+
+## Version 1.48
+
+
+### WebSocket routing
+
+New methods **Page.routeWebSocket()** and **BrowserContext.routeWebSocket()** allow to intercept, modify and mock WebSocket connections initiated in the page. Below is a simple example that mocks WebSocket communication by responding to a `"request"` with a `"response"`.
+
+```js
+await page.routeWebSocket('/ws', ws => {
+  ws.onMessage(message => {
+    if (message === 'request')
+      ws.send('response');
+  });
+});
+```
+
+See `WebSocketRoute` for more details.
+
+### UI updates
+
+- New "copy" buttons for annotations and test location in the HTML report.
+- Route method calls like **Route.fulfill()** are not shown in the report and trace viewer anymore. You can see which network requests were routed in the network tab instead.
+- New "Copy as cURL" and "Copy as fetch" buttons for requests in the network tab.
+
+### Miscellaneous
+
+- Option **APIRequestContext.fetch.form** and similar ones now accept [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData).
+- New method **Page.requestGC()** may help detect memory leaks.
+- New option **Test.step.location** to pass custom step location.
+- Requests made by `APIRequestContext` now record detailed timing and security information in the HAR.
+
+### Browser Versions
+
+- Chromium 130.0.6723.19
+- Mozilla Firefox 130.0
+- WebKit 18.0
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 129
+- Microsoft Edge 129
+
+
+## Version 1.47
+
+### Network Tab improvements
+
+The Network tab in the UI mode and trace viewer has several nice improvements:
+
+- filtering by asset type and URL
+- better display of query string parameters
+- preview of font assets
+
+![Network tab now has filters](https://github.com/user-attachments/assets/4bd1b67d-90bd-438b-a227-00b9e86872e2)
+
+
+### `--tsconfig` CLI option
+
+By default, copilotbrowser will look up the closest tsconfig for each imported file using a heuristic. You can now specify a single tsconfig file in the command line, and copilotbrowser will use it for all imported files, not only test files:
+
+```sh
+# Pass a specific tsconfig
+npx copilotbrowser test --tsconfig tsconfig.test.json
+```
+
+### `APIRequestContext` now accepts [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) and `string` as query parameters
+
+You can now pass [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) and `string` as query parameters to `APIRequestContext`:
+
+```js
+test('query params', async ({ request }) => {
+  const searchParams = new URLSearchParams();
+  searchParams.set('userId', 1);
+  const response = await request.get(
+      'https://jsonplaceholder.typicode.com/posts',
+      {
+        params: searchParams // or as a string: 'userId=1'
+      }
+  );
+  // ...
+});
+```
+
+### Miscellaneous
+
+- The `mcr.microsoft.com/copilotbrowser:v1.47.0` now serves a copilotbrowser image based on Ubuntu 24.04 Noble.
+  To use the 22.04 jammy-based image, please use `mcr.microsoft.com/copilotbrowser:v1.47.0-jammy` instead.
+- New options **Page.removeAllListeners.behavior**, **Browser.removeAllListeners.behavior** and **BrowserContext.removeAllListeners.behavior** to wait for ongoing listeners to complete.
+- TLS client certificates can now be passed from memory by passing **Browser.newContext.clientCertificates.cert** and **Browser.newContext.clientCertificates.key** as buffers instead of file paths.
+- Attachments with a `text/html` content type can now be opened in a new tab in the HTML report. This is useful for including third-party reports or other HTML content in the copilotbrowser test report and distributing it to your team.
+- **Locator.selectOption.noWaitAfter** option in **Locator.selectOption()** was deprecated.
+- We've seen reports of WebGL in Webkit misbehaving on GitHub Actions `macos-13`. We recommend upgrading GitHub Actions to `macos-14`.
+
+### Browser Versions
+
+- Chromium 129.0.6668.29
+- Mozilla Firefox 130.0
+- WebKit 18.0
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 128
+- Microsoft Edge 128
+
+## Version 1.46
+
+
+
+### TLS Client Certificates
+
+copilotbrowser now allows you to supply client-side certificates, so that server can verify them, as specified by TLS Client Authentication.
+
+The following snippet sets up a client certificate for `https://example.com`:
+
+```js
+import { defineConfig } from '@copilotbrowser/test';
+
+export default defineConfig({
+  // ...
+  use: {
+    clientCertificates: [{
+      origin: 'https://example.com',
+      certPath: './cert.pem',
+      keyPath: './key.pem',
+      passphrase: 'mysecretpassword',
+    }],
+  },
+  // ...
+});
+```
+
+You can also provide client certificates to a particular [test project](./api/class-testproject#test-project-use) or as a parameter of **Browser.newContext()** and **APIRequest.newContext()**.
+
+### `--only-changed` cli option
+
+New CLI option `--only-changed` will only run test files that have been changed since the last git commit or from a specific git "ref". This will also run all test files that import any changed files.
+
+```sh
+# Only run test files with uncommitted changes
+npx copilotbrowser test --only-changed
+
+# Only run test files changed relative to the "main" branch
+npx copilotbrowser test --only-changed=main
+```
+
+### Component Testing: New `router` fixture
+
+This release introduces an experimental `router` fixture to intercept and handle network requests in component testing.
+There are two ways to use the router fixture:
+
+- Call `router.route(url, handler)` that behaves similarly to **Page.route()**.
+- Call `router.use(handlers)` and pass [MSW library](https://mswjs.io) request handlers to it.
+
+Here is an example of reusing your existing MSW handlers in the test.
+
+```js
+import { handlers } from '@src/mocks/handlers';
+
+test.beforeEach(async ({ router }) => {
+  // install common handlers before each test
+  await router.use(...handlers);
+});
+
+test('example test', async ({ mount }) => {
+  // test as usual, your handlers are active
+  // ...
+});
+```
+
+This fixture is only available in [component tests](./test-components#handling-network-requests).
+
+### UI Mode / Trace Viewer Updates
+
+- Test annotations are now shown in UI mode.
+- Content of text attachments is now rendered inline in the attachments pane.
+- New setting to show/hide routing actions like **Route.continue()**.
+- Request method and status are shown in the network details tab.
+- New button to copy source file location to clipboard.
+- Metadata pane now displays the `baseURL`.
+
+### Miscellaneous
+
+- New `maxRetries` option in **APIRequestContext.fetch()** which retries on the `ECONNRESET` network error.
+- New option to [box a fixture](./test-fixtures#box-fixtures) to minimize the fixture exposure in test reports and error messages.
+- New option to provide a [custom fixture title](./test-fixtures#custom-fixture-title) to be used in test reports and error messages.
+
+### Browser Versions
+
+- Chromium 128.0.6613.18
+- Mozilla Firefox 128.0
+- WebKit 18.0
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 127
+- Microsoft Edge 127
+
+## Version 1.45
+
+
+### Clock
+
+Utilizing the new `Clock` API allows to manipulate and control time within tests to verify time-related behavior. This API covers many common scenarios, including:
+* testing with predefined time;
+* keeping consistent time and timers;
+* monitoring inactivity;
+* ticking through time manually.
+
+```js
+// Initialize clock and let the page load naturally.
+await page.clock.install({ time: new Date('2024-02-02T08:00:00') });
+await page.goto('http://localhost:3333');
+
+// Pretend that the user closed the laptop lid and opened it again at 10am,
+// Pause the time once reached that point.
+await page.clock.pauseAt(new Date('2024-02-02T10:00:00'));
+
+// Assert the page state.
+await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:00:00 AM');
+
+// Close the laptop lid again and open it at 10:30am.
+await page.clock.fastForward('30:00');
+await expect(page.getByTestId('current-time')).toHaveText('2/2/2024, 10:30:00 AM');
+```
+
+See [the clock guide](./clock.md) for more details.
+
+### Test runner
+
+- New CLI option `--fail-on-flaky-tests` that sets exit code to `1` upon any flaky tests. Note that by default, the test runner exits with code `0` when all failed tests recovered upon a retry. With this option, the test run will fail in such case.
+
+- New environment variable `copilotbrowser_FORCE_TTY` controls whether built-in `list`, `line` and `dot` reporters assume a live terminal. For example, this could be useful to disable tty behavior when your CI environment does not handle ANSI control sequences well. Alternatively, you can enable tty behavior even when to live terminal is present, if you plan to post-process the output and handle control sequences.
+
+  ```sh
+  # Avoid TTY features that output ANSI control sequences
+  copilotbrowser_FORCE_TTY=0 npx copilotbrowser test
+
+  # Enable TTY features, assuming a terminal width 80
+  copilotbrowser_FORCE_TTY=80 npx copilotbrowser test
+  ```
+
+- New options **TestConfig.respectGitIgnore** and **TestProject.respectGitIgnore** control whether files matching `.gitignore` patterns are excluded when searching for tests.
+
+- New property `timeout` is now available for custom expect matchers. This property takes into account `copilotbrowser.config.ts` and `expect.configure()`.
+  ```js
+  import { expect as baseExpect } from '@copilotbrowser/test';
+
+  export const expect = baseExpect.extend({
+    async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }) {
+      // When no timeout option is specified, use the config timeout.
+      const timeout = options?.timeout ?? this.timeout;
+      // ... implement the assertion ...
+    },
+  });
+  ```
+
+### Miscellaneous
+
+- Method **Locator.setInputFiles()** now supports uploading a directory for `<input type=file webkitdirectory>` elements.
+  ```js
+  await page.getByLabel('Upload directory').setInputFiles(path.join(__dirname, 'mydir'));
+  ```
+
+- Multiple methods like **Locator.click()** or **Locator.press()** now support a `ControlOrMeta` modifier key. This key maps to `Meta` on macOS and maps to `Control` on Windows and Linux.
+  ```js
+  // Press the common keyboard shortcut Control+S or Meta+S to trigger a "Save" operation.
+  await page.keyboard.press('ControlOrMeta+S');
+  ```
+
+- New property `httpCredentials.send` in **APIRequest.newContext()** that allows to either always send the `Authorization` header or only send it in response to `401 Unauthorized`.
+
+- New option `reason` in **APIRequestContext.dispose()** that will be included in the error message of ongoing operations interrupted by the context disposal.
+
+- New option `host` in **BrowserType.launchServer()** allows to accept websocket connections on a specific address instead of unspecified `0.0.0.0`.
+
+- copilotbrowser now supports Chromium, Firefox and WebKit on Ubuntu 24.04.
+
+- v1.45 is the last release to receive WebKit update for macOS 12 Monterey. Please update macOS to keep using the latest WebKit.
+
+### Browser Versions
+
+* Chromium 127.0.6533.5
+* Mozilla Firefox 127.0
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 126
+* Microsoft Edge 126
+
+## Version 1.44
+
+
+### New APIs
+
+**Accessibility assertions**
+
+- **LocatorAssertions.toHaveAccessibleName()** checks if the element has the specified accessible name:
+  ```js
+  const locator = page.getByRole('button');
+  await expect(locator).toHaveAccessibleName('Submit');
+  ```
+
+- **LocatorAssertions.toHaveAccessibleDescription()** checks if the element has the specified accessible description:
+  ```js
+  const locator = page.getByRole('button');
+  await expect(locator).toHaveAccessibleDescription('Upload a photo');
+  ```
+
+- **LocatorAssertions.toHaveRole()** checks if the element has the specified ARIA role:
+  ```js
+  const locator = page.getByTestId('save-button');
+  await expect(locator).toHaveRole('button');
+  ```
+
+**Locator handler**
+
+- After executing the handler added with **Page.addLocatorHandler()**, copilotbrowser will now wait until the overlay that triggered the handler is not visible anymore. You can opt-out of this behavior with the new `noWaitAfter` option.
+- You can use new `times` option in **Page.addLocatorHandler()** to specify maximum number of times the handler should be run.
+- The handler in **Page.addLocatorHandler()** now accepts the locator as argument.
+- New **Page.removeLocatorHandler()** method for removing previously added locator handlers.
+
+```js
+const locator = page.getByText('This interstitial covers the button');
+await page.addLocatorHandler(locator, async overlay => {
+  await overlay.locator('#close').click();
+}, { times: 3, noWaitAfter: true });
+// Run your tests that can be interrupted by the overlay.
+// ...
+await page.removeLocatorHandler(locator);
+```
+
+**Miscellaneous options**
+
+- [`multipart`](./api/class-apirequestcontext#api-request-context-fetch-option-multipart) option in `apiRequestContext.fetch()` now accepts [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) and supports repeating fields with the same name.
+  ```js
+  const formData = new FormData();
+  formData.append('file', new File(['let x = 2024;'], 'f1.js', { type: 'text/javascript' }));
+  formData.append('file', new File(['hello'], 'f2.txt', { type: 'text/plain' }));
+  context.request.post('https://example.com/uploadFiles', {
+    multipart: formData
+  });
+  ```
+
+- `expect(callback).toPass({ intervals })` can now be configured by `expect.toPass.intervals` option globally in **TestConfig.expect** or per project in **TestProject.expect**.
+- `expect(page).toHaveURL(url)` now supports `ignoreCase` [option](./api/class-pageassertions#page-assertions-to-have-url-option-ignore-case).
+- **TestProject.ignoreSnapshots**(./api/class-testproject#test-project-ignore-snapshots) allows to configure  per project whether to skip screenshot expectations.
+
+**Reporter API**
+
+- New method **Suite.entries()** returns child test suites and test cases in their declaration order. **Suite.type** and **TestCase.type** can be used to tell apart test cases and suites in the list.
+- [Blob](./test-reporters#blob-reporter) reporter now allows overriding report file path with a single option `outputFile`. The same option can also be specified as `copilotbrowser_BLOB_OUTPUT_FILE` environment variable that might be more convenient on CI/CD.
+- [JUnit](./test-reporters#junit-reporter) reporter now supports `includeProjectInTestName` option.
+
+**Command line**
+
+- `--last-failed` CLI option to for running only tests that failed in the previous run.
+
+  First run all tests:
+  ```sh
+  $ npx copilotbrowser test
+
+  Running 103 tests using 5 workers
+  ...
+  2 failed
+    [chromium] › my-test.spec.ts:8:5 › two ─────────────────────────────────────────────────────────
+    [chromium] › my-test.spec.ts:13:5 › three ──────────────────────────────────────────────────────
+  101 passed (30.0s)
+  ```
+
+  Now fix the failing tests and run copilotbrowser again with `--last-failed` option:
+  ```sh
+  $ npx copilotbrowser test --last-failed
+
+  Running 2 tests using 2 workers
+    2 passed (1.2s)
+  ```
+
+### Browser Versions
+
+* Chromium 125.0.6422.14
+* Mozilla Firefox 125.0.1
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 124
+* Microsoft Edge 124
+
+## Version 1.43
+
+### New APIs
+
+- Method **BrowserContext.clearCookies()** now supports filters to remove only some cookies.
+
+  ```js
+  // Clear all cookies.
+  await context.clearCookies();
+  // New: clear cookies with a particular name.
+  await context.clearCookies({ name: 'session-id' });
+  // New: clear cookies for a particular domain.
+  await context.clearCookies({ domain: 'my-origin.com' });
+  ```
+
+- New mode `retain-on-first-failure` for **TestOptions.trace**. In this mode, trace is recorded for the first run of each test, but not for retires. When test run fails, the trace file is retained, otherwise it is removed.
+
+  ```js title=copilotbrowser.config.ts
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    use: {
+      trace: 'retain-on-first-failure',
+    },
+  });
+  ```
+
+- New property **TestInfo.tags** exposes test tags during test execution.
+
+  ```js
+  test('example', async ({ page }) => {
+    console.log(test.info().tags);
+  });
+  ```
+
+- New method **Locator.contentFrame()** converts a `Locator` object to a `FrameLocator`. This can be useful when you have a `Locator` object obtained somewhere, and later on would like to interact with the content inside the frame.
+
+  ```js
+  const locator = page.locator('iframe[name="embedded"]');
+  // ...
+  const frameLocator = locator.contentFrame();
+  await frameLocator.getByRole('button').click();
+  ```
+
+- New method **FrameLocator.owner()** converts a `FrameLocator` object to a `Locator`. This can be useful when you have a `FrameLocator` object obtained somewhere, and later on would like to interact with the `iframe` element.
+
+  ```js
+  const frameLocator = page.frameLocator('iframe[name="embedded"]');
+  // ...
+  const locator = frameLocator.owner();
+  await expect(locator).toBeVisible();
+  ```
+
+### UI Mode Updates
+
+![copilotbrowser UI Mode](https://github.com/dayour/copilotbrowser/assets/9881434/61ca7cfc-eb7a-4305-8b62-b6c9f098f300)
+
+* See tags in the test list.
+* Filter by tags by typing `@fast` or clicking on the tag itself.
+* New shortcuts:
+  - "F5" to run tests.
+  - "Shift F5" to stop running tests.
+  - "Ctrl `" to toggle test output.
+
+### Browser Versions
+
+* Chromium 124.0.6367.8
+* Mozilla Firefox 124.0
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 123
+* Microsoft Edge 123
+
+## Version 1.42
+
+
+### New APIs
+
+- New method **Page.addLocatorHandler()** registers a callback that will be invoked when specified element becomes visible and may block copilotbrowser actions. The callback can get rid of the overlay. Here is an example that closes a cookie dialog when it appears:
+```js
+// Setup the handler.
+await page.addLocatorHandler(
+    page.getByRole('heading', { name: 'Hej! You are in control of your cookies.' }),
+    async () => {
+      await page.getByRole('button', { name: 'Accept all' }).click();
+    });
+// Write the test as usual.
+await page.goto('https://www.ikea.com/');
+await page.getByRole('link', { name: 'Collection of blue and white' }).click();
+await expect(page.getByRole('heading', { name: 'Light and easy' })).toBeVisible();
+```
+
+- `expect(callback).toPass()` timeout can now be configured by `expect.toPass.timeout` option [globally](./api/class-testconfig#test-config-expect) or in [project config](./api/class-testproject#test-project-expect)
+
+- **ElectronApplication.event('console')** event is emitted when Electron main process calls console API methods.
+```js
+electronApp.on('console', async msg => {
+  const values = [];
+  for (const arg of msg.args())
+    values.push(await arg.jsonValue());
+  console.log(...values);
+});
+await electronApp.evaluate(() => console.log('hello', 5, { foo: 'bar' }));
+```
+
+- [New syntax](./test-annotations#tag-tests) for adding tags to the tests (@-tokens in the test title are still supported):
+```js
+test('test customer login', {
+  tag: ['@fast', '@login'],
+}, async ({ page }) => {
+  // ...
+});
+```
+ Use `--grep` command line option to run only tests with certain tags.
+```sh
+npx copilotbrowser test --grep @fast
+```
+
+- `--project` command line [flag](./test-cli#all-options) now supports '*' wildcard:
+```sh
+npx copilotbrowser test --project='*mobile*'
+```
+
+- [New syntax](./test-annotations#annotate-tests) for test annotations:
+```js
+test('test full report', {
+  annotation: [
+    { type: 'issue', description: 'https://github.com/dayour/copilotbrowser/issues/23180' },
+    { type: 'docs', description: 'https://dayour.github.io/copilotbrowser/docs/test-annotations#tag-tests' },
+  ],
+}, async ({ page }) => {
+  // ...
+});
+```
+
+- **Page.pdf()** accepts two new options [`tagged`](./api/class-page#page-pdf-option-tagged) and [`outline`](./api/class-page#page-pdf-option-outline).
+
+### Announcements
+
+* ⚠️ Ubuntu 18 is not supported anymore.
+
+### Browser Versions
+
+* Chromium 123.0.6312.4
+* Mozilla Firefox 123.0
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 122
+* Microsoft Edge 123
+
+## Version 1.41
+
+### New APIs
+
+- New method **Page.unrouteAll()** removes all routes registered by **Page.route()** and **Page.routeFromHAR()**. Optionally allows to wait for ongoing routes to finish, or ignore any errors from them.
+- New method **BrowserContext.unrouteAll()** removes all routes registered by **BrowserContext.route()** and **BrowserContext.routeFromHAR()**. Optionally allows to wait for ongoing routes to finish, or ignore any errors from them.
+- New options **Page.screenshot.style** in **Page.screenshot()** and **Locator.screenshot.style** in **Locator.screenshot()** to add custom CSS to the page before taking a screenshot.
+- New option `stylePath` for methods **PageAssertions.toHaveScreenshot()** and **LocatorAssertions.toHaveScreenshot()** to apply a custom stylesheet while making the screenshot.
+- New `fileName` option for [Blob reporter](./test-reporters#blob-reporter), to specify the name of the report to be created.
+
+### Browser Versions
+
+* Chromium 121.0.6167.57
+* Mozilla Firefox 121.0
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 120
+* Microsoft Edge 120
+
+## Version 1.40
+
+
+### Test Generator Update
+
+![copilotbrowser Test Generator](https://github.com/dayour/copilotbrowser/assets/9881434/e8d67e2e-f36d-4301-8631-023948d3e190)
+
+New tools to generate assertions:
+- "Assert visibility" tool generates **LocatorAssertions.toBeVisible()**.
+- "Assert value" tool generates **LocatorAssertions.toHaveValue()**.
+- "Assert text" tool generates **LocatorAssertions.toContainText()**.
+
+Here is an example of a generated test with assertions:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test('test', async ({ page }) => {
+  await page.goto('https://dayour.github.io/copilotbrowser/');
+  await page.getByRole('link', { name: 'Get started' }).click();
+  await expect(page.getByLabel('Breadcrumbs').getByRole('list')).toContainText('Installation');
+  await expect(page.getByLabel('Search')).toBeVisible();
+  await page.getByLabel('Search').click();
+  await page.getByPlaceholder('Search docs').fill('locator');
+  await expect(page.getByPlaceholder('Search docs')).toHaveValue('locator');
+});
+```
+
+### New APIs
+
+- Options **Page.close.reason** in **Page.close()**, **BrowserContext.close.reason** in **BrowserContext.close()** and **Browser.close.reason** in **Browser.close()**. Close reason is reported for all operations interrupted by the closure.
+- Option **BrowserType.launchPersistentContext.firefoxUserPrefs** in **BrowserType.launchPersistentContext()**.
+
+### Other Changes
+
+- Methods **Download.path()** and **Download.createReadStream()** throw an error for failed and cancelled downloads.
+- copilotbrowser [docker image](./docker.md) now comes with Node.js v20.
+
+### Browser Versions
+
+* Chromium 120.0.6099.28
+* Mozilla Firefox 119.0
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 119
+* Microsoft Edge 119
+
+## Version 1.39
+
+
+### Add custom matchers to your expect
+
+You can extend copilotbrowser assertions by providing custom matchers. These matchers will be available on the expect object.
+
+```js title="test.spec.ts"
+import { expect as baseExpect } from '@copilotbrowser/test';
+export const expect = baseExpect.extend({
+  async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }) {
+    // ... see documentation for how to write matchers.
+  },
+});
+
+test('pass', async ({ page }) => {
+  await expect(page.getByTestId('cart')).toHaveAmount(5);
+});
+```
+
+See the documentation [for a full example](./test-assertions#add-custom-matchers-using-expectextend).
+
+### Merge test fixtures
+
+You can now merge test fixtures from multiple files or modules:
+
+```js title="fixtures.ts"
+import { mergeTests } from '@copilotbrowser/test';
+import { test as dbTest } from 'database-test-utils';
+import { test as a11yTest } from 'a11y-test-utils';
+
+export const test = mergeTests(dbTest, a11yTest);
+```
+
+```js title="test.spec.ts"
+import { test } from './fixtures';
+
+test('passes', async ({ database, page, a11y }) => {
+  // use database and a11y fixtures.
+});
+```
+
+### Merge custom expect matchers
+
+You can now merge custom expect matchers from multiple files or modules:
+
+```js title="fixtures.ts"
+import { mergeTests, mergeExpects } from '@copilotbrowser/test';
+import { test as dbTest, expect as dbExpect } from 'database-test-utils';
+import { test as a11yTest, expect as a11yExpect } from 'a11y-test-utils';
+
+export const test = mergeTests(dbTest, a11yTest);
+export const expect = mergeExpects(dbExpect, a11yExpect);
+```
+
+```js title="test.spec.ts"
+import { test, expect } from './fixtures';
+
+test('passes', async ({ page, database }) => {
+  await expect(database).toHaveDatabaseUser('admin');
+  await expect(page).toPassA11yAudit();
+});
+```
+
+### Hide implementation details: box test steps
+
+You can mark a **Test.step()** as "boxed" so that errors inside it point to the step call site.
+
+```js
+async function login(page) {
+  await test.step('login', async () => {
+    // ...
+  }, { box: true });  // Note the "box" option here.
+}
+```
+
+```txt
+Error: Timed out 5000ms waiting for expect(locator).toBeVisible()
+  ... error details omitted ...
+
+  14 |   await page.goto('https://github.com/login');
+> 15 |   await login(page);
+     |         ^
+  16 | });
+```
+
+See **Test.step()** documentation for a full example.
+
+### New APIs
+
+- **LocatorAssertions.toHaveAttribute()**
+
+### Browser Versions
+
+* Chromium 119.0.6045.9
+* Mozilla Firefox 118.0.1
+* WebKit 17.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 118
+* Microsoft Edge 118
+
+## Version 1.38
+
+
+### UI Mode Updates
+
+![copilotbrowser UI Mode](https://github.com/dayour/copilotbrowser/assets/746130/8ba27be0-58fd-4f62-8561-950480610369)
+
+1. Zoom into time range.
+1. Network panel redesign.
+
+### New APIs
+
+- **BrowserContext.event('webError')**
+- **Locator.pressSequentially()**
+- The **Reporter.onEnd()** now reports `startTime` and total run `duration`.
+
+### Deprecations
+
+* The following methods were deprecated: **Page.type()**, **Frame.type()**,
+  **Locator.type()** and **ElementHandle.type()**.
+  Please use **Locator.fill()** instead which is much faster. Use
+  **Locator.pressSequentially()** only if there is a special keyboard
+  handling on the page, and you need to press keys one-by-one.
+
+### Breaking Changes: copilotbrowser no longer downloads browsers automatically
+
+> **Note**: If you are using `@copilotbrowser/test` package, this change does not affect you.
+
+copilotbrowser recommends to use `@copilotbrowser/test` package and download browsers via `npx copilotbrowser install` command. If you are following this recommendation, nothing has changed for you.
+
+However, up to v1.38, installing the `copilotbrowser` package instead of `@copilotbrowser/test` did automatically download browsers. This is no longer the case, and we recommend to explicitly download browsers via `npx copilotbrowser install` command.
+
+**v1.37 and earlier**
+
+`copilotbrowser` package was downloading browsers during `npm install`, while `@copilotbrowser/test` was not.
+
+**v1.38 and later**
+
+`copilotbrowser` and `@copilotbrowser/test` packages do not download browsers during `npm install`.
+
+**Recommended migration**
+
+Run `npx copilotbrowser install` to download browsers after `npm install`. For example, in your CI configuration:
+
+```yml
+- run: npm ci
+- run: npx copilotbrowser install --with-deps
+```
+
+**Alternative migration option - not recommended**
+
+Add `@copilotbrowser/browser-chromium`, `@copilotbrowser/browser-firefox` and `@copilotbrowser/browser-webkit` as a dependency. These packages download respective browsers during `npm install`. Make sure you keep the version of all copilotbrowser packages in sync:
+
+```json
+// package.json
+{
+  "devDependencies": {
+    "copilotbrowser": "1.38.0",
+    "@copilotbrowser/browser-chromium": "1.38.0",
+    "@copilotbrowser/browser-firefox": "1.38.0",
+    "@copilotbrowser/browser-webkit": "1.38.0"
+  }
+}
+```
+
+### Browser Versions
+
+* Chromium 117.0.5938.62
+* Mozilla Firefox 117.0
+* WebKit 17.0
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 116
+* Microsoft Edge 116
+
+## Version 1.37
+
+
+### New `npx copilotbrowser merge-reports` tool
+
+If you run tests on multiple shards, you can now merge all reports in a single HTML report (or any other report)
+using the new `merge-reports` CLI tool.
+
+Using `merge-reports` tool requires the following steps:
+
+1. Adding a new "blob" reporter to the config when running on CI:
+
+  ```js title="copilotbrowser.config.ts"
+  export default defineConfig({
+    testDir: './tests',
+    reporter: process.env.CI ? 'blob' : 'html',
+  });
+  ```
+
+  The "blob" reporter will produce ".zip" files that contain all the information
+  about the test run.
+
+2. Copying all "blob" reports in a single shared location and running `npx copilotbrowser merge-reports`:
+
+  ```bash
+  npx copilotbrowser merge-reports --reporter html ./all-blob-reports
+  ```
+
+  Read more in [our documentation](./test-sharding.md).
+
+### 📚 Debian 12 Bookworm Support
+
+copilotbrowser now supports Debian 12 Bookworm on both x86_64 and arm64 for Chromium, Firefox and WebKit.
+Let us know if you encounter any issues!
+
+Linux support looks like this:
+
+|          | Ubuntu 20.04 | Ubuntu 22.04 | Debian 11 | Debian 12 |
+| :--- | :---: | :---: | :---: | :---: |
+| Chromium | ✅ | ✅ | ✅ | ✅ |
+| WebKit | ✅ | ✅ | ✅ | ✅ |
+| Firefox | ✅ | ✅ | ✅ | ✅ |
+
+### UI Mode Updates
+
+- UI Mode now respects project dependencies. You can control which dependencies to respect by checking/unchecking them in a projects list.
+- Console logs from the test are now displayed in the Console tab.
+
+### Browser Versions
+
+* Chromium 116.0.5845.82
+* Mozilla Firefox 115.0
+* WebKit 17.0
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 115
+* Microsoft Edge 115
+
+## Version 1.36
+
+🏝️ Summer maintenance release.
+
+### Browser Versions
+
+* Chromium 115.0.5790.75
+* Mozilla Firefox 115.0
+* WebKit 17.0
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 114
+* Microsoft Edge 114
+
+## Version 1.35
+
+
+### Highlights
+
+* UI mode is now available in VSCode copilotbrowser extension via a new "Show trace viewer" button:
+
+  ![copilotbrowser UI Mode](https://github.com/dayour/copilotbrowser/assets/746130/13094128-259b-477a-8bbb-c1181178e8a2)
+
+* UI mode and trace viewer mark network requests handled with **Page.route()** and **BrowserContext.route()** handlers, as well as those issued via the [API testing](./api-testing):
+
+  ![Trace Viewer](https://github.com/dayour/copilotbrowser/assets/746130/0df2d4b6-faa3-465c-aff3-c435b430bfe1)
+
+* New option `maskColor` for methods **Page.screenshot()**, **Locator.screenshot()**, **PageAssertions.toHaveScreenshot()** and **LocatorAssertions.toHaveScreenshot()** to change default masking color:
+  ```js
+  await page.goto('https://copilotbrowser.dev');
+  await expect(page).toHaveScreenshot({
+    mask: [page.locator('img')],
+    maskColor: '#00FF00', // green
+  });
+  ```
+
+* New `uninstall` CLI command to uninstall browser binaries:
+  ```bash
+  $ npx copilotbrowser uninstall # remove browsers installed by this installation
+  $ npx copilotbrowser uninstall --all # remove all ever-install copilotbrowser browsers
+  ```
+
+* Both UI mode and trace viewer now could be opened in a browser tab:
+  ```bash
+  $ npx copilotbrowser test --ui-port 0 # open UI mode in a tab on a random port
+  $ npx copilotbrowser show-trace --port 0 # open trace viewer in tab on a random port
+  ```
+
+### ⚠️ Breaking changes
+
+* `copilotbrowser-core` binary got renamed from `copilotbrowser` to `copilotbrowser-core`. So if you use `copilotbrowser-core` CLI, make sure to update the name:
+  ```bash
+  $ npx copilotbrowser-core install # the new way to install browsers when using copilotbrowser-core
+  ```
+
+  This change **does not** affect `@copilotbrowser/test` and `copilotbrowser` package users.
+
+### Browser Versions
+
+* Chromium 115.0.5790.13
+* Mozilla Firefox 113.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 114
+* Microsoft Edge 114
+
+## Version 1.34
+
+
+### Highlights
+
+* UI Mode now shows steps, fixtures and attachments:
+  ![UI Mode attachments](https://github.com/dayour/copilotbrowser/assets/746130/1d280419-d79a-4a56-b2dc-54d631281d56)
+* New property **TestProject.teardown** to specify a project that needs to run after this
+  and all dependent projects have finished. Teardown is useful to cleanup any resources acquired by this project.
+
+  A common pattern would be a `setup` dependency with a corresponding `teardown`:
+  ```js title="copilotbrowser.config.ts"
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    projects: [
+      {
+        name: 'setup',
+        testMatch: /global.setup\.ts/,
+        teardown: 'teardown',
+      },
+      {
+        name: 'teardown',
+        testMatch: /global.teardown\.ts/,
+      },
+      {
+        name: 'chromium',
+        use: devices['Desktop Chrome'],
+        dependencies: ['setup'],
+      },
+      {
+        name: 'firefox',
+        use: devices['Desktop Firefox'],
+        dependencies: ['setup'],
+      },
+      {
+        name: 'webkit',
+        use: devices['Desktop Safari'],
+        dependencies: ['setup'],
+      },
+    ],
+  });
+  ```
+* New method [`expect.configure`](./test-assertions.md#expectconfigure) to
+  create pre-configured expect instance with its own defaults such as `timeout`
+  and `soft`.
+
+  ```js
+  const slowExpect = expect.configure({ timeout: 10000 });
+  await slowExpect(locator).toHaveText('Submit');
+
+  // Always do soft assertions.
+  const softExpect = expect.configure({ soft: true });
+  ```
+
+* New options `stderr` and `stdout`  in **TestConfig.webServer** to configure output handling:
+
+  ```js title="copilotbrowser.config.ts"
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    // Run your local dev server before starting the tests
+    webServer: {
+      command: 'npm run start',
+      url: 'http://127.0.0.1:3000',
+      reuseExistingServer: !process.env.CI,
+      stdout: 'pipe',
+      stderr: 'pipe',
+    },
+  });
+  ```
+* New **Locator.and()** to create a locator that matches both locators.
+
+    ```js
+    const button = page.getByRole('button').and(page.getByTitle('Subscribe'));
+    ```
+
+* New events **BrowserContext.event('console')** and **BrowserContext.event('dialog')** to subscribe to any dialogs
+  and console messages from any page from the given browser context. Use the new methods **ConsoleMessage.page()**
+  and **Dialog.page()** to pin-point event source.
+
+### ⚠️ Breaking changes
+
+* `npx copilotbrowser test` no longer works if you install both `copilotbrowser` and `@copilotbrowser/test`. There's no need
+  to install both, since you can always import browser automation APIs from `@copilotbrowser/test` directly:
+
+  ```js title="automation.ts"
+  import { chromium, firefox, webkit } from '@copilotbrowser/test';
+  /* ... */
+  ```
+* Node.js 14 is no longer supported since it [reached its end-of-life](https://nodejs.dev/en/about/releases/) on April 30, 2023.
+
+### Browser Versions
+
+* Chromium 114.0.5735.26
+* Mozilla Firefox 113.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 113
+* Microsoft Edge 113
+
+## Version 1.33
+
+
+### Locators Update
+
+* Use **Locator.or()** to create a locator that matches either of the two locators.
+  Consider a scenario where you'd like to click on a "New email" button, but sometimes a security settings dialog shows up instead.
+  In this case, you can wait for either a "New email" button, or a dialog and act accordingly:
+
+    ```js
+    const newEmail = page.getByRole('button', { name: 'New email' });
+    const dialog = page.getByText('Confirm security settings');
+    await expect(newEmail.or(dialog)).toBeVisible();
+    if (await dialog.isVisible())
+      await page.getByRole('button', { name: 'Dismiss' }).click();
+    await newEmail.click();
+    ```
+* Use new options **Locator.filter.hasNot** and **Locator.filter.hasNotText** in **Locator.filter()**
+  to find elements that **do not match** certain conditions.
+
+    ```js
+    const rowLocator = page.locator('tr');
+    await rowLocator
+        .filter({ hasNotText: 'text in column 1' })
+        .filter({ hasNot: page.getByRole('button', { name: 'column 2 button' }) })
+        .screenshot();
+    ```
+* Use new web-first assertion **LocatorAssertions.toBeAttached()** to ensure that the element
+  is present in the page's DOM. Do not confuse with the **LocatorAssertions.toBeVisible()** that ensures that
+  element is both attached & visible.
+
+### New APIs
+
+- **Locator.or()**
+- New option **Locator.filter.hasNot** in **Locator.filter()**
+- New option **Locator.filter.hasNotText** in **Locator.filter()**
+- **LocatorAssertions.toBeAttached()**
+- New option **Route.fetch.timeout** in **Route.fetch()**
+- **Reporter.onExit()**
+
+### ⚠️ Breaking change
+
+* The `mcr.microsoft.com/copilotbrowser:v1.33.0` now serves a copilotbrowser image based on Ubuntu Jammy.
+  To use the focal-based image, please use `mcr.microsoft.com/copilotbrowser:v1.33.0-focal` instead.
+
+### Browser Versions
+
+* Chromium 113.0.5672.53
+* Mozilla Firefox 112.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 112
+* Microsoft Edge 112
+
+## Version 1.32
+
+
+### Introducing UI Mode (preview)
+
+New [UI Mode](./test-ui-mode.md) lets you explore, run and debug tests. Comes with a built-in watch mode.
+
+![copilotbrowser UI Mode](https://user-images.githubusercontent.com/746130/227004851-3901a691-4f8e-43d6-8d6b-cbfeafaeb999.png)
+
+Engage with a new flag `--ui`:
+
+```sh
+npx copilotbrowser test --ui
+```
+
+### New APIs
+
+- New options **Page.routeFromHAR.updateMode** and **Page.routeFromHAR.updateContent** in **Page.routeFromHAR()** and **BrowserContext.routeFromHAR()**.
+- Chaining existing locator objects, see [locator docs](./locators.md#matching-inside-a-locator) for details.
+- New property **TestInfo.testId**.
+- New option **Tracing.startChunk.name** in method **Tracing.startChunk()**.
+
+
+### ⚠️ Breaking change in component tests
+
+Note: **component tests only**, does not affect end-to-end tests.
+
+* `@copilotbrowser/experimental-ct-react` now supports **React 18 only**.
+* If you're running component tests with React 16 or 17, please replace
+  `@copilotbrowser/experimental-ct-react` with `@copilotbrowser/experimental-ct-react17`.
+
+### Browser Versions
+
+* Chromium 112.0.5615.29
+* Mozilla Firefox 111.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 111
+* Microsoft Edge 111
+
+## Version 1.31
+
+
+### New APIs
+
+- New property **TestProject.dependencies** to configure dependencies between projects.
+
+  Using dependencies allows global setup to produce traces and other artifacts,
+  see the setup steps in the test report and more.
+
+  ```js title="copilotbrowser.config.ts"
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    projects: [
+      {
+        name: 'setup',
+        testMatch: /global.setup\.ts/,
+      },
+      {
+        name: 'chromium',
+        use: devices['Desktop Chrome'],
+        dependencies: ['setup'],
+      },
+      {
+        name: 'firefox',
+        use: devices['Desktop Firefox'],
+        dependencies: ['setup'],
+      },
+      {
+        name: 'webkit',
+        use: devices['Desktop Safari'],
+        dependencies: ['setup'],
+      },
+    ],
+  });
+  ```
+
+- New assertion **LocatorAssertions.toBeInViewport()** ensures that locator points to an element that intersects viewport, according to the [intersection observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API).
+
+  ```js
+  const button = page.getByRole('button');
+
+  // Make sure at least some part of element intersects viewport.
+  await expect(button).toBeInViewport();
+
+  // Make sure element is fully outside of viewport.
+  await expect(button).not.toBeInViewport();
+
+  // Make sure that at least half of the element intersects viewport.
+  await expect(button).toBeInViewport({ ratio: 0.5 });
+  ```
+
+
+### Miscellaneous
+
+- DOM snapshots in trace viewer can be now opened in a separate window.
+- New method `defineConfig` to be used in `copilotbrowser.config`.
+- New option **Route.fetch.maxRedirects** for method **Route.fetch()**.
+- copilotbrowser now supports Debian 11 arm64.
+- Official [docker images](./docker.md) now include Node 18 instead of Node 16.
+
+
+### ⚠️ Breaking change in component tests
+
+Note: **component tests only**, does not affect end-to-end tests.
+
+`copilotbrowser-ct.config` configuration file for [component testing](./test-components.md) now requires calling `defineConfig`.
+
+```js
+// Before
+
+import { type copilotbrowserTestConfig, devices } from '@copilotbrowser/experimental-ct-react';
+const config: copilotbrowserTestConfig = {
+  // ... config goes here ...
+};
+export default config;
+```
+
+Replace `config` variable definition with `defineConfig` call:
+
+```js
+// After
+
+import { defineConfig, devices } from '@copilotbrowser/experimental-ct-react';
+export default defineConfig({
+  // ... config goes here ...
+});
+```
+
+### Browser Versions
+
+* Chromium 111.0.5563.19
+* Mozilla Firefox 109.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 110
+* Microsoft Edge 110
+
+
+## Version 1.30
+
+### Browser Versions
+
+* Chromium 110.0.5481.38
+* Mozilla Firefox 108.0.2
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 109
+* Microsoft Edge 109
+
+
+## Version 1.29
+
+
+### New APIs
+
+- New method **Route.fetch()** and new option `json` for **Route.fulfill()**:
+
+    ```js
+    await page.route('**/api/settings', async route => {
+      // Fetch original settings.
+      const response = await route.fetch();
+
+      // Force settings theme to a predefined value.
+      const json = await response.json();
+      json.theme = 'Solorized';
+
+      // Fulfill with modified data.
+      await route.fulfill({ json });
+    });
+    ```
+
+- New method **Locator.all()** to iterate over all matching elements:
+
+    ```js
+    // Check all checkboxes!
+    const checkboxes = page.getByRole('checkbox');
+    for (const checkbox of await checkboxes.all())
+      await checkbox.check();
+    ```
+
+- **Locator.selectOption()** matches now by value or label:
+
+  ```html
+  <select multiple>
+    <option value="red">Red</option>
+    <option value="green">Green</option>
+    <option value="blue">Blue</option>
+  </select>
+  ```
+
+  ```js
+  await element.selectOption('Red');
+  ```
+
+- Retry blocks of code until all assertions pass:
+
+    ```js
+    await expect(async () => {
+      const response = await page.request.get('https://api.example.com');
+      await expect(response).toBeOK();
+    }).toPass();
+    ```
+
+  Read more in [our documentation](./test-assertions.md#expecttopass).
+
+- Automatically capture **full page screenshot** on test failure:
+    ```js title="copilotbrowser.config.ts"
+    import { defineConfig } from '@copilotbrowser/test';
+    export default defineConfig({
+      use: {
+        screenshot: {
+          mode: 'only-on-failure',
+          fullPage: true,
+        }
+      }
+    });
+    ```
+
+### Miscellaneous
+
+- copilotbrowser Test now respects [`jsconfig.json`](https://code.visualstudio.com/docs/languages/jsconfig).
+- New options `args` and `proxy` for **AndroidDevice.launchBrowser()**.
+- Option `postData` in method **Route.continue()** now supports `Serializable` values.
+
+### Browser Versions
+
+* Chromium 109.0.5414.46
+* Mozilla Firefox 107.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 108
+* Microsoft Edge 108
+
+## Version 1.28
+
+
+### copilotbrowser Tools
+
+* **Record at Cursor in VSCode.** You can run the test, position the cursor at the end of the test and continue generating the test.
+
+![New VSCode Extension](https://user-images.githubusercontent.com/746130/202005839-aba2eeba-217b-424d-8496-8b4f5fa72f41.png)
+
+* **Live Locators in VSCode.** You can hover and edit locators in VSCode to get them  highlighted in the opened browser.
+* **Live Locators in CodeGen.** Generate a locator for any element on the page using "Explore" tool.
+
+![Locator Explorer](https://user-images.githubusercontent.com/746130/201796876-01567a0b-ca61-4a9d-b12b-04786c471671.png)
+
+* **Codegen and Trace Viewer Dark Theme.** Automatically picked up from operating system settings.
+
+![Dark Theme](https://user-images.githubusercontent.com/746130/201797969-603f74df-d7cf-4c56-befd-798dbd269796.png)
+
+
+### Test Runner
+
+* Configure retries and test timeout for a file or a test with **Test.describe.configure()**.
+
+    ```js
+    // Each test in the file will be retried twice and have a timeout of 20 seconds.
+    test.describe.configure({ retries: 2, timeout: 20_000 });
+    test('runs first', async ({ page }) => {});
+    test('runs second', async ({ page }) => {});
+    ```
+
+* Use **TestProject.snapshotPathTemplate** and **TestConfig.snapshotPathTemplate** to configure a template controlling location of snapshots generated by **PageAssertions.toHaveScreenshot()** and **SnapshotAssertions.toMatchSnapshot()**.
+
+    ```js title="copilotbrowser.config.ts"
+    import { defineConfig } from '@copilotbrowser/test';
+    export default defineConfig({
+      testDir: './tests',
+      snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',
+    });
+    ```
+
+### New APIs
+
+- **Locator.blur()**
+- **Locator.clear()**
+- **Android.launchServer()** and  **Android.connect()**
+- **AndroidDevice.event('close')**
+
+### Browser Versions
+
+* Chromium 108.0.5359.29
+* Mozilla Firefox 106.0
+* WebKit 16.4
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 107
+* Microsoft Edge 107
+
+
+## Version 1.27
+
+
+
+### Locators
+
+With these new APIs writing locators is a joy:
+- **Page.getByText()** to locate by text content.
+- **Page.getByRole()** to locate by [ARIA role](https://www.w3.org/TR/wai-aria-1.2/#roles), [ARIA attributes](https://www.w3.org/TR/wai-aria-1.2/#aria-attributes) and [accessible name](https://w3c.github.io/accname/#dfn-accessible-name).
+- **Page.getByLabel()** to locate a form control by associated label's text.
+- **Page.getByTestId()** to locate an element based on its `data-testid` attribute (other attribute can be configured).
+- **Page.getByPlaceholder()** to locate an input by placeholder.
+- **Page.getByAltText()** to locate an element, usually image, by its text alternative.
+- **Page.getByTitle()** to locate an element by its title.
+
+```js
+await page.getByLabel('User Name').fill('John');
+
+await page.getByLabel('Password').fill('secret-password');
+
+await page.getByRole('button', { name: 'Sign in' }).click();
+
+await expect(page.getByText('Welcome, John!')).toBeVisible();
+```
+
+All the same methods are also available on `Locator`, `FrameLocator` and `Frame` classes.
+
+### Other highlights
+
+- `workers` option in the `copilotbrowser.config.ts` now accepts a percentage string to use some of the available CPUs. You can also pass it in the command line:
+  ```bash
+  npx copilotbrowser test --workers=20%
+  ```
+
+- New options `host` and `port` for the html reporter.
+  ```js
+  import { defineConfig } from '@copilotbrowser/test';
+
+  export default defineConfig({
+    reporter: [['html', { host: 'localhost', port: '9223' }]],
+  });
+  ```
+
+- New field `FullConfig.configFile` is available to test reporters, specifying the path to the config file if any.
+
+- As announced in v1.25, Ubuntu 18 will not be supported as of Dec 2022. In addition to that, there will be no WebKit updates on Ubuntu 18 starting from the next copilotbrowser release.
+
+### Behavior Changes
+
+- **LocatorAssertions.toHaveAttribute()** with an empty value does not match missing attribute anymore. For example, the following snippet will succeed when `button` **does not** have a `disabled` attribute.
+
+   ```js
+   await expect(page.getByRole('button')).toHaveAttribute('disabled', '');
+   ```
+
+- Command line options `--grep` and `--grep-invert` previously incorrectly ignored `grep` and `grepInvert` options specified in the config. Now all of them are applied together.
+
+### Browser Versions
+
+* Chromium 107.0.5304.18
+* Mozilla Firefox 105.0.1
+* WebKit 16.0
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 106
+* Microsoft Edge 106
+
+
+## Version 1.26
+
+
+### Assertions
+
+- New option `enabled` for **LocatorAssertions.toBeEnabled()**.
+- **LocatorAssertions.toHaveText()** now pierces open shadow roots.
+- New option `editable` for **LocatorAssertions.toBeEditable()**.
+- New option `visible` for **LocatorAssertions.toBeVisible()**.
+
+### Other highlights
+
+- New option `maxRedirects` for **APIRequestContext.get()** and others to limit redirect count.
+- New command-line flag `--pass-with-no-tests` that allows the test suite to pass when no files are found.
+- New command-line flag `--ignore-snapshots` to skip snapshot expectations, such as `expect(value).toMatchSnapshot()` and `expect(page).toHaveScreenshot()`.
+
+### Behavior Change
+
+A bunch of copilotbrowser APIs already support the `waitUntil: 'domcontentloaded'` option.
+For example:
+
+```js
+await page.goto('https://copilotbrowser.dev', {
+  waitUntil: 'domcontentloaded',
+});
+```
+
+Prior to 1.26, this would wait for all iframes to fire the `DOMContentLoaded`
+event.
+
+To align with web specification, the `'domcontentloaded'` value only waits for
+the target frame to fire the `'DOMContentLoaded'` event. Use `waitUntil: 'load'` to wait for all iframes.
+
+### Browser Versions
+
+* Chromium 106.0.5249.30
+* Mozilla Firefox 104.0
+* WebKit 16.0
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 105
+* Microsoft Edge 105
+
+## Version 1.25
+
+
+### VSCode Extension
+
+* Watch your tests running live & keep devtools open.
+* Pick selector.
+* Record new test from current page state.
+
+![vscode extension screenshot](https://user-images.githubusercontent.com/746130/183781999-1b9fdbc5-cfae-47d6-b4f7-5d4ae89716a8.jpg)
+
+### Test Runner
+
+* **Test.step()** now returns the value of the step function:
+
+    ```js
+    test('should work', async ({ page }) => {
+      const pageTitle = await test.step('get title', async () => {
+        await page.goto('https://copilotbrowser.dev');
+        return await page.title();
+      });
+      console.log(pageTitle);
+    });
+    ```
+
+* Added **Test.describe.fixme()**.
+* New `'interrupted'` test status.
+* Enable tracing via CLI flag: `npx copilotbrowser test --trace=on`.
+
+### Announcements
+
+* 🎁 We now ship Ubuntu 22.04 Jammy Jellyfish docker image: `mcr.microsoft.com/copilotbrowser:v1.34.0-jammy`.
+* 🪦 This is the last release with macOS 10.15 support (deprecated as of 1.21).
+* 🪦 This is the last release with Node.js 12 support, we recommend upgrading to Node.js LTS (16).
+* ⚠️ Ubuntu 18 is now deprecated and will not be supported as of Dec 2022.
+
+### Browser Versions
+
+* Chromium 105.0.5195.19
+* Mozilla Firefox 103.0
+* WebKit 16.0
+
+This version was also tested against the following stable channels:
+
+* Google Chrome 104
+* Microsoft Edge 104
+
+
+## Version 1.24
+
+
+### 🌍 Multiple Web Servers in `copilotbrowser.config.ts`
+
+Launch multiple web servers, databases, or other processes by passing an array of configurations:
+
+```js title="copilotbrowser.config.ts"
+import { defineConfig } from '@copilotbrowser/test';
+export default defineConfig({
+  webServer: [
+    {
+      command: 'npm run start',
+      url: 'http://127.0.0.1:3000',
+      timeout: 120 * 1000,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      command: 'npm run backend',
+      url: 'http://127.0.0.1:3333',
+      timeout: 120 * 1000,
+      reuseExistingServer: !process.env.CI,
+    }
+  ],
+  use: {
+    baseURL: 'http://localhost:3000/',
+  },
+});
+```
+
+### 🐂 Debian 11 Bullseye Support
+
+copilotbrowser now supports Debian 11 Bullseye on x86_64 for Chromium, Firefox and WebKit. Let us know
+if you encounter any issues!
+
+Linux support looks like this:
+
+|          | Ubuntu 20.04 | Ubuntu 22.04 | Debian 11
+| :--- | :---: | :---: | :---: | :---: |
+| Chromium | ✅ | ✅ | ✅ |
+| WebKit | ✅ | ✅ | ✅ |
+| Firefox | ✅ | ✅ | ✅ |
+
+### 🕵️ Anonymous Describe
+
+It is now possible to call **Test.describe()** to create suites without a title. This is useful for giving a group of tests a common option with **Test.use()**.
+
+```js
+test.describe(() => {
+  test.use({ colorScheme: 'dark' });
+
+  test('one', async ({ page }) => {
+    // ...
+  });
+
+  test('two', async ({ page }) => {
+    // ...
+  });
+});
+```
+
+### 🧩 Component Tests Update
+
+copilotbrowser 1.24 Component Tests introduce `beforeMount` and `afterMount` hooks.
+Use these to configure your app for tests.
+
+For example, this could be used to setup App router in Vue.js:
+
+```js title="src/component.spec.ts"
+import { test } from '@copilotbrowser/experimental-ct-vue';
+import { Component } from './mycomponent';
+
+test('should work', async ({ mount }) => {
+  const component = await mount(Component, {
+    hooksConfig: {
+      /* anything to configure your app */
+    }
+  });
+});
+```
+
+```js title="copilotbrowser/index.ts"
+import { router } from '../router';
+import { beforeMount } from '@copilotbrowser/experimental-ct-vue/hooks';
+
+beforeMount(async ({ app, hooksConfig }) => {
+  app.use(router);
+});
+```
+
+A similar configuration in Next.js would look like this:
+
+```js title="src/component.spec.jsx"
+import { test } from '@copilotbrowser/experimental-ct-react';
+import { Component } from './mycomponent';
+
+test('should work', async ({ mount }) => {
+  const component = await mount(<Component></Component>, {
+    // Pass mock value from test into `beforeMount`.
+    hooksConfig: {
+      router: {
+        query: { page: 1, per_page: 10 },
+        asPath: '/posts'
+      }
+    }
+  });
+});
+```
+
+```js title="copilotbrowser/index.js"
+import router from 'next/router';
+import { beforeMount } from '@copilotbrowser/experimental-ct-react/hooks';
+
+beforeMount(async ({ hooksConfig }) => {
+  // Before mount, redefine useRouter to return mock value from test.
+  router.useRouter = () => hooksConfig.router;
+});
+```
+
+## Version 1.23
+
+
+### Network Replay
+
+Now you can record network traffic into a HAR file and re-use this traffic in your tests.
+
+To record network into HAR file:
+
+```bash
+npx copilotbrowser open --save-har=github.har.zip https://github.com/microsoft
+```
+
+Alternatively, you can record HAR programmatically:
+
+```js
+const context = await browser.newContext({
+  recordHar: { path: 'github.har.zip' }
+});
+// ... do stuff ...
+await context.close();
+```
+
+Use the new methods **Page.routeFromHAR()** or **BrowserContext.routeFromHAR()** to serve matching responses from the [HAR](http://www.softwareishard.com/blog/har-12-spec/) file:
+
+
+```js
+await context.routeFromHAR('github.har.zip');
+```
+
+Read more in [our documentation](./mock.md#mocking-with-har-files).
+
+
+### Advanced Routing
+
+You can now use **Route.fallback()** to defer routing to other handlers.
+
+Consider the following example:
+
+```js
+// Remove a header from all requests.
+test.beforeEach(async ({ page }) => {
+  await page.route('**/*', async route => {
+    const headers = await route.request().allHeaders();
+    delete headers['if-none-match'];
+    await route.fallback({ headers });
+  });
+});
+
+test('should work', async ({ page }) => {
+  await page.route('**/*', async route => {
+    if (route.request().resourceType() === 'image')
+      await route.abort();
+    else
+      await route.fallback();
+  });
+});
+```
+
+Note that the new methods **Page.routeFromHAR()** and **BrowserContext.routeFromHAR()** also participate in routing and could be deferred to.
+
+### Web-First Assertions Update
+
+* New method **LocatorAssertions.toHaveValues()** that asserts all selected values of `<select multiple>` element.
+* Methods **LocatorAssertions.toContainText()** and **LocatorAssertions.toHaveText()** now accept `ignoreCase` option.
+
+### Component Tests Update
+
+* Support for Vue2 via the [`@copilotbrowser/experimental-ct-vue2`](https://www.npmjs.com/package/@copilotbrowser/experimental-ct-vue2) package.
+* Support for component tests for [create-react-app](https://www.npmjs.com/package/create-react-app) with components in `.js` files.
+
+Read more about [component testing with copilotbrowser](./test-components).
+
+### Miscellaneous
+
+* If there's a service worker that's in your way, you can now easily disable it with a new context option `serviceWorkers`:
+  ```js title="copilotbrowser.config.ts"
+  export default {
+    use: {
+      serviceWorkers: 'block',
+    }
+  };
+  ```
+* Using `.zip` path for `recordHar` context option automatically zips the resulting HAR:
+  ```js
+  const context = await browser.newContext({
+    recordHar: {
+      path: 'github.har.zip',
+    }
+  });
+  ```
+* If you intend to edit HAR by hand, consider using the `"minimal"` HAR recording mode
+  that only records information that is essential for replaying:
+  ```js
+  const context = await browser.newContext({
+    recordHar: {
+      path: 'github.har',
+      mode: 'minimal',
+    }
+  });
+  ```
+* copilotbrowser now runs on Ubuntu 22 amd64 and Ubuntu 22 arm64. We also publish new docker image `mcr.microsoft.com/copilotbrowser:v1.34.0-jammy`.
+
+### ⚠️ Breaking Changes ⚠️
+
+WebServer is now considered "ready" if request to the specified url has any of the following HTTP status codes:
+
+* `200-299`
+* `300-399` (new)
+* `400`, `401`, `402`, `403` (new)
+
+
+## Version 1.22
+
+
+### Highlights
+
+- Components Testing (preview)
+
+  copilotbrowser Test can now test your [React](https://reactjs.org/),
+  [Vue.js](https://vuejs.org/) or [Svelte](https://svelte.dev/) components.
+  You can use all the features
+  of copilotbrowser Test (such as parallelization, emulation & debugging) while running components
+  in real browsers.
+
+  Here is what a typical component test looks like:
+
+  ```js title="App.spec.tsx"
+  import { test, expect } from '@copilotbrowser/experimental-ct-react';
+  import App from './App';
+
+  // Let's test component in a dark scheme!
+  test.use({ colorScheme: 'dark' });
+
+  test('should render', async ({ mount }) => {
+    const component = await mount(<App></App>);
+
+    // As with any copilotbrowser test, assert locator text.
+    await expect(component).toContainText('React');
+    // Or do a screenshot 🚀
+    await expect(component).toHaveScreenshot();
+    // Or use any copilotbrowser method
+    await component.click();
+  });
+  ```
+
+  Read more in [our documentation](./test-components).
+
+- Role selectors that allow selecting elements by their [ARIA role](https://www.w3.org/TR/wai-aria-1.2/#roles), [ARIA attributes](https://www.w3.org/TR/wai-aria-1.2/#aria-attributes) and [accessible name](https://w3c.github.io/accname/#dfn-accessible-name).
+
+  ```js
+  // Click a button with accessible name "log in"
+  await page.locator('role=button[name="log in"]').click();
+  ```
+
+  Read more in [our documentation](./locators.md#locate-by-role).
+
+- New **Locator.filter()** API to filter an existing locator
+
+  ```js
+  const buttons = page.locator('role=button');
+  // ...
+  const submitButton = buttons.filter({ hasText: 'Submit' });
+  await submitButton.click();
+  ```
+
+- New web-first assertions **PageAssertions.toHaveScreenshot()** and **LocatorAssertions.toHaveScreenshot()** that
+  wait for screenshot stabilization and enhances test reliability.
+
+  The new assertions has screenshot-specific defaults, such as:
+  * disables animations
+  * uses CSS scale option
+
+  ```js
+  await page.goto('https://copilotbrowser.dev');
+  await expect(page).toHaveScreenshot();
+  ```
+
+  The new **PageAssertions.toHaveScreenshot()** saves screenshots at the same
+  location as **SnapshotAssertions.toMatchSnapshot()**.
+
+
+## Version 1.21
+
+
+### Highlights
+
+- New role selectors that allow selecting elements by their [ARIA role](https://www.w3.org/TR/wai-aria-1.2/#roles), [ARIA attributes](https://www.w3.org/TR/wai-aria-1.2/#aria-attributes) and [accessible name](https://w3c.github.io/accname/#dfn-accessible-name).
+
+  ```js
+  // Click a button with accessible name "log in"
+  await page.locator('role=button[name="log in"]').click();
+  ```
+
+  Read more in [our documentation](./locators.md#locate-by-role).
+- New `scale` option in **Page.screenshot()** for smaller sized screenshots.
+- New `caret` option in **Page.screenshot()** to control text caret. Defaults to `"hide"`.
+
+- New method `expect.poll` to wait for an arbitrary condition:
+
+  ```js
+  // Poll the method until it returns an expected result.
+  await expect.poll(async () => {
+    const response = await page.request.get('https://api.example.com');
+    return response.status();
+  }).toBe(200);
+  ```
+
+  `expect.poll` supports most synchronous matchers, like `.toBe()`, `.toContain()`, etc.
+  Read more in [our documentation](./test-assertions.md#expectpoll).
+
+### Behavior Changes
+
+- ESM support when running TypeScript tests is now enabled by default. The `copilotbrowser_EXPERIMENTAL_TS_ESM` env variable is
+  no longer required.
+- The `mcr.microsoft.com/copilotbrowser` docker image no longer contains Python. Please use `mcr.microsoft.com/copilotbrowser/python`
+  as a copilotbrowser-ready docker image with pre-installed Python.
+- copilotbrowser now supports large file uploads (100s of MBs) via **Locator.setInputFiles()** API.
+
+### Browser Versions
+
+- Chromium 101.0.4951.26
+- Mozilla Firefox 98.0.2
+- WebKit 15.4
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 100
+- Microsoft Edge 100
+
+
+## Version 1.20
+
+
+### Highlights
+
+- New options for methods **Page.screenshot()**, **Locator.screenshot()** and **ElementHandle.screenshot()**:
+  * Option `animations: "disabled"` rewinds all CSS animations and transitions to a consistent state
+  * Option `mask: Locator[]` masks given elements, overlaying them with pink `#FF00FF` boxes.
+- `expect().toMatchSnapshot()` now supports anonymous snapshots: when snapshot name is missing, copilotbrowser Test will generate one
+  automatically:
+
+  ```js
+  expect('Web is Awesome <3').toMatchSnapshot();
+  ```
+- New `maxDiffPixels` and `maxDiffPixelRatio` options for fine-grained screenshot comparison using `expect().toMatchSnapshot()`:
+
+  ```js
+  expect(await page.screenshot()).toMatchSnapshot({
+    maxDiffPixels: 27, // allow no more than 27 different pixels.
+  });
+  ```
+
+  It is most convenient to specify `maxDiffPixels` or `maxDiffPixelRatio` once in **TestConfig.expect**.
+
+- copilotbrowser Test now adds **TestConfig.fullyParallel** mode. By default, copilotbrowser Test parallelizes between files. In fully parallel mode, tests inside a single file are also run in parallel. You can also use `--fully-parallel` command line flag.
+
+  ```js title="copilotbrowser.config.ts"
+  export default {
+    fullyParallel: true,
+  };
+  ```
+
+- **TestProject.grep** and **TestProject.grepInvert** are now configurable per project. For example, you can now
+  configure smoke tests project using `grep`:
+  ```js title="copilotbrowser.config.ts"
+  export default {
+    projects: [
+      {
+        name: 'smoke tests',
+        grep: /@smoke/,
+      },
+    ],
+  };
+  ```
+
+- [Trace Viewer](./trace-viewer) now shows [API testing requests](./api-testing).
+- **Locator.highlight()** visually reveals element(s) for easier debugging.
+
+### Announcements
+
+- We now ship a designated Python docker image `mcr.microsoft.com/copilotbrowser/python`. Please switch over to it if you use
+  Python. This is the last release that includes Python inside our javascript `mcr.microsoft.com/copilotbrowser` docker image.
+- v1.20 is the last release to receive WebKit update for macOS 10.15 Catalina. Please update macOS to keep using latest & greatest WebKit!
+
+### Browser Versions
+
+- Chromium 101.0.4921.0
+- Mozilla Firefox 97.0.1
+- WebKit 15.4
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 99
+- Microsoft Edge 99
+
+## Version 1.19
+
+
+### copilotbrowser Test Update
+
+- copilotbrowser Test v1.19 now supports *soft assertions*. Failed soft assertions
+  **do not** terminate test execution, but mark the test as failed.
+
+  ```js
+  // Make a few checks that will not stop the test when failed...
+  await expect.soft(page.locator('#status')).toHaveText('Success');
+  await expect.soft(page.locator('#eta')).toHaveText('1 day');
+
+  // ... and continue the test to check more things.
+  await page.locator('#next-page').click();
+  await expect.soft(page.locator('#title')).toHaveText('Make another order');
+  ```
+
+  Read more in [our documentation](./test-assertions#soft-assertions)
+
+- You can now specify a **custom expect message** as a second argument to the `expect` and `expect.soft` functions, for example:
+
+  ```js
+  await expect(page.locator('text=Name'), 'should be logged in').toBeVisible();
+  ```
+
+  The error would look like this:
+
+  ```bash
+      Error: should be logged in
+
+      Call log:
+        - expect.toBeVisible with timeout 5000ms
+        - waiting for "getByText('Name')"
+
+
+        2 |
+        3 | test('example test', async({ page }) => {
+      > 4 |   await expect(page.locator('text=Name'), 'should be logged in').toBeVisible();
+          |                                                                  ^
+        5 | });
+        6 |
+  ```
+
+  Read more in [our documentation](./test-assertions#custom-expect-message)
+- By default, tests in a single file are run in order. If you have many independent tests in a single file, you can now
+  run them in parallel with **Test.describe.configure()**.
+
+### Other Updates
+
+- Locator now supports a `has` option that makes sure it contains another locator inside:
+
+  ```js
+  await page.locator('article', {
+    has: page.locator('.highlight'),
+  }).click();
+  ```
+
+  Read more in [locator documentation](./api/class-locator#locator-locator)
+
+- New **Locator.page()**
+- **Page.screenshot()** and **Locator.screenshot()** now automatically hide blinking caret
+- copilotbrowser Codegen now generates locators and frame locators
+- New option `url`  in **TestConfig.webServer** to ensure your web server is ready before running the tests
+- New **TestInfo.errors** and **TestResult.errors** that contain all failed assertions and soft assertions.
+
+
+### Potentially breaking change in copilotbrowser Test Global Setup
+
+It is unlikely that this change will affect you, no action is required if your tests keep running as they did.
+
+We've noticed that in rare cases, the set of tests to be executed was configured in the global setup by means of the environment variables. We also noticed some applications that were post processing the reporters' output in the global teardown. If you are doing one of the two, [learn more](https://github.com/dayour/copilotbrowser/issues/12018)
+
+### Browser Versions
+
+- Chromium 100.0.4863.0
+- Mozilla Firefox 96.0.1
+- WebKit 15.4
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 98
+- Microsoft Edge 98
+
+
+## Version 1.18
+
+
+### Locator Improvements
+
+- **Locator.dragTo()**
+- [`expect(locator).toBeChecked({ checked })`](./api/class-locatorassertions#locator-assertions-to-be-checked)
+- Each locator can now be optionally filtered by the text it contains:
+    ```js
+    await page.locator('li', { hasText: 'my item' }).locator('button').click();
+    ```
+    Read more in [locator documentation](./api/class-locator#locator-locator)
+
+
+### Testing API improvements
+
+- [`expect(response).toBeOK()`](./test-assertions)
+- [`testInfo.attach()`](./api/class-testinfo#test-info-attach)
+- [`test.info()`](./api/class-test#test-info)
+
+### Improved TypeScript Support
+
+1. copilotbrowser Test now respects `tsconfig.json`'s [`baseUrl`](https://www.typescriptlang.org/tsconfig#baseUrl) and [`paths`](https://www.typescriptlang.org/tsconfig#paths), so you can use aliases
+1. There is a new environment variable `PW_EXPERIMENTAL_TS_ESM` that allows importing ESM modules in your TS code, without the need for the compile step. Don't forget the `.js` suffix when you are importing your esm modules. Run your tests as follows:
+
+```bash
+npm i --save-dev @copilotbrowser/test@1.18.0-rc1
+PW_EXPERIMENTAL_TS_ESM=1 npx copilotbrowser test
+```
+
+### Create copilotbrowser
+
+The `npm init copilotbrowser` command is now generally available for your use:
+
+```sh
+# Run from your project's root directory
+npm init copilotbrowser@latest
+# Or create a new project
+npm init copilotbrowser@latest new-project
+```
+
+This will create a copilotbrowser Test configuration file, optionally add examples, a GitHub Action workflow and a first test `example.spec.ts`.
+
+### New APIs & changes
+
+- new [`testCase.repeatEachIndex`](./api/class-testcase#test-case-repeat-each-index) API
+- [`acceptDownloads`](./api/class-browser#browser-new-context-option-accept-downloads) option now defaults to `true`
+
+### Breaking change: custom config options
+
+Custom config options are a convenient way to parametrize projects with different values. Learn more in [this guide](./test-parameterize#parameterized-projects).
+
+Previously, any fixture introduced through **Test.extend()** could be overridden in the **TestProject.use** config section. For example,
+
+```js
+// WRONG: THIS SNIPPET DOES NOT WORK SINCE v1.18.
+
+// fixtures.js
+const test = base.extend({
+  myParameter: 'default',
+});
+
+// copilotbrowser.config.js
+module.exports = {
+  use: {
+    myParameter: 'value',
+  },
+};
+```
+
+The proper way to make a fixture parametrized in the config file is to specify `option: true` when defining the fixture. For example,
+
+```js
+// CORRECT: THIS SNIPPET WORKS SINCE v1.18.
+
+// fixtures.js
+const test = base.extend({
+  // Fixtures marked as "option: true" will get a value specified in the config,
+  // or fallback to the default value.
+  myParameter: ['default', { option: true }],
+});
+
+// copilotbrowser.config.js
+module.exports = {
+  use: {
+    myParameter: 'value',
+  },
+};
+```
+
+### Browser Versions
+
+- Chromium 99.0.4812.0
+- Mozilla Firefox 95.0
+- WebKit 15.4
+
+This version was also tested against the following stable channels:
+
+- Google Chrome 97
+- Microsoft Edge 97
+
+
+## Version 1.17
+
+
+### Frame Locators
+
+copilotbrowser 1.17 introduces [frame locators](./api/class-framelocator) - a locator to the iframe on the page. Frame locators capture the logic sufficient to retrieve the `iframe` and then locate elements in that iframe. Frame locators are strict by default, will wait for `iframe` to appear and can be used in Web-First assertions.
+
+![Graphics](https://user-images.githubusercontent.com/746130/142082759-2170db38-370d-43ec-8d41-5f9941f57d83.png)
+
+Frame locators can be created with either **Page.frameLocator()** or **Locator.frameLocator()** method.
+
+```js
+const locator = page.frameLocator('#my-iframe').locator('text=Submit');
+await locator.click();
+```
+
+Read more at [our documentation](./api/class-framelocator).
+
+### Trace Viewer Update
+
+copilotbrowser Trace Viewer is now **available online** at https://trace.copilotbrowser.dev! Just drag-and-drop your `trace.zip` file to inspect its contents.
+
+> **NOTE**: trace files are not uploaded anywhere; [trace.copilotbrowser.dev](https://trace.copilotbrowser.dev) is a [progressive web application](https://web.dev/progressive-web-apps/) that processes traces locally.
+
+- copilotbrowser Test traces now include sources by default (these could be turned off with tracing option)
+- Trace Viewer now shows test name
+- New trace metadata tab with browser details
+- Snapshots now have URL bar
+
+![image](https://user-images.githubusercontent.com/746130/141877831-29e37cd1-e574-4bd9-aab5-b13a463bb4ae.png)
+
+### HTML Report Update
+
+- HTML report now supports dynamic filtering
+- Report is now a **single static HTML file** that could be sent by e-mail or as a slack attachment.
+
+![image](https://user-images.githubusercontent.com/746130/141877402-e486643d-72c7-4db3-8844-ed2072c5d676.png)
+
+### Ubuntu ARM64 support + more
+
+- copilotbrowser now supports **Ubuntu 20.04 ARM64**. You can now run copilotbrowser tests inside Docker on Apple M1 and on Raspberry Pi.
+- You can now use copilotbrowser to install stable version of Edge on Linux:
+    ```bash
+    npx copilotbrowser install msedge
+    ```
+
+### New APIs
+
+- Tracing now supports a [`'title'`](./api/class-tracing#tracing-start-option-title) option
+- Page navigations support a new [`'commit'`](./api/class-page#page-goto) waiting option
+- HTML reporter got [new configuration options](./test-reporters#html-reporter)
+- [`testConfig.snapshotDir` option](./api/class-testconfig#test-config-snapshot-dir)
+- [`testInfo.parallelIndex`](./api/class-testinfo#test-info-parallel-index)
+- [`testInfo.titlePath`](./api/class-testinfo#test-info-title-path)
+- [`testOptions.trace`](./api/class-testoptions#test-options-trace) has new options
+- [`expect.toMatchSnapshot`](./api/class-genericassertions.md) supports subdirectories
+- [`reporter.printsToStdio()`](./api/class-reporter#reporter-prints-to-stdio)
+
+
+## Version 1.16
+
+
+### 🎭 copilotbrowser Test
+
+#### API Testing
+
+copilotbrowser 1.16 introduces new [API Testing](./api/class-apirequestcontext) that lets you send requests to the server directly from Node.js!
+Now you can:
+
+- test your server API
+- prepare server side state before visiting the web application in a test
+- validate server side post-conditions after running some actions in the browser
+
+To do a request on behalf of copilotbrowser's Page, use **new **Page.request** API**:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test('context fetch', async ({ page }) => {
+  // Do a GET request on behalf of page
+  const response = await page.request.get('http://example.com/foo.json');
+  // ...
+});
+```
+
+To do a stand-alone request from node.js to an API endpoint, use **new [`request` fixture](./api/class-fixtures#fixtures-request)**:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test('context fetch', async ({ request }) => {
+  // Do a GET request on behalf of page
+  const response = await request.get('http://example.com/foo.json');
+  // ...
+});
+```
+
+Read more about it in our [API testing guide](./api-testing).
+
+#### Response Interception
+
+It is now possible to do response interception by combining [API Testing](./api-testing) with [request interception](./network#modify-requests).
+
+For example, we can blur all the images on the page:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+import jimp from 'jimp'; // image processing library
+
+test('response interception', async ({ page }) => {
+  await page.route('**/*.jpeg', async route => {
+    const response = await page._request.fetch(route.request());
+    const image = await jimp.read(await response.body());
+    await image.blur(5);
+    await route.fulfill({
+      response,
+      body: await image.getBufferAsync('image/jpeg'),
+    });
+  });
+  const response = await page.goto('https://copilotbrowser.dev');
+  expect(response.status()).toBe(200);
+});
+```
+
+Read more about [response interception](./network#modify-responses).
+
+#### New HTML reporter
+
+Try it out new HTML reporter with either `--reporter=html` or a `reporter` entry
+in `copilotbrowser.config.ts` file:
+
+```bash
+$ npx copilotbrowser test --reporter=html
+```
+
+The HTML reporter has all the information about tests and their failures, including surfacing
+trace and image artifacts.
+
+![html reporter](https://user-images.githubusercontent.com/746130/138324311-94e68b39-b51a-4776-a446-f60037a77f32.png)
+
+Read more about [our reporters](./test-reporters#html-reporter).
+
+### 🎭 copilotbrowser Library
+
+#### locator.waitFor
+
+Wait for a locator to resolve to a single element with a given state.
+Defaults to the `state: 'visible'`.
+
+Comes especially handy when working with lists:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test('context fetch', async ({ page }) => {
+  const completeness = page.locator('text=Success');
+  await completeness.waitFor();
+  expect(await page.screenshot()).toMatchSnapshot('screen.png');
+});
+```
+
+Read more about **Locator.waitFor()**.
+
+### Docker support for Arm64
+
+copilotbrowser Docker image is now published for Arm64 so it can be used on Apple Silicon.
+
+Read more about [Docker integration](./docker).
+
+### 🎭 copilotbrowser Trace Viewer
+
+- web-first assertions inside trace viewer
+- run trace viewer with `npx copilotbrowser show-trace` and drop trace files to the trace viewer PWA
+- API testing is integrated with trace viewer
+- better visual attribution of action targets
+
+Read more about [Trace Viewer](./trace-viewer).
+
+### Browser Versions
+
+- Chromium 97.0.4666.0
+- Mozilla Firefox 93.0
+- WebKit 15.4
+
+This version of copilotbrowser was also tested against the following stable channels:
+
+- Google Chrome 94
+- Microsoft Edge 94
+
+
+## Version 1.15
+
+
+### 🎭 copilotbrowser Library
+
+#### 🖱️ Mouse Wheel
+
+By using **Mouse.wheel()** you are now able to scroll vertically or horizontally.
+
+#### 📜 New Headers API
+
+Previously it was not possible to get multiple header values of a response. This is now  possible and additional helper functions are available:
+
+- **Request.allHeaders()**
+- **Request.headersArray()**
+- **Request.headerValue()**
+- **Response.allHeaders()**
+- **Response.headersArray()**
+- **Response.headerValue()**
+- **Response.headerValues()**
+
+#### 🌈 Forced-Colors emulation
+
+Its now possible to emulate the `forced-colors` CSS media feature by passing it in the **Browser.newContext()** or calling **Page.emulateMedia()**.
+
+#### New APIs
+
+- **Page.route()** accepts new `times` option to specify how many times this route should be matched.
+- **Page.setChecked()** and **Locator.setChecked()** were introduced to set the checked state of a checkbox.
+- **Request.sizes()** Returns resource size information for given http request.
+- **Tracing.startChunk()** - Start a new trace chunk.
+- **Tracing.stopChunk()** - Stops a new trace chunk.
+
+### 🎭 copilotbrowser Test
+
+#### 🤝 `test.parallel()` run tests in the same file in parallel
+
+```js
+test.describe.parallel('group', () => {
+  test('runs in parallel 1', async ({ page }) => {
+  });
+  test('runs in parallel 2', async ({ page }) => {
+  });
+});
+```
+
+By default, tests in a single file are run in order. If you have many independent tests in a single file, you can now run them in parallel with [test.describe.parallel(title, callback)](./api/class-test#test-describe-parallel).
+
+#### 🛠 Add `--debug` CLI flag
+
+By using `npx copilotbrowser test --debug` it will enable the [copilotbrowser Inspector](./debug#copilotbrowser-inspector) for you to debug your tests.
+
+### Browser Versions
+
+- Chromium 96.0.4641.0
+- Mozilla Firefox 92.0
+- WebKit 15.0
+
+## Version 1.14
+
+
+### 🎭 copilotbrowser Library
+
+#### ⚡️ New "strict" mode
+
+Selector ambiguity is a common problem in automation testing. **"strict" mode**
+ensures that your selector points to a single element and throws otherwise.
+
+Pass `strict: true` into your action calls to opt in.
+
+```js
+// This will throw if you have more than one button!
+await page.click('button', { strict: true });
+```
+
+#### 📍 New [**Locators API**](./api/class-locator)
+
+Locator represents a view to the element(s) on the page. It captures the logic sufficient to retrieve the element at any given moment.
+
+The difference between the [Locator](./api/class-locator) and [ElementHandle](./api/class-elementhandle) is that the latter points to a particular element, while [Locator](./api/class-locator) captures the logic of how to retrieve that element.
+
+Also, locators are **"strict" by default**!
+
+```js
+const locator = page.locator('button');
+await locator.click();
+```
+
+Learn more in the [documentation](./api/class-locator).
+
+#### 🧩 Experimental [**React**](./other-locators.md) and [**Vue**](./other-locators.md) selector engines
+
+React and Vue selectors allow selecting elements by its component name and/or property values. The syntax is very similar to [attribute selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors) and supports all attribute selector operators.
+
+```js
+await page.locator('_react=SubmitButton[enabled=true]').click();
+await page.locator('_vue=submit-button[enabled=true]').click();
+```
+
+Learn more in the [react selectors documentation](./other-locators.md) and the [vue selectors documentation](./other-locators.md).
+
+#### ✨ New [**`nth`**](./other-locators.md#n-th-element-locator) and [**`visible`**](./other-locators.md#css-matching-only-visible-elements) selector engines
+
+- [`nth`](./other-locators.md#n-th-element-locator) selector engine is equivalent to the `:nth-match` pseudo class, but could be combined with other selector engines.
+- [`visible`](./other-locators.md#css-matching-only-visible-elements) selector engine is equivalent to the `:visible` pseudo class, but could be combined with other selector engines.
+
+```js
+// select the first button among all buttons
+await button.click('button >> nth=0');
+// or if you are using locators, you can use first(), nth() and last()
+await page.locator('button').first().click();
+
+// click a visible button
+await button.click('button >> visible=true');
+```
+
+### 🎭 copilotbrowser Test
+
+#### ✅ Web-First Assertions
+
+`expect` now supports lots of new web-first assertions.
+
+Consider the following example:
+
+```js
+await expect(page.locator('.status')).toHaveText('Submitted');
+```
+
+copilotbrowser Test will be re-testing the node with the selector `.status` until fetched Node has the `"Submitted"` text. It will be re-fetching the node and checking it over and over, until the condition is met or until the timeout is reached. You can either pass this timeout or configure it once via the [`testProject.expect`](./api/class-testproject#test-project-expect) value in test config.
+
+By default, the timeout for assertions is not set, so it'll wait forever, until the whole test times out.
+
+List of all new assertions:
+
+- [`expect(locator).toBeChecked()`](./api/class-locatorassertions#locator-assertions-to-be-checked)
+- [`expect(locator).toBeDisabled()`](./api/class-locatorassertions#locator-assertions-to-be-disabled)
+- [`expect(locator).toBeEditable()`](./api/class-locatorassertions#locator-assertions-to-be-editable)
+- [`expect(locator).toBeEmpty()`](./api/class-locatorassertions#locator-assertions-to-be-empty)
+- [`expect(locator).toBeEnabled()`](./api/class-locatorassertions#locator-assertions-to-be-enabled)
+- [`expect(locator).toBeFocused()`](./api/class-locatorassertions#locator-assertions-to-be-focused)
+- [`expect(locator).toBeHidden()`](./api/class-locatorassertions#locator-assertions-to-be-hidden)
+- [`expect(locator).toBeVisible()`](./api/class-locatorassertions#locator-assertions-to-be-visible)
+- [`expect(locator).toContainText(text, options?)`](./api/class-locatorassertions#locator-assertions-to-contain-text)
+- [`expect(locator).toHaveAttribute(name, value)`](./api/class-locatorassertions#locator-assertions-to-have-attribute)
+- [`expect(locator).toHaveClass(expected)`](./api/class-locatorassertions#locator-assertions-to-have-class)
+- [`expect(locator).toHaveCount(count)`](./api/class-locatorassertions#locator-assertions-to-have-count)
+- [`expect(locator).toHaveCSS(name, value)`](./api/class-locatorassertions#locator-assertions-to-have-css-1)
+- [`expect(locator).toHaveId(id)`](./api/class-locatorassertions#locator-assertions-to-have-id)
+- [`expect(locator).toHaveJSProperty(name, value)`](./api/class-locatorassertions#locator-assertions-to-have-js-property)
+- [`expect(locator).toHaveText(expected, options)`](./api/class-locatorassertions#locator-assertions-to-have-text)
+- [`expect(page).toHaveTitle(title)`](./api/class-pageassertions#page-assertions-to-have-title)
+- [`expect(page).toHaveURL(url)`](./api/class-pageassertions#page-assertions-to-have-url)
+- [`expect(locator).toHaveValue(value)`](./api/class-locatorassertions#locator-assertions-to-have-value)
+
+#### ⛓ Serial mode with [`describe.serial`](./api/class-test#test-describe-serial)
+
+Declares a group of tests that should always be run serially. If one of the tests fails, all subsequent tests are skipped. All tests in a group are retried together.
+
+```js
+test.describe.serial('group', () => {
+  test('runs first', async ({ page }) => { /* ... */ });
+  test('runs second', async ({ page }) => { /* ... */ });
+});
+```
+
+Learn more in the [documentation](./api/class-test#test-describe-serial).
+
+#### 🐾 Steps API with [`test.step`](./api/class-test#test-step)
+
+Split long tests into multiple steps using `test.step()` API:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test('test', async ({ page }) => {
+  await test.step('Log in', async () => {
+    // ...
+  });
+  await test.step('news feed', async () => {
+    // ...
+  });
+});
+```
+
+Step information is exposed in reporters API.
+
+#### 🌎 Launch web server before running tests
+
+To launch a server during the tests, use the [`webServer`](./test-webserver) option in the configuration file. The server will wait for a given url to be available before running the tests, and the url will be passed over to copilotbrowser as a [`baseURL`](./api/class-testoptions#test-options-base-url) when creating a context.
+
+```js title="copilotbrowser.config.ts"
+import { defineConfig } from '@copilotbrowser/test';
+export default defineConfig({
+  webServer: {
+    command: 'npm run start', // command to launch
+    url: 'http://127.0.0.1:3000', // url to await for
+    timeout: 120 * 1000,
+    reuseExistingServer: !process.env.CI,
+  },
+});
+```
+
+Learn more in the [documentation](./test-webserver).
+
+### Browser Versions
+
+- Chromium 94.0.4595.0
+- Mozilla Firefox 91.0
+- WebKit 15.0
+
+
+## Version 1.13
+
+
+#### copilotbrowser Test
+
+- **⚡️ Introducing [Reporter API](https://github.com/dayour/copilotbrowser/blob/65a9037461ffc15d70cdc2055832a0c5512b227c/packages/copilotbrowser-test/types/testReporter.d.ts)** which is already used to create an [Allure copilotbrowser reporter](https://github.com/allure-framework/allure-js/pull/297).
+- **⛺️ New [`baseURL` fixture](./test-configuration#basic-configuration)** to support relative paths in tests.
+
+
+#### copilotbrowser
+
+- **🖖 Programmatic drag-and-drop support** via the **Page.dragAndDrop()** API.
+- **🔎 Enhanced HAR** with body sizes for requests and responses. Use via `recordHar` option in **Browser.newContext()**.
+
+#### Tools
+
+- copilotbrowser Trace Viewer now shows parameters, returned values and `console.log()` calls.
+- copilotbrowser Inspector can generate copilotbrowser Test tests.
+
+#### New and Overhauled Guides
+
+- [Intro](./intro.md)
+- [Authentication](./auth.md)
+- [Chrome Extensions](./chrome-extensions.md)
+- [copilotbrowser Test Annotations](./test-annotations.md)
+- [copilotbrowser Test Configuration](./test-configuration.md)
+- [copilotbrowser Test Fixtures](./test-fixtures.md)
+
+#### Browser Versions
+
+- Chromium 93.0.4576.0
+- Mozilla Firefox 90.0
+- WebKit 14.2
+
+#### New copilotbrowser APIs
+
+- new `baseURL` option in **Browser.newContext()** and **Browser.newPage()**
+- **Response.securityDetails()** and **Response.serverAddr()**
+- **Page.dragAndDrop()** and **Frame.dragAndDrop()**
+- **Download.cancel()**
+- **Page.inputValue()**, **Frame.inputValue()** and **ElementHandle.inputValue()**
+- new `force` option in **Page.fill()**, **Frame.fill()**, and **ElementHandle.fill()**
+- new `force` option in **Page.selectOption()**, **Frame.selectOption()**, and **ElementHandle.selectOption()**
+
+## Version 1.12
+
+#### ⚡️ Introducing copilotbrowser Test
+
+[copilotbrowser Test](./intro.md) is a **new test runner** built from scratch by copilotbrowser team specifically to accommodate end-to-end testing needs:
+
+- Run tests across all browsers.
+- Execute tests in parallel.
+- Enjoy context isolation and sensible defaults out of the box.
+- Capture videos, screenshots and other artifacts on failure.
+- Integrate your POMs as extensible fixtures.
+
+Installation:
+```bash
+npm i -D @copilotbrowser/test
+```
+
+Simple test `tests/foo.spec.ts`:
+
+```js
+import { test, expect } from '@copilotbrowser/test';
+
+test('basic test', async ({ page }) => {
+  await page.goto('https://dayour.github.io/copilotbrowser/');
+  const name = await page.innerText('.navbar__title');
+  expect(name).toBe('copilotbrowser');
+});
+```
+
+Running:
+
+```bash
+npx copilotbrowser test
+```
+
+👉  Read more in [copilotbrowser Test documentation](./intro.md).
+
+#### 🧟‍♂️ Introducing copilotbrowser Trace Viewer
+
+[copilotbrowser Trace Viewer](./trace-viewer.md) is a new GUI tool that helps exploring recorded copilotbrowser traces after the script ran. copilotbrowser traces let you examine:
+- page DOM before and after each copilotbrowser action
+- page rendering before and after each copilotbrowser action
+- browser network during script execution
+
+Traces are recorded using the new **BrowserContext.tracing** API:
+
+```js
+const browser = await chromium.launch();
+const context = await browser.newContext();
+
+// Start tracing before creating / navigating a page.
+await context.tracing.start({ screenshots: true, snapshots: true });
+
+const page = await context.newPage();
+await page.goto('https://copilotbrowser.dev');
+
+// Stop tracing and export it into a zip archive.
+await context.tracing.stop({ path: 'trace.zip' });
+```
+
+Traces are examined later with the copilotbrowser CLI:
+
+
+```sh
+npx copilotbrowser show-trace trace.zip
+```
+
+That will open the following GUI:
+
+![image](https://user-images.githubusercontent.com/746130/121109654-d66c4480-c7c0-11eb-8d4d-eb70d2b03811.png)
+
+👉 Read more in [trace viewer documentation](./trace-viewer.md).
+
+
+#### Browser Versions
+
+- Chromium 93.0.4530.0
+- Mozilla Firefox 89.0
+- WebKit 14.2
+
+This version of copilotbrowser was also tested against the following stable channels:
+
+- Google Chrome 91
+- Microsoft Edge 91
+
+#### New APIs
+
+- `reducedMotion` option in **Page.emulateMedia()**, **BrowserType.launchPersistentContext()**, **Browser.newContext()** and **Browser.newPage()**
+- **BrowserContext.event('request')**
+- **BrowserContext.event('requestFailed')**
+- **BrowserContext.event('requestFinished')**
+- **BrowserContext.event('response')**
+- `tracesDir` option in **BrowserType.launch()** and **BrowserType.launchPersistentContext()**
+- new **BrowserContext.tracing** API namespace
+- new **Download.page()** method
+
+## Version 1.11
+
+🎥  New video: [copilotbrowser: A New Test Automation Framework for the Modern Web](https://youtu.be/_Jla6DyuEu4) ([slides](https://docs.google.com/presentation/d/1xFhZIJrdHkVe2CuMKOrni92HoG2SWslo0DhJJQMR1DI/edit?usp=sharing))
+- We talked about copilotbrowser
+- Showed engineering work behind the scenes
+- Did live demos with new features ✨
+- **Special thanks** to [applitools](http://applitools.com/) for hosting the event and inviting us!
+
+#### Browser Versions
+
+- Chromium 92.0.4498.0
+- Mozilla Firefox 89.0b6
+- WebKit 14.2
+
+#### New APIs
+
+- support for **async predicates** across the API in methods such as **Page.waitForRequest()** and others
+- new **emulation devices**: Galaxy S8, Galaxy S9+, Galaxy Tab S4, Pixel 3, Pixel 4
+- new methods:
+    * **Page.waitForURL()** to await navigations to URL
+    * **Video.delete()** and **Video.saveAs()** to manage screen recording
+- new options:
+    * `screen` option in the **Browser.newContext()** method to emulate `window.screen` dimensions
+    * `position` option in **Page.check()** and **Page.uncheck()** methods
+    * `trial` option to dry-run actions in **Page.check()**, **Page.uncheck()**, **Page.click()**, **Page.dblclick()**, **Page.hover()** and **Page.tap()**
+
+## Version 1.10
+
+- [copilotbrowser for Java v1.10](https://github.com/dayour/copilotbrowser-java) is **now stable**!
+- Run copilotbrowser against **Google Chrome** and **Microsoft Edge** stable channels with the [new channels API](./browsers).
+- Chromium screenshots are **fast** on Mac & Windows.
+
+#### Bundled Browser Versions
+
+- Chromium 90.0.4430.0
+- Mozilla Firefox 87.0b10
+- WebKit 14.2
+
+This version of copilotbrowser was also tested against the following stable channels:
+
+- Google Chrome 89
+- Microsoft Edge 89
+
+#### New APIs
+
+- **BrowserType.launch()** now accepts the new `'channel'` option. Read more in [our documentation](./browsers).
+
+
+## Version 1.9
+
+- [copilotbrowser Inspector](./debug.md) is a **new GUI tool** to author and debug your tests.
+  - **Line-by-line debugging** of your copilotbrowser scripts, with play, pause and step-through.
+  - Author new scripts by **recording user actions**.
+  - **Generate element selectors** for your script by hovering over elements.
+  - Set the `PWDEBUG=1` environment variable to launch the Inspector
+
+- **Pause script execution** with **Page.pause()** in headed mode. Pausing the page launches [copilotbrowser Inspector](./debug.md) for debugging.
+
+- **New has-text pseudo-class** for CSS selectors. `:has-text("example")` matches any element containing `"example"` somewhere inside, possibly in a child or a descendant element. See [more examples](./other-locators.md#css-matching-by-text).
+
+- **Page dialogs are now auto-dismissed** during execution, unless a listener for `dialog` event is configured. [Learn more](./dialogs.md) about this.
+
+- [copilotbrowser for Python](https://github.com/dayour/copilotbrowser-python) is **now stable** with an idiomatic snake case API and pre-built [Docker image](./docker.md) to run tests in CI/CD.
+
+#### Browser Versions
+
+- Chromium 90.0.4421.0
+- Mozilla Firefox 86.0b10
+- WebKit 14.1
+
+#### New APIs
+- **Page.pause()**.
+
+
+## Version 1.8
+
+- [Selecting elements based on layout](./other-locators.md#css-matching-elements-based-on-layout) with `:left-of()`, `:right-of()`, `:above()` and `:below()`.
+- copilotbrowser now includes [command line interface](./test-cli.md), former copilotbrowser-cli.
+  ```bash js
+  npx copilotbrowser --help
+  ```
+- **Page.selectOption()** now waits for the options to be present.
+- New methods to [assert element state](./actionability#assertions) like **Page.isEditable()**.
+
+#### New APIs
+
+- **ElementHandle.isChecked()**.
+- **ElementHandle.isDisabled()**.
+- **ElementHandle.isEditable()**.
+- **ElementHandle.isEnabled()**.
+- **ElementHandle.isHidden()**.
+- **ElementHandle.isVisible()**.
+- **Page.isChecked()**.
+- **Page.isDisabled()**.
+- **Page.isEditable()**.
+- **Page.isEnabled()**.
+- **Page.isHidden()**.
+- **Page.isVisible()**.
+- New option `'editable'` in **ElementHandle.waitForElementState()**.
+
+#### Browser Versions
+
+- Chromium 90.0.4392.0
+- Mozilla Firefox 85.0b5
+- WebKit 14.1
+
+## Version 1.7
+
+- **New Java SDK**: [copilotbrowser for Java](https://github.com/dayour/copilotbrowser-java) is now on par with [JavaScript](https://github.com/dayour/copilotbrowser), [Python](https://github.com/dayour/copilotbrowser-python) and [.NET bindings](https://github.com/dayour/copilotbrowser-dotnet).
+- **Browser storage API**: New convenience APIs to save and load browser storage state (cookies, local storage) to simplify automation scenarios with authentication.
+- **New CSS selectors**: We heard your feedback for more flexible selectors and have revamped the selectors implementation. copilotbrowser 1.7 introduces [new CSS extensions](./other-locators.md#css-locator) and there's more coming soon.
+- **New website**: The docs website at [copilotbrowser Github.io](https://dayour.github.io/copilotbrowser/) has been updated and is now built with [Docusaurus](https://v2.docusaurus.io/).
+- **Support for Apple Silicon**: copilotbrowser browser binaries for WebKit and Chromium are now built for Apple Silicon.
+
+#### New APIs
+
+- **BrowserContext.storageState()** to get current state for later reuse.
+- `storageState` option in **Browser.newContext()** and **Browser.newPage()** to setup browser context state.
+
+#### Browser Versions
+
+- Chromium 89.0.4344.0
+- Mozilla Firefox 84.0b9
+- WebKit 14.1

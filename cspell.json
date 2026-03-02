@@ -1,0 +1,28 @@
+{
+  "words": [
+    "libasound",
+    "libatk",
+    "libatspi",
+    "libcairo",
+    "libcups",
+    "libdbus",
+    "libdrm",
+    "libexpat",
+    "libgbm",
+    "libnss",
+    "libnspr",
+    "libpango",
+    "libx",
+    "libxcb",
+    "libxcomposite",
+    "libxdamage",
+    "libxext",
+    "libxfixes",
+    "libxkbcommon",
+    "libxrandr",
+    "fontconfig",
+    "nologin",
+    "zipjs",
+    "zipimport"
+  ]
+}

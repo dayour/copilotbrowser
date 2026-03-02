@@ -1,0 +1,59 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { EventEmitter } from './eventEmitter';
+import { ChannelOwner } from './channelOwner';
+import { LocalUtils } from './localUtils';
+import { copilotbrowser } from './copilotbrowser';
+import type { ClientInstrumentation } from './clientInstrumentation';
+import type { HeadersArray } from './types';
+import type { Platform } from './platform';
+import type * as channels from '@protocol/channels';
+export declare class Connection extends EventEmitter {
+    readonly _objects: Map<string, ChannelOwner<channels.Channel>>;
+    onmessage: (message: object) => void;
+    private _lastId;
+    private _callbacks;
+    private _rootObject;
+    private _closedError;
+    private _isRemote;
+    private _localUtils?;
+    private _rawBuffers;
+    toImpl: ((client: ChannelOwner | Connection) => any) | undefined;
+    private _tracingCount;
+    readonly _instrumentation: ClientInstrumentation;
+    readonly headers: HeadersArray;
+    constructor(platform: Platform, localUtils?: LocalUtils, instrumentation?: ClientInstrumentation, headers?: HeadersArray);
+    markAsRemote(): void;
+    isRemote(): boolean;
+    useRawBuffers(): void;
+    rawBuffers(): boolean;
+    localUtils(): LocalUtils | undefined;
+    initializecopilotbrowser(): Promise<copilotbrowser>;
+    getObjectWithKnownName(guid: string): any;
+    setIsTracing(isTracing: boolean): void;
+    sendMessageToServer(object: ChannelOwner, method: string, params: any, options: {
+        apiName?: string;
+        title?: string;
+        internal?: boolean;
+        frames?: channels.StackFrame[];
+        stepId?: string;
+    }): Promise<any>;
+    private _validatorFromWireContext;
+    dispatch(message: object): void;
+    close(cause?: string): void;
+    private _tChannelImplFromWire;
+    private _createRemoteObject;
+}

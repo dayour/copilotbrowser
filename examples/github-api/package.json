@@ -1,0 +1,13 @@
+{
+  "name": "github-api",
+  "version": "0.0.1",
+  "scripts": {
+    "test": "copilotbrowser test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@copilotbrowser/test": "^1.17.1"
+  }
+}

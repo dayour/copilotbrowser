@@ -1,0 +1,40 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { SdkObject } from './instrumentation';
+import { ManualPromise } from '../utils/isomorphic/manualPromise';
+type SaveCallback = (localPath: string, error?: Error) => Promise<void>;
+type CancelCallback = () => Promise<void>;
+export declare class Artifact extends SdkObject {
+    private _localPath;
+    private _unaccessibleErrorMessage;
+    private _cancelCallback;
+    private _finishedPromise;
+    private _saveCallbacks;
+    private _finished;
+    private _deleted;
+    private _failureError;
+    constructor(parent: SdkObject, localPath: string, unaccessibleErrorMessage?: string, cancelCallback?: CancelCallback);
+    finishedPromise(): ManualPromise<void>;
+    localPath(): string;
+    localPathAfterFinished(): Promise<string>;
+    saveAs(saveCallback: SaveCallback): void;
+    failureError(): Promise<string | null>;
+    cancel(): Promise<void>;
+    delete(): Promise<void>;
+    deleteOnContextClose(): Promise<void>;
+    reportFinished(error?: Error): Promise<void>;
+}
+export {};

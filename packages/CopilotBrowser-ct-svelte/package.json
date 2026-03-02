@@ -1,0 +1,42 @@
+{
+  "name": "@copilotbrowser/experimental-ct-svelte",
+  "version": "2.0.0",
+  "description": "copilotbrowser Component Testing for Svelte",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://github.com/dayour/copilotbrowser",
+  "engines": {
+    "node": ">=25.6.1"
+  },
+  "author": {
+    "name": "Daryl Yourk"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "default": "./index.js"
+    },
+    "./register": {
+      "types": "./register.d.ts",
+      "default": "./register.mjs"
+    },
+    "./hooks": {
+      "types": "./hooks.d.ts",
+      "default": "./hooks.mjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {
+    "@copilotbrowser/experimental-ct-core": "2.0.0",
+    "@sveltejs/vite-plugin-svelte": "^5.1.0"
+  },
+  "devDependencies": {
+    "svelte": "^5.37.3"
+  },
+  "bin": {
+    "copilotbrowser": "cli.js"
+  }
+}

@@ -1,0 +1,239 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import { test, expect } from './npmTest';
+import { chromium } from '@copilotbrowser/test';
+import path from 'path';
+import http from 'http';
+import https from 'https';
+import { Writable } from 'stream';
+import { TestProxy } from '../config/proxy';
+import { TestServer } from '../config/testserver';
+
+test.use({ isolateBrowsers: true });
+
+const extraInstalledSoftware = process.platform === 'win32' ? ['winldd' as const] : [];
+
+test('install command should work', async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  await exec('npm i copilotbrowser');
+
+  await test.step('copilotbrowser install chromium', async () => {
+    const result = await exec('npx copilotbrowser install chromium');
+    expect(result).toHaveLoggedSoftwareDownload(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+    await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+  });
+
+  await test.step('copilotbrowser install', async () => {
+    const result = await exec('npx copilotbrowser install');
+    expect(result).toHaveLoggedSoftwareDownload(['firefox', 'webkit']);
+    await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', 'firefox', 'webkit', ...extraInstalledSoftware]);
+  });
+
+  await test.step('copilotbrowser install --list', async () => {
+    const result = await exec('npx copilotbrowser install --list');
+    expect.soft(result).toMatch(/copilotbrowser version: \d+\.\d+/);
+    expect.soft(result).toMatch(/chromium-\d+/);
+    expect.soft(result).toMatch(/chromium_headless_shell-\d+/);
+    expect.soft(result).toMatch(/ffmpeg-\d+/);
+    expect.soft(result).toMatch(/firefox-\d+/);
+    expect.soft(result).toMatch(/webkit-\d+/);
+  });
+
+  await exec('node sanity.js copilotbrowser', { env: { copilotbrowser_BROWSERS_PATH: '0' } });
+  await exec('node sanity.js copilotbrowser chromium firefox webkit');
+
+  const packages = ['copilotbrowser-chromium', 'copilotbrowser-firefox', 'copilotbrowser-webkit', '@copilotbrowser/browser-chromium', '@copilotbrowser/browser-firefox', '@copilotbrowser/browser-webkit'];
+  for (const pkg of packages) {
+    await test.step(pkg, async () => {
+      const result = await exec(`npm i ${pkg}`);
+      expect(result).toHaveLoggedSoftwareDownload([]);
+      if (!pkg.includes('@copilotbrowser/browser-'))
+        await exec('node sanity.js', pkg, 'chromium firefox webkit');
+    });
+  }
+});
+
+test('install command should work with HTTPS_PROXY', { annotation: { type: 'issue', description: 'https://github.com/dayour/copilotbrowser/issues/36650' } }, async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  await exec('npm i copilotbrowser');
+  const proxy = await TestProxy.create(8947 + test.info().workerIndex * 4);
+  proxy.forwardTo(443, { preserveHostname: true });
+  await test.step('copilotbrowser install chromium', async () => {
+    const result = await exec('npx copilotbrowser install chromium', {
+      env: {
+        HTTPS_PROXY: proxy.URL,
+      }
+    });
+    expect(result).toHaveLoggedSoftwareDownload(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+    await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+  });
+  await proxy.stop();
+});
+
+test('install command should work with mirror that uses chunked encoding', async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  await exec('npm i copilotbrowser');
+  const server = http.createServer(async (req, res) => {
+    try {
+      const upstream = await fetch('https://github.com/dayour/copilotbrowser/releases/download' + req.url);
+      const headers = new Headers(upstream.headers);
+      headers.delete('content-length');
+      res.writeHead(upstream.status, Object.fromEntries(headers));
+      await upstream.body.pipeTo(Writable.toWeb(res));
+      return;
+    } catch (e) {
+      console.error(e);
+      res.statusCode = 500;
+      res.end(String(e));
+      return;
+    }
+  });
+  await new Promise<void>(resolve => server.listen(0, resolve));
+  const result = await exec('npx copilotbrowser install chromium', {
+    env: {
+      copilotbrowser_DOWNLOAD_HOST: `http://localhost:${(server.address() as any).port}`,
+    }
+  });
+  expect(result).toHaveLoggedSoftwareDownload(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+  await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+  server.close();
+});
+
+test('install command should ignore HTTP_PROXY', { annotation: { type: 'issue', description: 'https://github.com/dayour/copilotbrowser/issues/36412' } }, async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  await exec('npm i copilotbrowser');
+  await test.step('copilotbrowser install chromium', async () => {
+    const result = await exec('npx copilotbrowser install chromium', {
+      env: {
+        HTTP_PROXY: 'unused',
+      },
+    });
+    expect(result).toHaveLoggedSoftwareDownload(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+    await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+  });
+});
+
+test('install command should work with HTTPS proxy for HTTP downloads', async ({ exec }) => {
+  await exec('npm i copilotbrowser');
+  const httpsProxyServer = https.createServer(await TestServer.certOptions());
+
+  let requestCount = 0;
+  httpsProxyServer.on('request', (_req, res) => {
+    requestCount++;
+    res.statusCode = 502;
+    res.end();
+  });
+
+  await new Promise<void>(resolve => httpsProxyServer.listen(0, resolve));
+  await exec('npx copilotbrowser install chromium', {
+    env: {
+      copilotbrowser_DOWNLOAD_HOST: 'http://example.com',
+      ALL_PROXY: `https://localhost:${(httpsProxyServer.address() as any).port}`,
+      NODE_TLS_REJECT_UNAUTHORIZED: '0',
+    },
+    expectToExitWithError: true,
+  });
+  expect(requestCount).toBeGreaterThan(0);
+  httpsProxyServer.close();
+});
+
+test('should be able to remove browsers', async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  await exec('npm i copilotbrowser');
+  await exec('npx copilotbrowser install chromium');
+  await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', ...extraInstalledSoftware]);
+  await exec('npx copilotbrowser uninstall');
+  await checkInstalledSoftwareOnDisk([]);
+});
+
+test('should print the right install command without browsers', async ({ exec }) => {
+  await exec('npm i copilotbrowser');
+
+  const pwLangName2InstallCommand = {
+    'java': 'mvn exec:java -e -D exec.mainClass=com.microsoft.copilotbrowser.CLI -D exec.args="install"',
+    'python': 'copilotbrowser install',
+    'csharp': 'pwsh bin/Debug/netX/copilotbrowser.ps1 install',
+    '': 'npx copilotbrowser install',
+  };
+
+  for (const [langName, installCommand] of Object.entries(pwLangName2InstallCommand)) {
+    await test.step(`codegen should work for ${langName}`, async () => {
+      const result = await exec('npx copilotbrowser codegen', {
+        expectToExitWithError: true,
+        env: {
+          PW_LANG_NAME: langName,
+        }
+      });
+      expect(result).toContain(installCommand);
+    });
+  }
+});
+
+test('subsequent installs works', async ({ exec }) => {
+  test.info().annotations.push({ type: 'issue', description: 'https://github.com/dayour/copilotbrowser/issues/1651' });
+
+  await exec('npm i @copilotbrowser/browser-chromium');
+  // Note: the `npm install` would not actually crash, the error
+  // is merely logged to the console. To reproduce the error, we should make
+  // sure that script's install.js can be run subsequently without unhandled promise rejections.
+  // Note: the flag `--unhandled-rejections=strict` will force node to terminate in case
+  // of UnhandledPromiseRejection.
+  await exec('node --unhandled-rejections=strict', path.join('node_modules', '@copilotbrowser', 'browser-chromium', 'install.js'));
+});
+
+test('install copilotbrowser-chromium should work', async ({ exec }) => {
+  await exec('npm i copilotbrowser-chromium');
+  await exec('npx copilotbrowser install chromium');
+  await exec('node sanity.js copilotbrowser-chromium chromium');
+});
+
+test('should print error if recording video without ffmpeg', async ({ exec, writeFiles }) => {
+  await exec('npm i copilotbrowser');
+
+  await writeFiles({
+    'launch.js': `
+      const copilotbrowser = require('copilotbrowser');
+      (async () => {
+        const browser = await copilotbrowser.chromium.launch({ executablePath: ${JSON.stringify(chromium.executablePath())} });
+        try {
+          const context = await browser.newContext({ recordVideo: { dir: 'videos' } });
+          const page = await context.newPage();
+        } finally {
+          await browser.close();
+        }
+      })().catch(e => {
+        console.error(e);
+        process.exit(1);
+      });
+    `,
+    'launchPersistentContext.js': `
+      const copilotbrowser = require('copilotbrowser');
+      process.on('unhandledRejection', (e) => console.error('unhandledRejection', e));
+      (async () => {
+        const context = await copilotbrowser.chromium.launchPersistentContext('', { executablePath: ${JSON.stringify(chromium.executablePath())}, recordVideo: { dir: 'videos' } });
+      })().catch(e => {
+        console.error(e);
+        process.exit(1);
+      });
+    `,
+  });
+
+  await test.step('BrowserType.launch', async () => {
+    const result = await exec('node', 'launch.js', { expectToExitWithError: true });
+    expect(result).toContain(`browserContext.newPage: Executable doesn't exist at`);
+  });
+
+  await test.step('BrowserType.launchPersistentContext', async () => {
+    const result = await exec('node', 'launchPersistentContext.js', { expectToExitWithError: true });
+    expect(result).not.toContain('unhandledRejection');
+    expect(result).toContain(`browserType.launchPersistentContext: Executable doesn't exist at`);
+  });
+});

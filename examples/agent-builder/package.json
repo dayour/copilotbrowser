@@ -1,0 +1,15 @@
+{
+  "name": "@copilotbrowser/agent-builder",
+  "version": "1.0.0",
+  "description": "Autonomously build Copilot Studio agents from JSON specs via copilotbrowser MCP",
+  "type": "module",
+  "main": "runner.mjs",
+  "scripts": {
+    "build:retail":  "node runner.mjs specs/retail-customer-service.json",
+    "build:helpdesk": "node runner.mjs specs/it-helpdesk.json",
+    "build:policy":  "node runner.mjs specs/policy-guidance.json"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.27.0"
+  }
+}

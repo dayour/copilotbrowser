@@ -1,0 +1,4 @@
+node_modules/
+test-results/
+copilotbrowser-report/
+package-lock.json

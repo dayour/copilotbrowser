@@ -1,0 +1,185 @@
+{
+  "name": "copilotbrowser-vscode",
+  "private": true,
+  "displayName": "copilotbrowser",
+  "description": "Browser automation, MCP server, and test tooling for VS Code — control Chrome, Firefox, and WebKit from AI coding assistants",
+  "version": "2.0.0",
+  "publisher": "dayour",
+  "icon": "icon.png",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://github.com/dayour/copilotbrowser",
+  "engines": {
+    "vscode": "^1.99.0"
+  },
+  "categories": [
+    "AI",
+    "Testing",
+    "Debuggers",
+    "Other"
+  ],
+  "keywords": [
+    "mcp",
+    "ai",
+    "copilot",
+    "browser",
+    "automation",
+    "testing",
+    "e2e",
+    "chromium",
+    "firefox",
+    "webkit",
+    "copilotbrowser",
+    "copilotbrowser"
+  ],
+  "enabledApiProposals": [
+    "mcpServerDefinitionProviders"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "copilotbrowser",
+        "label": "copilotbrowser Browser Automation"
+      }
+    ],
+    "commands": [
+      {
+        "command": "copilotbrowser.install",
+        "title": "Install Browsers",
+        "category": "copilotbrowser",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "copilotbrowser.runTests",
+        "title": "Run Tests",
+        "category": "copilotbrowser",
+        "icon": "$(play)"
+      },
+      {
+        "command": "copilotbrowser.showTrace",
+        "title": "Show Trace Viewer",
+        "category": "copilotbrowser",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "copilotbrowser.codegen",
+        "title": "Record New Test",
+        "category": "copilotbrowser",
+        "icon": "$(record)"
+      },
+      {
+        "command": "copilotbrowser.openInspector",
+        "title": "Open Inspector",
+        "category": "copilotbrowser",
+        "icon": "$(inspect)"
+      },
+      {
+        "command": "copilotbrowser.refreshMcp",
+        "title": "Refresh MCP Server",
+        "category": "copilotbrowser",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "copilotbrowser.showMcpConfig",
+        "title": "Show MCP Server Configuration",
+        "category": "copilotbrowser",
+        "icon": "$(settings-gear)"
+      }
+    ],
+    "configuration": {
+      "title": "copilotbrowser",
+      "properties": {
+        "copilotbrowser.reuseBrowser": {
+          "type": "boolean",
+          "default": true,
+          "description": "Reuse browser between test runs."
+        },
+        "copilotbrowser.showBrowser": {
+          "type": "boolean",
+          "default": false,
+          "description": "Show browser window during test execution."
+        },
+        "copilotbrowser.env": {
+          "type": "object",
+          "default": {},
+          "description": "Additional environment variables for copilotbrowser processes."
+        },
+        "copilotbrowser.mcp.browser": {
+          "type": "string",
+          "default": "chromium",
+          "enum": ["chromium", "chrome", "msedge", "firefox", "webkit"],
+          "enumDescriptions": [
+            "Chromium (bundled)",
+            "Google Chrome (system)",
+            "Microsoft Edge (system)",
+            "Firefox (bundled)",
+            "WebKit/Safari (bundled)"
+          ],
+          "description": "Browser to use for the MCP server."
+        },
+        "copilotbrowser.mcp.headless": {
+          "type": "boolean",
+          "default": true,
+          "description": "Run browser in headless mode when serving MCP requests."
+        },
+        "copilotbrowser.mcp.capabilities": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["vision", "pdf", "devtools"]
+          },
+          "default": [],
+          "description": "Additional MCP capabilities to enable: vision (screenshot-based), pdf, devtools."
+        },
+        "copilotbrowser.mcp.extraArgs": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Extra command-line arguments to pass to the copilotbrowser MCP server."
+        }
+      }
+    },
+    "menus": {
+      "editor/context": [
+        {
+          "command": "copilotbrowser.runTests",
+          "group": "copilotbrowser@1",
+          "when": "resourceFilename =~ /.*\\.spec\\.(ts|js|mjs)$/"
+        },
+        {
+          "command": "copilotbrowser.codegen",
+          "group": "copilotbrowser@2",
+          "when": "resourceFilename =~ /.*\\.spec\\.(ts|js|mjs)$/"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "copilotbrowser.refreshMcp",
+          "when": "true"
+        },
+        {
+          "command": "copilotbrowser.showMcpConfig",
+          "when": "true"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "package": "vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.99.0",
+    "@vscode/vsce": "^3.0.0",
+    "typescript": "^5.9.3"
+  }
+}

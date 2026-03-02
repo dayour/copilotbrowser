@@ -1,0 +1,76 @@
+# copilotbrowser MCP Server - Docker Compose
+# Usage:
+#   Build and start:  docker compose up --build
+#   Start (pre-built): docker compose up
+#   Stop:             docker compose down
+
+services:
+  copilotbrowser:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: copilotbrowser:2.0.0
+    container_name: copilotbrowser
+    restart: unless-stopped
+
+    ports:
+      - "${MCP_PORT:-8931}:8931"
+
+    environment:
+      # Browser configuration
+      - BROWSER_TYPE=${BROWSER_TYPE:-chromium}
+      - BROWSER_HEADLESS=${BROWSER_HEADLESS:-true}
+      - BROWSER_CAPS=${BROWSER_CAPS:-}
+
+      # Server configuration
+      - MCP_PORT=8931
+      - MCP_HOST=0.0.0.0
+      - SHARED_BROWSER_CONTEXT=${SHARED_BROWSER_CONTEXT:-false}
+
+      # Optional output directory (mount a volume to persist)
+      - OUTPUT_DIR=${OUTPUT_DIR:-}
+
+      # Optional allowed hosts for host-header validation
+      # Set to '*' to allow all (only for trusted networks)
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-}
+
+    # Optional: persist browser downloads across container recreations
+    volumes:
+      - copilotbrowser-browsers:/ms-copilotbrowser
+      - ${OUTPUT_DIR:-/tmp/copilotbrowser-output}:/output
+
+    # Resource limits for controlled environments
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+    # Security: drop capabilities not needed for headless browser
+    cap_drop:
+      - ALL
+    cap_add:
+      - SYS_ADMIN   # Required for Chromium sandbox (or use --no-sandbox)
+
+    # Shared memory size (Chromium requires sufficient /dev/shm)
+    shm_size: '256mb'
+
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8931/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  copilotbrowser-browsers:
+    driver: local

@@ -1,0 +1,30 @@
+/**
+ * Copyright (c) Microsoft Corporation.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+import type { BabelFileResult, ParseResult } from '../../bundles/babel/node_modules/@types/babel__core';
+import type { EncodedSourceMap } from '../../bundles/babel/node_modules/@jridgewell/gen-mapping';
+export declare const codeFrameColumns: typeof import('../../bundles/babel/node_modules/@types/babel__code-frame').codeFrameColumns;
+export declare const declare: typeof import('../../bundles/babel/node_modules/@types/babel__helper-plugin-utils').declare;
+export declare const types: typeof import('../../bundles/babel/node_modules/@types/babel__core').types;
+export declare const traverse: typeof import('../../bundles/babel/node_modules/@types/babel__traverse').default;
+export type BabelPlugin = [string, any?];
+export type BabelTransformFunction = (code: string, filename: string, isModule: boolean, pluginsPrefix: BabelPlugin[], pluginsSuffix: BabelPlugin[], inputSourceMap?: EncodedSourceMap) => BabelFileResult | null;
+export declare const babelTransform: BabelTransformFunction;
+export type BabelParseFunction = (code: string, filename: string, isModule: boolean) => ParseResult;
+export declare const babelParse: BabelParseFunction;
+export type { NodePath, PluginObj, types as T } from '../../bundles/babel/node_modules/@types/babel__core';
+export type { BabelAPI } from '../../bundles/babel/node_modules/@types/babel__helper-plugin-utils';
+export type { EncodedSourceMap } from '../../bundles/babel/node_modules/@jridgewell/gen-mapping';
+export declare const genMapping: typeof import('../../bundles/babel/node_modules/@jridgewell/gen-mapping');
