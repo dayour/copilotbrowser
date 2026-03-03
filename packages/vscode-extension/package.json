@@ -4,7 +4,7 @@
   "displayName": "copilotbrowser Browser Automation",
   "description": "Self-contained browser automation MCP server for VS Code — control Chrome, Firefox, Edge, and WebKit from AI coding assistants. No separate install needed.",
   "version": "2.0.0",
-  "publisher": "dayour",
+  "publisher": "DarbotLabs",
   "icon": "icon.png",
   "license": "Apache-2.0",
   "repository": {
