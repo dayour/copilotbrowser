@@ -1,4 +1,4 @@
-# copilotbrowser — Browser Automation & MCP for VS Code
+# copilotbrowser automation suite — Browser Automation & MCP for VS Code
 
 Control Chrome, Firefox, Edge, and WebKit from **GitHub Copilot Chat** and any MCP-compatible AI assistant, directly from VS Code.
 

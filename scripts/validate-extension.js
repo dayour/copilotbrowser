@@ -9,10 +9,11 @@ const stubStatusBar = { show: () => stubOutput.push('statusbar.show'), hide: () 
 
 const configStore = {
   'copilotbrowser.mcp.browser': 'msedge',
-  'copilotbrowser.mcp.headless': true,
+  'copilotbrowser.mcp.headless': false,
   'copilotbrowser.mcp.capabilities': [],
   'copilotbrowser.mcp.extraArgs': ['--timeout-action=30000'],
   'copilotbrowser.env': { FOO: 'BAR' },
+  'copilotbrowser.autoStart': true,
 };
 
 const stubConfig = {
@@ -35,6 +36,10 @@ class EventEmitter {
   dispose() { this._listeners = []; }
 }
 
+class TreeItem {
+  constructor(label, collapsibleState) { this.label = label; this.collapsibleState = collapsibleState; }
+}
+
 const stubVscode = {
   window: {
     createOutputChannel: (name) => ({ appendLine: (msg) => stubOutput.push(`out:${msg}`), append: (msg) => stubOutput.push(`out:${msg}`), show: () => {}, dispose: () => {} }),
@@ -42,6 +47,7 @@ const stubVscode = {
     showInformationMessage: (msg) => stubOutput.push(`info:${msg}`),
     showErrorMessage: (msg) => stubOutput.push(`error:${msg}`),
     showQuickPick: async () => ({ label: 'dummy' }),
+    registerTreeDataProvider: () => ({ dispose: () => {} }),
     activeTextEditor: undefined,
   },
   workspace: {
@@ -56,7 +62,14 @@ const stubVscode = {
   },
   lm: stubLm,
   StatusBarAlignment: { Right: 1 },
-  ThemeColor: class ThemeColor { constructor(val) { this.val = val; }},
+  ThemeColor: class ThemeColor { constructor(val) { this.val = val; } },
+  ThemeIcon: class ThemeIcon { constructor(id) { this.id = id; } },
+  TreeItem,
+  TreeItemCollapsibleState: { None: 0, Collapsed: 1, Expanded: 2 },
+  Uri: { file: (p) => ({ fsPath: p, toString: () => p }), parse: (s) => ({ toString: () => s }) },
+  QuickPickItemKind: { Default: 0, Separator: -1 },
+  ConfigurationTarget: { Global: 1, Workspace: 2, WorkspaceFolder: 3 },
+  Disposable: class Disposable { constructor(fn) { this._fn = fn; } dispose() { this._fn?.(); } static from(...d) { return new stubVscode.Disposable(() => d.forEach(x => x.dispose())); } },
   EventEmitter,
 };
 
@@ -69,13 +82,15 @@ Module._load = function(request, parent, isMain) {
 
 (async () => {
   const ext = require('../packages/vscode-extension/out/extension.js');
-  await ext.activate({ subscriptions: [] });
+  await ext.activate({ subscriptions: [], globalState: { get: () => undefined, update: async () => {} } });
   if (!capturedProvider) throw new Error('Provider was not registered');
   const defs = await capturedProvider.provideMcpServerDefinitions({});
   console.log('MCP defs:', defs);
   const def = defs[0];
   if (!def.command.includes('node') && !def.command.endsWith('.cmd')) throw new Error('Unexpected command');
-  if (!Array.isArray(def.args) || def.args[1] !== 'run-mcp-server') throw new Error('Args missing run-mcp-server');
+  if (!Array.isArray(def.args) || !def.args[0].includes('cli')) throw new Error('Args missing CLI path: ' + JSON.stringify(def.args));
+  if (!def.args.includes('--browser')) throw new Error('Args missing --browser: ' + JSON.stringify(def.args));
+  if (!def.args.includes('--isolated')) throw new Error('Args missing --isolated: ' + JSON.stringify(def.args));
   const cliPath = def.args[0];
   if (!fs.existsSync(cliPath)) throw new Error('CLI path does not exist: ' + cliPath);
   console.log('✅ extension provider resolved CLI path:', cliPath);

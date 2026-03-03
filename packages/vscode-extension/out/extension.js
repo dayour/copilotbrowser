@@ -399,6 +399,9 @@ async function restartMcpServer() {
         stopMcpServer();
     await new Promise(r => setTimeout(r, 600));
     await startMcpServer();
+    // Also refresh the stdio-based MCP definition provider so VS Code
+    // Copilot Chat re-spawns the server with the latest configuration.
+    mcpProviderRef?.refresh();
 }
 // ---------------------------------------------------------------------------
 // MCP Server Definition Provider

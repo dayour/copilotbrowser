@@ -20,7 +20,7 @@ Before you begin, make sure you have the following installed:
 
 ### Installation & Setup
 
-1.  **Install the Extension**: Open the Extensions view in VS Code (`Ctrl+Shift+X` or `Cmd+Shift+X`) and search for "copilotbrowser". [Install the official extension from Microsoft](https://marketplace.visualstudio.com/items?itemName=ms-copilotbrowser.copilotbrowser).
+1.  **Install the Extension**: Open the Extensions view in VS Code (`Ctrl+Shift+X` or `Cmd+Shift+X`) and search for "copilotbrowser". [Install the copilotbrowser extension from the marketplace](https://marketplace.visualstudio.com/items?itemName=DarbotLabs.copilotbrowser-vscode).
 
 
 ![install copilotbrowser extension](./images/getting-started/vscode-extension.png)

@@ -90,7 +90,7 @@ export const defaultConfig: FullConfig = {
     contextOptions: {
       viewport: null,
     },
-    isolated: false,
+    isolated: true,
   },
   console: {
     level: 'info',
@@ -436,7 +436,7 @@ export function mergeConfig(base: FullConfig, overrides: Config): FullConfig {
     ...pickDefined(base.browser),
     ...pickDefined(overrides.browser),
     browserName: overrides.browser?.browserName ?? base.browser?.browserName ?? 'chromium',
-    isolated: overrides.browser?.isolated ?? base.browser?.isolated ?? false,
+    isolated: overrides.browser?.isolated ?? base.browser?.isolated ?? true,
     launchOptions: {
       ...pickDefined(base.browser?.launchOptions),
       ...pickDefined(overrides.browser?.launchOptions),

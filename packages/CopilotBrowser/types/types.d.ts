@@ -46,7 +46,7 @@ type InferZodSchema<T extends ZodSchema> = T extends z3.ZodTypeAny ? z3.infer<T>
  * This example creates a page, navigates it to a URL, and then saves a screenshot:
  *
  * ```js
- * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+ * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
  *
  * (async () => {
  *   const browser = await webkit.launch();
@@ -313,7 +313,7 @@ export interface Page {
    * The **Page.waitForFunction()** can be used to observe viewport size change:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    *
    * (async () => {
    *   const browser = await webkit.launch();
@@ -347,7 +347,7 @@ export interface Page {
    * The **Page.waitForFunction()** can be used to observe viewport size change:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    *
    * (async () => {
    *   const browser = await webkit.launch();
@@ -394,7 +394,7 @@ export interface Page {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -434,7 +434,7 @@ export interface Page {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -474,7 +474,7 @@ export interface Page {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -514,7 +514,7 @@ export interface Page {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -550,7 +550,7 @@ export interface Page {
    * An example of exposing page URL to all frames in a page:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    *
    * (async () => {
    *   const browser = await webkit.launch({ headless: false });
@@ -592,7 +592,7 @@ export interface Page {
    * An example of exposing page URL to all frames in a page:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    *
    * (async () => {
    *   const browser = await webkit.launch({ headless: false });
@@ -2306,7 +2306,7 @@ export interface Page {
    * An example of adding a `sha256` function to the page:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    * const crypto = require('crypto');
    *
    * (async () => {
@@ -5088,7 +5088,7 @@ export interface PageAgent {
  * An example of dumping frame tree:
  *
  * ```js
- * const { firefox } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'webkit'.
+ * const { firefox } = require('copilotbrowser');  // Or 'chromium' or 'webkit'.
  *
  * (async () => {
  *   const browser = await firefox.launch();
@@ -5301,7 +5301,7 @@ export interface Frame {
    * The **Frame.waitForFunction()** can be used to observe viewport size change:
    *
    * ```js
-   * const { firefox } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'webkit'.
+   * const { firefox } = require('copilotbrowser');  // Or 'chromium' or 'webkit'.
    *
    * (async () => {
    *   const browser = await firefox.launch();
@@ -5335,7 +5335,7 @@ export interface Frame {
    * The **Frame.waitForFunction()** can be used to observe viewport size change:
    *
    * ```js
-   * const { firefox } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'webkit'.
+   * const { firefox } = require('copilotbrowser');  // Or 'chromium' or 'webkit'.
    *
    * (async () => {
    *   const browser = await firefox.launch();
@@ -5382,7 +5382,7 @@ export interface Frame {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -5422,7 +5422,7 @@ export interface Frame {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -5462,7 +5462,7 @@ export interface Frame {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -5502,7 +5502,7 @@ export interface Frame {
    * This method works across navigations:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+   * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
    *
    * (async () => {
    *   const browser = await chromium.launch();
@@ -7555,7 +7555,7 @@ export interface BrowserContext {
    * An example of exposing page URL to all frames in all pages in the context:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    *
    * (async () => {
    *   const browser = await webkit.launch({ headless: false });
@@ -7596,7 +7596,7 @@ export interface BrowserContext {
    * An example of exposing page URL to all frames in all pages in the context:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    *
    * (async () => {
    *   const browser = await webkit.launch({ headless: false });
@@ -8374,7 +8374,7 @@ export interface BrowserContext {
    * An example of adding a `sha256` function to all pages in the context:
    *
    * ```js
-   * const { webkit } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'firefox'.
+   * const { webkit } = require('copilotbrowser');  // Or 'chromium' or 'firefox'.
    * const crypto = require('crypto');
    *
    * (async () => {
@@ -8979,7 +8979,7 @@ export interface BrowserContext {
  * A Browser is created via **BrowserType.launch()**. An example of using a `Browser` to create a `Page`:
  *
  * ```js
- * const { firefox } = require('@copilotbrowser/copilotbrowser');  // Or 'chromium' or 'webkit'.
+ * const { firefox } = require('copilotbrowser');  // Or 'chromium' or 'webkit'.
  *
  * (async () => {
  *   const browser = await firefox.launch();
@@ -13642,7 +13642,7 @@ export interface Locator {
  * a typical example of using copilotbrowser to drive automation:
  *
  * ```js
- * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+ * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
  *
  * (async () => {
  *   const browser = await chromium.launch();
@@ -14285,7 +14285,7 @@ export interface BrowserType<Unused = {}> {
    * it later:
    *
    * ```js
-   * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'webkit' or 'firefox'.
+   * const { chromium } = require('copilotbrowser');  // Or 'webkit' or 'firefox'.
    *
    * (async () => {
    *   const browserServer = await chromium.launchServer();
@@ -14678,7 +14678,7 @@ export namespace errors {
  * **BrowserType.launch()**.
  *
  * ```js
- * const copilotbrowser = require('@copilotbrowser/copilotbrowser');
+ * const copilotbrowser = require('copilotbrowser');
  *
  * (async () => {
  *   const browser = await copilotbrowser.chromium.launch();
@@ -14716,7 +14716,7 @@ type ElectronType = typeof import('electron');
  * instance you can control main electron process as well as work with Electron windows:
  *
  * ```js
- * const { _electron: electron } = require('@copilotbrowser/copilotbrowser');
+ * const { _electron: electron } = require('copilotbrowser');
  *
  * (async () => {
  *   // Launch Electron app.
@@ -15188,7 +15188,7 @@ export {};
  * An example of the Android automation script would be:
  *
  * ```js
- * const { _android: android } = require('@copilotbrowser/copilotbrowser');
+ * const { _android: android } = require('copilotbrowser');
  *
  * (async () => {
  *   // Connect to the device.
@@ -15305,7 +15305,7 @@ export interface Android {
    * Server Side:
    *
    * ```js
-   * const { _android } = require('@copilotbrowser/copilotbrowser');
+   * const { _android } = require('copilotbrowser');
    *
    * (async () => {
    *   const browserServer = await _android.launchServer({
@@ -15320,7 +15320,7 @@ export interface Android {
    * Client Side:
    *
    * ```js
-   * const { _android } = require('@copilotbrowser/copilotbrowser');
+   * const { _android } = require('copilotbrowser');
    *
    * (async () => {
    *   const device = await _android.connect('<wsEndpoint>');
@@ -17780,7 +17780,7 @@ export const webkit: BrowserType;
  * **NOTE** Coverage APIs are only supported on Chromium-based browsers.
  *
  * ```js
- * const { chromium } = require('@copilotbrowser/copilotbrowser');
+ * const { chromium } = require('copilotbrowser');
  * const v8toIstanbul = require('v8-to-istanbul');
  *
  * (async () => {
@@ -17901,7 +17901,7 @@ export interface Coverage {
  * An example of using `Dialog` class:
  *
  * ```js
- * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+ * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
  *
  * (async () => {
  *   const browser = await chromium.launch();
@@ -18072,13 +18072,13 @@ export interface Download {
  * copilotbrowser has **experimental** support for Electron automation. You can access electron namespace via:
  *
  * ```js
- * const { _electron } = require('@copilotbrowser/copilotbrowser');
+ * const { _electron } = require('copilotbrowser');
  * ```
  *
  * An example of the Electron automation script would be:
  *
  * ```js
- * const { _electron: electron } = require('@copilotbrowser/copilotbrowser');
+ * const { _electron: electron } = require('copilotbrowser');
  *
  * (async () => {
  *   // Launch Electron app.
@@ -19062,7 +19062,7 @@ export interface Keyboard {
  * copilotbrowser generates a lot of logs and they are accessible via the pluggable logger sink.
  *
  * ```js
- * const { chromium } = require('@copilotbrowser/copilotbrowser');  // Or 'firefox' or 'webkit'.
+ * const { chromium } = require('copilotbrowser');  // Or 'firefox' or 'webkit'.
  *
  * (async () => {
  *   const browser = await chromium.launch({

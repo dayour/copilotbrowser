@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-import type { APIRequestContext, Browser, BrowserContext, BrowserContextOptions, Page, PageAgent, LaunchOptions, ViewportSize, Geolocation, HTTPCredentials, Locator, APIResponse, PageScreenshotOptions } from '@copilotbrowser/copilotbrowser';
-export * from '@copilotbrowser/copilotbrowser';
+import type { APIRequestContext, Browser, BrowserContext, BrowserContextOptions, Page, PageAgent, LaunchOptions, ViewportSize, Geolocation, HTTPCredentials, Locator, APIResponse, PageScreenshotOptions } from 'copilotbrowser';
+export * from 'copilotbrowser';
 
 export type BlobReporterOptions = { outputDir?: string, fileName?: string };
 export type ListReporterOptions = { printSteps?: boolean };
@@ -7252,7 +7252,7 @@ export interface copilotbrowserTestOptions {
  * and **Fixtures.page**.
  */
 export interface copilotbrowserWorkerArgs {
-  copilotbrowser: typeof import('@copilotbrowser/copilotbrowser');
+  copilotbrowser: typeof import('copilotbrowser');
   /**
    * `Browser` instance is shared between all tests in the [same worker](https://copilotbrowser.dev/docs/test-parallel) - this makes testing
    * efficient. However, each test runs in an isolated `BrowserContext`  and gets a fresh environment.
