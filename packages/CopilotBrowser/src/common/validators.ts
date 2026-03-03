@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { z as zod } from 'copilotbrowser-core/lib/mcpBundle';
+import { z as zod } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 
 import type { TestAnnotation, TestDetailsAnnotation } from '../../types/test';
 import type { Location } from '../../types/testReporter';

@@ -17,7 +17,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ExpectError = void 0;
 exports.isJestError = isJestError;
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 class ExpectError extends Error {
     matcherResult;
     constructor(jestError, customMessage, stackFrames) {

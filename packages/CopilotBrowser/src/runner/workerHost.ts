@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { removeFolders } from 'copilotbrowser-core/lib/utils';
+import { removeFolders } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { ProcessHost } from './processHost';
 import { stdioChunkToParams } from '../common/ipc';

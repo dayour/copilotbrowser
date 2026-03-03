@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { stringifyStackFrames } from 'copilotbrowser-core/lib/utils';
+import { stringifyStackFrames } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import type { StackFrame } from '@protocol/channels';
 

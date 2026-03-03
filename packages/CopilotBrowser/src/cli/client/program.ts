@@ -233,7 +233,7 @@ async function install(args: MinimistArgs) {
 
 async function ensureConfiguredBrowserInstalled() {
   if (fs.existsSync(defaultConfigFile())) {
-    const { registry } = await import('copilotbrowser-core/lib/server/registry/index');
+    const { registry } = await import('@copilotbrowser/copilotbrowser/lib/server/registry/index');
     // Config exists, ensure configured browser is installed
     const config = JSON.parse(await fs.promises.readFile(defaultConfigFile(), 'utf-8')) as Config;
     const browserName = config.browser?.browserName ?? 'chromium';
@@ -265,7 +265,7 @@ async function createDefaultConfig(channel: string) {
 }
 
 async function findOrInstallDefaultBrowser() {
-  const { registry } = await import('copilotbrowser-core/lib/server/registry/index');
+  const { registry } = await import('@copilotbrowser/copilotbrowser/lib/server/registry/index');
   const channels = ['chrome', 'msedge'];
   for (const channel of channels) {
     const executable = registry.findExecutable(channel);

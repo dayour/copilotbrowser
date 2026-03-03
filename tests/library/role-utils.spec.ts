@@ -15,7 +15,7 @@
  */
 
 import { contextTest as test, expect } from '../config/browserTest';
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from 'copilotbrowser';
 import fs from 'fs';
 
 test.skip(({ mode }) => mode !== 'default');

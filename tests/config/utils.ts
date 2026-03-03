@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import type { Locator, Frame, Page } from 'copilotbrowser-core';
-import { ZipFile } from '../../packages/copilotbrowser-core/lib/server/utils/zipFile';
+import type { Locator, Frame, Page } from 'copilotbrowser';
+import { ZipFile } from '../../packages/copilotbrowser/lib/server/utils/zipFile';
 import type { StackFrame } from '../../packages/protocol/src/channels';
-import { parseClientSideCallMetadata } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/traceUtils';
-import { TraceLoader } from '../../packages/copilotbrowser-core/src/utils/isomorphic/trace/traceLoader';
-import { TraceModel } from '../../packages/copilotbrowser-core/src/utils/isomorphic/trace/traceModel';
+import { parseClientSideCallMetadata } from '../../packages/copilotbrowser/lib/utils/isomorphic/traceUtils';
+import { TraceLoader } from '../../packages/copilotbrowser/src/utils/isomorphic/trace/traceLoader';
+import { TraceModel } from '../../packages/copilotbrowser/src/utils/isomorphic/trace/traceModel';
 import type { ActionTraceEvent, TraceEvent } from '@trace/trace';
-import { renderTitleForCall } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/protocolFormatter';
-import { ZipTraceLoaderBackend } from '../../packages/copilotbrowser-core/lib/server/trace/viewer/traceParser';
-import type { SnapshotStorage } from '../../packages/copilotbrowser-core/src/utils/isomorphic/trace/snapshotStorage';
+import { renderTitleForCall } from '../../packages/copilotbrowser/lib/utils/isomorphic/protocolFormatter';
+import { ZipTraceLoaderBackend } from '../../packages/copilotbrowser/lib/server/trace/viewer/traceParser';
+import type { SnapshotStorage } from '../../packages/copilotbrowser/src/utils/isomorphic/trace/snapshotStorage';
 
 export type BoundingBox = Awaited<ReturnType<Locator['boundingBox']>>;
 

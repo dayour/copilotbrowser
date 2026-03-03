@@ -18,8 +18,8 @@ import type { IncomingMessage } from 'http';
 import type { ProxyServer } from '../third_party/proxy';
 import { createProxy } from '../third_party/proxy';
 import net from 'net';
-import type { SocksSocketClosedPayload, SocksSocketDataPayload, SocksSocketRequestedPayload } from 'copilotbrowser-core/src/server/utils/socksProxy';
-import { SocksProxy } from '../../packages/copilotbrowser-core/lib/server/utils/socksProxy';
+import type { SocksSocketClosedPayload, SocksSocketDataPayload, SocksSocketRequestedPayload } from 'copilotbrowser/src/server/utils/socksProxy';
+import { SocksProxy } from '../../packages/copilotbrowser/lib/server/utils/socksProxy';
 
 // Certain browsers perform telemetry requests which we want to ignore.
 const kConnectHostsToIgnore = new Set([

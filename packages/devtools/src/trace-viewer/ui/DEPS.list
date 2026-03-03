@@ -1,0 +1,10 @@
+[*]
+@injected/**
+@isomorphic/**
+@trace/**
+@web/**
+../entries.ts
+../geometry.ts
+../../../copilotbrowser/src/isomorphic/**
+../third_party/devtools.ts
+./shared/**

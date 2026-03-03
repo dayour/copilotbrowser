@@ -1,7 +1,10 @@
 {
-  "name": "copilotbrowser",
+  "name": "@copilotbrowser/copilotbrowser",
   "version": "2.0.0",
   "description": "A high-level API to automate web browsers",
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dayour/copilotbrowser.git"
@@ -24,7 +27,6 @@
     "./lib/mcp/index": "./lib/mcp/index.js",
     "./lib/mcp/browser/tools": "./lib/mcp/browser/tools.js",
     "./lib/mcp/program": "./lib/mcp/program.js",
-    "./lib/mcp/sdk/bundle": "./lib/mcp/sdk/bundle.js",
     "./lib/mcp/sdk/exports": "./lib/mcp/sdk/exports.js",
     "./lib/cli/client/program": "./lib/cli/client/program.js",
     "./lib/program": "./lib/program.js",
@@ -42,8 +44,15 @@
       "require": "./jsx-runtime.js",
       "default": "./jsx-runtime.js"
     },
+    "./lib/cli/program": "./lib/cli/program.js",
+    "./lib/mcpBundle": "./lib/mcpBundle.js",
+    "./lib/remote/copilotbrowserServer": "./lib/remote/copilotbrowserServer.js",
+    "./lib/server": "./lib/server/index.js",
+    "./lib/server/registry/index": "./lib/server/registry/index.js",
     "./lib/util": "./lib/util.js",
+    "./lib/utils": "./lib/utils.js",
     "./lib/utilsBundle": "./lib/utilsBundle.js",
+    "./lib/zipBundle": "./lib/zipBundle.js",
     "./types/test": {
       "types": "./types/test.d.ts"
     },
@@ -55,17 +64,105 @@
       "import": "./test.mjs",
       "require": "./test.js",
       "default": "./test.js"
+    },
+    "./client": {
+      "types": "./client.d.ts",
+      "import": "./client.mjs",
+      "require": "./client.js",
+      "default": "./client.js"
+    },
+    "./ct/core": {
+      "types": "./ct/core/index.d.ts",
+      "default": "./ct/core/index.js"
+    },
+    "./ct/core/lib/mount": "./lib/ct/mount.js",
+    "./ct/core/lib/program": "./lib/ct/program.js",
+    "./ct/core/types/component": {
+      "types": "./types/ct/component.d.ts"
+    },
+    "./ct/react": {
+      "types": "./ct/react/index.d.ts",
+      "default": "./ct/react/index.js"
+    },
+    "./ct/react/register": {
+      "types": "./ct/react/register.d.ts",
+      "default": "./ct/react/register.mjs"
+    },
+    "./ct/react/hooks": {
+      "types": "./ct/react/hooks.d.ts",
+      "default": "./ct/react/hooks.mjs"
+    },
+    "./ct/react17": {
+      "types": "./ct/react17/index.d.ts",
+      "default": "./ct/react17/index.js"
+    },
+    "./ct/react17/register": {
+      "types": "./ct/react17/register.d.ts",
+      "default": "./ct/react17/register.mjs"
+    },
+    "./ct/react17/hooks": {
+      "types": "./ct/react17/hooks.d.ts",
+      "default": "./ct/react17/hooks.mjs"
+    },
+    "./ct/svelte": {
+      "types": "./ct/svelte/index.d.ts",
+      "default": "./ct/svelte/index.js"
+    },
+    "./ct/svelte/register": {
+      "types": "./ct/svelte/register.d.ts",
+      "default": "./ct/svelte/register.mjs"
+    },
+    "./ct/svelte/hooks": {
+      "types": "./ct/svelte/hooks.d.ts",
+      "default": "./ct/svelte/hooks.mjs"
+    },
+    "./ct/vue": {
+      "types": "./ct/vue/index.d.ts",
+      "default": "./ct/vue/index.js"
+    },
+    "./ct/vue/register": {
+      "types": "./ct/vue/register.d.ts",
+      "default": "./ct/vue/register.mjs"
+    },
+    "./ct/vue/hooks": {
+      "types": "./ct/vue/hooks.d.ts",
+      "default": "./ct/vue/hooks.mjs"
     }
   },
   "bin": {
     "copilotbrowser": "cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "install": "node install.js"
   },
   "author": {
     "name": "Daryl Yourk"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "copilotbrowser-core": "2.0.0"
+    "@modelcontextprotocol/sdk": "^1.27.0",
+    "colors": "1.4.0",
+    "commander": "^13.0.0",
+    "debug": "^4.3.4",
+    "diff": "^7.0.0",
+    "dotenv": "^16.4.5",
+    "https-proxy-agent": "7.0.6",
+    "ini": "^6.0.0",
+    "jpeg-js": "0.4.4",
+    "mime": "^3.0.0",
+    "minimatch": "^3.1.2",
+    "open": "8.4.0",
+    "playwright-core": "1.51.1",
+    "pngjs": "6.0.0",
+    "progress": "2.0.3",
+    "proxy-from-env": "2.0.0",
+    "socks-proxy-agent": "8.0.5",
+    "ws": "8.19.0",
+    "yaml": "^2.6.0",
+    "zod": "^3.25.76",
+    "zod-to-json-schema": "^3.25.1"
   },
   "optionalDependencies": {
     "fsevents": "2.3.2"

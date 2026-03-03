@@ -20,8 +20,8 @@ import os from 'os';
 import path from 'path';
 import url from 'url';
 
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
-import { gracefullyProcessExitDoNotHang } from 'copilotbrowser-core/lib/utils';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { gracefullyProcessExitDoNotHang } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { BrowserServerBackend } from '../../mcp/browser/browserServerBackend';
 import { SocketConnection } from '../client/socketConnection';

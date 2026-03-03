@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTool } from './tool';
 
 const listProfiles = defineTool({

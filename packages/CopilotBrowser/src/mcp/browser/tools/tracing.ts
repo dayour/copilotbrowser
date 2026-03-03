@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTool } from './tool';
 
-import type { Tracing } from '../../../../../copilotbrowser-core/src/client/tracing';
+import type { Tracing } from '../../../../../copilotbrowser/src/client/tracing';
 
 const tracingStart = defineTool({
   capability: 'devtools',

@@ -16,7 +16,7 @@
 
 import path from 'path';
 
-import { createGuid } from 'copilotbrowser-core/lib/utils';
+import { createGuid } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { serializeRegexPatterns } from '../isomorphic/teleReceiver';
 

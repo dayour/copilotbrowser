@@ -19,8 +19,8 @@ import type { Server } from 'http';
 import type http from 'http';
 import https from 'https';
 import path from 'path';
-import { spawnAsync } from '../../packages/copilotbrowser-core/lib/server/utils/spawnAsync';
-import { createHttpServer } from '../../packages/copilotbrowser-core/lib/server/utils/network';
+import { spawnAsync } from '../../packages/copilotbrowser/lib/server/utils/spawnAsync';
+import { createHttpServer } from '../../packages/copilotbrowser/lib/server/utils/network';
 
 const kPublicNpmRegistry = 'https://registry.npmjs.org';
 const kContentTypeAbbreviatedMetadata = 'application/vnd.npm.install-v1+json';

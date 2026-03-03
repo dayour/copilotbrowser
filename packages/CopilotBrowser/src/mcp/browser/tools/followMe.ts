@@ -16,12 +16,12 @@
 
 import vm from 'vm';
 
-import { ManualPromise } from 'copilotbrowser-core/lib/utils';
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { ManualPromise } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 
 import { defineTool, defineTabTool } from './tool';
 
-import type * as copilotbrowser from 'copilotbrowser-core';
+import type * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 import type * as actions from '@recorder/actions';
 
 type FollowMeRecording = {

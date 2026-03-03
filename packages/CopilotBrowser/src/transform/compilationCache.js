@@ -37,7 +37,7 @@ exports.getUserData = getUserData;
 const fs_1 = __importDefault(require("fs"));
 const os_1 = __importDefault(require("os"));
 const path_1 = __importDefault(require("path"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const globals_1 = require("../common/globals");
 const utilsBundle_1 = require("../utilsBundle");
 // Assumptions for the compilation cache:

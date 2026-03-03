@@ -20,7 +20,7 @@ import { contextFactory } from './browser/browserContextFactory';
 import * as mcpServer from './sdk/server';
 
 import type { Config } from './config';
-import type { BrowserContext } from 'copilotbrowser';
+import type { BrowserContext } from '@copilotbrowser/copilotbrowser';
 import type { BrowserContextFactory } from './browser/browserContextFactory';
 import type { Server } from '@modelcontextprotocol/sdk/server/index.js';
 

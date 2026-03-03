@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 const errorDebug = debug('pw:mcp:error');
 

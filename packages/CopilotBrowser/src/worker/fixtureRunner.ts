@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { escapeWithQuotes, ManualPromise } from 'copilotbrowser-core/lib/utils';
+import { escapeWithQuotes, ManualPromise } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { fixtureParameterNames } from '../common/fixtures';
 import { filterStackFile, formatLocation } from '../util';

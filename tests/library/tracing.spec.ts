@@ -15,7 +15,7 @@
  */
 
 import fs from 'fs';
-import { jpegjs } from 'copilotbrowser-core/lib/utilsBundle';
+import { jpegjs } from 'copilotbrowser/lib/utilsBundle';
 import path from 'path';
 import { browserTest, contextTest as test, expect } from '../config/browserTest';
 import { parseTraceRaw } from '../config/utils';

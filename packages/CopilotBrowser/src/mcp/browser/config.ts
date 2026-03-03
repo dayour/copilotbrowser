@@ -18,9 +18,9 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { registry } from 'copilotbrowser-core/lib/server';
-import { devices } from 'copilotbrowser-core';
-import { dotenv, debug } from 'copilotbrowser-core/lib/utilsBundle';
+import { registry } from '@copilotbrowser/copilotbrowser/lib/server';
+import { devices } from '@copilotbrowser/copilotbrowser';
+import { dotenv, debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { configFromIniFile } from './configIni';
 import { fileExistsAsync } from '../../util';

@@ -16,7 +16,7 @@
 
 import path from 'path';
 
-import { calculateSha1, toPosixPath } from 'copilotbrowser-core/lib/utils';
+import { calculateSha1, toPosixPath } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { createFileMatcher } from '../util';
 

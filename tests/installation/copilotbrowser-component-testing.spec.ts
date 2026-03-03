@@ -18,12 +18,12 @@ import path from 'path';
 
 test.slow();
 
-test('pnpm: @copilotbrowser/experimental-ct-react should work', async ({ exec, tmpWorkspace, writeFiles }) => {
-  await exec('pnpm add @copilotbrowser/experimental-ct-react react react-dom');
+test('pnpm: copilotbrowser/ct/react should work', async ({ exec, tmpWorkspace, writeFiles }) => {
+  await exec('pnpm add copilotbrowser react react-dom');
   await exec('pnpm exec copilotbrowser install');
   await writeFiles({
     'copilotbrowser.config.ts': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig } from 'copilotbrowser/ct/react';
       export default defineConfig({});
     `,
     'copilotbrowser/index.html': `<script type="module" src="./index.js"></script>`,
@@ -34,7 +34,7 @@ test('pnpm: @copilotbrowser/experimental-ct-react should work', async ({ exec, t
       }
     `,
     'example.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './Button';
 
       test('sample test', async ({ page, mount }) => {

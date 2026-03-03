@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ManualPromise, setTimeOrigin, startProfiling, stopProfiling } from 'copilotbrowser-core/lib/utils';
+import { ManualPromise, setTimeOrigin, startProfiling, stopProfiling } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { serializeError } from '../util';
 

@@ -17,7 +17,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.testDebug = void 0;
 exports.logUnhandledError = logUnhandledError;
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
 const errorDebug = (0, utilsBundle_1.debug)('pw:mcp:error');
 function logUnhandledError(error) {
     errorDebug(error);

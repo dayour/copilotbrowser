@@ -16,7 +16,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toEqual = toEqual;
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const util_1 = require("../util");
 // Omit colon and one or more spaces, so can call getLabelPrinter.
 const EXPECTED_LABEL = 'Expected';

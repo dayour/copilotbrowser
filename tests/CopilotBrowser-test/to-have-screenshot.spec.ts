@@ -15,7 +15,7 @@
  */
 
 import * as fs from 'fs';
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
 import * as path from 'path';
 import { pathToFileURL } from 'url';
 import { test, expect, createImage, paintBlackPixels } from './copilotbrowser-test-fixtures';

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { asLocatorDescription, constructURLBasedOnBaseURL, isRegExp, isString, isTextualMimeType, isURLPattern, pollAgainstDeadline, serializeExpectedTextValues, formatMatcherMessage } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
+import { asLocatorDescription, constructURLBasedOnBaseURL, isRegExp, isString, isTextualMimeType, isURLPattern, pollAgainstDeadline, serializeExpectedTextValues, formatMatcherMessage } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { expectTypes } from '../util';
 import { toBeTruthy } from './toBeTruthy';
@@ -30,10 +30,10 @@ import { MatcherResult } from './matcherHint';
 
 import type { ExpectMatcherState } from '../../types/test';
 import type { TestStepInfoImpl } from '../worker/testInfo';
-import type { APIResponse, Locator, Frame, Page } from 'copilotbrowser-core';
-import type { FrameExpectParams } from 'copilotbrowser-core/lib/client/types';
+import type { APIResponse, Locator, Frame, Page } from '@copilotbrowser/copilotbrowser';
+import type { FrameExpectParams } from '@copilotbrowser/copilotbrowser/lib/client/types';
 import type { ExpectMatcherUtils } from '../../types/test';
-import type { InternalMatcherUtils, URLPattern } from 'copilotbrowser-core/lib/utils';
+import type { InternalMatcherUtils, URLPattern } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 export type ExpectMatcherStateInternal = Omit<ExpectMatcherState, 'utils'> & {
   _stepInfo?: TestStepInfoImpl;

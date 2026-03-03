@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { z as zod } from 'copilotbrowser-core/lib/mcpBundle';
+import { z as zod } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 
 import * as mcp from '../sdk/exports';
 import { TestContext } from './testContext';

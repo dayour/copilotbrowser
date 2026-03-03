@@ -358,7 +358,7 @@ test('should check types of fixtures', async ({ runTSC }) => {
       });
     `,
     'copilotbrowser-define-merge-ct.config.ts': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-vue';
+      import { defineConfig } from 'copilotbrowser/ct/vue';
       const config0 = defineConfig({
         timeout: 1,
         // @ts-expect-error

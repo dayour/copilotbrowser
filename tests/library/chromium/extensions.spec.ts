@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { BrowserType, BrowserContext } from 'copilotbrowser-core';
+import type { BrowserType, BrowserContext } from 'copilotbrowser';
 import { copilotbrowserTest as base, expect } from '../../config/browserTest';
 
 const it = base.extend<{

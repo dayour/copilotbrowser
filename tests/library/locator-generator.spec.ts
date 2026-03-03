@@ -15,9 +15,9 @@
  */
 
 import { contextTest as it, expect } from '../config/browserTest';
-import { asLocator, asLocators, asLocatorDescription } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/locatorGenerators';
-import { locatorOrSelectorAsSelector as parseLocator } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/locatorParser';
-import type { Page, Frame, Locator, FrameLocator } from 'copilotbrowser-core';
+import { asLocator, asLocators, asLocatorDescription } from '../../packages/copilotbrowser/lib/utils/isomorphic/locatorGenerators';
+import { locatorOrSelectorAsSelector as parseLocator } from '../../packages/copilotbrowser/lib/utils/isomorphic/locatorParser';
+import type { Page, Frame, Locator, FrameLocator } from 'copilotbrowser';
 
 it.skip(({ mode }) => mode !== 'default');
 

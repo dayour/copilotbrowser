@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 import { renderModalStates, shouldIncludeMessage } from './tab';
 import { scaleImageToFitMessage } from './tools/screenshot';
 

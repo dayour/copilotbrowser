@@ -15,14 +15,14 @@
  */
 
 import { contextTest } from '../../config/browserTest';
-import type { Locator, Page } from 'copilotbrowser-core';
+import type { Locator, Page } from 'copilotbrowser';
 import { step } from '../../config/baseTest';
 import * as path from 'path';
 import fs from 'fs';
 import type { Source } from '../../../packages/recorder/src/recorderTypes';
 import type { CommonFixtures, TestChildProcess } from '../../config/commonFixtures';
 import { expect } from '@copilotbrowser/test';
-import { nodePlatform } from '../../../packages/copilotbrowser-core/lib/server/utils/nodePlatform';
+import { nodePlatform } from '../../../packages/copilotbrowser/lib/server/utils/nodePlatform';
 export { expect } from '@copilotbrowser/test';
 
 type CLITestArgs = {
@@ -47,7 +47,7 @@ const codegenLang2Id: Map<string, string> = new Map([
 ]);
 const codegenLangId2lang = new Map([...codegenLang2Id.entries()].map(([lang, langId]) => [langId, lang]));
 
-const copilotbrowserToAutomateInspector = require('../../../packages/copilotbrowser-core/lib/inProcessFactory').createInProcesscopilotbrowser(nodePlatform);
+const copilotbrowserToAutomateInspector = require('../../../packages/copilotbrowser/lib/inProcessFactory').createInProcesscopilotbrowser(nodePlatform);
 
 export const test = contextTest.extend<CLITestArgs>({
   recorderPageGetter: async ({ context, toImpl, mode }, run, testInfo) => {
@@ -253,7 +253,7 @@ class CLIMock {
     this._outputFile = options.outputFile;
     const nodeArgs = [
       'node',
-      path.join(__dirname, '..', '..', '..', 'packages', 'copilotbrowser-core', 'cli.js'),
+      path.join(__dirname, '..', '..', '..', 'packages', 'copilotbrowser', 'cli.js'),
       'codegen',
       ...options.args,
       `--browser=${options.browserName}`,

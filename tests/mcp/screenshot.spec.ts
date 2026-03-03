@@ -17,7 +17,7 @@
 import fs from 'fs';
 
 import { test, expect } from './fixtures';
-import { jpegjs, PNG } from 'packages/copilotbrowser-core/lib/utilsBundle';
+import { jpegjs, PNG } from 'packages/copilotbrowser/lib/utilsBundle';
 
 test('browser_take_screenshot (viewport)', async ({ startClient, server }, testInfo) => {
   const { client } = await startClient({

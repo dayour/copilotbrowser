@@ -308,7 +308,7 @@ test('should update missing snapshots in tsx', async ({ runInlineTest }, testInf
     `,
 
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.tsx';
 
       test('pass', async ({ mount }) => {
@@ -354,7 +354,7 @@ test('should update multiple files', async ({ runInlineTest }, testInfo) => {
     `,
 
     'src/button-1.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.tsx';
 
       test('pass 1', async ({ mount }) => {
@@ -364,7 +364,7 @@ test('should update multiple files', async ({ runInlineTest }, testInfo) => {
     `,
 
     'src/button-2.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.tsx';
 
       test('pass 2', async ({ mount }) => {

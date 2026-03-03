@@ -15,7 +15,7 @@
  */
 
 // @ts-ignore
-import { asLocator } from 'copilotbrowser-core/lib/utils';
+import { asLocator } from 'copilotbrowser/lib/utils';
 
 import { test as it, expect } from './pageTest';
 import { unshift } from '../config/utils';

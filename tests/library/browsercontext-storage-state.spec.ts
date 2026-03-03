@@ -19,7 +19,7 @@ import { attachFrame } from 'tests/config/utils';
 import { browserTest as it, expect } from '../config/browserTest';
 import fs from 'fs';
 
-import type { BrowserContext } from 'copilotbrowser-core';
+import type { BrowserContext } from 'copilotbrowser';
 
 it('should capture local storage', async ({ contextFactory }) => {
   const context = await contextFactory();

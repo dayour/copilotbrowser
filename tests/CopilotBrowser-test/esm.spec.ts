@@ -554,7 +554,7 @@ test('should resolve .js import to .tsx file in ESM mode for components', async 
     `,
 
     'src/test.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.js';
       test('pass', async ({ mount }) => {
         await mount(<Button></Button>);

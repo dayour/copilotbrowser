@@ -15,7 +15,7 @@
  */
 import type { z } from 'zod';
 import type { Context } from '../context';
-import type * as copilotbrowser from 'copilotbrowser-core';
+import type * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 import type { ToolCapability } from '../../config';
 import type { Tab } from '../tab';
 import type { Response } from '../response';

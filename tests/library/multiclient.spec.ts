@@ -16,7 +16,7 @@
 
 import { kTargetClosedErrorMessage } from '../config/errors';
 import { expect, copilotbrowserTest } from '../config/browserTest';
-import type { Browser, BrowserServer, ConnectOptions, Page } from 'copilotbrowser-core';
+import type { Browser, BrowserServer, ConnectOptions, Page } from 'copilotbrowser';
 
 type ExtraFixtures = {
   remoteServer: BrowserServer;

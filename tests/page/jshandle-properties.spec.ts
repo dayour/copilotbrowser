@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import type { ElementHandle } from 'copilotbrowser-core';
+import type { ElementHandle } from 'copilotbrowser';
 
 it('should work @smoke', async ({ page }) => {
   const aHandle = await page.evaluateHandle(() => ({

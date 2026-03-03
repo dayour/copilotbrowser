@@ -37,9 +37,11 @@ export class BrowserServerBackend implements ServerBackend {
   private _config: FullConfig;
   private _browserContextFactory: BrowserContextFactory;
   private _lastToolCallTime = 0;
+  private _pendingCalls = 0;
   private _router: ToolRouter;
   private _providerConfig: LLMProviderConfig | undefined;
-  private static readonly MIN_TOOL_INTERVAL_MS = 2000;
+  private static readonly MIN_TOOL_INTERVAL_MS = 3000;
+  private static readonly MAX_CONCURRENT_CALLS = 2;
 
   constructor(config: FullConfig, factory: BrowserContextFactory, options: { allTools?: boolean, structuredOutput?: boolean, routingStrategies?: ToolRoutingStrategy[], providerConfig?: LLMProviderConfig } = {}) {
     this._config = config;
@@ -65,7 +67,15 @@ export class BrowserServerBackend implements ServerBackend {
   }
 
   async callTool(name: string, rawArguments: mcpServer.CallToolRequest['params']['arguments']) {
-    // Rate limit: enforce minimum interval between tool calls
+    // Guard: reject if too many calls are already in flight (prevents LLM call-spam)
+    if (this._pendingCalls >= BrowserServerBackend.MAX_CONCURRENT_CALLS) {
+      return {
+        content: [{ type: 'text' as const, text: `### Error\n**Tool:** ${name}\n**Error:** Too many concurrent tool calls (max ${BrowserServerBackend.MAX_CONCURRENT_CALLS}). Wait for the previous call to complete before issuing another.` }],
+        isError: true,
+      };
+    }
+    this._pendingCalls++;
+    // Rate limit: enforce minimum interval between tool calls (3 s)
     const now = Date.now();
     const elapsed = now - this._lastToolCallTime;
     if (this._lastToolCallTime > 0 && elapsed < BrowserServerBackend.MIN_TOOL_INTERVAL_MS) {
@@ -78,6 +88,7 @@ export class BrowserServerBackend implements ServerBackend {
     const resolved = this._router.resolveTool(name, dispatchCtx);
 
     if (!resolved.found) {
+      this._pendingCalls--;
       if (resolved.decision.kind === 'deny') {
         return {
           content: [{ type: 'text' as const, text: `### Error\n${resolved.decision.reason}` }],
@@ -122,6 +133,7 @@ export class BrowserServerBackend implements ServerBackend {
       };
     } finally {
       context.setRunningTool(undefined);
+      this._pendingCalls--;
     }
     return responseObject;
   }

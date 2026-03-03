@@ -17,8 +17,8 @@
 import child_process from 'child_process';
 import { EventEmitter } from 'events';
 
-import { assert, timeOrigin } from 'copilotbrowser-core/lib/utils';
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
+import { assert, timeOrigin } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import type { EnvProducedPayload, ProcessInitParams } from '../common/ipc';
 import type { ProtocolRequest, ProtocolResponse } from '../common/process';

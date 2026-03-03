@@ -16,9 +16,9 @@
 
 import util from 'util';
 
-import { installRootRedirect, openTraceInBrowser, openTraceViewerApp, startTraceViewerServer } from 'copilotbrowser-core/lib/server';
-import { ManualPromise, gracefullyProcessExitDoNotHang, isUnderTest } from 'copilotbrowser-core/lib/utils';
-import { debug, open } from 'copilotbrowser-core/lib/utilsBundle';
+import { installRootRedirect, openTraceInBrowser, openTraceViewerApp, startTraceViewerServer } from '@copilotbrowser/copilotbrowser/lib/server';
+import { ManualPromise, gracefullyProcessExitDoNotHang, isUnderTest } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { debug, open } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { loadConfig, resolveConfigLocation } from '../common/configLoader';
 import ListReporter from '../reporters/list';
@@ -26,8 +26,8 @@ import { createReporterForTestServer } from './reporters';
 import { SigIntWatcher } from './sigIntWatcher';
 import { TestRunner, TestRunnerEvent } from './testRunner';
 
-import type { TraceViewerRedirectOptions, TraceViewerServerOptions } from 'copilotbrowser-core/lib/server/trace/viewer/traceViewer';
-import type { HttpServer, Transport } from 'copilotbrowser-core/lib/utils';
+import type { TraceViewerRedirectOptions, TraceViewerServerOptions } from '@copilotbrowser/copilotbrowser/lib/server/trace/viewer/traceViewer';
+import type { HttpServer, Transport } from '@copilotbrowser/copilotbrowser/lib/utils';
 import type * as reporterTypes from '../../types/testReporter';
 import type { ConfigLocation } from '../common/config';
 import type { ConfigCLIOverrides } from '../common/ipc';

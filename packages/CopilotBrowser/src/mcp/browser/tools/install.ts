@@ -17,7 +17,7 @@
 import { fork } from 'child_process';
 import path from 'path';
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTool } from './tool';
 import { renderTabsMarkdown } from '../response';
 

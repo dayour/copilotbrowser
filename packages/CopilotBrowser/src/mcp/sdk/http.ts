@@ -19,9 +19,9 @@ import net from 'net';
 import http from 'http';
 import crypto from 'crypto';
 
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
-import * as mcpBundle from 'copilotbrowser-core/lib/mcpBundle';
-import { createHttpServer, startHttpServer } from 'copilotbrowser-core/lib/utils';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import * as mcpBundle from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
+import { createHttpServer, startHttpServer } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import * as mcpServer from './server';
 

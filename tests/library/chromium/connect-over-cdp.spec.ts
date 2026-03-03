@@ -18,10 +18,10 @@
 import { copilotbrowserTest as test, expect } from '../../config/browserTest';
 import http from 'http';
 import fs from 'fs';
-import { getUserAgent } from '../../../packages/copilotbrowser-core/lib/server/utils/userAgent';
-import { WebSocketTransport } from '../../../packages/copilotbrowser-core/lib/server/transport';
+import { getUserAgent } from '../../../packages/copilotbrowser/lib/server/utils/userAgent';
+import { WebSocketTransport } from '../../../packages/copilotbrowser/lib/server/transport';
 import { suppressCertificateWarning } from '../../config/utils';
-import type { Frame } from '../../../packages/copilotbrowser-core/lib/server/frames';
+import type { Frame } from '../../../packages/copilotbrowser/lib/server/frames';
 
 test.skip(({ mode }) => mode === 'service2');
 

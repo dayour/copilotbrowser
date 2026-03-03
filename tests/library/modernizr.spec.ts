@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import type { BrowserContext } from 'copilotbrowser-core';
+import type { BrowserContext } from 'copilotbrowser';
 import type { TestServer } from '../config/testserver';
-import { hostPlatform } from '../../packages/copilotbrowser-core/src/server/utils/hostPlatform';
+import { hostPlatform } from '../../packages/copilotbrowser/src/server/utils/hostPlatform';
 import { browserTest as it, expect } from '../config/browserTest';
 import fs from 'fs';
 import os from 'os';

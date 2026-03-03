@@ -18,7 +18,7 @@ import { browserTest as it, expect } from '../config/browserTest';
 import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
-import type { Download } from 'copilotbrowser-core';
+import type { Download } from 'copilotbrowser';
 import { kTargetClosedErrorMessage } from '../config/errors';
 
 it.describe('download event', () => {

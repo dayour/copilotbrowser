@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.toMatchAriaSnapshot = toMatchAriaSnapshot;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const util_1 = require("../util");
 const globals_1 = require("../common/globals");
 async function toMatchAriaSnapshot(locator, expectedParam, options = {}) {

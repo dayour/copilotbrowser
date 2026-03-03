@@ -15,9 +15,9 @@
  */
 
 import { test } from '../copilotbrowser-test/stable-test-runner';
-import { ssim, FastStats } from 'copilotbrowser-core/lib/server/utils/image_tools/stats';
-import { ImageChannel } from 'copilotbrowser-core/lib/server/utils/image_tools/imageChannel';
-import { srgb2xyz, xyz2lab, colorDeltaE94 } from 'copilotbrowser-core/lib/server/utils/image_tools/colorUtils';
+import { ssim, FastStats } from 'copilotbrowser/lib/server/utils/image_tools/stats';
+import { ImageChannel } from 'copilotbrowser/lib/server/utils/image_tools/imageChannel';
+import { srgb2xyz, xyz2lab, colorDeltaE94 } from 'copilotbrowser/lib/server/utils/image_tools/colorUtils';
 import referenceSSIM from 'ssim.js';
 import { randomPNG, assertEqual, grayChannel } from './utils';
 

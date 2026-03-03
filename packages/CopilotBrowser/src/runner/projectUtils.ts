@@ -18,8 +18,8 @@ import fs from 'fs';
 import path from 'path';
 import { promisify } from 'util';
 
-import { escapeRegExp } from 'copilotbrowser-core/lib/utils';
-import { minimatch } from 'copilotbrowser-core/lib/utilsBundle';
+import { escapeRegExp } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { minimatch } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { createFileMatcher } from '../util';
 

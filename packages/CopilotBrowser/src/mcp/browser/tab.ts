@@ -15,8 +15,8 @@
  */
 
 import { EventEmitter } from 'events';
-import * as copilotbrowser from 'copilotbrowser-core';
-import { asLocator, ManualPromise } from 'copilotbrowser-core/lib/utils';
+import * as copilotbrowser from '@copilotbrowser/copilotbrowser';
+import { asLocator, ManualPromise } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { callOnPageNoTrace, waitForCompletion, eventWaiter } from './tools/utils';
 import { logUnhandledError } from '../log';
@@ -27,8 +27,8 @@ import { uploadFile } from './tools/files';
 import { requireOrImport } from '../../transform/transform';
 
 import type { Context } from './context';
-import type { Page } from '../../../../copilotbrowser-core/src/client/page';
-import type { Locator } from '../../../../copilotbrowser-core/src/client/locator';
+import type { Page } from '../../../../copilotbrowser/src/client/page';
+import type { Locator } from '../../../../copilotbrowser/src/client/locator';
 import type { FullConfig } from './config';
 
 const TabEvents = {

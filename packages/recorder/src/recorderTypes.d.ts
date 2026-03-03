@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-import type { Language } from '../../copilotbrowser-core/src/utils/isomorphic/locatorGenerators';
+import type { Language } from '../../copilotbrowser/src/utils/isomorphic/locatorGenerators';
 import type { AriaTemplateNode } from '@isomorphic/ariaSnapshot';
 
 export type Point = { x: number; y: number };

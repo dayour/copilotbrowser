@@ -16,9 +16,9 @@
 import net from 'net';
 import path from 'path';
 
-import { launchProcess, isURLAvailable, monotonicTime, raceAgainstDeadline, ManualPromise } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
+import { launchProcess, isURLAvailable, monotonicTime, raceAgainstDeadline, ManualPromise } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import type { TestRunnerPlugin } from '.';
 import type { FullConfig } from '../../types/testReporter';

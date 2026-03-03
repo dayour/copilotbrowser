@@ -15,7 +15,7 @@
  */
 
 import fs from 'fs';
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
 import { androidTest as test, expect } from './androidTest';
 
 test('androidDevice.shell', async function({ androidDevice }) {

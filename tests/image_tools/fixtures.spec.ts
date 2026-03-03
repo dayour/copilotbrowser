@@ -15,8 +15,8 @@
  */
 
 import { test, expect } from '../copilotbrowser-test/stable-test-runner';
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
-import { compare } from 'copilotbrowser-core/lib/server/utils/image_tools/compare';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
+import { compare } from 'copilotbrowser/lib/server/utils/image_tools/compare';
 import fs from 'fs';
 import path from 'path';
 

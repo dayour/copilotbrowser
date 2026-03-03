@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import type { APIRequestContext, Browser, BrowserContext, BrowserContextOptions, Page, PageAgent, LaunchOptions, ViewportSize, Geolocation, HTTPCredentials, Locator, APIResponse, PageScreenshotOptions } from 'copilotbrowser-core';
-export * from 'copilotbrowser-core';
+import type { APIRequestContext, Browser, BrowserContext, BrowserContextOptions, Page, PageAgent, LaunchOptions, ViewportSize, Geolocation, HTTPCredentials, Locator, APIResponse, PageScreenshotOptions } from 'copilotbrowser';
+export * from 'copilotbrowser';
 
 export type BlobReporterOptions = { outputDir?: string, fileName?: string };
 export type ListReporterOptions = { printSteps?: boolean };
@@ -316,7 +316,7 @@ export interface copilotbrowserTestOptions {
 
 
 export interface copilotbrowserWorkerArgs {
-  copilotbrowser: typeof import('copilotbrowser-core');
+  copilotbrowser: typeof import('copilotbrowser');
   browser: Browser;
 }
 

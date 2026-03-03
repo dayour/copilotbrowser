@@ -17,8 +17,8 @@ apt-get update && \
 # Install apt-file
 apt-get update && apt-get install -y --no-install-recommends apt-file && apt-file update
 
-# Install tip-of-tree copilotbrowser-core and browsers
-mkdir /root/tmp && cd /root/tmp && npm init -y && npm i /root/hostfolder/copilotbrowser-core.tar.gz && npx copilotbrowser-core install
+# Install tip-of-tree copilotbrowser and browsers
+mkdir /root/tmp && cd /root/tmp && npm init -y && npm i /root/hostfolder/copilotbrowser.tar.gz && npx copilotbrowser install
 
 cp /root/hostfolder/inside_docker/list_dependencies.js /root/tmp/list_dependencies.js
 

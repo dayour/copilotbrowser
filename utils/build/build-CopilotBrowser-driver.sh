@@ -11,8 +11,8 @@ PACKAGE_VERSION=$(node -p "require('../../package.json').version")
 rm -rf ./output
 mkdir -p ./output
 
-echo "Building copilotbrowser-core package"
-node ../../utils/pack_package.js copilotbrowser-core ./output/copilotbrowser-core.tgz
+echo "Building copilotbrowser package"
+node ../../utils/pack_package.js copilotbrowser ./output/copilotbrowser.tgz
 
 echo "Building api.json and protocol.yml"
 API_JSON_MODE=1 node ../../utils/doclint/generateApiJson.js > ./output/api.json
@@ -29,7 +29,7 @@ function build {
   cd ${SCRIPT_PATH}
 
   mkdir -p ./output/copilotbrowser-${SUFFIX}
-  tar -xzf ./output/copilotbrowser-core.tgz -C ./output/copilotbrowser-${SUFFIX}/
+  tar -xzf ./output/copilotbrowser.tgz -C ./output/copilotbrowser-${SUFFIX}/
 
   curl --retry 10 --retry-all-errors ${NODE_URL} -o ./output/${NODE_DIR}.${ARCHIVE}
   NPM_PATH=""

@@ -18,7 +18,7 @@ import { test, expect, parseTestRunnerOutput } from './copilotbrowser-test-fixtu
 import fs from 'fs';
 import path from 'path';
 import { spawnSync } from 'child_process';
-import { registry } from '../../packages/copilotbrowser-core/lib/server';
+import { registry } from '../../packages/copilotbrowser/lib/server';
 
 const ffmpeg = registry.findExecutable('ffmpeg')!.executablePath();
 

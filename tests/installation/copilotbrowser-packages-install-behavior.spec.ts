@@ -37,8 +37,8 @@ for (const browser of ['chromium', 'firefox', 'webkit']) {
 }
 
 for (const browser of ['chromium', 'firefox', 'webkit']) {
-  test(`@copilotbrowser/browser-${browser} should work`, async ({ exec, checkInstalledSoftwareOnDisk }) => {
-    const pkg = `@copilotbrowser/browser-${browser}`;
+  test(`@copilotbrowser-${browser} should work`, async ({ exec, checkInstalledSoftwareOnDisk }) => {
+    const pkg = `@copilotbrowser-${browser}`;
     const expectedSoftware = [browser, ...extraInstalledSoftware];
     if (browser === 'chromium')
       expectedSoftware.push('chromium-headless-shell', 'ffmpeg');
@@ -57,11 +57,11 @@ for (const browser of ['chromium', 'firefox', 'webkit']) {
   });
 }
 
-test(`copilotbrowser-core should work`, async ({ exec, checkInstalledSoftwareOnDisk }) => {
-  const result1 = await exec('npm i --foreground-scripts copilotbrowser-core');
+test(`copilotbrowser should work`, async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  const result1 = await exec('npm i --foreground-scripts copilotbrowser');
   expect(result1).toHaveLoggedSoftwareDownload([]);
   await checkInstalledSoftwareOnDisk([]);
-  const stdio = await exec('npx copilotbrowser-core', 'test', '-c', '.', { expectToExitWithError: true });
+  const stdio = await exec('npx copilotbrowser', 'test', '-c', '.', { expectToExitWithError: true });
   expect(stdio).toContain(`Please install @copilotbrowser/test package`);
 });
 

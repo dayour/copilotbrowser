@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { z as zod } from 'copilotbrowser-core/lib/mcpBundle';
+import { z as zod } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import type { z } from 'zod';
 import type * as mcpServer from './server';
 

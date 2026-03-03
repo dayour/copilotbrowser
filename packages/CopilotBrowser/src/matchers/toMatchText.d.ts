@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import type { MatcherResult } from './matcherHint';
-import type { Page, Locator } from 'copilotbrowser-core';
+import type { Page, Locator } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 export declare function toMatchText(this: ExpectMatcherStateInternal, matcherName: string, receiver: Locator | Page, receiverType: 'Locator' | 'Page', query: (isNot: boolean, timeout: number) => Promise<{
     matches: boolean;

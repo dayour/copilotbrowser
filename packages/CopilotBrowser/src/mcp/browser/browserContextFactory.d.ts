@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import * as copilotbrowser from 'copilotbrowser-core';
+import * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 import type { FullConfig } from './config';
 import type { ClientInfo } from '../sdk/server';
 export declare function contextFactory(config: FullConfig): BrowserContextFactory;

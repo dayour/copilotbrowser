@@ -17,9 +17,9 @@
 import fs from 'fs';
 import path from 'path';
 
-import { callLogText, formatMatcherMessage, compareBuffersOrStrings, getComparator, isString } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
-import { mime } from 'copilotbrowser-core/lib/utilsBundle';
+import { callLogText, formatMatcherMessage, compareBuffersOrStrings, getComparator, isString } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { mime } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { addSuffixToFilePath, expectTypes } from '../util';
 import { currentTestInfo } from '../common/globals';
@@ -28,9 +28,9 @@ import type { MatcherResult } from './matcherHint';
 import type { ExpectMatcherStateInternal } from './matchers';
 import type { FullProjectInternal } from '../common/config';
 import type { TestInfoImpl, TestStepInfoImpl } from '../worker/testInfo';
-import type { Locator, Page } from 'copilotbrowser-core';
-import type { ExpectScreenshotOptions, Page as PageEx } from 'copilotbrowser-core/lib/client/page';
-import type { Comparator, ImageComparatorOptions } from 'copilotbrowser-core/lib/utils';
+import type { Locator, Page } from '@copilotbrowser/copilotbrowser';
+import type { ExpectScreenshotOptions, Page as PageEx } from '@copilotbrowser/copilotbrowser/lib/client/page';
+import type { Comparator, ImageComparatorOptions } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 type NameOrSegments = string | string[];
 

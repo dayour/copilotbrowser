@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-react17';
+import { test, expect } from 'copilotbrowser/ct/react17';
 import Counter from '@/components/Counter';
 import DefaultChildren from '@/components/DefaultChildren';
 

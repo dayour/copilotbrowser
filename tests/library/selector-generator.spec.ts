@@ -15,7 +15,7 @@
  */
 
 import { contextTest as it, expect } from '../config/browserTest';
-import type { Page, Frame } from 'copilotbrowser-core';
+import type { Page, Frame } from 'copilotbrowser';
 
 async function generate(pageOrFrame: Page | Frame, target: string, expected?: string): Promise<string> {
   return pageOrFrame.$eval(target, (e, expected) => {

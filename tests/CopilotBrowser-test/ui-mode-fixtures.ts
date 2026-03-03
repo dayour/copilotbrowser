@@ -22,7 +22,7 @@ import { cleanEnv, cliEntrypoint, test as base, writeFiles, removeFolders } from
 import type { Files, RunOptions } from './copilotbrowser-test-fixtures';
 import type { Browser, Page, TestInfo } from './stable-test-runner';
 import { chromium } from './stable-test-runner';
-import { createGuid } from '../../packages/copilotbrowser-core/src/server/utils/crypto';
+import { createGuid } from '../../packages/copilotbrowser/src/server/utils/crypto';
 
 type Latch = {
   blockingCode: string;

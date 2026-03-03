@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.StepSkipError = exports.TestSkipError = exports.TestStepInfoImpl = exports.TestInfoImpl = exports.emtpyTestInfoCallbacks = void 0;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const timeoutManager_1 = require("./timeoutManager");
 const util_1 = require("../util");
 const testTracing_1 = require("./testTracing");

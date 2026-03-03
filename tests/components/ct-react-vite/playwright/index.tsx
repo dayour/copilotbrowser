@@ -1,4 +1,4 @@
-import { beforeMount, afterMount } from '@copilotbrowser/experimental-ct-react/hooks';
+import { beforeMount, afterMount } from 'copilotbrowser/ct/react/hooks';
 import { BrowserRouter } from 'react-router-dom';
 import '../src/assets/index.css';
 

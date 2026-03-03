@@ -18,10 +18,10 @@ import fs from 'fs';
 import path from 'path';
 import url from 'url';
 import { test as baseTest, expect as baseExpect, createImage } from './copilotbrowser-test-fixtures';
-import type { HttpServer } from '../../packages/copilotbrowser-core/lib/server/utils/httpServer';
+import type { HttpServer } from '../../packages/copilotbrowser/lib/server/utils/httpServer';
 import { startHtmlReportServer } from '../../packages/copilotbrowser/lib/reporters/html';
 import { msToString } from '../../packages/web/src/uiUtils';
-const { spawnAsync } = require('../../packages/copilotbrowser-core/lib/utils');
+const { spawnAsync } = require('../../packages/copilotbrowser/lib/utils');
 
 const test = baseTest.extend<{ showReport: (reportFolder?: string) => Promise<void> }>({
   showReport: async ({ page }, use, testInfo) => {

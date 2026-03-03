@@ -17,15 +17,15 @@ if [[ ($1 == '--help') || ($1 == '-h') || ($1 == '') || ($2 == '') ]]; then
 fi
 
 function cleanup() {
-  rm -f "copilotbrowser-core.tar.gz"
+  rm -f "copilotbrowser.tar.gz"
 }
 
 trap "cleanup; cd $(pwd -P)" EXIT
 cd "$(dirname "$0")"
 
-# We rely on `./copilotbrowser-core.tar.gz` to download browsers into the docker
+# We rely on `./copilotbrowser.tar.gz` to download browsers into the docker
 # image.
-node ../../utils/pack_package.js copilotbrowser-core ./copilotbrowser-core.tar.gz
+node ../../utils/pack_package.js copilotbrowser ./copilotbrowser.tar.gz
 
 PLATFORM=""
 if [[ "$1" == "--arm64" ]]; then

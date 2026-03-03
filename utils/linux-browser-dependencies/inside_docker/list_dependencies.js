@@ -4,7 +4,7 @@ const fs = require('fs');
 const util = require('util');
 const path = require('path');
 const {spawn} = require('child_process');
-const {registryDirectory} = require('copilotbrowser-core/lib/server/registry/index');
+const {registryDirectory} = require('copilotbrowser/lib/server/registry/index');
 
 const readdirAsync = util.promisify(fs.readdir.bind(fs));
 const readFileAsync = util.promisify(fs.readFile.bind(fs));

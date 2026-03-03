@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-react';
+import { test, expect } from 'copilotbrowser/ct/react';
 import Button from '@/components/Button';
 import EmptyFragment from '@/components/EmptyFragment';
 import { ComponentAsProp } from '@/components/ComponentAsProp';

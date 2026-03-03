@@ -17,8 +17,8 @@
 import { spawnSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
-import { PNG, jpegjs } from 'copilotbrowser-core/lib/utilsBundle';
-import { registry } from '../../packages/copilotbrowser-core/lib/server';
+import { PNG, jpegjs } from 'copilotbrowser/lib/utilsBundle';
+import { registry } from '../../packages/copilotbrowser/lib/server';
 import { expect, browserTest as it } from '../config/browserTest';
 import { parseTraceRaw, rafraf } from '../config/utils';
 import { kTargetClosedErrorMessage } from '../config/errors';

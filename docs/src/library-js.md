@@ -102,7 +102,7 @@ The key differences to note are as follows:
 | | Library | Test |
 | - | - | - |
 | Installation | `npm install copilotbrowser` | `npm init copilotbrowser@latest` - note `install` vs. `init` |
-| Install browsers | Install `@copilotbrowser/browser-chromium`, `@copilotbrowser/browser-firefox` and/or `@copilotbrowser/browser-webkit` | `npx copilotbrowser install` or `npx copilotbrowser install chromium` for a single one |
+| Install browsers | Install `@copilotbrowser-chromium`, `@copilotbrowser-firefox` and/or `@copilotbrowser-webkit` | `npx copilotbrowser install` or `npx copilotbrowser install chromium` for a single one |
 | `import` from | `copilotbrowser` | `@copilotbrowser/test` |
 | Initialization | Explicitly need to: <ol><li>Pick a browser to use, e.g. `chromium`</li><li>Launch browser with **BrowserType.launch()**</li><li>Create a context with **Browser.newContext()**, <em>and</em> pass any context options explicitly, e.g. `devices['iPhone 11']`</li><li>Create a page with **BrowserContext.newPage()**</li></ol> | An isolated `page` and `context` are provided to each test out-of the box, along with other [built-in fixtures](./test-fixtures.md#built-in-fixtures). No explicit creation. If referenced by the test in its arguments, the Test Runner will create them for the test. (i.e. lazy-initialization) |
 | Assertions | No built-in Web-First Assertions | [Web-First assertions](./test-assertions.md) like: <ul><li>**PageAssertions.toHaveTitle()**</li><li>**PageAssertions.toHaveScreenshot()**</li></ul> which auto-wait and retry for the condition to be met.|
@@ -135,7 +135,7 @@ You will also need to install browsers - either manually or by adding a package 
 npx copilotbrowser install chromium firefox webkit
 
 # Alternatively, add packages that will download a browser upon npm install
-npm i -D @copilotbrowser/browser-chromium @copilotbrowser/browser-firefox @copilotbrowser/browser-webkit
+npm i -D @copilotbrowser-chromium @copilotbrowser-firefox @copilotbrowser-webkit
 ```
 
 See [managing browsers](./browsers.md#managing-browser-binaries) for more options.
@@ -200,11 +200,11 @@ To download copilotbrowser browsers run:
 npx copilotbrowser install
 ```
 
-Alternatively, you can add `@copilotbrowser/browser-chromium`, `@copilotbrowser/browser-firefox` and `@copilotbrowser/browser-webkit` packages to automatically download the respective browser during the package installation.
+Alternatively, you can add `@copilotbrowser-chromium`, `@copilotbrowser-firefox` and `@copilotbrowser-webkit` packages to automatically download the respective browser during the package installation.
 
 ```bash
 # Use a helper package that downloads a browser on npm install
-npm install @copilotbrowser/browser-chromium
+npm install @copilotbrowser-chromium
 ```
 
 **Download behind a firewall or a proxy**
@@ -215,8 +215,8 @@ Pass `HTTPS_PROXY` environment variable to download through a proxy.
 # Manual
 HTTPS_PROXY=https://192.0.2.1 npx copilotbrowser install
 
-# Through @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# Through @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 HTTPS_PROXY=https://192.0.2.1 npm install
 ```
 
@@ -225,8 +225,8 @@ HTTPS_PROXY=https://192.0.2.1 npm install
 set HTTPS_PROXY=https://192.0.2.1
 npx copilotbrowser install
 
-# Through @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# Through @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 set HTTPS_PROXY=https://192.0.2.1
 npm install
 ```
@@ -236,8 +236,8 @@ npm install
 $Env:HTTPS_PROXY=https://192.0.2.1
 npx copilotbrowser install
 
-# Through @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# Through @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 $Env:HTTPS_PROXY=https://192.0.2.1
 npm install
 ```
@@ -250,8 +250,8 @@ By default, copilotbrowser downloads browsers from Microsoft's CDN. Pass `copilo
 # Manual
 copilotbrowser_DOWNLOAD_HOST=192.0.2.1 npx copilotbrowser install
 
-# Through @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# Through @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 copilotbrowser_DOWNLOAD_HOST=192.0.2.1 npm install
 ```
 
@@ -260,8 +260,8 @@ copilotbrowser_DOWNLOAD_HOST=192.0.2.1 npm install
 set copilotbrowser_DOWNLOAD_HOST=192.0.2.1
 npx copilotbrowser install
 
-# Through @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# Through @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 set copilotbrowser_DOWNLOAD_HOST=192.0.2.1
 npm install
 ```
@@ -271,8 +271,8 @@ npm install
 $Env:copilotbrowser_DOWNLOAD_HOST=192.0.2.1
 npx copilotbrowser install
 
-# Through @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# Through @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 $Env:copilotbrowser_DOWNLOAD_HOST=192.0.2.1
 npm install
 ```
@@ -282,21 +282,21 @@ npm install
 In certain cases, it is desired to avoid browser downloads altogether because browser binaries are managed separately. This can be done by setting `copilotbrowser_SKIP_BROWSER_DOWNLOAD` variable before installing packages.
 
 ```bash tab=bash-bash lang=js
-# When using @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# When using @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 copilotbrowser_SKIP_BROWSER_DOWNLOAD=1 npm install
 ```
 
 ```batch tab=bash-batch lang=js
-# When using @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# When using @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 set copilotbrowser_SKIP_BROWSER_DOWNLOAD=1
 npm install
 ```
 
 ```powershell tab=bash-powershell lang=js
-# When using @copilotbrowser/browser-chromium, @copilotbrowser/browser-firefox
-# and @copilotbrowser/browser-webkit helper packages
+# When using @copilotbrowser-chromium, @copilotbrowser-firefox
+# and @copilotbrowser-webkit helper packages
 $Env:copilotbrowser_SKIP_BROWSER_DOWNLOAD=1
 npm install
 ```

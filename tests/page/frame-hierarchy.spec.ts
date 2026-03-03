@@ -17,7 +17,7 @@
 
 import { test as it, expect } from './pageTest';
 import { attachFrame, detachFrame } from '../config/utils';
-import type { Frame } from 'copilotbrowser-core';
+import type { Frame } from 'copilotbrowser';
 
 function dumpFrames(frame: Frame, indentation: string = ''): string[] {
   let description = frame.url();

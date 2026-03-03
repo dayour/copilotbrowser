@@ -20,9 +20,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Context = void 0;
 const os_1 = __importDefault(require("os"));
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
-const utils_1 = require("copilotbrowser-core/lib/utils");
-const copilotbrowser_core_1 = require("copilotbrowser-core");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const copilotbrowser_core_1 = require("@copilotbrowser/copilotbrowser");
 const url_1 = require("url");
 const log_1 = require("../log");
 const tab_1 = require("./tab");

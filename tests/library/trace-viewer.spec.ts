@@ -19,7 +19,7 @@
 
 import type { TraceViewerFixtures } from '../config/traceViewerFixtures';
 import { traceViewerFixtures } from '../config/traceViewerFixtures';
-import extractZip from '../../packages/copilotbrowser-core/bundles/zip/src/third_party/extract-zip';
+import extractZip from '../../packages/copilotbrowser/bundles/zip/src/third_party/extract-zip';
 import fs from 'fs';
 import path from 'path';
 import type http from 'http';

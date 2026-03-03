@@ -15,7 +15,7 @@
  */
 
 import { copilotbrowserTest as it, expect } from '../config/browserTest';
-import { parseCSS, serializeSelector as serialize } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/cssParser';
+import { parseCSS, serializeSelector as serialize } from '../../packages/copilotbrowser/lib/utils/isomorphic/cssParser';
 
 const parse = (selector: string) => {
   return parseCSS(selector, new Set(['text', 'not', 'has', 'react', 'scope', 'right-of', 'is'])).selector;

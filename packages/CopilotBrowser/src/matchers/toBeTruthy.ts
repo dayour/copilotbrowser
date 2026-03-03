@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { formatMatcherMessage } from 'copilotbrowser-core/lib/utils';
+import { formatMatcherMessage } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { expectTypes } from '../util';
 
 import type { MatcherResult } from './matcherHint';
-import type { Locator } from 'copilotbrowser-core';
+import type { Locator } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 
 export async function toBeTruthy(

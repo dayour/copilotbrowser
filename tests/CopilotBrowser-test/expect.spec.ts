@@ -16,7 +16,7 @@
 
 import path from 'path';
 import { test, expect, parseTestRunnerOutput, stripAnsi } from './copilotbrowser-test-fixtures';
-const { spawnAsync } = require('../../packages/copilotbrowser-core/lib/utils');
+const { spawnAsync } = require('../../packages/copilotbrowser/lib/utils');
 
 test('should not expand huge arrays', async ({ runInlineTest }) => {
   const result = await runInlineTest({

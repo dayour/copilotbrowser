@@ -17,7 +17,7 @@
 
 //@ts-check
 
-const copilotbrowser = require('copilotbrowser-core');
+const copilotbrowser = require('copilotbrowser');
 const fs = require('fs');
 const path = require('path');
 const { parseApi } = require('./api_parser');
@@ -80,7 +80,7 @@ async function run() {
   // since its version is hardcoded in copilotbrowser library rather then in browser builds.
   // @see https://github.com/dayour/copilotbrowser/issues/15702
   {
-    const browsersJSONPath = path.join(__dirname, '..', '..', 'packages/copilotbrowser-core/browsers.json');
+    const browsersJSONPath = path.join(__dirname, '..', '..', 'packages/copilotbrowser/browsers.json');
     const browsersJSON = JSON.parse(await fs.promises.readFile(browsersJSONPath, 'utf8'));
     for (const browser of browsersJSON.browsers) {
       if (versions[browser.name])
@@ -91,7 +91,7 @@ async function run() {
 
   // Update device descriptors
   {
-    const devicesDescriptorsSourceFile = path.join(PROJECT_DIR, 'packages', 'copilotbrowser-core', 'src', 'server', 'deviceDescriptorsSource.json')
+    const devicesDescriptorsSourceFile = path.join(PROJECT_DIR, 'packages', 'copilotbrowser', 'src', 'server', 'deviceDescriptorsSource.json')
     const devicesDescriptors = require(devicesDescriptorsSourceFile)
     for (const deviceName of Object.keys(devicesDescriptors)) {
       switch (devicesDescriptors[deviceName].defaultBrowserType) {
@@ -267,7 +267,7 @@ async function run() {
   {
     const apiDocumentation = parseApi(path.join(PROJECT_DIR, 'docs', 'src', 'api'));
     apiDocumentation.filterForLanguage('js');
-    const srcClient = path.join(PROJECT_DIR, 'packages', 'copilotbrowser-core', 'src', 'client');
+    const srcClient = path.join(PROJECT_DIR, 'packages', 'copilotbrowser', 'src', 'client');
     const sources = fs.readdirSync(srcClient).map(n => path.join(srcClient, n));
     const errors = missingDocs(apiDocumentation, sources, path.join(srcClient, 'api.ts'));
     if (errors.length) {
@@ -315,7 +315,7 @@ async function getBrowserVersions() {
     return result;
   } catch {
     // Fall back to browsers.json versions when browsers aren't installed.
-    const browsersJSON = JSON.parse(fs.readFileSync(path.join(PROJECT_DIR, 'packages', 'copilotbrowser-core', 'browsers.json'), 'utf8'));
+    const browsersJSON = JSON.parse(fs.readFileSync(path.join(PROJECT_DIR, 'packages', 'copilotbrowser', 'browsers.json'), 'utf8'));
     const result = {};
     for (const browser of browsersJSON.browsers) {
       if (names.includes(browser.name) && browser.browserVersion)

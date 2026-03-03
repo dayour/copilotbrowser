@@ -20,8 +20,8 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import { expect } from '@copilotbrowser/test';
-import { EventEmitter as OriginalEventEmitter } from '../../../packages/copilotbrowser-core/lib/client/eventEmitter';
-import { nodePlatform } from '../../../packages/copilotbrowser-core/lib/server/utils/nodePlatform';
+import { EventEmitter as OriginalEventEmitter } from '../../../packages/copilotbrowser/lib/client/eventEmitter';
+import { nodePlatform } from '../../../packages/copilotbrowser/lib/server/utils/nodePlatform';
 
 export const mustNotCall = (msg?: string) => {
   return function mustNotCall() {

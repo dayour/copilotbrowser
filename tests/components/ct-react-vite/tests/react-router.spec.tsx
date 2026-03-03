@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-react';
+import { test, expect } from 'copilotbrowser/ct/react';
 import App from '@/App';
 import type { HooksConfig } from '../copilotbrowser';
 

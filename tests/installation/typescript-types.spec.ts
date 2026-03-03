@@ -18,7 +18,7 @@ import { test } from './npmTest';
 test('typescript types should work', async ({ exec, tsc, writeFiles }) => {
   const libraryPackages = [
     'copilotbrowser',
-    'copilotbrowser-core',
+    'copilotbrowser',
     'copilotbrowser-firefox',
     'copilotbrowser-webkit',
     'copilotbrowser-chromium',

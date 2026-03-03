@@ -69,7 +69,7 @@ class Workspace {
     if (version.startsWith('v'))
       throw new Error('version must not start with "v"');
 
-    // 1. update workspace's package.json (copilotbrowser-core) with the new version
+    // 1. update workspace's package.json (copilotbrowser) with the new version
     const workspacePackageJSON = await readJSON(path.join(this._rootDir, 'package.json'));
     workspacePackageJSON.version = version;
     await writeJSON(path.join(this._rootDir, 'package.json'), workspacePackageJSON);
@@ -130,7 +130,7 @@ class Workspace {
     child_process.execSync('npm i', {
       env: {
         ...process.env,
-        // copilotbrowser would download the browsers because it has e.g. @copilotbrowser/browser-chromium or copilotbrowser-chromium
+        // copilotbrowser would download the browsers because it has e.g. @copilotbrowser-chromium or copilotbrowser-chromium
         // in the workspace. We don't want to download browsers here.
         copilotbrowser_SKIP_BROWSER_DOWNLOAD: '1',
       }
@@ -149,75 +149,9 @@ const workspace = new Workspace(ROOT_PATH, [
     files: [...LICENCE_FILES, 'README.md'],
   }),
   new PWPackage({
-    name: 'copilotbrowser-core',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-core'),
+    name: 'copilotbrowser',
+    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser'),
     files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/test',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-test'),
-    // We copy README.md additionally for @copilotbrowser/test so that it looks nice on NPM.
-    files: [...LICENCE_FILES, 'README.md'],
-  }),
-  new PWPackage({
-    name: 'copilotbrowser-webkit',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-webkit'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: 'copilotbrowser-firefox',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-firefox'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: 'copilotbrowser-chromium',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-chromium'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/client',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-client'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/browser-webkit',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-browser-webkit'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/browser-firefox',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-browser-firefox'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/browser-chromium',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-browser-chromium'),
-    files: LICENCE_FILES,
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/experimental-ct-core',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-ct-core'),
-    files: ['LICENSE'],
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/experimental-ct-react',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-ct-react'),
-    files: ['LICENSE'],
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/experimental-ct-react17',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-ct-react17'),
-    files: ['LICENSE'],
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/experimental-ct-svelte',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-ct-svelte'),
-    files: ['LICENSE'],
-  }),
-  new PWPackage({
-    name: '@copilotbrowser/experimental-ct-vue',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser-ct-vue'),
-    files: ['LICENSE'],
   }),
 ]);
 

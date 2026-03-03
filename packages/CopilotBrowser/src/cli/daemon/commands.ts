@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { declareCommand } from './command';
 
 import type { AnyCommandSchema } from './command';

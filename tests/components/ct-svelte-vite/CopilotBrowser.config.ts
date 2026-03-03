@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { defineConfig, devices } from '@copilotbrowser/experimental-ct-svelte';
+import { defineConfig, devices } from 'copilotbrowser/ct/svelte';
 import { resolve } from 'path';
 
 export default defineConfig({

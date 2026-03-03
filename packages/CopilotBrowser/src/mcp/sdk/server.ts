@@ -16,8 +16,8 @@
 
 import { fileURLToPath } from 'url';
 
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
-import * as mcpBundle from 'copilotbrowser-core/lib/mcpBundle';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import * as mcpBundle from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 
 import { startMcpHttpServer } from './http';
 import { InProcessTransport } from './inProcessTransport';

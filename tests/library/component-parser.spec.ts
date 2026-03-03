@@ -15,8 +15,8 @@
  */
 
 import { copilotbrowserTest as it, expect } from '../config/browserTest';
-import type { AttributeSelector } from '../../packages/copilotbrowser-core/src/utils/isomorphic/selectorParser';
-import { parseAttributeSelector } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/selectorParser';
+import type { AttributeSelector } from '../../packages/copilotbrowser/src/utils/isomorphic/selectorParser';
+import { parseAttributeSelector } from '../../packages/copilotbrowser/lib/utils/isomorphic/selectorParser';
 
 const parse = (selector: string) => parseAttributeSelector(selector, false);
 const serialize = (parsed: AttributeSelector) => {

@@ -281,6 +281,7 @@ function copyFile(file, from, to) {
  *   outfile?: string,
  *   minify?: boolean,
  *   alias?: Record<string, string>,
+ *   skipNpmCi?: boolean,
  * }} BundleOptions
  */
 
@@ -308,20 +309,20 @@ bundles.push({
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser-core/bundles/utils',
-  outfile: 'packages/copilotbrowser-core/lib/utilsBundleImpl/index.js',
+  modulePath: 'packages/copilotbrowser/bundles/utils',
+  outfile: 'packages/copilotbrowser/lib/utilsBundleImpl/index.js',
   entryPoints: ['src/utilsBundleImpl.ts'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser-core/bundles/zip',
-  outdir: 'packages/copilotbrowser-core/lib',
+  modulePath: 'packages/copilotbrowser/bundles/zip',
+  outdir: 'packages/copilotbrowser/lib',
   entryPoints: ['src/zipBundleImpl.ts'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser-core/bundles/mcp',
-  outfile: 'packages/copilotbrowser-core/lib/mcpBundleImpl/index.js',
+  modulePath: 'packages/copilotbrowser/bundles/mcp',
+  outfile: 'packages/copilotbrowser/lib/mcpBundleImpl/index.js',
   entryPoints: ['src/mcpBundleImpl.ts'],
   external: ['express', '@anthropic-ai/sdk'],
   alias: {
@@ -329,12 +330,13 @@ bundles.push({
   },
 });
 
-// @copilotbrowser/client
+// Client web bundle (formerly @copilotbrowser/client)
 bundles.push({
-  modulePath: 'packages/copilotbrowser-client',
-  outdir: 'packages/copilotbrowser-client/lib',
-  entryPoints: ['src/index.ts'],
+  modulePath: 'packages/copilotbrowser',
+  outfile: 'packages/copilotbrowser/lib/clientWebBundle.js',
+  entryPoints: ['src/client-web/index.ts'],
   minify: false,
+  skipNpmCi: true,
 });
 
 class GroupStep extends Step {
@@ -359,34 +361,35 @@ const updateSteps = [];
 // Update test runner (skip if tests/ directory is excluded, e.g. in Docker).
 const testRunnerCwd = path.join(__dirname, '..', '..', 'tests', 'copilotbrowser-test', 'stable-test-runner');
 if (fs.existsSync(path.join(testRunnerCwd, 'package.json'))) {
-  updateSteps.push(new ProgramStep({
+  steps.push(new ProgramStep({
     command: 'npm',
     args: ['ci', '--save=false', '--fund=false', '--audit=false'],
     shell: true,
     cwd: testRunnerCwd,
-    concurrent: true,
   }));
 }
 
-// Update bundles.
+// Update bundles (deduplicate by modulePath; run sequentially to avoid Windows EBUSY).
+const seenModulePaths = new Set();
 for (const bundle of bundles) {
-  // Do not update @copilotbrowser/client, it has not its own deps.
-  if (bundle.modulePath === 'packages/copilotbrowser-client')
+  // Skip npm ci for bundles that have no dependencies of their own.
+  if (bundle.skipNpmCi)
     continue;
+
+  if (seenModulePaths.has(bundle.modulePath))
+    continue;
+  seenModulePaths.add(bundle.modulePath);
 
   const packageJson = path.join(filePath(bundle.modulePath), 'package.json');
   if (!fs.existsSync(packageJson))
     throw new Error(`${packageJson} does not exist`);
-  updateSteps.push(new ProgramStep({
+  steps.push(new ProgramStep({
     command: 'npm',
     args: ['ci', '--save=false', '--fund=false', '--audit=false', '--omit=optional'],
     shell: true,
     cwd: filePath(bundle.modulePath),
-    concurrent: true,
   }));
 }
-
-steps.push(new GroupStep(updateSteps));
 
 // Generate third party licenses for bundles.
 steps.push(new ProgramStep({
@@ -488,9 +491,6 @@ class CustomCallbackStep extends Step {
 for (const pkg of workspace.packages()) {
   if (!fs.existsSync(path.join(pkg.path, 'src')))
     continue;
-  // copilotbrowser-client is built as a bundle.
-  if (['@copilotbrowser/client'].includes(pkg.name))
-    continue;
 
   steps.push(new EsbuildStep({
     entryPoints: [path.join(pkg.path, 'src/**/*.ts')],
@@ -502,13 +502,18 @@ for (const pkg of workspace.packages()) {
 }
 
 function copyXdgOpen() {
-  const outdir = filePath('packages/copilotbrowser-core/lib/utilsBundleImpl');
+  const outdir = filePath('packages/copilotbrowser/lib/utilsBundleImpl');
   if (!fs.existsSync(outdir))
     fs.mkdirSync(outdir, { recursive: true });
 
   // 'open' package requires 'xdg-open' binary to be present, which does not get bundled by esbuild.
-  fs.copyFileSync(filePath('packages/copilotbrowser-core/bundles/utils/node_modules/open/xdg-open'), path.join(outdir, 'xdg-open'));
-  console.log('==== Copied xdg-open to', path.join(outdir, 'xdg-open'));
+  const xdgOpenPath = filePath('packages/copilotbrowser/bundles/utils/node_modules/open/xdg-open');
+  if (fs.existsSync(xdgOpenPath)) {
+    fs.copyFileSync(xdgOpenPath, path.join(outdir, 'xdg-open'));
+    console.log('==== Copied xdg-open to', path.join(outdir, 'xdg-open'));
+  } else {
+    console.log('==== Skipping xdg-open copy (not present on this platform)');
+  }
 }
 
 // Copy xdg-open after bundles 'npm ci' has finished.
@@ -619,9 +624,9 @@ onChanges.push({
 onChanges.push({
   inputs: [
     'packages/injected/src/**',
-    'packages/copilotbrowser-core/src/third_party/**',
-    'packages/copilotbrowser-ct-core/src/injected/**',
-    'packages/copilotbrowser-core/src/utils/isomorphic/**',
+    'packages/copilotbrowser/src/third_party/**',
+    'packages/copilotbrowser/src/ct/injected/**',
+    'packages/copilotbrowser/src/utils/isomorphic/**',
     'utils/generate_injected_builtins.js',
     'utils/generate_injected.js',
   ],
@@ -646,10 +651,10 @@ onChanges.push({
     'utils/generate_types/overrides-test.d.ts',
     'utils/generate_types/overrides-testReporter.d.ts',
     'utils/generate_types/exported.json',
-    'packages/copilotbrowser-core/src/server/chromium/protocol.d.ts',
+    'packages/copilotbrowser/src/server/chromium/protocol.d.ts',
   ],
   mustExist: [
-    'packages/copilotbrowser-core/lib/server/deviceDescriptorsSource.json',
+    'packages/copilotbrowser/lib/server/deviceDescriptorsSource.json',
   ],
   script: 'utils/generate_types/index.js',
 });
@@ -657,7 +662,7 @@ onChanges.push({
 if (watchMode && !disableInstall) {
   // Keep browser installs up to date.
   onChanges.push({
-    inputs: ['packages/copilotbrowser-core/browsers.json'],
+    inputs: ['packages/copilotbrowser/browsers.json'],
     command: 'npx',
     args: ['copilotbrowser', 'install'],
   });
@@ -665,27 +670,27 @@ if (watchMode && !disableInstall) {
 
 // The recorder and trace viewer have an app_icon.png that needs to be copied.
 copyFiles.push({
-  files: 'packages/copilotbrowser-core/src/server/chromium/*.png',
-  from: 'packages/copilotbrowser-core/src',
-  to: 'packages/copilotbrowser-core/lib',
+  files: 'packages/copilotbrowser/src/server/chromium/*.png',
+  from: 'packages/copilotbrowser/src',
+  to: 'packages/copilotbrowser/lib',
 });
 
 // esbuild doesn't touch JS files, so copy them manually.
 // For example: diff_match_patch.js
 copyFiles.push({
-  files: 'packages/copilotbrowser-core/src/**/*.js',
-  from: 'packages/copilotbrowser-core/src',
-  to: 'packages/copilotbrowser-core/lib',
+  files: 'packages/copilotbrowser/src/**/*.js',
+  from: 'packages/copilotbrowser/src',
+  to: 'packages/copilotbrowser/lib',
   ignored: ['**/.eslintrc.js', '**/injected/**/*']
 });
 
 // Sometimes we require JSON files that esbuild ignores.
 // For example, deviceDescriptorsSource.json
 copyFiles.push({
-  files: 'packages/copilotbrowser-core/src/**/*.json',
+  files: 'packages/copilotbrowser/src/**/*.json',
   ignored: ['**/injected/**/*'],
-  from: 'packages/copilotbrowser-core/src',
-  to: 'packages/copilotbrowser-core/lib',
+  from: 'packages/copilotbrowser/src',
+  to: 'packages/copilotbrowser/lib',
 });
 
 

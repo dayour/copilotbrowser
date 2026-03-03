@@ -9,7 +9,7 @@ description: Explains how to develop copilotbrowser - add APIs, MCP tools, CLI c
 
 - [Adding and Modifying APIs](api.md) — define API docs, implement client/server, add tests
 - [MCP Tools and CLI Commands](mcp-dev.md) — add MCP tools, CLI commands, config options
-- [Vendoring Dependencies](vendor.md) — bundle third-party npm packages into copilotbrowser-core or copilotbrowser
+- [Vendoring Dependencies](vendor.md) — bundle third-party npm packages into copilotbrowser or copilotbrowser
 
 ## Build
 - Assume watch is running and everything is up to date.

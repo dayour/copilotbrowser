@@ -20,7 +20,7 @@ test('copilotbrowser should work with relative home path', async ({ exec }) => {
   test.skip(os.platform().startsWith('win'));
 
   const env = { copilotbrowser_BROWSERS_PATH: '0', HOME: '.' };
-  await exec('npm i copilotbrowser @copilotbrowser/browser-chromium @copilotbrowser/browser-webkit', { env });
+  await exec('npm i copilotbrowser @copilotbrowser-chromium @copilotbrowser-webkit', { env });
   // Firefox does not work with relative HOME.
   await exec('node sanity.js copilotbrowser chromium webkit', { env });
 });

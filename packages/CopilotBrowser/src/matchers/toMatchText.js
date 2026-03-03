@@ -16,7 +16,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toMatchText = toMatchText;
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const util_1 = require("../util");
 async function toMatchText(matcherName, receiver, receiverType, query, expected, options = {}) {
     (0, util_1.expectTypes)(receiver, [receiverType], matcherName);

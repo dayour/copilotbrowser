@@ -19,15 +19,15 @@ import fs from 'fs';
 import net from 'net';
 import path from 'path';
 
-import * as copilotbrowser from 'copilotbrowser-core';
-import { registryDirectory } from 'copilotbrowser-core/lib/server/registry/index';
-import { startTraceViewerServer } from 'copilotbrowser-core/lib/server';
+import * as copilotbrowser from '@copilotbrowser/copilotbrowser';
+import { registryDirectory } from '@copilotbrowser/copilotbrowser/lib/server/registry/index';
+import { startTraceViewerServer } from '@copilotbrowser/copilotbrowser/lib/server';
 import { logUnhandledError, testDebug } from '../log';
 import { outputDir, outputFile } from './config';
 import { firstRootPath } from '../sdk/server';
 
 import type { FullConfig } from './config';
-import type { LaunchOptions, BrowserContextOptions } from '../../../../copilotbrowser-core/src/client/types';
+import type { LaunchOptions, BrowserContextOptions } from '../../../../copilotbrowser/src/client/types';
 import type { ClientInfo } from '../sdk/server';
 
 export function contextFactory(config: FullConfig): BrowserContextFactory {

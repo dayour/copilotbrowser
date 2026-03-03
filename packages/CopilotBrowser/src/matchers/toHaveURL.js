@@ -16,7 +16,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toHaveURLWithPredicate = toHaveURLWithPredicate;
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 async function toHaveURLWithPredicate(page, expected, options) {
     const matcherName = 'toHaveURL';
     const timeout = options?.timeout ?? this.timeout;

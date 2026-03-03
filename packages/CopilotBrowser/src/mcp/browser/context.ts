@@ -16,9 +16,9 @@
 
 import os from 'os';
 
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
-import { escapeWithQuotes } from 'copilotbrowser-core/lib/utils';
-import { selectors } from 'copilotbrowser-core';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { escapeWithQuotes } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { selectors } from '@copilotbrowser/copilotbrowser';
 import { fileURLToPath } from 'url';
 
 import { logUnhandledError } from '../log';
@@ -29,7 +29,7 @@ import type * as copilotbrowser from '../../../types/test';
 import type { FullConfig } from './config';
 import type { BrowserContextFactory, BrowserContextFactoryResult } from './browserContextFactory';
 import type { SessionLog } from './sessionLog';
-import type { Tracing } from '../../../../copilotbrowser-core/src/client/tracing';
+import type { Tracing } from '../../../../copilotbrowser/src/client/tracing';
 import type { ClientInfo } from '../sdk/server';
 
 const testDebug = debug('pw:mcp:test');

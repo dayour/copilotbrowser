@@ -16,7 +16,7 @@
 
 import fs from 'fs';
 
-import { monotonicTime } from 'copilotbrowser-core/lib/utils';
+import { monotonicTime } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { internalScreen, prepareErrorStack, relativeFilePath } from './base';
 import { Multiplexer } from './multiplexer';

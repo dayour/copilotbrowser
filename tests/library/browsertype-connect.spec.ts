@@ -19,15 +19,15 @@ import fs from 'fs';
 import type http from 'http';
 import type net from 'net';
 import * as path from 'path';
-import { getUserAgent, getcopilotbrowserVersion } from '../../packages/copilotbrowser-core/lib/server/utils/userAgent';
+import { getUserAgent, getcopilotbrowserVersion } from '../../packages/copilotbrowser/lib/server/utils/userAgent';
 import WebSocket from 'ws';
 import { expect, copilotbrowserTest } from '../config/browserTest';
 import { parseTraceRaw, suppressCertificateWarning, rafraf } from '../config/utils';
 import { IncomingForm, type Fields, type File as FormidableFile } from 'formidable';
 import type { IncomingMessage } from 'http';
 import { PassThrough } from 'stream';
-import type { Browser, ConnectOptions } from 'copilotbrowser-core';
-import { createHttpServer } from '../../packages/copilotbrowser-core/lib/server/utils/network';
+import type { Browser, ConnectOptions } from 'copilotbrowser';
+import { createHttpServer } from '../../packages/copilotbrowser/lib/server/utils/network';
 import { kTargetClosedErrorMessage } from '../config/errors';
 import { RunServer } from '../config/remoteServer';
 

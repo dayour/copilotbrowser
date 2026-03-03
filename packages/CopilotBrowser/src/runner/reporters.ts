@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import fs from 'fs';
-import { calculateSha1 } from 'copilotbrowser-core/lib/utils';
+import { calculateSha1 } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { loadReporter } from './loadUtils';
 import { formatError } from '../reporters/base';

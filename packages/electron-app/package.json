@@ -109,7 +109,7 @@
     }
   },
   "dependencies": {
-    "copilotbrowser-core": "2.0.0"
+    "copilotbrowser": "2.0.0"
   },
   "devDependencies": {
     "electron": "^40.6.0",

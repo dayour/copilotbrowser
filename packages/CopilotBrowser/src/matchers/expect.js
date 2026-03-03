@@ -17,7 +17,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.expect = void 0;
 exports.mergeExpects = mergeExpects;
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const matcherHint_1 = require("./matcherHint");
 const matchers_1 = require("./matchers");
 const toMatchAriaSnapshot_1 = require("./toMatchAriaSnapshot");

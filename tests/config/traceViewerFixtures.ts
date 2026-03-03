@@ -158,7 +158,7 @@ export const traceViewerFixtures: Fixtures<TraceViewerFixtures, {}, BaseTestFixt
     await use(async (trace: string | undefined, { host, port, stdin } = {}) => {
       const command = [
         'node',
-        path.join(__dirname, '../../packages/copilotbrowser-core/cli.js'),
+        path.join(__dirname, '../../packages/copilotbrowser/cli.js'),
         'show-trace',
         '--port', '' + (port ?? '0'),
       ];

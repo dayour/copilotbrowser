@@ -18,7 +18,7 @@ import type { JSONReport, JSONReportSpec, JSONReportSuite, JSONReportTest, JSONR
 import * as fs from 'fs';
 import * as os from 'os';
 import * as path from 'path';
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
 import type { CommonFixtures, CommonWorkerFixtures, TestChildProcess } from '../config/commonFixtures';
 import { commonFixtures } from '../config/commonFixtures';
 import type { ServerFixtures, ServerWorkerOptions } from '../config/serverFixtures';
@@ -476,7 +476,7 @@ export function parseTestRunnerOutput(output: string) {
 }
 
 export const copilotbrowserCtConfigText = `
-import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+import { defineConfig } from 'copilotbrowser/ct/react';
 export default defineConfig({
   use: {
     ctPort: ${3200 + (+process.env.TEST_PARALLEL_INDEX)}

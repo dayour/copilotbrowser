@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-vue';
+import { test, expect } from 'copilotbrowser/ct/vue';
 import DefaultSlot from '@/components/DefaultSlot.vue';
 import NamedSlots from '@/components/NamedSlots.vue';
 

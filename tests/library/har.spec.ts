@@ -17,12 +17,12 @@
 
 import { browserTest as it, expect } from '../config/browserTest';
 import fs from 'fs';
-import type { BrowserContext, BrowserContextOptions } from 'copilotbrowser-core';
+import type { BrowserContext, BrowserContextOptions } from 'copilotbrowser';
 import type { AddressInfo } from 'net';
 import type { Log } from '../../packages/trace/src/har';
 import { parseHar } from '../config/utils';
 import { TestServer } from '../config/testserver';
-const { createHttp2Server } = require('../../packages/copilotbrowser-core/lib/utils');
+const { createHttp2Server } = require('../../packages/copilotbrowser/lib/utils');
 
 async function pageWithHar(contextFactory: (options?: BrowserContextOptions) => Promise<BrowserContext>, testInfo: any, options: { outputPath?: string } & Partial<Pick<BrowserContextOptions['recordHar'], 'content' | 'omitContent' | 'mode'>> = {}) {
   const harPath = testInfo.outputPath(options.outputPath || 'test.har');

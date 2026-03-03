@@ -17,12 +17,12 @@
 import * as fs from 'fs';
 import type { copilotbrowserTestConfig } from '@copilotbrowser/test';
 import path from 'path';
-import type { HttpServer } from '../../packages/copilotbrowser-core/lib/server/utils/httpServer';
+import type { HttpServer } from '../../packages/copilotbrowser/lib/server/utils/httpServer';
 import { startHtmlReportServer } from '../../packages/copilotbrowser/lib/reporters/html';
 import { expect as baseExpect, test as baseTest, stripAnsi } from './copilotbrowser-test-fixtures';
-import extractZip from '../../packages/copilotbrowser-core/bundles/zip/src/third_party/extract-zip';
-import * as yazl from '../../packages/copilotbrowser-core/bundles/zip/node_modules/yazl';
-import { getUserAgent } from '../../packages/copilotbrowser-core/lib/server/utils/userAgent';
+import extractZip from '../../packages/copilotbrowser/bundles/zip/src/third_party/extract-zip';
+import * as yazl from '../../packages/copilotbrowser/bundles/zip/node_modules/yazl';
+import { getUserAgent } from '../../packages/copilotbrowser/lib/server/utils/userAgent';
 import { Readable } from 'stream';
 import type { FullResult, JSONReportTestResult } from '../../packages/copilotbrowser-test/reporter';
 

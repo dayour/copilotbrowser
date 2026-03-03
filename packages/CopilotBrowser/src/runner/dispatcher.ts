@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { ManualPromise,  eventsHelper } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
+import { ManualPromise,  eventsHelper } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { addSuggestedRebaseline } from './rebase';
 import { WorkerHost } from './workerHost';
@@ -34,7 +34,7 @@ import type { AttachmentPayload, DonePayload, RunPayload, SerializedConfig, Step
 import type { Suite } from '../common/test';
 import type { TestCase } from '../common/test';
 import type { ReporterV2 } from '../reporters/reporterV2';
-import type { RegisteredListener } from 'copilotbrowser-core/lib/utils';
+import type { RegisteredListener } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 
 export type EnvByProjectId = Map<string, Record<string, string | undefined>>;

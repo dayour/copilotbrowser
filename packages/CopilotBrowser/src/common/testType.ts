@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { errors } from 'copilotbrowser-core';
-import { getPackageManagerExecCommand, monotonicTime, raceAgainstDeadline, currentZone } from 'copilotbrowser-core/lib/utils';
+import { errors } from '@copilotbrowser/copilotbrowser';
+import { getPackageManagerExecCommand, monotonicTime, raceAgainstDeadline, currentZone } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { currentTestInfo, currentlyLoadingFileSuite, setCurrentlyLoadingFileSuite } from './globals';
 import { Suite, TestCase } from './test';

@@ -16,7 +16,7 @@
  */
 
 import { browserTest as it, expect } from '../config/browserTest';
-import { hostPlatform } from '../../packages/copilotbrowser-core/src/server/utils/hostPlatform';
+import { hostPlatform } from '../../packages/copilotbrowser/src/server/utils/hostPlatform';
 
 it.describe('mobile viewport', () => {
   it.skip(({ browserName, isBidi }) => browserName === 'firefox' && !isBidi);

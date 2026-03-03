@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { formatMatcherMessage, isRegExp } from 'copilotbrowser-core/lib/utils';
+import { formatMatcherMessage, isRegExp } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { expectTypes } from '../util';
 
 import type { MatcherResult } from './matcherHint';
-import type { Locator } from 'copilotbrowser-core';
+import type { Locator } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 
 // Omit colon and one or more spaces, so can call getLabelPrinter.

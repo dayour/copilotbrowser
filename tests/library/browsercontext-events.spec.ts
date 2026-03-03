@@ -15,7 +15,7 @@
  */
 
 import { browserTest as test, expect } from '../config/browserTest';
-import type { ElementHandle } from 'copilotbrowser-core';
+import type { ElementHandle } from 'copilotbrowser';
 
 test('console event should work @smoke', async ({ page }) => {
   const [, message] = await Promise.all([

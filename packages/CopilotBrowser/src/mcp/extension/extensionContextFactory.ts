@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import * as copilotbrowser from 'copilotbrowser-core';
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
-import { createHttpServer, startHttpServer } from 'copilotbrowser-core/lib/utils';
+import * as copilotbrowser from '@copilotbrowser/copilotbrowser';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { createHttpServer, startHttpServer } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { CDPRelayServer } from './cdpRelay';
 

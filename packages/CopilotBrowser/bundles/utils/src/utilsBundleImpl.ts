@@ -14,26 +14,58 @@
  * limitations under the License.
  */
 
-import json5Library from 'json5';
-export const json5 = json5Library;
+/* eslint-disable import/order */
 
-import sourceMapSupportLibrary from 'source-map-support';
-export const sourceMapSupport = sourceMapSupportLibrary;
+import colorsLibrary from 'colors/safe';
+export const colors = colorsLibrary;
 
-import stoppableLibrary from 'stoppable';
-export const stoppable = stoppableLibrary;
+import debugLibrary from 'debug';
+export const debug = debugLibrary;
 
-import enquirerLibrary from 'enquirer';
-export const enquirer = enquirerLibrary;
+import * as iniLibrary from 'ini';
+export const ini = iniLibrary;
 
-import chokidarLibrary from 'chokidar';
-export const chokidar = chokidarLibrary;
+import * as diffLibrary from 'diff';
+export const diff = diffLibrary;
 
-import * as getEastAsianWidthLibrary from 'get-east-asian-width';
-export const getEastAsianWidth = getEastAsianWidthLibrary;
+import dotenvLibrary from 'dotenv';
+export const dotenv = dotenvLibrary;
 
-import * as unifiedLibrary from 'unified';
-export const unified = unifiedLibrary;
+export { getProxyForUrl } from 'proxy-from-env';
 
-import remarkParseLibrary from 'remark-parse';
-export const remarkParse = remarkParseLibrary;
+export { HttpsProxyAgent } from 'https-proxy-agent';
+
+import jpegLibrary from 'jpeg-js';
+export const jpegjs = jpegLibrary;
+
+const lockfileLibrary = require('./third_party/lockfile');
+export const lockfile = lockfileLibrary;
+
+import mimeLibrary from 'mime';
+export const mime = mimeLibrary;
+
+import minimatchLibrary from 'minimatch';
+export const minimatch = minimatchLibrary;
+
+import openLibrary from 'open';
+export const open = openLibrary;
+
+export { PNG } from 'pngjs';
+
+export { program } from 'commander';
+export { Option as ProgramOption } from 'commander';
+
+import progressLibrary from 'progress';
+export const progress = progressLibrary;
+
+export { SocksProxyAgent } from 'socks-proxy-agent';
+
+// @ts-ignore
+import wsLibrary, { WebSocketServer, Receiver, Sender } from 'ws';
+export const ws = wsLibrary;
+export const wsServer = WebSocketServer;
+export const wsReceiver = Receiver;
+export const wsSender = Sender;
+
+import yamlLibrary from 'yaml';
+export const yaml = yamlLibrary;

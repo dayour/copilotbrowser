@@ -18,9 +18,9 @@ import fs from 'fs';
 import path from 'path';
 
 
-import { MultiMap } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
-import { diff } from 'copilotbrowser-core/lib/utilsBundle';
+import { MultiMap } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { diff } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { filterProjects } from './projectUtils';
 import { babelParse, traverse, types } from '../transform/babelBundle';

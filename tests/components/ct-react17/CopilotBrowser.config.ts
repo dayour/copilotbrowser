@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { defineConfig, devices } from '@copilotbrowser/experimental-ct-react17';
+import { defineConfig, devices } from 'copilotbrowser/ct/react17';
 import { resolve } from 'path';
 
 export default defineConfig({

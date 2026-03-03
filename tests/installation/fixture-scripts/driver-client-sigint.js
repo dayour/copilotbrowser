@@ -16,7 +16,7 @@
 // @ts-check
 
 const pw = require.resolve('copilotbrowser');
-const oop = require.resolve('copilotbrowser-core/lib/outofprocess', { paths: [pw] });
+const oop = require.resolve('copilotbrowser/lib/outofprocess', { paths: [pw] });
 const { start } = require(oop);
 
 (async () => {

@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-svelte';
+import { test, expect } from 'copilotbrowser/ct/svelte';
 import Button from '@/components/Button.svelte';
 import MultiRoot from '@/components/MultiRoot.svelte';
 

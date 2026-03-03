@@ -17,14 +17,14 @@
  */
 
 const path = require('path');
-const { Registry } = require('../packages/copilotbrowser-core/lib/server');
+const { Registry } = require('../packages/copilotbrowser/lib/server');
 const fs = require('fs');
 const protocolGenerator = require('./protocol-types-generator');
 const {execSync} = require('child_process');
-const copilotbrowser = require('copilotbrowser-core');
+const copilotbrowser = require('copilotbrowser');
 
 const SCRIPT_NAME = path.basename(__filename);
-const CORE_PATH = path.resolve(path.join(__dirname, '..', 'packages', 'copilotbrowser-core'));
+const CORE_PATH = path.resolve(path.join(__dirname, '..', 'packages', 'copilotbrowser'));
 
 function usage() {
   return `

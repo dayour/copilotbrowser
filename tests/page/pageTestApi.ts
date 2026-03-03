@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Page, ViewportSize } from 'copilotbrowser-core';
+import type { Page, ViewportSize } from 'copilotbrowser';
 import type { PageScreenshotOptions, ScreenshotMode, VideoMode } from '@copilotbrowser/test';
 export { expect } from '@copilotbrowser/test';
 

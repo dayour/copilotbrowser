@@ -18,7 +18,7 @@ import type http from 'http';
 import path from 'path';
 import { test, expect, parseTestRunnerOutput } from './copilotbrowser-test-fixtures';
 import type { RunResult } from './copilotbrowser-test-fixtures';
-import { createHttpServer } from '../../packages/copilotbrowser-core/lib/server/utils/network';
+import { createHttpServer } from '../../packages/copilotbrowser/lib/server/utils/network';
 
 const SIMPLE_SERVER_PATH = path.join(__dirname, 'assets', 'simple-server.js');
 

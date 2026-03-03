@@ -18,7 +18,7 @@
 import { test as it, expect } from './pageTest';
 import type { Worker as PwWorker } from '@copilotbrowser/test';
 import { attachFrame } from '../config/utils';
-import type { ConsoleMessage } from 'copilotbrowser-core';
+import type { ConsoleMessage } from 'copilotbrowser';
 import fs from 'fs';
 import { kTargetClosedErrorMessage } from '../config/errors';
 

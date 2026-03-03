@@ -17,8 +17,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import { ManualPromise, SerializedFS, calculateSha1, createGuid, getcopilotbrowserVersion, monotonicTime } from 'copilotbrowser-core/lib/utils';
-import { yauzl, yazl } from 'copilotbrowser-core/lib/zipBundle';
+import { ManualPromise, SerializedFS, calculateSha1, createGuid, getcopilotbrowserVersion, monotonicTime } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { yauzl, yazl } from '@copilotbrowser/copilotbrowser/lib/zipBundle';
 
 import { filteredStackTrace } from '../util';
 

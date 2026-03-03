@@ -14,16 +14,54 @@
  * limitations under the License.
  */
 
-export const json5: typeof import('../bundles/utils/node_modules/json5/lib') = require('./utilsBundleImpl').json5;
-export const sourceMapSupport: typeof import('../bundles/utils/node_modules/@types/source-map-support') = require('./utilsBundleImpl').sourceMapSupport;
-export const stoppable: typeof import('../bundles/utils/node_modules/@types/stoppable') = require('./utilsBundleImpl').stoppable;
-export const enquirer: typeof import('../bundles/utils/node_modules/enquirer') = require('./utilsBundleImpl').enquirer;
-export const chokidar: typeof import('../bundles/utils/node_modules/chokidar') = require('./utilsBundleImpl').chokidar;
-export const getEastAsianWidth: typeof import('../bundles/utils/node_modules/get-east-asian-width') = require('./utilsBundleImpl').getEastAsianWidth;
-export type { RawSourceMap } from '../bundles/utils/node_modules/source-map';
+export const colors: typeof import('../bundles/utils/node_modules/colors/safe') = require('./utilsBundleImpl').colors;
+export const debug: typeof import('../bundles/utils/node_modules/@types/debug') = require('./utilsBundleImpl').debug;
+export const diff: typeof import('../bundles/utils/node_modules/@types/diff') = require('./utilsBundleImpl').diff;
+export const dotenv: typeof import('../bundles/utils/node_modules/dotenv') = require('./utilsBundleImpl').dotenv;
+export const ini: typeof import('../bundles/utils/node_modules/@types/ini') = require('./utilsBundleImpl').ini;
+export const getProxyForUrl: typeof import('../bundles/utils/node_modules/@types/proxy-from-env').getProxyForUrl = require('./utilsBundleImpl').getProxyForUrl;
+export const HttpsProxyAgent: typeof import('../bundles/utils/node_modules/https-proxy-agent').HttpsProxyAgent = require('./utilsBundleImpl').HttpsProxyAgent;
+export const jpegjs: typeof import('../bundles/utils/node_modules/jpeg-js') = require('./utilsBundleImpl').jpegjs;
+export const lockfile: typeof import('../bundles/utils/node_modules/@types/proper-lockfile') = require('./utilsBundleImpl').lockfile;
+export const mime: typeof import('../bundles/utils/node_modules/@types/mime') = require('./utilsBundleImpl').mime;
+export const minimatch: typeof import('../bundles/utils/node_modules/@types/minimatch') = require('./utilsBundleImpl').minimatch;
+export const open: typeof import('../bundles/utils/node_modules/open') = require('./utilsBundleImpl').open;
+export const PNG: typeof import('../bundles/utils/node_modules/@types/pngjs').PNG = require('./utilsBundleImpl').PNG;
+export const program: typeof import('../bundles/utils/node_modules/commander').program = require('./utilsBundleImpl').program;
+export const ProgramOption: typeof import('../bundles/utils/node_modules/commander').Option = require('./utilsBundleImpl').ProgramOption;
+export const progress: typeof import('../bundles/utils/node_modules/@types/progress') = require('./utilsBundleImpl').progress;
+export const SocksProxyAgent: typeof import('../bundles/utils/node_modules/socks-proxy-agent').SocksProxyAgent = require('./utilsBundleImpl').SocksProxyAgent;
+export const ws: typeof import('../bundles/utils/node_modules/@types/ws') = require('./utilsBundleImpl').ws;
+export const wsServer: typeof import('../bundles/utils/node_modules/@types/ws').WebSocketServer = require('./utilsBundleImpl').wsServer;
+export const wsReceiver = require('./utilsBundleImpl').wsReceiver;
+export const wsSender = require('./utilsBundleImpl').wsSender;
+export const yaml: typeof import('../bundles/utils/node_modules/yaml') = require('./utilsBundleImpl').yaml;
+export type { Range as YAMLRange, Scalar as YAMLScalar, YAMLError, YAMLMap, YAMLSeq } from '../bundles/utils/node_modules/yaml';
+export type { Command } from '../bundles/utils/node_modules/commander';
+export type { EventEmitter as WebSocketEventEmitter, RawData as WebSocketRawData, WebSocket, WebSocketServer } from '../bundles/utils/node_modules/@types/ws';
 
-const { unified } = require('./utilsBundleImpl').unified;
-const remarkParse = require('./utilsBundleImpl').remarkParse;
-export function parseMarkdown(content: string): import('mdast').Root {
-  return unified().use(remarkParse).parse(content);
+export function ms(ms: number): string {
+  if (!isFinite(ms))
+    return '-';
+
+  if (ms === 0)
+    return '0ms';
+
+  if (ms < 1000)
+    return ms.toFixed(0) + 'ms';
+
+  const seconds = ms / 1000;
+  if (seconds < 60)
+    return seconds.toFixed(1) + 's';
+
+  const minutes = seconds / 60;
+  if (minutes < 60)
+    return minutes.toFixed(1) + 'm';
+
+  const hours = minutes / 60;
+  if (hours < 24)
+    return hours.toFixed(1) + 'h';
+
+  const days = hours / 24;
+  return days.toFixed(1) + 'd';
 }

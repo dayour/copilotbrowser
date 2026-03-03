@@ -21,9 +21,9 @@ exports.webServerPluginsForConfig = exports.webServer = exports.WebServerPlugin 
  */
 const net_1 = __importDefault(require("net"));
 const path_1 = __importDefault(require("path"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
-const utils_2 = require("copilotbrowser-core/lib/utils");
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utils_2 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
 const DEFAULT_ENVIRONMENT_VARIABLES = {
     'BROWSER': 'none', // Disable that create-react-app will open the page in the browser
     'FORCE_COLOR': '1',

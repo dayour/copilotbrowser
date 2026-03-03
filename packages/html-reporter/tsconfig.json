@@ -22,7 +22,7 @@
       "@copilotbrowser/*": ["../copilotbrowser/src/*"],
       "@recorder/*": ["../recorder/src/*"],
       "@testIsomorphic/*": ["../copilotbrowser/src/isomorphic/*"],
-      "copilotbrowser-core/lib/*": ["../copilotbrowser-core/src/*"],
+      "copilotbrowser/lib/*": ["../copilotbrowser/src/*"],
       "copilotbrowser/lib/*": ["../copilotbrowser/src/*"],
     }
   },

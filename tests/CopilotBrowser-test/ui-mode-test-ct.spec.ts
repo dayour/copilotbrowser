@@ -20,7 +20,7 @@ test.describe.configure({ mode: 'parallel', retries });
 
 const basicTestTree = {
   'copilotbrowser.config.ts': `
-    import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+    import { defineConfig } from 'copilotbrowser/ct/react';
     export default defineConfig({
       use: {
         ctPort: ${3200 + (+process.env.TEST_PARALLEL_INDEX)}
@@ -33,7 +33,7 @@ const basicTestTree = {
     export const Button = () => <button>Button</button>;
   `,
   'src/button.test.tsx': `
-    import { test, expect } from '@copilotbrowser/experimental-ct-react';
+    import { test, expect } from 'copilotbrowser/ct/react';
     import { Button } from './button';
 
     test('pass', async ({ mount }) => {
@@ -70,7 +70,7 @@ test('should run component tests after editing test', async ({ runUITest, writeF
 
   await writeFiles({
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('fail', async ({ mount }) => {
@@ -128,7 +128,7 @@ test('should run component tests after editing test and component', async ({ run
 
   await writeFiles({
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass 2', async ({ mount }) => {
@@ -169,7 +169,7 @@ test('should watch test', async ({ runUITest, writeFiles }) => {
 
   await writeFiles({
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass', async ({ mount }) => {
@@ -306,7 +306,7 @@ test('should watch component when editing inline css', async ({ runUITest, write
       .button{color:red}
     `,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass', async ({ mount }) => {
@@ -345,7 +345,7 @@ test('should watch component when editing story import chain', async ({ runUITes
     ...basicTestTree,
     'src/button.tsx': undefined,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { StoryButton } from './button.story';
 
       test('pass', async ({ mount }) => {

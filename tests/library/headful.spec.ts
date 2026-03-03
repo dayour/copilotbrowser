@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { compare } from 'copilotbrowser-core/lib/server/utils/image_tools/compare';
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
+import { compare } from 'copilotbrowser/lib/server/utils/image_tools/compare';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
 import { expect, copilotbrowserTest as it } from '../config/browserTest';
 
 it.skip(({ headless }) => headless, 'avoid popping windows in headless mode');

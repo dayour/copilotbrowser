@@ -16,7 +16,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toBeTruthy = toBeTruthy;
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const util_1 = require("../util");
 async function toBeTruthy(matcherName, locator, receiverType, expected, arg, query, options = {}) {
     (0, util_1.expectTypes)(locator, [receiverType], matcherName);

@@ -17,7 +17,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateTestAnnotation = validateTestAnnotation;
 exports.validateTestDetails = validateTestDetails;
-const mcpBundle_1 = require("copilotbrowser-core/lib/mcpBundle");
+const mcpBundle_1 = require("@copilotbrowser/copilotbrowser/lib/mcpBundle");
 const testAnnotationSchema = mcpBundle_1.z.object({
     type: mcpBundle_1.z.string(),
     description: mcpBundle_1.z.string().optional(),

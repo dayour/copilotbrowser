@@ -696,7 +696,7 @@ test('should run CT on changed deps', async ({ runWatchTest, writeFiles }) => {
       export const Button = () => <button>Button</button>;
     `,
     'src/button.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -704,7 +704,7 @@ test('should run CT on changed deps', async ({ runWatchTest, writeFiles }) => {
       });
     `,
     'src/link.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       test('pass', async ({ mount }) => {
         const component = await mount(<a>hello</a>);
         await expect(component).toHaveText('hello');
@@ -742,7 +742,7 @@ test('should run CT on indirect deps change', async ({ runWatchTest, writeFiles 
       export const buttonInstance = <Button></Button>
     `,
     'src/button.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { buttonInstance } from './helper';
       test('pass', async ({ mount }) => {
         const component = await mount(buttonInstance);
@@ -750,7 +750,7 @@ test('should run CT on indirect deps change', async ({ runWatchTest, writeFiles 
       });
     `,
     'src/link.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       test('pass', async ({ mount }) => {
         const component = await mount(<a>hello</a>);
         await expect(component).toHaveText('hello');
@@ -783,7 +783,7 @@ test('should run CT on indirect deps change ESM mode', async ({ runWatchTest, wr
       export const Button = () => <button>Button</button>;
     `,
     'src/button.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.jsx';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -791,7 +791,7 @@ test('should run CT on indirect deps change ESM mode', async ({ runWatchTest, wr
       });
     `,
     'src/link.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       test('pass', async ({ mount }) => {
         const component = await mount(<a>hello</a>);
         await expect(component).toHaveText('hello');

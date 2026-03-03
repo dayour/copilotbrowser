@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from 'copilotbrowser';
 import { test as it, expect, rafraf } from './pageTest';
 
 it.skip(({ isAndroid }) => {

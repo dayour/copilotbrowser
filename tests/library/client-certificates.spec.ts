@@ -24,7 +24,7 @@ import { expect, copilotbrowserTest as base } from '../config/browserTest';
 import type net from 'net';
 import type { BrowserContextOptions } from 'packages/copilotbrowser-test';
 import { setupSocksForwardingServer } from '../config/proxy';
-const { createHttpsServer, createHttp2Server } = require('../../packages/copilotbrowser-core/lib/utils');
+const { createHttpsServer, createHttp2Server } = require('../../packages/copilotbrowser/lib/utils');
 
 type TestOptions = {
   startCCServer(options?: {

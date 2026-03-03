@@ -18,9 +18,9 @@ import path from 'path';
 import readline from 'readline';
 import { EventEmitter } from 'stream';
 
-import { copilotbrowserServer } from 'copilotbrowser-core/lib/remote/copilotbrowserServer';
-import { ManualPromise, createGuid, eventsHelper, getPackageManagerExecCommand } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
+import { copilotbrowserServer } from '@copilotbrowser/copilotbrowser/lib/remote/copilotbrowserServer';
+import { ManualPromise, createGuid, eventsHelper, getPackageManagerExecCommand } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { separator, terminalScreen } from '../reporters/base';
 import { enquirer } from '../utilsBundle';

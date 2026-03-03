@@ -16,8 +16,8 @@
 import type { MatcherResult } from './matcherHint';
 import type { ExpectMatcherStateInternal } from './matchers';
 import type { FullProjectInternal } from '../common/config';
-import type { Locator, Page } from 'copilotbrowser-core';
-import type { ImageComparatorOptions } from 'copilotbrowser-core/lib/utils';
+import type { Locator, Page } from '@copilotbrowser/copilotbrowser';
+import type { ImageComparatorOptions } from '@copilotbrowser/copilotbrowser/lib/utils';
 type NameOrSegments = string | string[];
 type ToHaveScreenshotConfigOptions = NonNullable<NonNullable<FullProjectInternal['expect']>['toHaveScreenshot']> & {
     _comparator?: string;

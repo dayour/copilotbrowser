@@ -16,7 +16,7 @@
 
 // @ts-check
 const path = require('path');
-const devices = require('../../packages/copilotbrowser-core/lib/server/deviceDescriptorsSource.json');
+const devices = require('../../packages/copilotbrowser/lib/server/deviceDescriptorsSource.json');
 const md = require('../markdown');
 const docs = require('../doclint/documentation');
 const PROJECT_DIR = path.join(__dirname, '..', '..');
@@ -622,17 +622,15 @@ class TypesGenerator {
     fs.writeFileSync(filePath, content, 'utf8');
   }
 
-  const coreTypesDir = path.join(PROJECT_DIR, 'packages', 'copilotbrowser-core', 'types');
-  const clientTypesDir = path.join(PROJECT_DIR, 'packages', 'copilotbrowser-client', 'types');
+  const coreTypesDir = path.join(PROJECT_DIR, 'packages', 'copilotbrowser', 'types');
   if (!fs.existsSync(coreTypesDir))
     fs.mkdirSync(coreTypesDir)
   const copilotbrowserTypesDir = path.join(PROJECT_DIR, 'packages', 'copilotbrowser', 'types');
   if (!fs.existsSync(copilotbrowserTypesDir))
     fs.mkdirSync(copilotbrowserTypesDir)
-  writeFile(path.join(coreTypesDir, 'protocol.d.ts'), fs.readFileSync(path.join(PROJECT_DIR, 'packages', 'copilotbrowser-core', 'src', 'server', 'chromium', 'protocol.d.ts'), 'utf8'), false);
+  writeFile(path.join(coreTypesDir, 'protocol.d.ts'), fs.readFileSync(path.join(PROJECT_DIR, 'packages', 'copilotbrowser', 'src', 'server', 'chromium', 'protocol.d.ts'), 'utf8'), false);
   const coreTypes = await generateCoreTypes();
   writeFile(path.join(coreTypesDir, 'types.d.ts'), coreTypes, true);
-  writeFile(path.join(clientTypesDir, 'types.d.ts'), coreTypes, true);
   writeFile(path.join(copilotbrowserTypesDir, 'test.d.ts'), await generateTestTypes(), true);
   writeFile(path.join(copilotbrowserTypesDir, 'testReporter.d.ts'), await generateReporterTypes(), true);
   process.exit(0);

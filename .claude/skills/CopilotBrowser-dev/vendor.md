@@ -28,7 +28,7 @@ lib/<name>Bundle.js                  (used by application code)
 
 ### Decide which package it belongs to
 
-- `packages/copilotbrowser-core/bundles/` — for core browser automation deps (networking, compression, protocols, etc.)
+- `packages/copilotbrowser/bundles/` — for core browser automation deps (networking, compression, protocols, etc.)
 - `packages/copilotbrowser/bundles/` — for test runner deps (assertion libs, transpilers, file watchers, etc.)
 
 ### 1. Create the bundle directory
@@ -150,7 +150,7 @@ import { someLib } from '../<name>Bundle';
 
 ## Existing Bundles Reference
 
-### copilotbrowser-core bundles
+### copilotbrowser bundles
 
 | Bundle | Deps | Output |
 |--------|------|--------|

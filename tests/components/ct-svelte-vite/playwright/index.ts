@@ -1,5 +1,5 @@
 import '../src/assets/index.css';
-import { beforeMount, afterMount } from '@copilotbrowser/experimental-ct-svelte/hooks';
+import { beforeMount, afterMount } from 'copilotbrowser/ct/svelte/hooks';
 
 export type HooksConfig = {
   context?: string;

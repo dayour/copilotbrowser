@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { MultiMap } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/multimap';
+import { MultiMap } from '../../packages/copilotbrowser/lib/utils/isomorphic/multimap';
 import { test, expect } from './pageTest';
 
 function leakedJSHandles(): string {

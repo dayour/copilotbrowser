@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import type { Frame } from 'copilotbrowser-core';
+import type { Frame } from 'copilotbrowser';
 import { expectedSSLError } from '../config/utils';
 
 it('should work', async ({ page, server }) => {

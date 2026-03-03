@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from 'copilotbrowser';
 import { test as it, expect } from './pageTest';
 
 async function routeIframe(page: Page) {

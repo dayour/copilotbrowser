@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTool } from './tool';
 
-import type * as copilotbrowser from 'copilotbrowser-core';
+import type * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 import type { RouteEntry } from '../context';
 
 const route = defineTool({

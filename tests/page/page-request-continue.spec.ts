@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import type { Route } from 'copilotbrowser-core';
+import type { Route } from 'copilotbrowser';
 import type * as http from 'http';
 
 it('should work', async ({ page, server }) => {

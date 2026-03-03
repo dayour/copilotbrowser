@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
-import { ImageChannel } from 'copilotbrowser-core/lib/server/utils/image_tools/imageChannel';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
+import { ImageChannel } from 'copilotbrowser/lib/server/utils/image_tools/imageChannel';
 
 // mulberry32
 export function createRandom(seed) {

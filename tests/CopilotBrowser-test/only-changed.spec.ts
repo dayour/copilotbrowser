@@ -199,7 +199,7 @@ test('should support component tests', async ({ runInlineTest, git, writeFiles }
       export { Button } from "./button";
     `,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './helper';
 
       test('pass', async ({ mount }) => {
@@ -208,7 +208,7 @@ test('should support component tests', async ({ runInlineTest, git, writeFiles }
       });
     `,
     'src/button2.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './helper';
 
       test('pass', async ({ mount }) => {
@@ -217,7 +217,7 @@ test('should support component tests', async ({ runInlineTest, git, writeFiles }
       });
     `,
     'src/button3.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
 
       test('pass', async ({ mount }) => {
         const component = await mount(<p>Hello World</p>);
@@ -237,7 +237,7 @@ test('should support component tests', async ({ runInlineTest, git, writeFiles }
 
   const result2 = await runInlineTest({
     'src/button2.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './helper';
 
       test('pass', async ({ mount }) => {

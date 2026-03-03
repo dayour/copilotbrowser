@@ -17,8 +17,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.rootTestType = exports.TestTypeImpl = void 0;
 exports.mergeTests = mergeTests;
-const copilotbrowser_core_1 = require("copilotbrowser-core");
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const copilotbrowser_core_1 = require("@copilotbrowser/copilotbrowser");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const globals_1 = require("./globals");
 const test_1 = require("./test");
 const expect_1 = require("../matchers/expect");

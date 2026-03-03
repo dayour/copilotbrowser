@@ -61,12 +61,12 @@ Description.
 ```
 
 Watch will kick in and auto-generate:
-- `packages/copilotbrowser-core/types/types.d.ts` — public API types
+- `packages/copilotbrowser/types/types.d.ts` — public API types
 - `packages/copilotbrowser/types/test.d.ts` — test API types
 
 ## Step 2: Implement Client API
 
-Implement the new API in `packages/copilotbrowser-core/src/client/xxx.ts`.
+Implement the new API in `packages/copilotbrowser/src/client/xxx.ts`.
 
 ### Client Implementation Pattern
 
@@ -152,12 +152,12 @@ Page:
 
 Watch will kick in and auto-generate:
 - `packages/protocol/src/channels.d.ts` — channel TypeScript interfaces
-- `packages/copilotbrowser-core/src/protocol/validator.ts` — runtime validators
-- `packages/copilotbrowser-core/src/utils/isomorphic/protocolMetainfo.ts` — method metadata
+- `packages/copilotbrowser/src/protocol/validator.ts` — runtime validators
+- `packages/copilotbrowser/src/utils/isomorphic/protocolMetainfo.ts` — method metadata
 
 ## Step 4: Implement Dispatcher
 
-Implement dispatcher handler in `packages/copilotbrowser-core/src/server/dispatchers/xxxDispatcher.ts` as needed.
+Implement dispatcher handler in `packages/copilotbrowser/src/server/dispatchers/xxxDispatcher.ts` as needed.
 
 ### Dispatcher Pattern
 
@@ -200,12 +200,12 @@ async querySelectorAll(params: channels.FrameQuerySelectorAllParams, progress: P
 
 ## Step 5: Implement Server Logic
 
-Handler should route the call into the corresponding method in `packages/copilotbrowser-core/src/server/xxx.ts`.
+Handler should route the call into the corresponding method in `packages/copilotbrowser/src/server/xxx.ts`.
 
 Server methods implement the actual browser interaction:
 
 ```typescript
-// In packages/copilotbrowser-core/src/server/frames.ts
+// In packages/copilotbrowser/src/server/frames.ts
 async goto(progress: Progress, url: string, options: types.GotoOptions = {}): Promise<network.Response | null> {
   // ... validation, URL construction ...
   // Delegates to browser-specific implementation:
@@ -216,9 +216,9 @@ async goto(progress: Progress, url: string, options: types.GotoOptions = {}): Pr
 ```
 
 Browser-specific implementations live in:
-- `packages/copilotbrowser-core/src/server/chromium/crPage.ts` — Chromium (uses CDP: `this._client.send('Page.navigate', { ... })`)
-- `packages/copilotbrowser-core/src/server/firefox/ffPage.ts` — Firefox
-- `packages/copilotbrowser-core/src/server/webkit/wkPage.ts` — WebKit
+- `packages/copilotbrowser/src/server/chromium/crPage.ts` — Chromium (uses CDP: `this._client.send('Page.navigate', { ... })`)
+- `packages/copilotbrowser/src/server/firefox/ffPage.ts` — Firefox
+- `packages/copilotbrowser/src/server/webkit/wkPage.ts` — WebKit
 
 ## Step 6: Write Tests
 

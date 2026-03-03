@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-vue';
+import { test, expect } from 'copilotbrowser/ct/vue';
 import Button from '@/components/Button.vue';
 
 test('emit a submit event when the button is clicked', async ({ mount }) => {

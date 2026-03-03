@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { getAsBooleanFromENV } from 'copilotbrowser-core/lib/utils';
+import { getAsBooleanFromENV } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { CommonReporterOptions, formatFailure, nonTerminalScreen, resolveOutputFile } from './base';
 import { stripAnsiEscapes } from '../util';

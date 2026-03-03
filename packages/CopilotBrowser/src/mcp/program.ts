@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ProgramOption } from 'copilotbrowser-core/lib/utilsBundle';
+import { ProgramOption } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import * as mcpServer from './sdk/server';
 import { commaSeparatedList, dotenvFileLoader, enumParser, headerParser, numberParser, resolutionParser, resolveCLIConfig, semicolonSeparatedList } from './browser/config';
@@ -23,7 +23,7 @@ import { contextFactory } from './browser/browserContextFactory';
 import { BrowserServerBackend } from './browser/browserServerBackend';
 import { ExtensionContextFactory } from './extension/extensionContextFactory';
 
-import type { Command } from 'copilotbrowser-core/lib/utilsBundle';
+import type { Command } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 export function decorateMCPCommand(command: Command, version: string) {
   command

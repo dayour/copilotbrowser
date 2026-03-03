@@ -9,7 +9,7 @@ With copilotbrowser you can test your app on any browser as well as emulate a re
 
 ## Devices
 
-copilotbrowser comes with a [registry of device parameters](https://github.com/dayour/copilotbrowser/blob/main/packages/copilotbrowser-core/src/server/deviceDescriptorsSource.json) using **copilotbrowser.devices** for selected desktop, tablet and mobile devices. It can be used to simulate browser behavior for a specific device such as user agent, screen size, viewport and if it has touch enabled. All tests will run with the specified device parameters.
+copilotbrowser comes with a [registry of device parameters](https://github.com/dayour/copilotbrowser/blob/main/packages/copilotbrowser/src/server/deviceDescriptorsSource.json) using **copilotbrowser.devices** for selected desktop, tablet and mobile devices. It can be used to simulate browser behavior for a specific device such as user agent, screen size, viewport and if it has touch enabled. All tests will run with the specified device parameters.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
 import { defineConfig, devices } from '@copilotbrowser/test'; // import devices

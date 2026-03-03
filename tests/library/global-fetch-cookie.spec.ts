@@ -16,7 +16,7 @@
 
 import type { LookupAddress } from 'dns';
 import fs from 'fs';
-import type { APIRequestContext } from 'copilotbrowser-core';
+import type { APIRequestContext } from 'copilotbrowser';
 import { expect, copilotbrowserTest } from '../config/browserTest';
 
 export type GlobalFetchFixtures = {

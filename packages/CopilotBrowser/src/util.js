@@ -49,10 +49,10 @@ const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
 const url_1 = __importDefault(require("url"));
 const util_1 = __importDefault(require("util"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
 const copilotbrowser_TEST_PATH = path_1.default.join(__dirname, '..');
-const copilotbrowser_CORE_PATH = path_1.default.dirname(require.resolve('copilotbrowser-core/package.json'));
+const copilotbrowser_CORE_PATH = path_1.default.dirname(require.resolve('copilotbrowser/package.json'));
 function filterStackTrace(e) {
     const name = e.name ? e.name + ': ' : '';
     const cause = e.cause instanceof Error ? filterStackTrace(e.cause) : undefined;
@@ -384,6 +384,6 @@ async function removeDirAndLogToConsole(dir) {
     catch {
     }
 }
-var utils_2 = require("copilotbrowser-core/lib/utils");
+var utils_2 = require("@copilotbrowser/copilotbrowser/lib/utils");
 Object.defineProperty(exports, "ansiRegex", { enumerable: true, get: function () { return utils_2.ansiRegex; } });
 Object.defineProperty(exports, "stripAnsiEscapes", { enumerable: true, get: function () { return utils_2.stripAnsiEscapes; } });

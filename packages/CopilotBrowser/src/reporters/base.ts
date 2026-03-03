@@ -16,9 +16,9 @@
 
 import path from 'path';
 
-import { getPackageManagerExecCommand, parseErrorStack } from 'copilotbrowser-core/lib/utils';
-import { ms as milliseconds } from 'copilotbrowser-core/lib/utilsBundle';
-import { colors as realColors, noColors } from 'copilotbrowser-core/lib/utils';
+import { getPackageManagerExecCommand, parseErrorStack } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { ms as milliseconds } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { colors as realColors, noColors } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { ansiRegex, resolveReporterOutputPath, stripAnsiEscapes } from '../util';
 import { getEastAsianWidth } from '../utilsBundle';

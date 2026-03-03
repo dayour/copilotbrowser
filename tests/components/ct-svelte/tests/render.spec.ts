@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-svelte';
+import { test, expect } from 'copilotbrowser/ct/svelte';
 import Button from '@/components/Button.svelte';
 import Empty from '@/components/Empty.svelte';
 

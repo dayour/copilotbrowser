@@ -15,7 +15,7 @@
  */
 
 import assert from 'assert';
-import { spawnAsync } from '../../packages/copilotbrowser-core/lib/server/utils/spawnAsync';
+import { spawnAsync } from '../../packages/copilotbrowser/lib/server/utils/spawnAsync';
 
 export default async () => {
   const result = await spawnAsync(['npx', 'electron', `"${require.resolve('./electron-print-chromium-version.js')}"`, '--no-sandbox'].join(' '), [], {

@@ -16,8 +16,8 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TimeoutManagerError = exports.TimeoutManager = exports.kMaxDeadline = void 0;
-const utils_1 = require("copilotbrowser-core/lib/utils");
-const utils_2 = require("copilotbrowser-core/lib/utils");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utils_2 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const util_1 = require("../util");
 exports.kMaxDeadline = 2147483647; // 2^31-1
 class TimeoutManager {

@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-vue';
+import { test, expect } from 'copilotbrowser/ct/vue';
 import Button from '@/components/Button.vue';
 import Component from '@/components/Component.vue';
 import EmptyTemplate from '@/components/EmptyTemplate.vue';

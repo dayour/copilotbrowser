@@ -17,7 +17,7 @@
 
 import { test as it, expect } from './pageTest';
 import { attachFrame } from '../config/utils';
-import { hostPlatform } from '../../packages/copilotbrowser-core/src/server/utils/hostPlatform';
+import { hostPlatform } from '../../packages/copilotbrowser/src/server/utils/hostPlatform';
 
 it.skip(({ isAndroid }) => isAndroid);
 

@@ -16,7 +16,7 @@
 
 import url from 'url';
 import { contextTest as it, expect } from '../config/browserTest';
-import { hostPlatform } from '../../packages/copilotbrowser-core/src/server/utils/hostPlatform';
+import { hostPlatform } from '../../packages/copilotbrowser/src/server/utils/hostPlatform';
 
 it('SharedArrayBuffer should work @smoke', async function({ contextFactory, httpsServer }) {
   const context = await contextFactory({ ignoreHTTPSErrors: true });

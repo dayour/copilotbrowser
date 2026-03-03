@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { createGuid } from 'copilotbrowser-core/lib/utils';
+import { createGuid } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 type StorageEnties = Record<string, unknown>;
 

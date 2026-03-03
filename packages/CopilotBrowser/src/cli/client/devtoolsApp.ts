@@ -19,15 +19,15 @@ import path from 'path';
 import os from 'os';
 import net from 'net';
 
-import { chromium } from 'copilotbrowser-core';
-import { gracefullyProcessExitDoNotHang, HttpServer } from 'copilotbrowser-core/lib/utils';
-import { findChromiumChannelBestEffort, registryDirectory } from 'copilotbrowser-core/lib/server/registry/index';
+import { chromium } from '@copilotbrowser/copilotbrowser';
+import { gracefullyProcessExitDoNotHang, HttpServer } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { findChromiumChannelBestEffort, registryDirectory } from '@copilotbrowser/copilotbrowser/lib/server/registry/index';
 
 import { createClientInfo, Registry } from './registry';
 import { Session } from './session';
 
 import type http from 'http';
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from '@copilotbrowser/copilotbrowser';
 import type { ClientInfo, SessionConfig } from './registry';
 
 function readBody(request: http.IncomingMessage): Promise<any> {
@@ -118,7 +118,7 @@ async function handleApiRequest(clientInfo: ClientInfo, request: http.IncomingMe
 
 async function openDevToolsApp(): Promise<Page> {
   const httpServer = new HttpServer();
-  const libDir = require.resolve('copilotbrowser-core/package.json');
+  const libDir = require.resolve('copilotbrowser/package.json');
   const devtoolsDir = path.join(path.dirname(libDir), 'lib/vite/devtools');
   const clientInfo = createClientInfo();
 

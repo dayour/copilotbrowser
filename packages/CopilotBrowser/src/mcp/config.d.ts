@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type * as copilotbrowser from 'copilotbrowser-core';
+import type * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 
 export type ToolCapability =
   'config' |

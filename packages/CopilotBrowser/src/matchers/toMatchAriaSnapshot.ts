@@ -18,7 +18,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { formatMatcherMessage, escapeTemplateString, isString, printReceivedStringContainExpectedSubstring } from 'copilotbrowser-core/lib/utils';
+import { formatMatcherMessage, escapeTemplateString, isString, printReceivedStringContainExpectedSubstring } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { fileExistsAsync } from '../util';
 import { currentTestInfo } from '../common/globals';

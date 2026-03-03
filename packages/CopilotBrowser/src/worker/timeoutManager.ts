@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { ManualPromise, monotonicTime } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
+import { ManualPromise, monotonicTime } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { debugTest, formatLocation } from '../util';
 

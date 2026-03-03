@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import type { Route } from 'copilotbrowser-core';
+import type { Route } from 'copilotbrowser';
 
 it('should pick up ongoing navigation', async ({ page, server }) => {
   let response = null;

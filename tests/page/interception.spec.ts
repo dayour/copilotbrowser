@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import { globToRegexPattern, urlMatches } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/urlMatch';
+import { globToRegexPattern, urlMatches } from '../../packages/copilotbrowser/lib/utils/isomorphic/urlMatch';
 import vm from 'vm';
 
 it('should work with navigation @smoke', async ({ page, server }) => {

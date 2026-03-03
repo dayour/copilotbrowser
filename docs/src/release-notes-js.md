@@ -1356,16 +1356,16 @@ Run `npx copilotbrowser install` to download browsers after `npm install`. For e
 
 **Alternative migration option - not recommended**
 
-Add `@copilotbrowser/browser-chromium`, `@copilotbrowser/browser-firefox` and `@copilotbrowser/browser-webkit` as a dependency. These packages download respective browsers during `npm install`. Make sure you keep the version of all copilotbrowser packages in sync:
+Add `@copilotbrowser-chromium`, `@copilotbrowser-firefox` and `@copilotbrowser-webkit` as a dependency. These packages download respective browsers during `npm install`. Make sure you keep the version of all copilotbrowser packages in sync:
 
 ```json
 // package.json
 {
   "devDependencies": {
     "copilotbrowser": "1.38.0",
-    "@copilotbrowser/browser-chromium": "1.38.0",
-    "@copilotbrowser/browser-firefox": "1.38.0",
-    "@copilotbrowser/browser-webkit": "1.38.0"
+    "@copilotbrowser-chromium": "1.38.0",
+    "@copilotbrowser-firefox": "1.38.0",
+    "@copilotbrowser-webkit": "1.38.0"
   }
 }
 ```
@@ -1491,9 +1491,9 @@ This version was also tested against the following stable channels:
 
 ### ⚠️ Breaking changes
 
-* `copilotbrowser-core` binary got renamed from `copilotbrowser` to `copilotbrowser-core`. So if you use `copilotbrowser-core` CLI, make sure to update the name:
+* `copilotbrowser` binary got renamed from `copilotbrowser` to `copilotbrowser`. So if you use `copilotbrowser` CLI, make sure to update the name:
   ```bash
-  $ npx copilotbrowser-core install # the new way to install browsers when using copilotbrowser-core
+  $ npx copilotbrowser install # the new way to install browsers when using copilotbrowser
   ```
 
   This change **does not** affect `@copilotbrowser/test` and `copilotbrowser` package users.
@@ -1697,7 +1697,7 @@ Note: **component tests only**, does not affect end-to-end tests.
 
 * `@copilotbrowser/experimental-ct-react` now supports **React 18 only**.
 * If you're running component tests with React 16 or 17, please replace
-  `@copilotbrowser/experimental-ct-react` with `@copilotbrowser/experimental-ct-react17`.
+  `@copilotbrowser/experimental-ct-react` with `@copilotbrowser`.
 
 ### Browser Versions
 

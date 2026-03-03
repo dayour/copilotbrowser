@@ -15,7 +15,7 @@
  */
 
 import fs from 'fs';
-import { yaml } from 'copilotbrowser-core/lib/utilsBundle';
+import { yaml } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 type AgentSpecHeader = {
   name: string;

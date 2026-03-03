@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { parsePattern } from '../../packages/copilotbrowser-core/lib/server/utils/socksProxy';
+import { parsePattern } from '../../packages/copilotbrowser/lib/server/utils/socksProxy';
 import { copilotbrowserTest as test, expect } from '../config/browserTest';
 
 test('socks proxy patter matcher', async ({}) => {

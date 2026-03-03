@@ -12,25 +12,17 @@ const serverDir = p.join(extDir, 'server');
 if (fs.existsSync(serverDir))
   fs.rmSync(serverDir, { recursive: true });
 
-// --- 1. Bundle copilotbrowser + copilotbrowser-core from monorepo packages ---
-const pkgs = ['copilotbrowser', 'copilotbrowser-core'];
-for (const pkg of pkgs) {
-  const from = p.join(extDir, '..', pkg);
-  const to = p.join(serverDir, pkg);
-  fs.cpSync(from, to, {
-    recursive: true,
-    filter: (s) => !s.includes('node_modules') && !s.includes(p.sep + 'src' + p.sep),
-  });
-}
+// --- 1. Bundle copilotbrowser from monorepo packages ---
+const from = p.join(extDir, '..', 'copilotbrowser');
+const to = p.join(serverDir, 'copilotbrowser');
+fs.cpSync(from, to, {
+  recursive: true,
+  filter: (s) => !s.includes('node_modules') && !s.includes(p.sep + 'src' + p.sep),
+});
 
-// Wire copilotbrowser-core as a node_modules dependency of copilotbrowser
-const nm = p.join(serverDir, 'copilotbrowser', 'node_modules');
-fs.mkdirSync(nm, { recursive: true });
-fs.cpSync(
-    p.join(serverDir, 'copilotbrowser-core'),
-    p.join(nm, 'copilotbrowser-core'),
-    { recursive: true },
-);
+// No extra wiring needed — the bundled copilotbrowser directory has its own
+// package.json with name "copilotbrowser", so require('copilotbrowser') and
+// require('copilotbrowser/lib/...') resolve naturally via Node's resolution.
 
 console.log('Bundled copilotbrowser server into', serverDir);
 

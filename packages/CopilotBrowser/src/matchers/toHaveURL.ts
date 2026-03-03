@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { formatMatcherMessage, printReceivedStringContainExpectedResult, urlMatches } from 'copilotbrowser-core/lib/utils';
+import { formatMatcherMessage, printReceivedStringContainExpectedResult, urlMatches } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import type { MatcherResult } from './matcherHint';
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 
 export async function toHaveURLWithPredicate(

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from 'copilotbrowser';
 import { test as it, expect, Recorder } from './inspectorTest';
 import { roundBox, waitForTestLog } from '../../config/utils';
 import type { BoundingBox } from '../../config/utils';

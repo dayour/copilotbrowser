@@ -35,7 +35,7 @@ git clone "https://x-access-token:${GH_SERVICE_ACCOUNT_TOKEN}@github.com/microso
 if [[ "${RELEASE_CHANNEL}" == "--stable" ]]; then
   rm -rf trace.copilotbrowser.dev/docs/
   mkdir trace.copilotbrowser.dev/docs/
-  cp -r packages/copilotbrowser-core/lib/vite/traceViewer/* trace.copilotbrowser.dev/docs/
+  cp -r packages/copilotbrowser/lib/vite/traceViewer/* trace.copilotbrowser.dev/docs/
 
   # Restore CNAME, beta/ & next/ branches.
   cd trace.copilotbrowser.dev/
@@ -47,11 +47,11 @@ if [[ "${RELEASE_CHANNEL}" == "--stable" ]]; then
   echo "Updated stable version"
 elif [[ "${RELEASE_CHANNEL}" == "--canary" ]]; then
   rm -rf trace.copilotbrowser.dev/docs/next/
-  cp -r packages/copilotbrowser-core/lib/vite/traceViewer/ trace.copilotbrowser.dev/docs/next/
+  cp -r packages/copilotbrowser/lib/vite/traceViewer/ trace.copilotbrowser.dev/docs/next/
   echo "Updated canary version"
 elif [[ "${RELEASE_CHANNEL}" == "--beta" ]]; then
   rm -rf trace.copilotbrowser.dev/docs/beta/
-  cp -r packages/copilotbrowser-core/lib/vite/traceViewer/ trace.copilotbrowser.dev/docs/beta/
+  cp -r packages/copilotbrowser/lib/vite/traceViewer/ trace.copilotbrowser.dev/docs/beta/
   echo "Updated beta version"
 else
   echo "ERROR: unknown environment - ${RELEASE_CHANNEL}"

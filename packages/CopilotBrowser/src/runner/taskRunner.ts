@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { ManualPromise, monotonicTime } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
-import { debug } from 'copilotbrowser-core/lib/utilsBundle';
+import { ManualPromise, monotonicTime } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { debug } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 
 import { SigIntWatcher } from './sigIntWatcher';

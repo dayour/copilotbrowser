@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTabTool } from './tool';
 
 const localStorageList = defineTabTool({

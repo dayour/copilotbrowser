@@ -18,7 +18,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { calculateSha1 } from 'copilotbrowser-core/lib/utils';
+import { calculateSha1 } from '@copilotbrowser/copilotbrowser/lib/utils';
 import { isWorkerProcess } from '../common/globals';
 import { sourceMapSupport } from '../utilsBundle';
 

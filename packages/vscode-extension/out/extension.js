@@ -339,6 +339,7 @@ async function startMcpServer() {
     outputChannel.appendLine(`Starting HTTP MCP server on port ${httpPort}: ${command} ${args.join(' ')}`);
     outputChannel.show(true);
     let intentionallyStopped = false;
+    // On Windows we use shell: true, so args containing spaces must be quoted.
     const useShell = process.platform === 'win32';
     const spawnArgs = useShell
         ? args.map(a => a.includes(' ') ? `"${a}"` : a)

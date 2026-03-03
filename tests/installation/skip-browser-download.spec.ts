@@ -18,7 +18,7 @@ import { test, expect } from './npmTest';
 test.use({ isolateBrowsers: true });
 
 test('should skip browser installs', async ({ exec, checkInstalledSoftwareOnDisk }) => {
-  const result = await exec('npm i --foreground-scripts copilotbrowser @copilotbrowser/browser-firefox', { env: { copilotbrowser_SKIP_BROWSER_DOWNLOAD: '1' } });
+  const result = await exec('npm i --foreground-scripts copilotbrowser @copilotbrowser-firefox', { env: { copilotbrowser_SKIP_BROWSER_DOWNLOAD: '1' } });
   expect(result).toHaveLoggedSoftwareDownload([]);
   await checkInstalledSoftwareOnDisk([]);
   expect(result).toContain(`Skipping browsers download because`);

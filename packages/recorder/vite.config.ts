@@ -29,13 +29,13 @@ export default defineConfig({
     // Prefer TS sources over JS sidecars when both exist in aliased folders.
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json'],
     alias: {
-      '@isomorphic': path.resolve(__dirname, '../copilotbrowser-core/src/utils/isomorphic'),
+      '@isomorphic': path.resolve(__dirname, '../copilotbrowser/src/utils/isomorphic'),
       '@protocol': path.resolve(__dirname, '../protocol/src'),
       '@web': path.resolve(__dirname, '../web/src'),
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../copilotbrowser-core/lib/vite/recorder'),
+    outDir: path.resolve(__dirname, '../copilotbrowser/lib/vite/recorder'),
     emptyOutDir: true,
     rollupOptions: {
       output: {

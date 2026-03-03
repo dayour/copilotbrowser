@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-react';
+import { test, expect } from 'copilotbrowser/ct/react';
 import TitleWithFont from '@/components/TitleWithFont';
 import Fetcher from '@/components/Fetcher';
 import { http, HttpResponse, passthrough, bypass } from 'msw';

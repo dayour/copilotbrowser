@@ -23,9 +23,9 @@ exports.toHaveScreenshotStepTitle = toHaveScreenshotStepTitle;
 exports.toHaveScreenshot = toHaveScreenshot;
 const fs_1 = __importDefault(require("fs"));
 const path_1 = __importDefault(require("path"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
-const utils_2 = require("copilotbrowser-core/lib/utils");
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utils_2 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
 const util_1 = require("../util");
 const globals_1 = require("../common/globals");
 // Keep in sync with above (begin).

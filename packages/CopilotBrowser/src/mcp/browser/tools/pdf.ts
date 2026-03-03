@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
-import { formatObject } from 'copilotbrowser-core/lib/utils';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
+import { formatObject } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { defineTabTool } from './tool';
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { ElementHandle, Page, Route } from 'copilotbrowser-core';
+import type { ElementHandle, Page, Route } from 'copilotbrowser';
 import { test as it, expect } from './pageTest';
 import { attachFrame } from '../config/utils';
 

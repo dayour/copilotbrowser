@@ -55,9 +55,9 @@ exports.startMcpHttpServer = startMcpHttpServer;
 exports.addressToString = addressToString;
 const assert_1 = __importDefault(require("assert"));
 const crypto_1 = __importDefault(require("crypto"));
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
-const mcpBundle = __importStar(require("copilotbrowser-core/lib/mcpBundle"));
-const utils_1 = require("copilotbrowser-core/lib/utils");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
+const mcpBundle = __importStar(require("@copilotbrowser/copilotbrowser/lib/mcpBundle"));
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
 const mcpServer = __importStar(require("./server"));
 const testDebug = (0, utilsBundle_1.debug)('pw:mcp:test');
 async function startMcpHttpServer(config, serverBackendFactory, allowedHosts) {

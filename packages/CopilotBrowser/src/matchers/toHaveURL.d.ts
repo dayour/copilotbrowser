@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import type { MatcherResult } from './matcherHint';
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 export declare function toHaveURLWithPredicate(this: ExpectMatcherStateInternal, page: Page, expected: (url: URL) => boolean, options?: {
     ignoreCase?: boolean;

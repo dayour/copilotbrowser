@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { Route, Request } from 'copilotbrowser-core';
+import type { Route, Request } from 'copilotbrowser';
 import { expect, test as base } from './pageTest';
 import fs from 'fs';
 import path from 'path';

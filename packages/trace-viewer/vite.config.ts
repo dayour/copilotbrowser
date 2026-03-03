@@ -38,7 +38,7 @@ export default defineConfig({
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json'],
     alias: {
       '@injected': path.resolve(__dirname, '../injected/src'),
-      '@isomorphic': path.resolve(__dirname, '../copilotbrowser-core/src/utils/isomorphic'),
+      '@isomorphic': path.resolve(__dirname, '../copilotbrowser/src/utils/isomorphic'),
       '@protocol': path.resolve(__dirname, '../protocol/src'),
       '@testIsomorphic': path.resolve(__dirname, '../copilotbrowser/src/isomorphic'),
       '@trace': path.resolve(__dirname, '../trace/src'),
@@ -46,7 +46,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: path.resolve(__dirname, '../copilotbrowser-core/lib/vite/traceViewer'),
+    outDir: path.resolve(__dirname, '../copilotbrowser/lib/vite/traceViewer'),
     emptyOutDir: false,
     rollupOptions: {
       input: {

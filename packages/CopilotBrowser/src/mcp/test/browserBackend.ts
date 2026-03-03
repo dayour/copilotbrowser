@@ -22,7 +22,7 @@ import { stripAnsiEscapes } from '../../util';
 import { identityBrowserContextFactory } from '../browser/browserContextFactory';
 
 import type * as copilotbrowser from '../../../index';
-import type { Page } from '../../../../copilotbrowser-core/src/client/page';
+import type { Page } from '../../../../copilotbrowser/src/client/page';
 import type { TestInfo } from '../../../test';
 
 export type BrowserMCPRequest = {

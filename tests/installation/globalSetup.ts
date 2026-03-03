@@ -16,8 +16,8 @@
 
 import path from 'path';
 import fs from 'fs';
-import { spawnAsync } from '../../packages/copilotbrowser-core/lib/server/utils/spawnAsync';
-import { removeFolders } from '../../packages/copilotbrowser-core/lib/server/utils/fileUtils';
+import { spawnAsync } from '../../packages/copilotbrowser/lib/server/utils/spawnAsync';
+import { removeFolders } from '../../packages/copilotbrowser/lib/server/utils/fileUtils';
 import { TMP_WORKSPACES } from './npmTest';
 
 const PACKAGE_BUILDER_SCRIPT = path.join(__dirname, '..', '..', 'utils', 'pack_package.js');
@@ -45,17 +45,15 @@ async function globalSetup() {
     };
 
     const builds = await Promise.all([
-      build('copilotbrowser-core'),
+      build('copilotbrowser'),
       build('copilotbrowser-test', '@copilotbrowser/test'),
       build('copilotbrowser'),
       build('copilotbrowser-chromium'),
       build('copilotbrowser-firefox'),
       build('copilotbrowser-webkit'),
-      build('copilotbrowser-browser-chromium', '@copilotbrowser/browser-chromium'),
-      build('copilotbrowser-browser-firefox', '@copilotbrowser/browser-firefox'),
-      build('copilotbrowser-browser-webkit', '@copilotbrowser/browser-webkit'),
-      build('copilotbrowser-ct-react', '@copilotbrowser/experimental-ct-react'),
-      build('copilotbrowser-ct-core', '@copilotbrowser/experimental-ct-core'),
+      build('copilotbrowser-browser-chromium', '@copilotbrowser-chromium'),
+      build('copilotbrowser-browser-firefox', '@copilotbrowser-firefox'),
+      build('copilotbrowser-browser-webkit', '@copilotbrowser-webkit'),
     ]);
 
     const buildcopilotbrowserTestPlugin = async () => {

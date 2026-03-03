@@ -15,7 +15,7 @@
  */
 
 import path from 'path';
-import type { BrowserType, Browser } from 'copilotbrowser-core';
+import type { BrowserType, Browser } from 'copilotbrowser';
 import type { CommonFixtures, TestChildProcess } from './commonFixtures';
 
 export interface copilotbrowserServer {
@@ -28,7 +28,7 @@ export class RunServer implements copilotbrowserServer {
   _wsEndpoint!: string;
 
   async start(childProcess: CommonFixtures['childProcess'], mode?: 'extension' | 'default', env?: NodeJS.ProcessEnv) {
-    const command = ['node', path.join(__dirname, '..', '..', 'packages', 'copilotbrowser-core', 'cli.js'), 'run-server'];
+    const command = ['node', path.join(__dirname, '..', '..', 'packages', 'copilotbrowser', 'cli.js'), 'run-server'];
     if (mode === 'extension')
       command.push('--mode=extension');
     this._process = childProcess({

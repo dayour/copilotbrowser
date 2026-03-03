@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import { formatMatcherMessage, printReceivedStringContainExpectedResult, printReceivedStringContainExpectedSubstring } from 'copilotbrowser-core/lib/utils';
+import { formatMatcherMessage, printReceivedStringContainExpectedResult, printReceivedStringContainExpectedSubstring } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { expectTypes } from '../util';
 
 import type { MatcherResult } from './matcherHint';
-import type { Page, Locator } from 'copilotbrowser-core';
+import type { Page, Locator } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 
 export async function toMatchText(

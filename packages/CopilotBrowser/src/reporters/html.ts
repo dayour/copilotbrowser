@@ -18,11 +18,11 @@ import fs from 'fs';
 import path from 'path';
 import { Transform } from 'stream';
 
-import { HttpServer, MultiMap, assert, calculateSha1, getPackageManagerExecCommand, copyFileAndMakeWritable, gracefullyProcessExitDoNotHang, removeFolders, sanitizeForFilePath, toPosixPath } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
-import { open } from 'copilotbrowser-core/lib/utilsBundle';
-import { mime } from 'copilotbrowser-core/lib/utilsBundle';
-import { yazl } from 'copilotbrowser-core/lib/zipBundle';
+import { HttpServer, MultiMap, assert, calculateSha1, getPackageManagerExecCommand, copyFileAndMakeWritable, gracefullyProcessExitDoNotHang, removeFolders, sanitizeForFilePath, toPosixPath } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { open } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { mime } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { yazl } from '@copilotbrowser/copilotbrowser/lib/zipBundle';
 
 import { CommonReporterOptions, formatError, formatResultFailure, internalScreen } from './base';
 import { codeFrameColumns } from '../transform/babelBundle';
@@ -32,7 +32,7 @@ import type { ReportConfigureParams, ReportEndParams, ReporterV2 } from './repor
 import type { HtmlReporterOptions as HtmlReporterConfigOptions, Metadata, TestAnnotation } from '../../types/test';
 import type * as api from '../../types/testReporter';
 import type { HTMLReport, HTMLReportOptions, Location, Stats, TestAttachment, TestCase, TestCaseSummary, TestFile, TestFileSummary, TestResult, TestStep } from '@html-reporter/types';
-import type { ZipFile } from 'copilotbrowser-core/lib/zipBundle';
+import type { ZipFile } from '@copilotbrowser/copilotbrowser/lib/zipBundle';
 import type { TransformCallback } from 'stream';
 
 type TestEntry = {
@@ -338,12 +338,12 @@ class HtmlBuilder {
     }
 
     // Copy app.
-    const appFolder = path.join(require.resolve('copilotbrowser-core'), '..', 'lib', 'vite', 'htmlReport');
+    const appFolder = path.join(require.resolve('copilotbrowser'), '..', 'lib', 'vite', 'htmlReport');
     await copyFileAndMakeWritable(path.join(appFolder, 'index.html'), path.join(this._reportFolder, 'index.html'));
 
     // Copy trace viewer.
     if (this._hasTraces) {
-      const traceViewerFolder = path.join(require.resolve('copilotbrowser-core'), '..', 'lib', 'vite', 'traceViewer');
+      const traceViewerFolder = path.join(require.resolve('copilotbrowser'), '..', 'lib', 'vite', 'traceViewer');
       const traceViewerTargetFolder = path.join(this._reportFolder, 'trace');
       const traceViewerAssetsTargetFolder = path.join(traceViewerTargetFolder, 'assets');
       fs.mkdirSync(traceViewerAssetsTargetFolder, { recursive: true });

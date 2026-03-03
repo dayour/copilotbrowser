@@ -18,10 +18,10 @@ import fs from 'fs';
 import path from 'path';
 import { Readable } from 'stream';
 
-import { removeFolders, sanitizeForFilePath } from 'copilotbrowser-core/lib/utils';
-import { ManualPromise, calculateSha1, createGuid, getUserAgent } from 'copilotbrowser-core/lib/utils';
-import { mime } from 'copilotbrowser-core/lib/utilsBundle';
-import { yazl } from 'copilotbrowser-core/lib/zipBundle';
+import { removeFolders, sanitizeForFilePath } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { ManualPromise, calculateSha1, createGuid, getUserAgent } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { mime } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { yazl } from '@copilotbrowser/copilotbrowser/lib/zipBundle';
 
 import { resolveOutputFile, CommonReporterOptions } from './base';
 import { TeleReporterEmitter } from './teleEmitter';

@@ -9,7 +9,7 @@ Create `packages/copilotbrowser/src/mcp/browser/tools/<your-tool>.ts`.
 Import zod from the MCP bundle and use `defineTool` or `defineTabTool`:
 
 ```typescript
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from 'copilotbrowser/lib/mcpBundle';
 import { defineTool, defineTabTool } from './tool';
 ```
 
@@ -201,7 +201,7 @@ Implement the corresponding MCP tool first (see section above). CLI commands cal
 In `packages/copilotbrowser/src/cli/daemon/commands.ts`, use `declareCommand()`:
 
 ```typescript
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from 'copilotbrowser/lib/mcpBundle';
 import { declareCommand } from './command';
 
 const myCommand = declareCommand({

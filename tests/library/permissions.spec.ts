@@ -16,7 +16,7 @@
  */
 
 import { contextTest as it, expect } from '../config/browserTest';
-import { hostPlatform } from '../../packages/copilotbrowser-core/src/server/utils/hostPlatform';
+import { hostPlatform } from '../../packages/copilotbrowser/src/server/utils/hostPlatform';
 
 function getPermission(page, name) {
   return page.evaluate(name => navigator.permissions.query({ name }).then(result => result.state), name);

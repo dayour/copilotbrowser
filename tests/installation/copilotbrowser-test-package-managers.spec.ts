@@ -35,9 +35,9 @@ test('npm: copilotbrowser + @copilotbrowser/test should work', async ({ exec, tm
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });
 
-test('npm: @copilotbrowser/test + copilotbrowser-core should work', async ({ exec, tmpWorkspace }) => {
+test('npm: @copilotbrowser/test + copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
   await exec('npm i @copilotbrowser/test');
-  await exec('npm i copilotbrowser-core');
+  await exec('npm i copilotbrowser');
   await exec('npx copilotbrowser install');
   await exec('npx copilotbrowser test -c . --browser=all --reporter=list,json sample.spec.js', { env: {  copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'));
@@ -45,16 +45,16 @@ test('npm: @copilotbrowser/test + copilotbrowser-core should work', async ({ exe
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });
 
-test('npm: @copilotbrowser/test should install copilotbrowser-core bin', async ({ exec, tmpWorkspace }) => {
+test('npm: @copilotbrowser/test should install copilotbrowser bin', async ({ exec, tmpWorkspace }) => {
   await exec('npm i @copilotbrowser/test');
-  const result = await exec('npx copilotbrowser-core --version');
+  const result = await exec('npx copilotbrowser --version');
   expect(result).toContain('Version 1.');
 });
 
-test('npm: uninstalling ct removes copilotbrowser bin', async ({ exec, tmpWorkspace }) => {
+test('npm: uninstalling copilotbrowser removes copilotbrowser bin', async ({ exec, tmpWorkspace }) => {
   await exec('npm i @copilotbrowser/test');
-  await exec('npm i @copilotbrowser/experimental-ct-react');
-  await exec('npm uninstall @copilotbrowser/experimental-ct-react');
+  await exec('npm i copilotbrowser');
+  await exec('npm uninstall copilotbrowser');
   await exec('npx copilotbrowser test', { expectToExitWithError: true, message: 'command not found' });
 });
 

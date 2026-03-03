@@ -14,7 +14,7 @@
         "baseUrl": "..",
         "paths": {
           "@dvtools/*": ["packages/devtools/src/*"],
-          "@isomorphic/*": ["packages/copilotbrowser-core/src/utils/isomorphic/*"],
+          "@isomorphic/*": ["packages/copilotbrowser/src/utils/isomorphic/*"],
           "@testIsomorphic/*": ["packages/copilotbrowser/src/isomorphic/*"],
           "@protocol/*": ["packages/protocol/src/*"],
           "@recorder/*": ["packages/recorder/src/*"],

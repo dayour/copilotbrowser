@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { Route } from 'copilotbrowser-core';
+import type { Route } from 'copilotbrowser';
 import { test as it, expect } from './pageTest';
 
 it('should intercept @smoke', async ({ page, server }) => {

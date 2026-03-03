@@ -15,8 +15,8 @@
  */
 
 import { expect, copilotbrowserTest as baseTest } from '../config/browserTest';
-import { copilotbrowserServer } from '../../packages/copilotbrowser-core/lib/remote/copilotbrowserServer';
-import { createGuid } from '../../packages/copilotbrowser-core/lib/server/utils/crypto';
+import { copilotbrowserServer } from '../../packages/copilotbrowser/lib/remote/copilotbrowserServer';
+import { createGuid } from '../../packages/copilotbrowser/lib/server/utils/crypto';
 import { Backend } from '../config/debugControllerBackend';
 import type { Browser, BrowserContext } from '@copilotbrowser/test';
 import type * as channels from '@protocol/channels';

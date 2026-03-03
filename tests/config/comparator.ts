@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { getComparator } from '../../packages/copilotbrowser-core/lib/server/utils/comparators';
+import { getComparator } from '../../packages/copilotbrowser/lib/server/utils/comparators';
 
 const pngComparator = getComparator('image/png');
 type ComparatorResult = { diff?: Buffer; errorMessage: string; } | null;

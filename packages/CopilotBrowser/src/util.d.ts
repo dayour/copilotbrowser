@@ -16,7 +16,7 @@
 import type { Location } from './../types/testReporter';
 import type { TestInfoErrorImpl } from './common/ipc';
 import type { StackFrame } from '@protocol/channels';
-import type { RawStack } from 'copilotbrowser-core/lib/utils';
+import type { RawStack } from '@copilotbrowser/copilotbrowser/lib/utils';
 import type { TestCase } from './common/test';
 export declare function filterStackTrace(e: Error): {
     message: string;
@@ -74,4 +74,4 @@ export declare function fileIsModule(file: string): boolean;
 export declare function resolveImportSpecifierAfterMapping(resolved: string, afterPathMapping: boolean): string | undefined;
 export declare function fileExistsAsync(resolved: string): Promise<boolean>;
 export declare function removeDirAndLogToConsole(dir: string): Promise<void>;
-export { ansiRegex, stripAnsiEscapes } from 'copilotbrowser-core/lib/utils';
+export { ansiRegex, stripAnsiEscapes } from '@copilotbrowser/copilotbrowser/lib/utils';

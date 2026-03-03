@@ -1,5 +1,5 @@
 {
-  "name": "copilotbrowser-core",
+  "name": "copilotbrowser",
   "private": true,
   "version": "2.0.0",
   "description": "A high-level API to automate web browsers",
@@ -38,6 +38,9 @@
     "lint-tests": "node utils/lint_tests.js",
     "clean": "node utils/build/clean.js",
     "build": "node utils/build/build.js",
+    "build:simple": "tsc -p packages/copilotbrowser/tsconfig.json",
+    "publish": "node utils/publish.js",
+    "publish:dry-run": "node utils/publish.js --dry-run",
     "watch": "node utils/build/build.js --watch --lint",
     "test-types": "node utils/generate_types/ && tsc -p utils/generate_types/test/tsconfig.json && tsc -p ./tests/",
     "roll": "node utils/roll_browser.js",

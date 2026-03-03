@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-svelte';
+import { test, expect } from 'copilotbrowser/ct/svelte';
 import App from '@/App.svelte';
 
 test('navigate to a page by clicking a link', async ({ page, mount }) => {

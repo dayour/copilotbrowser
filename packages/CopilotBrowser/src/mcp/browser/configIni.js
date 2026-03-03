@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.configFromIniFile = configFromIniFile;
 exports.configsFromIniFile = configsFromIniFile;
 const fs_1 = __importDefault(require("fs"));
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
 function configFromIniFile(filePath) {
     const content = fs_1.default.readFileSync(filePath, 'utf8');
     const parsed = utilsBundle_1.ini.parse(content);

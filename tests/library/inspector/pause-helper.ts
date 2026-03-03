@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Page } from 'copilotbrowser-core';
+import type { Page } from 'copilotbrowser';
 
 export async function pauseHelper(page: Page) {
   await page.setContent('<div>here we go</div>');

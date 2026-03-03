@@ -19,13 +19,13 @@ import * as os from 'os';
 import * as path from 'path';
 import { baseTest } from './baseTest';
 import { RunServer, RemoteServer } from './remoteServer';
-import { removeFolders } from '../../packages/copilotbrowser-core/lib/server/utils/fileUtils';
+import { removeFolders } from '../../packages/copilotbrowser/lib/server/utils/fileUtils';
 import { isBidiChannel, parseHar } from '../config/utils';
 import { createSkipTestPredicate } from '../bidi/expectationUtil';
 
 import type { PageTestFixtures, PageWorkerFixtures } from '../page/pageTestApi';
 import type { RemoteServerOptions, copilotbrowserServer } from './remoteServer';
-import type { BrowserContext, BrowserContextOptions, BrowserType, Page } from 'copilotbrowser-core';
+import type { BrowserContext, BrowserContextOptions, BrowserType, Page } from 'copilotbrowser';
 import type { Log } from '../../packages/trace/src/har';
 import type { TestInfo } from '@copilotbrowser/test';
 

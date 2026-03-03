@@ -16,7 +16,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleDialog = void 0;
-const mcpBundle_1 = require("copilotbrowser-core/lib/mcpBundle");
+const mcpBundle_1 = require("@copilotbrowser/copilotbrowser/lib/mcpBundle");
 const tool_1 = require("./tool");
 exports.handleDialog = (0, tool_1.defineTabTool)({
     capability: 'core',

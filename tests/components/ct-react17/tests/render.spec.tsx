@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-react17';
+import { test, expect } from 'copilotbrowser/ct/react17';
 import Fetch from '@/components/Fetch';
 import DelayedData from '@/components/DelayedData';
 import Button from '@/components/Button';

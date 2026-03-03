@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import type { Frame } from 'copilotbrowser-core';
+import type { Frame } from 'copilotbrowser';
 import type { TestServer } from '../config/testserver';
 
 it('should navigate to empty page with networkidle', async ({ page, server }) => {

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { defineConfig, devices } from '@copilotbrowser/experimental-ct-vue';
+import { defineConfig, devices } from 'copilotbrowser/ct/vue';
 import path from 'path';
 import { fileURLToPath } from 'url';
 

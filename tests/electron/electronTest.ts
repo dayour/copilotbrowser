@@ -22,7 +22,7 @@ import type { ElectronApplication, Page, Electron } from '@copilotbrowser/test';
 import type { PageTestFixtures, PageWorkerFixtures } from '../page/pageTestApi';
 import type { TraceViewerFixtures } from '../config/traceViewerFixtures';
 import { traceViewerFixtures } from '../config/traceViewerFixtures';
-import { removeFolders } from '../../packages/copilotbrowser-core/lib/server/utils/fileUtils';
+import { removeFolders } from '../../packages/copilotbrowser/lib/server/utils/fileUtils';
 export { expect } from '@copilotbrowser/test';
 
 type ElectronTestFixtures = PageTestFixtures & {

@@ -15,7 +15,7 @@
  */
 
 import { test, expect, writeFiles } from './fixtures';
-import { spawnAsync } from '../../packages/copilotbrowser-core/lib/server/utils/spawnAsync';
+import { spawnAsync } from '../../packages/copilotbrowser/lib/server/utils/spawnAsync';
 
 import path from 'path';
 import fs from 'fs';

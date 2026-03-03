@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { ManualPromise, gracefullyCloseAll, removeFolders } from 'copilotbrowser-core/lib/utils';
-import { colors } from 'copilotbrowser-core/lib/utils';
+import { ManualPromise, gracefullyCloseAll, removeFolders } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { colors } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { deserializeConfig } from '../common/configLoader';
 import { setCurrentTestInfo, setIsWorkerProcess } from '../common/globals';

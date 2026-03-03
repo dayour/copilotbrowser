@@ -16,7 +16,7 @@
 
 import os from 'os';
 import * as util from 'util';
-import { getcopilotbrowserVersion } from '../../packages/copilotbrowser-core/lib/server/utils/userAgent';
+import { getcopilotbrowserVersion } from '../../packages/copilotbrowser/lib/server/utils/userAgent';
 import { expect, copilotbrowserTest as base } from '../config/browserTest';
 import { kTargetClosedErrorMessage } from 'tests/config/errors';
 

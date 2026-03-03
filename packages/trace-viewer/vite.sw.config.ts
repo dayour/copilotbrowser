@@ -34,16 +34,16 @@ export default defineConfig({
     // This avoids Rollup resolving CommonJS sidecar files and failing named exports.
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.json'],
     alias: {
-      '@isomorphic': path.resolve(__dirname, '../copilotbrowser-core/src/utils/isomorphic'),
+      '@isomorphic': path.resolve(__dirname, '../copilotbrowser/src/utils/isomorphic'),
       '@protocol': path.resolve(__dirname, '../protocol/src'),
-      '@testIsomorphic': path.resolve(__dirname, '../copilotbrowser-core/src/utils/testIsomorphic'),
+      '@testIsomorphic': path.resolve(__dirname, '../copilotbrowser/src/utils/testIsomorphic'),
       '@trace': path.resolve(__dirname, '../trace/src'),
       '@web': path.resolve(__dirname, '../web/src'),
     },
   },
   publicDir: false,
   build: {
-    outDir: path.resolve(__dirname, '../copilotbrowser-core/lib/vite/traceViewer'),
+    outDir: path.resolve(__dirname, '../copilotbrowser/lib/vite/traceViewer'),
     // Output dir is shared with vite.config.ts, clearing it here is racy.
     emptyOutDir: false,
     rollupOptions: {

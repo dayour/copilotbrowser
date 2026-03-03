@@ -1,7 +1,7 @@
 {
   "name": "copilotbrowser-webkit",
   "version": "2.0.0",
-  "description": "A high-level API to automate WebKit",
+  "description": "Deprecated: use copilotbrowser instead. This package re-exports copilotbrowser for backward compatibility.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dayour/copilotbrowser.git"
@@ -26,10 +26,8 @@
   "bin": {
     "copilotbrowser": "cli.js"
   },
-  "scripts": {
-    "install": "node install.js"
-  },
+  "deprecated": "This package is deprecated. Use copilotbrowser instead, which now installs all browsers.",
   "dependencies": {
-    "copilotbrowser-core": "2.0.0"
+    "copilotbrowser": "2.0.0"
   }
 }

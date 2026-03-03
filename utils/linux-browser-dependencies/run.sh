@@ -28,9 +28,9 @@ function cleanup() {
 trap "cleanup; cd $(pwd -P)" EXIT
 cd "$(dirname "$0")"
 
-# We rely on `./copilotbrowser-core.tar.gz` to download browsers into the docker
+# We rely on `./copilotbrowser.tar.gz` to download browsers into the docker
 # image.
-node ../../utils/pack_package.js copilotbrowser-core ./copilotbrowser-core.tar.gz
+node ../../utils/pack_package.js copilotbrowser ./copilotbrowser.tar.gz
 
 docker run --platform linux/amd64 -v $PWD:/root/hostfolder --rm -it "$1" /root/hostfolder/inside_docker/process.sh "$2"
 

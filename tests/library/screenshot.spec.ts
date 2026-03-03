@@ -16,7 +16,7 @@
  */
 
 import { expect, browserTest } from '../config/browserTest';
-import { PNG } from 'copilotbrowser-core/lib/utilsBundle';
+import { PNG } from 'copilotbrowser/lib/utilsBundle';
 import { verifyViewport } from '../config/utils';
 
 browserTest.describe('page screenshot', () => {

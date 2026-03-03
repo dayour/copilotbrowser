@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-const pw = require('copilotbrowser-core');
+const pw = require('copilotbrowser');
 
 async function browserVersion(browserType) {
   const browser = await browserType.launch();

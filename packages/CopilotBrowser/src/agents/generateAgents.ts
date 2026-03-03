@@ -17,8 +17,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import { colors, yaml } from 'copilotbrowser-core/lib/utilsBundle';
-import { mkdirIfNeeded } from 'copilotbrowser-core/lib/utils';
+import { colors, yaml } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { mkdirIfNeeded } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { FullConfigInternal } from '../common/config';
 import { defaultSeedFile, findSeedFile, seedFileContent, seedProject } from '../mcp/test/seed';

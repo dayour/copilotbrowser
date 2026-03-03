@@ -19,17 +19,17 @@ import path from 'path';
 import url from 'url';
 import util from 'util';
 
-import { parseStackFrame, sanitizeForFilePath, calculateSha1, isRegExp, isString, stringifyStackFrames } from 'copilotbrowser-core/lib/utils';
-import { debug, mime, minimatch } from 'copilotbrowser-core/lib/utilsBundle';
+import { parseStackFrame, sanitizeForFilePath, calculateSha1, isRegExp, isString, stringifyStackFrames } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { debug, mime, minimatch } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import type { Location } from './../types/testReporter';
 import type { TestInfoErrorImpl } from './common/ipc';
 import type { StackFrame } from '@protocol/channels';
-import type { RawStack } from 'copilotbrowser-core/lib/utils';
+import type { RawStack } from '@copilotbrowser/copilotbrowser/lib/utils';
 import type { TestCase } from './common/test';
 
 const copilotbrowser_TEST_PATH = path.join(__dirname, '..');
-const copilotbrowser_CORE_PATH = path.dirname(require.resolve('copilotbrowser-core/package.json'));
+const copilotbrowser_CORE_PATH = path.dirname(require.resolve('copilotbrowser/package.json'));
 
 export function filterStackTrace(e: Error): { message: string, stack: string, cause?: ReturnType<typeof filterStackTrace> } {
   const name = e.name ? e.name + ': ' : '';
@@ -414,4 +414,4 @@ export async function removeDirAndLogToConsole(dir: string) {
   }
 }
 
-export { ansiRegex, stripAnsiEscapes } from 'copilotbrowser-core/lib/utils';
+export { ansiRegex, stripAnsiEscapes } from '@copilotbrowser/copilotbrowser/lib/utils';

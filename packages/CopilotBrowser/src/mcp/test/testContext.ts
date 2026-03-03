@@ -18,7 +18,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 
-import { noColors, escapeRegExp, ManualPromise, toPosixPath } from 'copilotbrowser-core/lib/utils';
+import { noColors, escapeRegExp, ManualPromise, toPosixPath } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { terminalScreen } from '../../reporters/base';
 import ListReporter from '../../reporters/list';

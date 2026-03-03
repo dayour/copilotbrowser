@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-svelte';
+import { test, expect } from 'copilotbrowser/ct/svelte';
 import Button from '@/components/Button.svelte';
 
 test('emit an submit event when the button is clicked', async ({ mount }) => {

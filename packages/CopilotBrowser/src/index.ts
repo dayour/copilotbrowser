@@ -17,8 +17,8 @@
 import fs from 'fs';
 import path from 'path';
 
-import * as copilotbrowserLibrary from 'copilotbrowser-core';
-import { setBoxedStackPrefixes, createGuid, currentZone, debugMode, jsonStringifyForceASCII, asLocatorDescription, renderTitleForCall, getActionGroup } from 'copilotbrowser-core/lib/utils';
+import * as copilotbrowserLibrary from '@copilotbrowser/copilotbrowser';
+import { setBoxedStackPrefixes, createGuid, currentZone, debugMode, jsonStringifyForceASCII, asLocatorDescription, renderTitleForCall, getActionGroup } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { currentTestInfo } from './common/globals';
 import { rootTestType } from './common/testType';
@@ -28,14 +28,14 @@ import { resolveLLMProvider } from './agents/llmProvider';
 import type { Fixtures, copilotbrowserTestArgs, copilotbrowserTestOptions, copilotbrowserWorkerArgs, copilotbrowserWorkerOptions, ScreenshotMode, TestInfo, TestType, VideoMode } from '../types/test';
 import type { ContextReuseMode } from './common/config';
 import type { TestInfoImpl, TestStepInternal } from './worker/testInfo';
-import type { ClientInstrumentationListener } from '../../copilotbrowser-core/src/client/clientInstrumentation';
-import type { copilotbrowser as copilotbrowserImpl } from '../../copilotbrowser-core/src/client/copilotbrowser';
-import type { Browser as BrowserImpl } from '../../copilotbrowser-core/src/client/browser';
-import type { BrowserContext as BrowserContextImpl } from '../../copilotbrowser-core/src/client/browserContext';
-import type { APIRequestContext as APIRequestContextImpl, NewContextOptions as APIRequestContextOptions } from '../../copilotbrowser-core/src/client/fetch';
-import type { ChannelOwner } from '../../copilotbrowser-core/src/client/channelOwner';
-import type { Page as PageImpl } from '../../copilotbrowser-core/src/client/page';
-import type { BrowserContext, BrowserContextOptions, LaunchOptions, Page, Tracing } from 'copilotbrowser-core';
+import type { ClientInstrumentationListener } from '../../copilotbrowser/src/client/clientInstrumentation';
+import type { copilotbrowser as copilotbrowserImpl } from '../../copilotbrowser/src/client/copilotbrowser';
+import type { Browser as BrowserImpl } from '../../copilotbrowser/src/client/browser';
+import type { BrowserContext as BrowserContextImpl } from '../../copilotbrowser/src/client/browserContext';
+import type { APIRequestContext as APIRequestContextImpl, NewContextOptions as APIRequestContextOptions } from '../../copilotbrowser/src/client/fetch';
+import type { ChannelOwner } from '../../copilotbrowser/src/client/channelOwner';
+import type { Page as PageImpl } from '../../copilotbrowser/src/client/page';
+import type { BrowserContext, BrowserContextOptions, LaunchOptions, Page, Tracing } from '@copilotbrowser/copilotbrowser';
 
 export { expect } from './matchers/expect';
 export type { LLMProvider, LLMProviderAdapter, LLMProviderConfig, LLMProviderPolicy } from './agents/llmProvider';
@@ -74,7 +74,7 @@ const copilotbrowserFixtures: Fixtures<TestFixtures, WorkerFixtures> = ({
   defaultBrowserType: ['chromium', { scope: 'worker', option: true, box: true }],
   browserName: [({ defaultBrowserType }, use) => use(defaultBrowserType), { scope: 'worker', option: true, box: true }],
   copilotbrowser: [async ({}, use) => {
-    await use(require('copilotbrowser-core'));
+    await use(require('@copilotbrowser/copilotbrowser'));
   }, { scope: 'worker', box: true }],
   headless: [({ launchOptions }, use) => use(launchOptions.headless ?? true), { scope: 'worker', option: true, box: true }],
   channel: [({ launchOptions }, use) => use(launchOptions.channel), { scope: 'worker', option: true, box: true }],

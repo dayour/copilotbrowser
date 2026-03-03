@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-vue';
+import { test, expect } from 'copilotbrowser/ct/vue';
 import App from '@/App.vue';
 
 test('navigate to a page by clicking a link', async ({ page, mount }) => {

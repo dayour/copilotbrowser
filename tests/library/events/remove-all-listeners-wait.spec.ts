@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { ManualPromise } from '../../../packages/copilotbrowser-core/lib/utils/isomorphic/manualPromise';
+import { ManualPromise } from '../../../packages/copilotbrowser/lib/utils/isomorphic/manualPromise';
 import { EventEmitter } from './utils';
 import { test, expect } from '@copilotbrowser/test';
 

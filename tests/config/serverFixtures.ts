@@ -18,9 +18,9 @@ import type { Fixtures } from '@copilotbrowser/test';
 import path from 'path';
 import { TestServer } from './testserver';
 import { TestProxy } from './proxy';
-import type { SocksSocketRequestedPayload } from 'copilotbrowser-core/src/server/utils/socksProxy';
+import type { SocksSocketRequestedPayload } from 'copilotbrowser/src/server/utils/socksProxy';
 
-import { SocksProxy } from '../../packages/copilotbrowser-core/lib/server/utils/socksProxy';
+import { SocksProxy } from '../../packages/copilotbrowser/lib/server/utils/socksProxy';
 
 export type ServerWorkerOptions = {
   loopback?: string;

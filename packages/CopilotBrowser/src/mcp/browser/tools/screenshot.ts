@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-import { scaleImageToSize } from 'copilotbrowser-core/lib/utils';
-import { jpegjs, PNG } from 'copilotbrowser-core/lib/utilsBundle';
-import { formatObject } from 'copilotbrowser-core/lib/utils';
+import { scaleImageToSize } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { jpegjs, PNG } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { formatObject } from '@copilotbrowser/copilotbrowser/lib/utils';
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTabTool } from './tool';
 
-import type * as copilotbrowser from 'copilotbrowser-core';
+import type * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 
 const screenshotSchema = z.object({
   type: z.enum(['png', 'jpeg']).default('png').describe('Image format for the screenshot. Default is png.'),

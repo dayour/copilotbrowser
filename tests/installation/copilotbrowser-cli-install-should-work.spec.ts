@@ -54,12 +54,12 @@ test('install command should work', async ({ exec, checkInstalledSoftwareOnDisk 
   await exec('node sanity.js copilotbrowser', { env: { copilotbrowser_BROWSERS_PATH: '0' } });
   await exec('node sanity.js copilotbrowser chromium firefox webkit');
 
-  const packages = ['copilotbrowser-chromium', 'copilotbrowser-firefox', 'copilotbrowser-webkit', '@copilotbrowser/browser-chromium', '@copilotbrowser/browser-firefox', '@copilotbrowser/browser-webkit'];
+  const packages = ['copilotbrowser-chromium', 'copilotbrowser-firefox', 'copilotbrowser-webkit', '@copilotbrowser-chromium', '@copilotbrowser-firefox', '@copilotbrowser-webkit'];
   for (const pkg of packages) {
     await test.step(pkg, async () => {
       const result = await exec(`npm i ${pkg}`);
       expect(result).toHaveLoggedSoftwareDownload([]);
-      if (!pkg.includes('@copilotbrowser/browser-'))
+      if (!pkg.includes('@copilotbrowser-'))
         await exec('node sanity.js', pkg, 'chromium firefox webkit');
     });
   }
@@ -180,7 +180,7 @@ test('should print the right install command without browsers', async ({ exec })
 test('subsequent installs works', async ({ exec }) => {
   test.info().annotations.push({ type: 'issue', description: 'https://github.com/dayour/copilotbrowser/issues/1651' });
 
-  await exec('npm i @copilotbrowser/browser-chromium');
+  await exec('npm i @copilotbrowser-chromium');
   // Note: the `npm install` would not actually crash, the error
   // is merely logged to the console. To reproduce the error, we should make
   // sure that script's install.js can be run subsequently without unhandled promise rejections.

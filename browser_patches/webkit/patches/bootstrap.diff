@@ -20893,7 +20893,7 @@ index 5d6492124eb520ce2b25f5c62775438103050ed3..1c0ea8a3258b5676b81fb00360e2c058
        location = "group:Configurations">
     </FileRef>
 +   <FileRef
-+      location = "group:Tools/copilotbrowser/copilotbrowser.xcodeproj">
++      location = "group:Tools/copilotbrowser.xcodeproj">
 +   </FileRef>
     <FileRef
        location = "group:Source/bmalloc/bmalloc.xcodeproj">
@@ -20917,7 +20917,7 @@ index 68732987fc02d863415360d066bc2a45d16ec39a..f4f924cb859034306361e9e55cdf31c6
 +               BlueprintIdentifier = "8D1107260486CEB800E47091"
 +               BuildableName = "copilotbrowser.app"
 +               BlueprintName = "copilotbrowser"
-+               ReferencedContainer = "container:Tools/copilotbrowser/copilotbrowser.xcodeproj">
++               ReferencedContainer = "container:Tools/copilotbrowser.xcodeproj">
 +            </BuildableReference>
 +         </BuildActionEntry>
           <BuildActionEntry

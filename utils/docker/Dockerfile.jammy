@@ -41,9 +41,9 @@ COPY ./copilotbrowser.tar.gz /tmp/copilotbrowser.tar.gz
 RUN mkdir /ms-copilotbrowser && \
     mkdir /ms-copilotbrowser-agent && \
     cd /ms-copilotbrowser-agent && npm init -y && \
-    npm i /tmp/copilotbrowser-core.tar.gz && \
-    npm exec --no -- copilotbrowser-core mark-docker-image "${DOCKER_IMAGE_NAME_TEMPLATE}" && \
-    npm exec --no -- copilotbrowser-core install --with-deps && rm -rf /var/lib/apt/lists/* && \
+    npm i /tmp/copilotbrowser.tar.gz && \
+    npm exec --no -- copilotbrowser mark-docker-image "${DOCKER_IMAGE_NAME_TEMPLATE}" && \
+    npm exec --no -- copilotbrowser install --with-deps && rm -rf /var/lib/apt/lists/* && \
     # Workaround for https://github.com/dayour/copilotbrowser/issues/27313
     # While the gstreamer plugin load process can be in-process, it ended up throwing
     # an error that it can't have libsoup2 and libsoup3 in the same process because
@@ -53,7 +53,7 @@ RUN mkdir /ms-copilotbrowser && \
     else \
         rm /usr/lib/x86_64-linux-gnu/gstreamer-1.0/libgstwebrtc.so; \
     fi && \
-    rm /tmp/copilotbrowser-core.tar.gz && \
+    rm /tmp/copilotbrowser.tar.gz && \
     rm -rf /ms-copilotbrowser-agent && \
     rm -rf ~/.npm/ && \
     chmod -R 777 /ms-copilotbrowser

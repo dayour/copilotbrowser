@@ -10,7 +10,7 @@ node_modules/
 .mono
 .idea
 yarn.lock
-/packages/copilotbrowser-core/src/generated
+/packages/copilotbrowser/src/generated
 /packages/copilotbrowser-ct-core/src/generated
 packages/*/lib/
 drivers/
@@ -29,7 +29,7 @@ test-results
 /packages/*/NOTICE
 /packages/copilotbrowser/README.md
 /packages/copilotbrowser-test/README.md
-/packages/copilotbrowser-core/api.json
+/packages/copilotbrowser/api.json
 .env
 /tests/installation/output/
 /tests/installation/.registry.json

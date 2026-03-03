@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-react17';
+import { test, expect } from 'copilotbrowser/ct/react17';
 import Button from '@/components/Button';
 import CheckChildrenProp from '@/components/CheckChildrenProp';
 import DefaultChildren from '@/components/DefaultChildren';

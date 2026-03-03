@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-vue';
+import { test, expect } from 'copilotbrowser/ct/vue';
 import MultiRoot from '@/components/MultiRoot.vue';
 import Button from '@/components/Button.vue';
 

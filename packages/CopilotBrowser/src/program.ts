@@ -19,12 +19,12 @@
 import fs from 'fs';
 import path from 'path';
 
-import { program } from 'copilotbrowser-core/lib/cli/program';
-import { gracefullyProcessExitDoNotHang, startProfiling, stopProfiling } from 'copilotbrowser-core/lib/utils';
+import { program } from '@copilotbrowser/copilotbrowser/lib/cli/program';
+import { gracefullyProcessExitDoNotHang, startProfiling, stopProfiling } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { builtInReporters, defaultReporter, defaultTimeout } from './common/config';
 import { loadConfigFromFile, loadEmptyConfigForMergeReports, resolveConfigLocation } from './common/configLoader';
-export { program } from 'copilotbrowser-core/lib/cli/program';
+export { program } from '@copilotbrowser/copilotbrowser/lib/cli/program';
 import { terminalScreen } from './reporters/base';
 import { showHTMLReport } from './reporters/html';
 import { createMergedReport } from './reporters/merge';
@@ -43,7 +43,7 @@ import { ClaudeGenerator, OpencodeGenerator, VSCodeGenerator, CopilotGenerator }
 import type { ConfigCLIOverrides } from './common/ipc';
 import type { TraceMode } from '../types/test';
 import type { ReporterDescription } from '../types/test';
-import type { Command } from 'copilotbrowser-core/lib/utilsBundle';
+import type { Command } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 const packageJSON = require('../package.json');
 

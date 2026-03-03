@@ -16,7 +16,7 @@
 
 
 import { test as it, expect } from '@copilotbrowser/test';
-import { findRepeatedSubsequencesForTest as findRepeatedSubsequences } from '../../../packages/copilotbrowser-core/lib/server/callLog';
+import { findRepeatedSubsequencesForTest as findRepeatedSubsequences } from '../../../packages/copilotbrowser/lib/server/callLog';
 
 it('should return an empty array when the input is empty', () => {
   const input = [];

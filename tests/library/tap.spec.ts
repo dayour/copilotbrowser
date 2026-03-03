@@ -15,7 +15,7 @@
  */
 
 import { contextTest as it, expect } from '../config/browserTest';
-import type { ElementHandle } from 'copilotbrowser-core';
+import type { ElementHandle } from 'copilotbrowser';
 
 it.use({ hasTouch: true });
 

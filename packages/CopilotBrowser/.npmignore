@@ -1,3 +1,5 @@
 src
 bundles
+*.tgz
+.npmrc
 !npm-readme-banner.png

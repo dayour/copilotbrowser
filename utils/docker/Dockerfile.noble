@@ -32,7 +32,7 @@ ENV copilotbrowser_BROWSERS_PATH=/ms-copilotbrowser
 
 # 1. Add tip-of-tree copilotbrowser package to install its browsers.
 #    The package should be built beforehand from tip-of-tree copilotbrowser.
-COPY ./copilotbrowser-core.tar.gz /tmp/copilotbrowser-core.tar.gz
+COPY ./copilotbrowser.tar.gz /tmp/copilotbrowser.tar.gz
 
 # 2. Bake in browsers & deps.
 #    Browsers will be downloaded in `/ms-copilotbrowser`.
@@ -41,10 +41,10 @@ COPY ./copilotbrowser-core.tar.gz /tmp/copilotbrowser-core.tar.gz
 RUN mkdir /ms-copilotbrowser && \
     mkdir /ms-copilotbrowser-agent && \
     cd /ms-copilotbrowser-agent && npm init -y && \
-    npm i /tmp/copilotbrowser-core.tar.gz && \
-    npm exec --no -- copilotbrowser-core mark-docker-image "${DOCKER_IMAGE_NAME_TEMPLATE}" && \
-    npm exec --no -- copilotbrowser-core install --with-deps && rm -rf /var/lib/apt/lists/* && \
-    rm /tmp/copilotbrowser-core.tar.gz && \
+    npm i /tmp/copilotbrowser.tar.gz && \
+    npm exec --no -- copilotbrowser mark-docker-image "${DOCKER_IMAGE_NAME_TEMPLATE}" && \
+    npm exec --no -- copilotbrowser install --with-deps && rm -rf /var/lib/apt/lists/* && \
+    rm /tmp/copilotbrowser.tar.gz && \
     rm -rf /ms-copilotbrowser-agent && \
     rm -rf ~/.npm/ && \
     chmod -R 777 /ms-copilotbrowser

@@ -53,7 +53,7 @@ async function checkDir(dir) {
 }
 
 (async () => {
-  for (const project of ['copilotbrowser-core', 'copilotbrowser']) {
+  for (const project of ['copilotbrowser', 'copilotbrowser']) {
     const lines = [];
     lines.push(`microsoft/${project}
 

@@ -1,7 +1,7 @@
 {
   "name": "@copilotbrowser/test",
   "version": "2.0.0",
-  "description": "A high-level API to automate web browsers",
+  "description": "Deprecated: use copilotbrowser/test instead. This package re-exports copilotbrowser for backward compatibility.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dayour/copilotbrowser.git"
@@ -28,6 +28,7 @@
   "bin": {
     "copilotbrowser": "cli.js"
   },
+  "deprecated": "This package is deprecated. Use copilotbrowser/test instead.",
   "scripts": {},
   "dependencies": {
     "copilotbrowser": "2.0.0"

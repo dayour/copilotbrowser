@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import type { MatcherResult } from './matcherHint';
-import type { Locator } from 'copilotbrowser-core';
+import type { Locator } from '@copilotbrowser/copilotbrowser';
 import type { ExpectMatcherStateInternal } from './matchers';
 export declare function toEqual<T>(this: ExpectMatcherStateInternal, matcherName: string, locator: Locator, receiverType: string, query: (isNot: boolean, timeout: number) => Promise<{
     matches: boolean;

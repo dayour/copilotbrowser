@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-svelte';
+import { test, expect } from 'copilotbrowser/ct/svelte';
 import Counter from '@/components/Counter.svelte';
 
 test('update props without remounting', async ({ mount }) => {

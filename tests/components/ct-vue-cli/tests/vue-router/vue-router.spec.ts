@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-vue';
+import { test, expect } from 'copilotbrowser/ct/vue';
 import App from '@/App.vue';
 import type { HooksConfig } from '../../copilotbrowser';
 

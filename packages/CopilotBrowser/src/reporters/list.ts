@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { getAsBooleanFromENV } from 'copilotbrowser-core/lib/utils';
-import { ms as milliseconds } from 'copilotbrowser-core/lib/utilsBundle';
+import { getAsBooleanFromENV } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { ms as milliseconds } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { markErrorsAsReported, TerminalReporter, stepSuffix } from './base';
 import { stripAnsiEscapes } from '../util';

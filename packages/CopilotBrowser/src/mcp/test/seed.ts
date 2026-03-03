@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { mkdirIfNeeded } from 'copilotbrowser-core/lib/utils';
+import { mkdirIfNeeded } from '@copilotbrowser/copilotbrowser/lib/utils';
 import { collectFilesForProject, findTopLevelProjects } from '../../runner/projectUtils';
 
 import type { FullConfigInternal, FullProjectInternal } from '../../common/config';

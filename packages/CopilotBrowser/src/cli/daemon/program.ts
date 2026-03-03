@@ -24,7 +24,7 @@ import { contextFactory } from '../../mcp/browser/browserContextFactory';
 import { ExtensionContextFactory } from '../../mcp/extension/extensionContextFactory';
 import { configFromCLIOptions, configFromEnv, defaultConfig, loadConfig, mergeConfig, validateConfig } from '../../mcp/browser/config';
 
-import type { Command } from 'copilotbrowser-core/lib/utilsBundle';
+import type { Command } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 import type { SessionConfig } from '../client/registry';
 import type { FullConfig } from '../../mcp/browser/config';
 

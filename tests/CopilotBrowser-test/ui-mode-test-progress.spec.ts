@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { ManualPromise } from '../../packages/copilotbrowser-core/lib/utils/isomorphic/manualPromise';
+import { ManualPromise } from '../../packages/copilotbrowser/lib/utils/isomorphic/manualPromise';
 import { test, expect, retries, dumpTestTree } from './ui-mode-fixtures';
 
 test.describe.configure({ mode: 'parallel', retries });

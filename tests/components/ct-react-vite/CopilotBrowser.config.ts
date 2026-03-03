@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { defineConfig, devices } from '@copilotbrowser/experimental-ct-react';
+import { defineConfig, devices } from 'copilotbrowser/ct/react';
 import path from 'path';
 import { fileURLToPath } from 'url';
 

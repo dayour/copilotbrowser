@@ -18,8 +18,8 @@ import EventEmitter from 'events';
 import fs from 'fs';
 import path from 'path';
 
-import { registry } from 'copilotbrowser-core/lib/server';
-import { ManualPromise, gracefullyProcessExitDoNotHang, setcopilotbrowserTestProcessEnv } from 'copilotbrowser-core/lib/utils';
+import { registry } from '@copilotbrowser/copilotbrowser/lib/server';
+import { ManualPromise, gracefullyProcessExitDoNotHang, setcopilotbrowserTestProcessEnv } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { loadConfig } from '../common/configLoader';
 import { Watcher } from '../fsWatcher';

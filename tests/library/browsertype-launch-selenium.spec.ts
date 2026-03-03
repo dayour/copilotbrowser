@@ -18,7 +18,7 @@ import { copilotbrowserTest as test, expect } from '../config/browserTest';
 import type { TestInfo } from '@copilotbrowser/test';
 import path from 'path';
 import fs from 'fs';
-import { start } from '../../packages/copilotbrowser-core/lib/outofprocess';
+import { start } from '../../packages/copilotbrowser/lib/outofprocess';
 
 const chromeDriver = process.env.PWTEST_CHROMEDRIVER;
 const brokenDriver = path.join(__dirname, '..', 'assets', 'selenium-grid', 'broken-selenium-driver.js');

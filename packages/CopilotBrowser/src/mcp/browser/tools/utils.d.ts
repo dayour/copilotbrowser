@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import type * as copilotbrowser from 'copilotbrowser-core';
+import type * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 import type { Tab } from '../tab';
 export declare function waitForCompletion<R>(tab: Tab, callback: () => Promise<R>): Promise<R>;
 export declare function callOnPageNoTrace<T>(page: copilotbrowser.Page, callback: (page: copilotbrowser.Page) => Promise<T>): Promise<T>;

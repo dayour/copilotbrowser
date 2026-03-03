@@ -27,7 +27,7 @@ test('should work with the empty component list', async ({ runInlineTest }, test
     'copilotbrowser/index.js': ``,
 
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       test('pass', async ({ mount }) => {});
     `,
   }, { workers: 1 });
@@ -38,7 +38,7 @@ test('should work with the empty component list', async ({ runInlineTest }, test
   expect(output.replace(/\\+/g, '/')).toContain('.cache/index.html');
 
   const metainfo = JSON.parse(fs.readFileSync(testInfo.outputPath('copilotbrowser/.cache/metainfo.json'), 'utf-8'));
-  expect(metainfo.version).toEqual(require('copilotbrowser-core/package.json').version);
+  expect(metainfo.version).toEqual(require('copilotbrowser/package.json').version);
   expect(metainfo.viteVersion).toEqual(require('vite/package.json').version);
   expect(Object.entries(metainfo.deps)).toHaveLength(0);
   expect(Object.entries(metainfo.sources)).toHaveLength(10);
@@ -72,7 +72,7 @@ test('should extract component list', async ({ runInlineTest }, testInfo) => {
     `,
 
     'src/one-import.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -81,7 +81,7 @@ test('should extract component list', async ({ runInlineTest }, testInfo) => {
     `,
 
     'src/named-imports.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Component1, Component2 } from './components';
 
       test('pass 1', async ({ mount }) => {
@@ -96,7 +96,7 @@ test('should extract component list', async ({ runInlineTest }, testInfo) => {
     `,
 
     'src/default-import.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import DefaultComponent from './defaultExport';
 
       test('named', async ({ mount }) => {
@@ -106,7 +106,7 @@ test('should extract component list', async ({ runInlineTest }, testInfo) => {
     `,
 
     'src/clashing-imports.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
 
       import DefaultComponent from './defaultExport.tsx';
       import { ClashingName as CN1 } from './clashingNames1';
@@ -126,7 +126,7 @@ test('should extract component list', async ({ runInlineTest }, testInfo) => {
       export default () => <button>Button</button>;
     `,
     'src/relative-import-different-folders/one/one.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import Button from '.';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -137,7 +137,7 @@ test('should extract component list', async ({ runInlineTest }, testInfo) => {
       export default () => <button>Button</button>;
     `,
     'src/relative-import-different-folders/two/two.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import Button from '.';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -233,7 +233,7 @@ test('should cache build', async ({ runInlineTest }, testInfo) => {
       `,
 
       'src/button.test.tsx': `
-          import { test, expect } from '@copilotbrowser/experimental-ct-react';
+          import { test, expect } from 'copilotbrowser/ct/react';
         import { Button } from './button.tsx';
 
         test('pass', async ({ mount }) => {
@@ -263,7 +263,7 @@ test('should cache build', async ({ runInlineTest }, testInfo) => {
     const result = await runInlineTest({
       'copilotbrowser.config.ts': copilotbrowserCtConfigText,
       'src/button.test.tsx': `
-          import { test, expect } from '@copilotbrowser/experimental-ct-react';
+          import { test, expect } from 'copilotbrowser/ct/react';
         import { Button } from './button.tsx';
 
         test('pass updated', async ({ mount }) => {
@@ -307,7 +307,7 @@ test('should grow cache', async ({ runInlineTest }, testInfo) => {
         export const Button2 = () => <button>Button 2</button>;
       `,
       'src/button1.test.tsx': `
-          import { test, expect } from '@copilotbrowser/experimental-ct-react';
+          import { test, expect } from 'copilotbrowser/ct/react';
         import { Button1 } from './button1.tsx';
         test('pass', async ({ mount }) => {
           const component = await mount(<Button1></Button1>);
@@ -315,7 +315,7 @@ test('should grow cache', async ({ runInlineTest }, testInfo) => {
         });
       `,
       'src/button2.test.tsx': `
-          import { test, expect } from '@copilotbrowser/experimental-ct-react';
+          import { test, expect } from 'copilotbrowser/ct/react';
         import { Button2 } from './button2.tsx';
         test('pass', async ({ mount }) => {
           const component = await mount(<Button2></Button2>);
@@ -362,7 +362,7 @@ test('should not crash when cached component test file is deleted', async ({ run
       export const Button = () => <button>Button</button>;
     `,
       'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.tsx';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -373,7 +373,7 @@ test('should not crash when cached component test file is deleted', async ({ run
       export const Button2 = () => <button>Button 2</button>;
     `,
       'src/button2.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button2 } from './button2.tsx';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button2></Button2>);
@@ -415,7 +415,7 @@ test('should not use global config for preview', async ({ runInlineTest }) => {
       };
     `,
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       test('pass', async ({ mount }) => {});
     `,
   }, { workers: 1 });
@@ -434,7 +434,7 @@ test('should work with https enabled', async ({ runInlineTest }) => {
     'copilotbrowser/index.html': `<script type="module" src="./index.js"></script>`,
     'copilotbrowser/index.js': ``,
     'copilotbrowser.config.js': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig } from 'copilotbrowser/ct/react';
       import basicSsl from '@vitejs/plugin-basic-ssl';
       export default defineConfig({
         use: {
@@ -449,7 +449,7 @@ test('should work with https enabled', async ({ runInlineTest }) => {
       });
     `,
     'http.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
 
       test('pass', async ({ page }) => {
         await expect(page).toHaveURL(/https:.*/);
@@ -469,7 +469,7 @@ test('list compilation cache should not clash with the run one', async ({ runInl
       export const Button = () => <button>Button</button>;
     `,
     'src/button.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -497,7 +497,7 @@ test('should retain deps when test changes', async ({ runInlineTest }, testInfo)
         export const Button = () => <button>Button</button>;
       `,
       'src/button.test.tsx': `
-        import { test, expect } from '@copilotbrowser/experimental-ct-react';
+        import { test, expect } from 'copilotbrowser/ct/react';
         import { Button } from './button.tsx';
         test('pass', async ({ mount }) => {
           const component = await mount(<Button></Button>);
@@ -515,7 +515,7 @@ test('should retain deps when test changes', async ({ runInlineTest }, testInfo)
   await test.step('modify test and run it again', async () => {
     const result = await runInlineTest({
       'src/button.test.tsx': `
-        import { test, expect } from '@copilotbrowser/experimental-ct-react';
+        import { test, expect } from 'copilotbrowser/ct/react';
         import { Button } from './button.tsx';
         test('pass', async ({ mount }) => {
           const component1 = await mount(<Button></Button>);
@@ -564,7 +564,7 @@ test('should render component via re-export', async ({ runInlineTest }, testInfo
       export { Button };
     `,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './buttonHelper';
       test('pass', async ({ mount }) => {
         const component = await mount(<Button></Button>);
@@ -584,7 +584,7 @@ test('should import json', async ({ runInlineTest }) => {
     'copilotbrowser/index.ts': ``,
     'src/some.json': `{ "some": "value" }`,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import json from './some.json';
       test('pass', async ({}) => {
         expect(json.some).toBe('value');
@@ -605,8 +605,8 @@ test('should render component exported via fixture', async ({ runInlineTest }, t
     `,
     'src/buttonFixture.tsx': `
       import { Button } from './button';
-      import { test as baseTest } from '@copilotbrowser/experimental-ct-react';
-      export { expect } from '@copilotbrowser/experimental-ct-react';
+      import { test as baseTest } from 'copilotbrowser/ct/react';
+      export { expect } from 'copilotbrowser/ct/react';
       export const test = baseTest.extend({
         button: async ({ mount }, use) => {
           await use(await mount(<Button></Button>));
@@ -632,7 +632,7 @@ test('should pass imported images from test to component', async ({ runInlineTes
     'copilotbrowser/index.ts': ``,
     'src/image.png': Buffer.from('iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAQAAAD9CzEMAAACMElEQVRYw+1XT0tCQRD/9Qci0Cw7mp1C6BMYnt5niMhPEEFCh07evNk54XnuGkhFehA/QxHkqYMEFWXpscMTipri7fqeu+vbfY+EoBkQ3Zn5zTo7MzsL/NNfoClkUUQNN3jCJ/ETfavRSpYkkSmFQzz8wMr4gaSp8OBJ2HCU4Iwd0kqGgd9GPxCccZ+0jWgWVW1wxlWy0qR51I3hv7lOllq7b4SC/+aGzr+QBadjEKgAykvzJGXwr/Lj4JfRk5hUSLKIa00HPUJRki0xeMWSWxVXmi5sddXKymqTyxdwquXAUVV3WREeLx3gTcNFWQY/jXtB8QIzgt4qTvAR4OCe0ATKCmrnmFMEM0Pp2BvrIisaFUdUjgKKZgYWSjjDLR5J+x13lATHuHSti6JBzQP+gq2QHXjfRaiJojbPgYqbmGFow0VpiyIW0/VIF9QKLzeBWA2MHmwCu8QJQV++Ps/joHQQH4HpuO0uobUeVztgIcr4Vnf4we9orWfUIWKHbEVyYKkPmaVpIVKICuo0ZYXWjHTITXWhsVYxkIDpUoKsla1i2Oz2QjvYG9fshu36GbFQ8DGyHNOuvRdOKZSDUtCFM7wyHeSM4XN8e7bOpd9F2gg+TRYal753bGkbuEjzMg0YW/yDV1czUDm+e43Byz86OnRwsYDMKXlmkYbeAOwffrtU/nGpXpwkXfPhVza+D9AiMAtrtOMYfVr0q8Wr1nh8n8ADZCJPqAk8AifyjP2n36cvkA6/Wln9MokAAAAASUVORK5CYII=', 'base64'),
     'src/image.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import imageSrc from './image.png';
       test('pass', async ({ mount }) => {
         const component = await mount(<img src={imageSrc}></img>);
@@ -663,7 +663,7 @@ test('should pass dates, regex, urls and bigints', async ({ runInlineTest }) => 
       };
     `,
     'src/component.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('renders props with builtin types', async ({ mount, page }) => {
@@ -693,7 +693,7 @@ test('should pass undefined value as param', async ({ runInlineTest }) => {
       };
     `,
     'src/component.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Component } from './component';
 
       test('renders props with undefined type', async ({ mount, page }) => {
@@ -724,7 +724,7 @@ test('should resolve components imported from node_modules', async ({ runInlineT
     }),
 
     'src/component.spec.tsx': `
-      import { test } from '@copilotbrowser/experimental-ct-react';
+      import { test } from 'copilotbrowser/ct/react';
       import { TextField } from '@mui/material';
 
       test("passes", async ({ mount }) => {
@@ -770,7 +770,7 @@ test('should remove ? or # from deps in metainfo.json', async ({ runInlineTest }
       )
     `,
     'a.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { ButtonStory } from './button.story.tsx';
 
       test('Button', async ({ mount }) => {

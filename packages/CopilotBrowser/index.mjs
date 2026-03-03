@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from 'copilotbrowser-core';
-import copilotbrowser from 'copilotbrowser-core';
+export * from './lib/inprocess.js';
+import copilotbrowser from './lib/inprocess.js';
 export default copilotbrowser;

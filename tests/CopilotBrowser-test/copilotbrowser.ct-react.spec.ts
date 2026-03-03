@@ -26,7 +26,7 @@ test('should work with TSX', async ({ runInlineTest }) => {
       export const Button = () => <button>Button</button>;
     `,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass', async ({ mount }) => {
@@ -52,7 +52,7 @@ test('should work with JSX', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass', async ({ mount }) => {
@@ -78,7 +78,7 @@ test('should work with JSX in JS', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass', async ({ mount }) => {
@@ -108,7 +108,7 @@ test('should work with JSX in JS and in JSX', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       import { List } from './list';
 
@@ -145,7 +145,7 @@ test('should work with stray TSX import', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       import { List } from './list';
 
@@ -176,7 +176,7 @@ test('should work with stray JSX import', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       import { List } from './list';
 
@@ -207,7 +207,7 @@ test('should work with stray JS import', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       import { List } from './list';
 
@@ -234,7 +234,7 @@ test('should work with JSX in variable', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       const button = <Button></Button>;
@@ -278,7 +278,7 @@ test('should pass "key" attribute from JSX in variable', async ({ runInlineTest 
     `,
 
     'src/index.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
       import { Container } from './container';
 
@@ -312,7 +312,7 @@ test('should return root locator for fragments', async ({ runInlineTest }) => {
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass button', async ({ mount }) => {
@@ -337,7 +337,7 @@ test('should respect default property values', async ({ runInlineTest }) => {
     `,
 
     'src/label.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Label } from './label';
 
       test('boolean shorthand', async ({ mount }) => {
@@ -365,7 +365,7 @@ test('should bundle public folder', async ({ runInlineTest }) => {
       export const Image = () => <img src='/logo.svg' className="App-logo" alt="logo" />;
     `,
     'src/image.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Image } from './image';
 
       test('pass', async ({ mount, page }) => {
@@ -399,7 +399,7 @@ test('should work with property expressions in JSX', async ({ runInlineTest }) =
       export default { Button };
     `,
     'src/button.test.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { components1 } from './button1';
       import components2 from './button2';
 
@@ -422,7 +422,7 @@ test('should work with property expressions in JSX', async ({ runInlineTest }) =
 test('should handle the baseUrl config', async ({ runInlineTest }) => {
   const result = await runInlineTest({
     'copilotbrowser.config.ts': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig } from 'copilotbrowser/ct/react';
       export default defineConfig({ use: { baseURL: 'http://127.0.0.1:8080' } });
     `,
     'copilotbrowser/index.html': `<script type="module" src="./index.js"></script>`,
@@ -433,7 +433,7 @@ test('should handle the baseUrl config', async ({ runInlineTest }) => {
     `,
 
     'src/component.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Component } from './component';
 
       test('pass component', async ({ page, mount }) => {
@@ -450,7 +450,7 @@ test('should handle the baseUrl config', async ({ runInlineTest }) => {
 test('should handle the vite host config', async ({ runInlineTest }) => {
   const result = await runInlineTest({
     'copilotbrowser.config.ts': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig } from 'copilotbrowser/ct/react';
       export default defineConfig({ use: { ctViteConfig: { preview: { host: '127.0.0.1' } } } });
     `,
     'copilotbrowser/index.html': `<script type="module" src="./index.js"></script>`,
@@ -461,7 +461,7 @@ test('should handle the vite host config', async ({ runInlineTest }) => {
     `,
 
     'src/component.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Component } from './component';
 
       test('pass component', async ({ page, mount }) => {
@@ -479,7 +479,7 @@ test('should handle the vite host config', async ({ runInlineTest }) => {
 test('should prioritize the vite host config over the baseUrl config', async ({ runInlineTest }) => {
   const result = await runInlineTest({
     'copilotbrowser.config.ts': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig } from 'copilotbrowser/ct/react';
       export default defineConfig({
         use: {
           baseURL: 'http://localhost:8080',
@@ -495,7 +495,7 @@ test('should prioritize the vite host config over the baseUrl config', async ({ 
     `,
 
     'src/component.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Component } from './component';
 
       test('pass component', async ({ page, mount }) => {
@@ -524,7 +524,7 @@ test('should normalize children', async ({ runInlineTest }) => {
     `,
 
     'src/component.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { OneChild, OtherComponent } from './component';
 
       test("can pass an HTML element to OneChild", async ({ mount }) => {
@@ -549,7 +549,7 @@ test('should allow props children', async ({ runInlineTest }) => {
     'copilotbrowser/index.html': `<script type="module" src="./index.ts"></script>`,
     'copilotbrowser/index.ts': ``,
     'src/component.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
 
       test("renders children from props object", async ({ mount, page }) => {
         const props = { children: 'test' };
@@ -584,7 +584,7 @@ test('should allow import from shared file', async ({ runInlineTest }) => {
       };
     `,
     'src/component.spec.tsx': `
-      import { expect, test } from '@copilotbrowser/experimental-ct-react';
+      import { expect, test } from 'copilotbrowser/ct/react';
       import { ComponentTest } from './component.render';
       import { componentMock } from './component.shared';
       test('component renders', async ({ mount }) => {
@@ -613,7 +613,7 @@ test('should not add React import to minified .js file that already imports Reac
     `,
 
     'src/button.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button';
 
       test('pass', async ({ mount }) => {
@@ -630,7 +630,7 @@ test('should not add React import to minified .js file that already imports Reac
 test('should throw test error when template index.html is not provided', async ({ runInlineTest }) => {
   const result = await runInlineTest({
     'copilotbrowser.config.ts': `
-      import { defineConfig } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig } from 'copilotbrowser/ct/react';
       export default defineConfig({});
     `,
     'src/component.jsx': `
@@ -638,7 +638,7 @@ test('should throw test error when template index.html is not provided', async (
     `,
 
     'src/component.test.jsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Component } from './component';
 
       test('pass component', async ({ page, mount }) => {

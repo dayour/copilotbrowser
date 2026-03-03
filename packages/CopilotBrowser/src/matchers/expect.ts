@@ -20,7 +20,7 @@ import {
   currentZone,
   escapeWithQuotes,
   isString,
-  pollAgainstDeadline } from 'copilotbrowser-core/lib/utils';
+  pollAgainstDeadline } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { ExpectError, isJestError } from './matcherHint';
 import {

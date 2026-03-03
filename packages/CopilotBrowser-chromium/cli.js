@@ -15,5 +15,5 @@
  * limitations under the License.
  */
 
-const { program } = require('copilotbrowser-core/lib/cli/program');
+const { program } = require('copilotbrowser/lib/cli/program');
 program.parse(process.argv);

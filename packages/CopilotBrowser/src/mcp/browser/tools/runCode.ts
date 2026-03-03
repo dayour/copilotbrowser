@@ -16,9 +16,9 @@
 
 import vm from 'vm';
 
-import { ManualPromise } from 'copilotbrowser-core/lib/utils';
+import { ManualPromise } from '@copilotbrowser/copilotbrowser/lib/utils';
 
-import { z } from 'copilotbrowser-core/lib/mcpBundle';
+import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTabTool } from './tool';
 
 const codeSchema = z.object({

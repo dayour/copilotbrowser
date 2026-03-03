@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { toPosixPath, MultiMap } from 'copilotbrowser-core/lib/utils';
+import { toPosixPath, MultiMap } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { formatError, nonTerminalScreen, prepareErrorStack, resolveOutputFile, CommonReporterOptions } from './base';
 import { getProjectId } from '../common/config';

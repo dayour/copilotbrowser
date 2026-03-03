@@ -710,7 +710,7 @@ test('should merge projects in the config', async ({ runInlineTest }) => {
 test('should merge ct configs', async ({ runInlineTest }) => {
   const result = await runInlineTest({
     'copilotbrowser.config.ts': `
-      import { defineConfig, expect } from '@copilotbrowser/experimental-ct-react';
+      import { defineConfig, expect } from 'copilotbrowser/ct/react';
       const baseConfig = defineConfig({
         timeout: 10,
         use: {
@@ -732,13 +732,13 @@ test('should merge ct configs', async ({ runInlineTest }) => {
         '@copilotbrowser/test': expect.objectContaining({
           babelPlugins: [[expect.stringContaining('tsxTransform.js')]]
         }),
-        '@copilotbrowser/experimental-ct-core': expect.objectContaining({
+        'copilotbrowser/ct/core': expect.objectContaining({
           registerSourceFile: expect.stringContaining('registerSource'),
         }),
       }));
     `,
     'a.test.ts': `
-      import { test } from '@copilotbrowser/experimental-ct-react';
+      import { test } from 'copilotbrowser/ct/react';
       test('pass', async ({}) => {});
     `
   });

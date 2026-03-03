@@ -16,7 +16,7 @@
     "jsx": "react-jsx",
     "useUnknownInCatchVariables": false,
     "paths": {
-      "@isomorphic/*": ["../copilotbrowser-core/src/utils/isomorphic/*"],
+      "@isomorphic/*": ["../copilotbrowser/src/utils/isomorphic/*"],
       "@protocol/*": ["../protocol/src/*"],
       "@web/*": ["../web/src/*"],
     }

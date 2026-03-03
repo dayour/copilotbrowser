@@ -43,7 +43,7 @@ export function bundle(): Plugin {
     },
     closeBundle: () => {
       if (fs.existsSync(path.join(config.build!.outDir!, 'index.html'))) {
-        const targetDir = path.join(__dirname, '..', 'copilotbrowser-core', 'lib', 'vite', 'htmlReport');
+        const targetDir = path.join(__dirname, '..', 'copilotbrowser', 'lib', 'vite', 'htmlReport');
         fs.mkdirSync(targetDir, { recursive: true });
         fs.copyFileSync(
             path.join(config.build!.outDir!, 'index.html'),

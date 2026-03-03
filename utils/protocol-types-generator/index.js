@@ -15,8 +15,8 @@ async function generateProtocol(name, executablePath) {
 }
 
 async function generateChromiumProtocol(executablePath) {
-  const outputPath = path.join(__dirname, '../../packages/copilotbrowser-core/src/server/chromium/protocol.d.ts');
-  const copilotbrowser = require('copilotbrowser-core').chromium;
+  const outputPath = path.join(__dirname, '../../packages/copilotbrowser/src/server/chromium/protocol.d.ts');
+  const copilotbrowser = require('copilotbrowser').chromium;
   const browser = await copilotbrowser.launch({ executablePath, args: ['--remote-debugging-port=9339'] });
   const page = await browser.newPage();
   await page.goto(`http://localhost:9339/json/protocol`);
@@ -29,7 +29,7 @@ async function generateChromiumProtocol(executablePath) {
 }
 
 async function generateWebKitProtocol(folderPath) {
-  const outputPath = path.join(__dirname, '../../packages/copilotbrowser-core/src/server/webkit/protocol.d.ts');
+  const outputPath = path.join(__dirname, '../../packages/copilotbrowser/src/server/webkit/protocol.d.ts');
   const json = JSON.parse(await fs.promises.readFile(path.join(folderPath, '../protocol.json'), 'utf8'));
   await fs.promises.writeFile(outputPath, jsonToTS({domains: json}));
   console.log(`Wrote protocol.d.ts for WebKit to ${path.relative(process.cwd(), outputPath)}`);
@@ -129,7 +129,7 @@ function typeOfProperty(property, domain) {
 }
 
 async function generateFirefoxProtocol(executablePath) {
-  const outputPath = path.join(__dirname, '../../packages/copilotbrowser-core/src/server/firefox/protocol.d.ts');
+  const outputPath = path.join(__dirname, '../../packages/copilotbrowser/src/server/firefox/protocol.d.ts');
   const omnija = os.platform() === 'darwin' ?
     path.join(executablePath, '../../Resources/omni.ja') :
     path.join(executablePath, '../omni.ja');

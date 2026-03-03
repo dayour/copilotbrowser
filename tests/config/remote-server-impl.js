@@ -14,7 +14,7 @@ async function start() {
   if (disconnectOnSIGHUP)
     launchOptions.handleSIGHUP = false;
 
-  const copilotbrowser = require('copilotbrowser-core');
+  const copilotbrowser = require('copilotbrowser');
 
   if (startStopAndRunHttp) {
     const browser = await copilotbrowser[browserTypeName].launch(launchOptions);

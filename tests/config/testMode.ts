@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { start } from '../../packages/copilotbrowser-core/lib/outofprocess';
-import type { copilotbrowser } from '../../packages/copilotbrowser-core/lib/client/copilotbrowser';
+import { start } from '../../packages/copilotbrowser/lib/outofprocess';
+import type { copilotbrowser } from '../../packages/copilotbrowser/lib/client/copilotbrowser';
 
 export type TestModeName = 'default' | 'driver' | 'service' | 'service2' | 'wsl';
 
@@ -41,7 +41,7 @@ export class DriverTestMode implements TestMode {
 
 export class DefaultTestMode implements TestMode {
   async setup() {
-    return require('copilotbrowser-core');
+    return require('copilotbrowser');
   }
 
   async teardown() {

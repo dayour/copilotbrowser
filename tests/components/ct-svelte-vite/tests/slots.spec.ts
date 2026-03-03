@@ -1,4 +1,4 @@
-import { test, expect } from '@copilotbrowser/experimental-ct-svelte';
+import { test, expect } from 'copilotbrowser/ct/svelte';
 import DefaultSlot from '@/components/DefaultSlot.svelte';
 import NamedSlots from '@/components/NamedSlots.svelte';
 

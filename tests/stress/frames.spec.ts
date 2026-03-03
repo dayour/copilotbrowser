@@ -19,7 +19,7 @@ import { contextTest as test, expect } from '../config/browserTest';
 test.slow();
 
 test('cycle frames', async ({ page, server }) => {
-  require('../../packages/copilotbrowser-core/lib/server/dispatchers/dispatcher').setMaxDispatchersForTest(100);
+  require('../../packages/copilotbrowser/lib/server/dispatchers/dispatcher').setMaxDispatchersForTest(100);
 
   const kFrameCount = 310;
 
@@ -46,7 +46,7 @@ test('cycle frames', async ({ page, server }) => {
   await promise;
   await page.waitForTimeout(500);
 
-  require('../../packages/copilotbrowser-core/lib/server/dispatchers/dispatcher').setMaxDispatchersForTest(null);
+  require('../../packages/copilotbrowser/lib/server/dispatchers/dispatcher').setMaxDispatchersForTest(null);
 });
 
 test('cycle handles', async ({ page, server }) => {

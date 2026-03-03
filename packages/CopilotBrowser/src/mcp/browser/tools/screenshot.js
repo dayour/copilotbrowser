@@ -16,10 +16,10 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.scaleImageToFitMessage = scaleImageToFitMessage;
-const utils_1 = require("copilotbrowser-core/lib/utils");
-const utilsBundle_1 = require("copilotbrowser-core/lib/utilsBundle");
-const utils_2 = require("copilotbrowser-core/lib/utils");
-const mcpBundle_1 = require("copilotbrowser-core/lib/mcpBundle");
+const utils_1 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const utilsBundle_1 = require("@copilotbrowser/copilotbrowser/lib/utilsBundle");
+const utils_2 = require("@copilotbrowser/copilotbrowser/lib/utils");
+const mcpBundle_1 = require("@copilotbrowser/copilotbrowser/lib/mcpBundle");
 const tool_1 = require("./tool");
 const screenshotSchema = mcpBundle_1.z.object({
     type: mcpBundle_1.z.enum(['png', 'jpeg']).default('png').describe('Image format for the screenshot. Default is png.'),

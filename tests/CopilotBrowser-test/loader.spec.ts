@@ -299,7 +299,7 @@ test('should filter stack trace for simple expect', async ({ runInlineTest }) =>
   });
   expect(result.exitCode).toBe(1);
   expect(result.output).not.toContain(path.sep + `copilotbrowser-test`);
-  expect(result.output).not.toContain(path.sep + `copilotbrowser-core`);
+  expect(result.output).not.toContain(path.sep + `copilotbrowser`);
   expect(result.output).not.toContain('internal');
 });
 
@@ -314,7 +314,7 @@ test('should filter stack trace for web-first assertions', async ({ runInlineTes
   });
   expect(result.exitCode).toBe(1);
   expect(result.output).not.toContain(path.sep + `copilotbrowser-test`);
-  expect(result.output).not.toContain(path.sep + `copilotbrowser-core`);
+  expect(result.output).not.toContain(path.sep + `copilotbrowser`);
   expect(result.output).not.toContain('internal');
 });
 
@@ -362,7 +362,7 @@ test('should filter stack trace for raw errors', async ({ runInlineTest }) => {
   expect(result.exitCode).toBe(1);
   expect(result.output).toContain('foobar!');
   expect(result.output).not.toContain(path.sep + `copilotbrowser-test`);
-  expect(result.output).not.toContain(path.sep + `copilotbrowser-core`);
+  expect(result.output).not.toContain(path.sep + `copilotbrowser`);
   expect(result.output).not.toContain('internal');
 });
 
@@ -386,7 +386,7 @@ test('should not filter out POM', async ({ runInlineTest }) => {
   expect(result.output).toContain('helper.ts');
   expect(result.output).toContain('expect-test.spec.ts');
   expect(result.output).not.toContain(path.sep + `copilotbrowser-test`);
-  expect(result.output).not.toContain(path.sep + `copilotbrowser-core`);
+  expect(result.output).not.toContain(path.sep + `copilotbrowser`);
   expect(result.output).not.toContain('internal');
 });
 
@@ -765,7 +765,7 @@ test('should resolve .js import to .tsx file in non-ESM mode for components', as
     `,
 
     'src/test.spec.tsx': `
-      import { test, expect } from '@copilotbrowser/experimental-ct-react';
+      import { test, expect } from 'copilotbrowser/ct/react';
       import { Button } from './button.js';
       test('pass', async ({ mount }) => {
         await mount(<Button></Button>);

@@ -24,7 +24,7 @@ import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { test as baseTest, expect, mcpServerPath } from './fixtures';
 
 import type { Config } from '../../packages/copilotbrowser/src/mcp/config';
-import { ListRootsRequestSchema } from 'copilotbrowser-core/lib/mcpBundle';
+import { ListRootsRequestSchema } from 'copilotbrowser/lib/mcpBundle';
 
 const test = baseTest.extend<{ serverEndpoint: (options?: { args?: string[], noPort?: boolean }) => Promise<{ url: URL, stderr: () => string }> }>({
   serverEndpoint: async ({ mcpHeadless }, use, testInfo) => {

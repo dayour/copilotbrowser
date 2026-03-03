@@ -17,7 +17,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.toMcpTool = toMcpTool;
 exports.defineToolSchema = defineToolSchema;
-const mcpBundle_1 = require("copilotbrowser-core/lib/mcpBundle");
+const mcpBundle_1 = require("@copilotbrowser/copilotbrowser/lib/mcpBundle");
 function toMcpTool(tool) {
     const readOnly = tool.type === 'readOnly' || tool.type === 'assertion';
     return {

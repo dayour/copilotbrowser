@@ -55,7 +55,7 @@ COPY package.json package-lock.json ./
 
 # Copy every package.json so npm can resolve the full workspace graph
 COPY --from=builder /app/packages/copilotbrowser/package.json               packages/copilotbrowser/package.json
-COPY --from=builder /app/packages/copilotbrowser-core/package.json          packages/copilotbrowser-core/package.json
+COPY --from=builder /app/packages/copilotbrowser/package.json          packages/copilotbrowser/package.json
 COPY --from=builder /app/packages/copilotbrowser-chromium/package.json      packages/copilotbrowser-chromium/package.json
 COPY --from=builder /app/packages/copilotbrowser-firefox/package.json       packages/copilotbrowser-firefox/package.json
 COPY --from=builder /app/packages/copilotbrowser-webkit/package.json        packages/copilotbrowser-webkit/package.json
@@ -63,12 +63,6 @@ COPY --from=builder /app/packages/copilotbrowser-browser-chromium/package.json p
 COPY --from=builder /app/packages/copilotbrowser-browser-firefox/package.json  packages/copilotbrowser-browser-firefox/package.json
 COPY --from=builder /app/packages/copilotbrowser-browser-webkit/package.json   packages/copilotbrowser-browser-webkit/package.json
 COPY --from=builder /app/packages/copilotbrowser-test/package.json          packages/copilotbrowser-test/package.json
-COPY --from=builder /app/packages/copilotbrowser-client/package.json        packages/copilotbrowser-client/package.json
-COPY --from=builder /app/packages/copilotbrowser-ct-core/package.json       packages/copilotbrowser-ct-core/package.json
-COPY --from=builder /app/packages/copilotbrowser-ct-react/package.json      packages/copilotbrowser-ct-react/package.json
-COPY --from=builder /app/packages/copilotbrowser-ct-react17/package.json    packages/copilotbrowser-ct-react17/package.json
-COPY --from=builder /app/packages/copilotbrowser-ct-svelte/package.json     packages/copilotbrowser-ct-svelte/package.json
-COPY --from=builder /app/packages/copilotbrowser-ct-vue/package.json        packages/copilotbrowser-ct-vue/package.json
 COPY --from=builder /app/packages/html-reporter/package.json                packages/html-reporter/package.json
 COPY --from=builder /app/packages/recorder/package.json                     packages/recorder/package.json
 COPY --from=builder /app/packages/trace-viewer/package.json                 packages/trace-viewer/package.json
@@ -85,7 +79,7 @@ RUN npm ci --ignore-scripts --omit=dev
 # Selective COPY is fragile — internal requires reference package roots,
 # not just lib/, so copy entire package directories.
 COPY --from=builder /app/packages/copilotbrowser      packages/copilotbrowser
-COPY --from=builder /app/packages/copilotbrowser-core  packages/copilotbrowser-core
+COPY --from=builder /app/packages/copilotbrowser  packages/copilotbrowser
 COPY --from=builder /app/packages/copilotbrowser-chromium packages/copilotbrowser-chromium
 
 # Browser binaries are installed at container startup or via volume mount.

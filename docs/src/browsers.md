@@ -155,7 +155,7 @@ npx copilotbrowser --version
 
 ## Configure Browsers
 
-copilotbrowser can run tests on Chromium, WebKit and Firefox browsers as well as branded browsers such as Google Chrome and Microsoft Edge. It can also run on emulated tablet and mobile devices. See the [registry of device parameters](https://github.com/dayour/copilotbrowser/blob/main/packages/copilotbrowser-core/src/server/deviceDescriptorsSource.json) for a complete list of selected desktop, tablet and mobile devices.
+copilotbrowser can run tests on Chromium, WebKit and Firefox browsers as well as branded browsers such as Google Chrome and Microsoft Edge. It can also run on emulated tablet and mobile devices. See the [registry of device parameters](https://github.com/dayour/copilotbrowser/blob/main/packages/copilotbrowser/src/server/deviceDescriptorsSource.json) for a complete list of selected desktop, tablet and mobile devices.
 
 ### Run tests on different browsers
 
@@ -1091,18 +1091,18 @@ You can opt into the hermetic install and place binaries in the local folder:
 
 
 ```bash tab=bash-bash
-# Places binaries to node_modules/copilotbrowser-core/.local-browsers
+# Places binaries to node_modules/copilotbrowser/.local-browsers
 copilotbrowser_BROWSERS_PATH=0 npx copilotbrowser install
 ```
 
 ```batch tab=bash-batch
-# Places binaries to node_modules\copilotbrowser-core\.local-browsers
+# Places binaries to node_modules\copilotbrowser\.local-browsers
 set copilotbrowser_BROWSERS_PATH=0
 npx copilotbrowser install
 ```
 
 ```powershell tab=bash-powershell
-# Places binaries to node_modules\copilotbrowser-core\.local-browsers
+# Places binaries to node_modules\copilotbrowser\.local-browsers
 $Env:copilotbrowser_BROWSERS_PATH=0
 npx copilotbrowser install
 ```

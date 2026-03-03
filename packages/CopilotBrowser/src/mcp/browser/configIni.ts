@@ -16,7 +16,7 @@
 
 import fs from 'fs';
 
-import { ini } from 'copilotbrowser-core/lib/utilsBundle';
+import { ini } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import type { Config } from '../config';
 

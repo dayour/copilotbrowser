@@ -18,7 +18,7 @@
 import { test as base, expect } from './pageTest';
 import fs from 'fs';
 import type * as har from '../../packages/trace/src/har';
-import type { Route } from 'copilotbrowser-core';
+import type { Route } from 'copilotbrowser';
 
 const it = base.extend<{
   // We access test servers at 10.0.2.2 from inside the browser on Android,

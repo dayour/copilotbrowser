@@ -26,9 +26,9 @@ import { spawn } from 'child_process';
 import http from 'http';
 import os from 'os';
 
-import { debug, ws, wsServer } from 'copilotbrowser-core/lib/utilsBundle';
-import { registry } from 'copilotbrowser-core/lib/server/registry/index';
-import { ManualPromise } from 'copilotbrowser-core/lib/utils';
+import { debug, ws, wsServer } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
+import { registry } from '@copilotbrowser/copilotbrowser/lib/server/registry/index';
+import { ManualPromise } from '@copilotbrowser/copilotbrowser/lib/utils';
 
 import { addressToString } from '../sdk/http';
 import { logUnhandledError } from '../log';
@@ -37,7 +37,7 @@ import * as protocol from './protocol';
 import type websocket from 'ws';
 import type { ClientInfo } from '../sdk/server';
 import type { ExtensionCommand, ExtensionEvents } from './protocol';
-import type { WebSocket, WebSocketServer } from 'copilotbrowser-core/lib/utilsBundle';
+import type { WebSocket, WebSocketServer } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 
 const debugLogger = debug('pw:mcp:relay');

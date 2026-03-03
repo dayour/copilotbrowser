@@ -16,8 +16,8 @@
 
 import path from 'path';
 
-import { noColors } from 'copilotbrowser-core/lib/utils';
-import { ms as milliseconds } from 'copilotbrowser-core/lib/utilsBundle';
+import { noColors } from '@copilotbrowser/copilotbrowser/lib/utils';
+import { ms as milliseconds } from '@copilotbrowser/copilotbrowser/lib/utilsBundle';
 
 import { TerminalReporter, formatResultFailure, formatRetry } from './base';
 import { stripAnsiEscapes } from '../util';
