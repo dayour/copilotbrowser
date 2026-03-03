@@ -95,7 +95,7 @@ npx copilotbrowser test --last-failed
 
 ### Run tests in VS Code
 
-Tests can be run right from VS Code using the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-copilotbrowser.copilotbrowser). Once installed you can simply click the green triangle next to the test you want to run or run all tests from the testing sidebar. Check out our [Getting Started with VS Code](./getting-started-vscode.md) guide for more details.
+Tests can be run right from VS Code using the [VS Code extension](https://marketplace.visualstudio.com/items?itemName=DarbotLabs.copilotbrowser-vscode). Once installed you can simply click the green triangle next to the test you want to run or run all tests from the testing sidebar. Check out our [Getting Started with VS Code](./getting-started-vscode.md) guide for more details.
 
 ![install copilotbrowser extension](./images/getting-started/vscode-extension.png)
 

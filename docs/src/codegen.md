@@ -11,7 +11,7 @@ copilotbrowser comes with the ability to generate tests for you as you perform a
 
 ## Generate tests in VS Code
 
-Install the VS Code extension and generate tests directly from VS Code. The extension is available on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=ms-copilotbrowser.copilotbrowser). Check out our guide on [getting started with VS Code](./getting-started-vscode.md).
+Install the VS Code extension and generate tests directly from VS Code. The extension is available on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=DarbotLabs.copilotbrowser-vscode). Check out our guide on [getting started with VS Code](./getting-started-vscode.md).
 
 
 ### Record a New Test
