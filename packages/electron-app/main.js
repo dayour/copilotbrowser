@@ -12,6 +12,7 @@ const { getFlags } = require('./lib/feature-flags');
 const { createTabContentView } = require('./lib/tab-content-view');
 const { getWebView2Status } = require('./lib/webview2-adapter');
 const { store } = require('./lib/store');
+const { registerSparkIPC } = require('./lib/ipcSpark');
 
 // Feature flags resolved once at startup (env > file > defaults).
 // See lib/feature-flags.js for resolution order and enablement docs.
@@ -89,6 +90,7 @@ class TabManager {
 
     const id = crypto.randomUUID();
     const url = payload.url || 'about:blank';
+    const isSpark = payload.spark === true;
 
     // -- WebView2 parity bridge (ADR-001 Phase 3 foundation) -----------------
     // Use the adapter factory to select the tab content backend.
@@ -96,7 +98,13 @@ class TabManager {
     // returns a WebView2-backed view (currently a stub that renders via
     // Electron fallback). When the flag is off or on non-Windows, it returns
     // the standard Electron WebContentsView — zero behavioral change.
-    const contentView = createTabContentView({ flags: this.flags, window: this.window });
+    //
+    // Spark tabs get the spark-preload.js injected so window.spark is available.
+    const tabOptions = { flags: this.flags, window: this.window };
+    if (isSpark) {
+      tabOptions.preload = path.join(__dirname, 'spark-preload.js');
+    }
+    const contentView = createTabContentView(tabOptions);
 
     contentView.setBounds(this.getViewportBounds());
     contentView.setVisible(false);
@@ -114,6 +122,7 @@ class TabManager {
       view: contentView.nativeView,      // raw Electron view (layout compat)
       contentView,                        // adapter (navigation + events)
       backendType: contentView.getBackendType(),
+      isSpark,                            // true if this tab runs a Spark app
       lastLoadError: null,
       lastCertError: null,
     };
@@ -470,6 +479,54 @@ function createMenu() {
           label: 'Install Browsers',
           click: () => mainWindow.webContents.send('action', 'install'),
         },
+        { type: 'separator' },
+        {
+          label: 'Open Spark App...',
+          accelerator: 'CmdOrCtrl+Shift+S',
+          click: async () => {
+            // Open a local Spark app (built Vite output) in a Spark-enabled tab.
+            const result = await dialog.showOpenDialog(mainWindow, {
+              title: 'Open Spark App',
+              properties: ['openDirectory'],
+              message: 'Select the root directory of a built Spark app (containing index.html)',
+            });
+            if (result.canceled || !result.filePaths.length) return;
+
+            const appDir = result.filePaths[0];
+            const indexPath = path.join(appDir, 'index.html');
+
+            // Verify index.html exists.
+            const fs = require('fs');
+            if (!fs.existsSync(indexPath)) {
+              dialog.showErrorBox('Spark App Not Found', `No index.html found in:\n${appDir}`);
+              return;
+            }
+
+            if (tabManager && tabManager.isEnabled()) {
+              tabManager.createTab({
+                url: `file://${indexPath}`,
+                title: `Spark: ${path.basename(appDir)}`,
+                spark: true,
+              });
+            } else {
+              mainWindow.loadFile(indexPath);
+            }
+          },
+        },
+        {
+          label: 'Open Spark URL...',
+          click: async () => {
+            // Prompt for a Spark app URL and open in a Spark-enabled tab.
+            // This supports loading published Spark apps from github.app domain.
+            if (tabManager && tabManager.isEnabled()) {
+              tabManager.createTab({
+                url: 'about:blank',
+                title: 'Spark App',
+                spark: true,
+              });
+            }
+          },
+        },
       ],
     },
     {
@@ -644,6 +701,21 @@ app.whenReady().then(() => {
     console.log('[webview2-bridge] useWebView2 flag is ON — checking runtime availability...');
     const status = getWebView2Status();
     console.log('[webview2-bridge] Status:', JSON.stringify(status));
+  }
+
+  // Register Spark IPC handlers if a GitHub token is available.
+  const sparkToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
+  if (sparkToken) {
+    const sparkOwner = process.env.SPARK_OWNER || '';
+    const sparkRepo = process.env.SPARK_REPO || 'copilotspark-store';
+    registerSparkIPC({
+      token: sparkToken,
+      owner: sparkOwner,
+      repo: sparkRepo,
+      defaultModel: process.env.SPARK_MODEL || 'gpt-4o',
+    });
+  } else {
+    console.log('[spark] No GITHUB_TOKEN — Spark IPC handlers not registered. Set GITHUB_TOKEN to enable.');
   }
 
   createMenu();
