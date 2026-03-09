@@ -84,6 +84,126 @@
       overflow-y: auto;
       white-space: pre-wrap;
     }
+
+    /* --- Live Tiles --- */
+    .live-tile {
+      position: relative;
+      border-width: 2px;
+      min-height: 100px;
+    }
+    .live-tile .tile-icon {
+      font-size: 24px;
+      margin-bottom: 6px;
+      opacity: 0.7;
+    }
+    .live-tile .tile-meta {
+      font-size: 11px;
+      color: #6c7086;
+      margin-top: 8px;
+      font-style: italic;
+    }
+    .spark-tile {
+      border-color: #89b4fa;
+      background: linear-gradient(135deg, #181825 0%, #1a1a2e 100%);
+    }
+    .spark-tile:hover {
+      border-color: #b4befe;
+      background: linear-gradient(135deg, #1e1e2e 0%, #1e2040 100%);
+    }
+    .runbook-tile {
+      border-color: #a6e3a1;
+      background: linear-gradient(135deg, #181825 0%, #1a2e1a 100%);
+    }
+    .runbook-tile:hover {
+      border-color: #c6f0c2;
+      background: linear-gradient(135deg, #1e1e2e 0%, #1e3e1e 100%);
+    }
+
+    /* --- Page Dots --- */
+    .page-dots {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #45475a;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .dot:hover { background: #6c7086; }
+    .dot.active { background: #89b4fa; }
+
+    /* --- Detail Panels (Page 2) --- */
+    .detail-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      max-width: 720px;
+      width: 100%;
+    }
+    .detail-panel {
+      border: 1px solid #313244;
+      border-radius: 10px;
+      background: #181825;
+      overflow: hidden;
+    }
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: #11111b;
+      border-bottom: 1px solid #313244;
+    }
+    .panel-header .panel-icon {
+      font-size: 18px;
+      opacity: 0.7;
+    }
+    .panel-header h3 {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .panel-action {
+      font-size: 12px;
+      padding: 4px 10px;
+      border: 1px solid #45475a;
+      border-radius: 6px;
+      background: transparent;
+      color: #89b4fa;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .panel-action:hover { background: #313244; }
+    .panel-body {
+      padding: 12px 16px;
+      min-height: 120px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    .empty-state {
+      color: #6c7086;
+      font-size: 13px;
+      text-align: center;
+      padding: 24px 8px;
+      line-height: 1.5;
+    }
+    .list-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .list-item:hover { background: #1e1e2e; }
+    .list-item .item-icon { font-size: 16px; opacity: 0.6; }
+    .list-item .item-name { font-size: 13px; font-weight: 500; }
+    .list-item .item-detail { font-size: 11px; color: #6c7086; }
     .navbar {
       background: #181825;
       padding: 6px 12px;
@@ -172,7 +292,7 @@
     <input class="address-bar" id="address-bar" type="text" placeholder="Enter a URL..." spellcheck="false" autocomplete="off">
   </div>
 
-  <div class="main">
+  <div class="main" id="home-page-1">
     <img class="logo" src="../build/icon.png" alt="">
     <div class="welcome">
       <h2>Welcome to copilotbrowser</h2>
@@ -199,8 +319,62 @@
         <h3>Install Browsers</h3>
         <p>Download Chromium, Firefox, WebKit</p>
       </button>
+
+      <button class="action-btn live-tile spark-tile" id="btn-spark">
+        <div class="tile-icon">&#9889;</div>
+        <h3>Spark Apps</h3>
+        <p>Build and run GitHub Spark apps locally</p>
+        <div class="tile-meta" id="spark-meta">No apps loaded</div>
+      </button>
+      <button class="action-btn live-tile runbook-tile" id="btn-runbooks">
+        <div class="tile-icon">&#9776;</div>
+        <h3>Runbooks</h3>
+        <p>copilotbrowser automation runbooks</p>
+        <div class="tile-meta" id="runbook-meta">0 runbooks</div>
+      </button>
+    </div>
+
+    <div class="page-dots">
+      <span class="dot active" data-page="1"></span>
+      <span class="dot" data-page="2"></span>
     </div>
     <pre id="output"></pre>
+  </div>
+
+  <div class="main" id="home-page-2" style="display:none;">
+    <div class="welcome">
+      <h2>Spark Apps &amp; Runbooks</h2>
+      <p>Detailed view of your Spark applications and automation runbooks.</p>
+    </div>
+
+    <div class="detail-panels">
+      <div class="detail-panel">
+        <div class="panel-header">
+          <span class="panel-icon">&#9889;</span>
+          <h3>Spark Apps</h3>
+          <button class="panel-action" id="btn-spark-new">+ New Spark</button>
+        </div>
+        <div class="panel-body" id="spark-list">
+          <div class="empty-state">No Spark apps yet. Click "+ New Spark" or use Tools &gt; Open Spark App to get started.</div>
+        </div>
+      </div>
+
+      <div class="detail-panel">
+        <div class="panel-header">
+          <span class="panel-icon">&#9776;</span>
+          <h3>Runbooks</h3>
+          <button class="panel-action" id="btn-runbook-new">+ New Runbook</button>
+        </div>
+        <div class="panel-body" id="runbook-list">
+          <div class="empty-state">No runbooks configured. Create a runbook to automate browser workflows.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-dots">
+      <span class="dot" data-page="1"></span>
+      <span class="dot active" data-page="2"></span>
+    </div>
   </div>
 
   <div class="status-bar">
@@ -228,6 +402,40 @@
     document.getElementById('btn-inspector').addEventListener('click', () => handleAction('inspector'));
     document.getElementById('btn-trace').addEventListener('click', () => handleAction('trace'));
     document.getElementById('btn-install').addEventListener('click', () => handleAction('install'));
+
+    // --- Spark tile ---
+    document.getElementById('btn-spark').addEventListener('click', () => {
+      // Open Spark detail page
+      switchPage(2);
+    });
+
+    // --- Runbook tile ---
+    document.getElementById('btn-runbooks').addEventListener('click', () => {
+      // Open Runbook detail page
+      switchPage(2);
+    });
+
+    // --- Page 2 buttons ---
+    document.getElementById('btn-spark-new')?.addEventListener('click', () => {
+      // Trigger the same action as Tools > Open Spark App
+      handleAction('spark-open');
+    });
+    document.getElementById('btn-runbook-new')?.addEventListener('click', () => {
+      handleAction('runbook-new');
+    });
+
+    // --- Page switching ---
+    function switchPage(pageNum) {
+      document.getElementById('home-page-1').style.display = pageNum === 1 ? 'flex' : 'none';
+      document.getElementById('home-page-2').style.display = pageNum === 2 ? 'flex' : 'none';
+      document.querySelectorAll('.dot').forEach(dot => {
+        dot.classList.toggle('active', Number(dot.dataset.page) === pageNum);
+      });
+    }
+
+    document.querySelectorAll('.dot').forEach(dot => {
+      dot.addEventListener('click', () => switchPage(Number(dot.dataset.page)));
+    });
 
     async function handleAction(action) {
       if (!projectPath && action !== 'install') return;
