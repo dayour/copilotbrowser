@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
   <title>copilotbrowser</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -91,10 +91,20 @@
       border-width: 2px;
       min-height: 100px;
     }
-    .live-tile .tile-icon {
-      font-size: 24px;
-      margin-bottom: 6px;
-      opacity: 0.7;
+    .live-tile .tile-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 72px;
+      padding: 4px 8px;
+      margin-bottom: 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.06);
+      color: #cdd6f4;
     }
     .live-tile .tile-meta {
       font-size: 11px;
@@ -158,9 +168,19 @@
       background: #11111b;
       border-bottom: 1px solid #313244;
     }
-    .panel-header .panel-icon {
-      font-size: 18px;
-      opacity: 0.7;
+    .panel-header .panel-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.06);
+      color: #cdd6f4;
     }
     .panel-header h3 {
       flex: 1;
@@ -201,7 +221,20 @@
       transition: background 0.1s;
     }
     .list-item:hover { background: #1e1e2e; }
-    .list-item .item-icon { font-size: 16px; opacity: 0.6; }
+    .list-item .item-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.06);
+      color: #cdd6f4;
+    }
     .list-item .item-name { font-size: 13px; font-weight: 500; }
     .list-item .item-detail { font-size: 11px; color: #6c7086; }
     .navbar {
@@ -321,13 +354,13 @@
       </button>
 
       <button class="action-btn live-tile spark-tile" id="btn-spark">
-        <div class="tile-icon">&#9889;</div>
+        <div class="tile-label">Spark</div>
         <h3>Spark Apps</h3>
         <p>Build and run GitHub Spark apps locally</p>
         <div class="tile-meta" id="spark-meta">No apps loaded</div>
       </button>
       <button class="action-btn live-tile runbook-tile" id="btn-runbooks">
-        <div class="tile-icon">&#9776;</div>
+        <div class="tile-label">Runbook</div>
         <h3>Runbooks</h3>
         <p>copilotbrowser automation runbooks</p>
         <div class="tile-meta" id="runbook-meta">0 runbooks</div>
@@ -350,23 +383,23 @@
     <div class="detail-panels">
       <div class="detail-panel">
         <div class="panel-header">
-          <span class="panel-icon">&#9889;</span>
+          <span class="panel-label">Spark</span>
           <h3>Spark Apps</h3>
           <button class="panel-action" id="btn-spark-new">+ New Spark</button>
         </div>
         <div class="panel-body" id="spark-list">
-          <div class="empty-state">No Spark apps yet. Click "+ New Spark" or use Tools &gt; Open Spark App to get started.</div>
+          <div class="empty-state">Loading Spark app index...</div>
         </div>
       </div>
 
       <div class="detail-panel">
         <div class="panel-header">
-          <span class="panel-icon">&#9776;</span>
+          <span class="panel-label">Runbook</span>
           <h3>Runbooks</h3>
           <button class="panel-action" id="btn-runbook-new">+ New Runbook</button>
         </div>
         <div class="panel-body" id="runbook-list">
-          <div class="empty-state">No runbooks configured. Create a runbook to automate browser workflows.</div>
+          <div class="empty-state">Loading runbook index...</div>
         </div>
       </div>
     </div>
@@ -384,13 +417,140 @@
 
   <script>
     let projectPath = null;
+    const copilotbrowser = window.copilotbrowser || {
+      runCommand: async () => ({ stdout: '', stderr: 'copilotbrowser bridge unavailable in browser preview', code: 0 }),
+      onProjectOpened: () => {},
+      onAction: () => {},
+      tabs: {
+        create: async () => ({ ok: false }),
+        activate: async () => ({ ok: false }),
+        close: async () => ({ ok: false }),
+        list: async () => ({ enabled: false, tabs: [], activeTabId: null }),
+        onState: () => {},
+      },
+      nav: {
+        goBack: async () => {},
+        goForward: async () => {},
+        reload: async () => {},
+        stop: async () => {},
+        navigate: async () => {},
+        onState: () => {},
+      },
+      settings: {
+        get: async () => ({}),
+        set: async () => ({}),
+        delete: async () => ({}),
+      },
+    };
 
-    window.copilotbrowser.onProjectOpened((path) => {
+    const sparkApps = [
+      {
+        name: 'Open Local Spark App',
+        detail: 'Load a built Spark app from disk into a native Spark tab',
+        type: 'action',
+        action: 'spark-open',
+        label: 'Open',
+      },
+      {
+        name: 'Published Spark URL',
+        detail: 'Open a published github.app Spark site in a Spark-enabled tab',
+        type: 'action',
+        action: 'spark-url',
+        label: 'URL',
+      },
+      {
+        name: 'copilotspark Runtime',
+        detail: 'Use the rebuilt window.spark runtime backed by GitHub APIs',
+        type: 'info',
+        label: 'Runtime',
+      },
+    ];
+
+    const runbooks = [
+      {
+        name: 'Spark App Smoke Test',
+        detail: 'Launch, inspect, and verify a local Spark app in copilotbrowser',
+        type: 'action',
+        action: 'runbook-spark-smoke',
+        label: 'Smoke',
+      },
+      {
+        name: 'Recorder to Runbook',
+        detail: 'Record browser actions and promote them into a reusable runbook',
+        type: 'info',
+        label: 'Record',
+      },
+      {
+        name: 'Trace Review',
+        detail: 'Open trace viewer output for fast debugging and replay',
+        type: 'action',
+        action: 'trace',
+        label: 'Trace',
+      },
+    ];
+
+    function renderList(containerId, items, emptyMessage) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      if (!items.length) {
+        container.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
+        return;
+      }
+
+      container.innerHTML = items.map((item, index) => `
+        <div class="list-item" data-list="${containerId}" data-index="${index}">
+          <span class="item-label">${item.label}</span>
+          <div>
+            <div class="item-name">${item.name}</div>
+            <div class="item-detail">${item.detail}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateTileMeta() {
+      const sparkMeta = document.getElementById('spark-meta');
+      const runbookMeta = document.getElementById('runbook-meta');
+      if (sparkMeta) sparkMeta.textContent = `${sparkApps.length} indexed items`;
+      if (runbookMeta) runbookMeta.textContent = `${runbooks.length} indexed items`;
+    }
+
+    function initializeHomeData() {
+      updateTileMeta();
+      renderList('spark-list', sparkApps, 'No Spark apps indexed.');
+      renderList('runbook-list', runbooks, 'No runbooks indexed.');
+    }
+
+    function switchPage(pageNum) {
+      document.getElementById('home-page-1').style.display = pageNum === 1 ? 'flex' : 'none';
+      document.getElementById('home-page-2').style.display = pageNum === 2 ? 'flex' : 'none';
+      document.querySelectorAll('.dot').forEach(dot => {
+        dot.classList.toggle('active', Number(dot.dataset.page) === pageNum);
+      });
+    }
+
+    async function executeIndexedAction(action) {
+      switch (action) {
+        case 'spark-open':
+          return handleAction('spark-open');
+        case 'spark-url':
+          return handleAction('spark-url');
+        case 'runbook-spark-smoke':
+          return handleAction('runbook-spark-smoke');
+        case 'trace':
+          return handleAction('trace');
+        default:
+          return Promise.resolve();
+      }
+    }
+
+    copilotbrowser.onProjectOpened((path) => {
       projectPath = path;
       document.getElementById('project-path').textContent = path;
     });
 
-    window.copilotbrowser.onAction((action) => {
+    copilotbrowser.onAction((action) => {
       handleAction(action);
     });
 
@@ -425,34 +585,46 @@
     });
 
     // --- Page switching ---
-    function switchPage(pageNum) {
-      document.getElementById('home-page-1').style.display = pageNum === 1 ? 'flex' : 'none';
-      document.getElementById('home-page-2').style.display = pageNum === 2 ? 'flex' : 'none';
-      document.querySelectorAll('.dot').forEach(dot => {
-        dot.classList.toggle('active', Number(dot.dataset.page) === pageNum);
-      });
-    }
-
     document.querySelectorAll('.dot').forEach(dot => {
       dot.addEventListener('click', () => switchPage(Number(dot.dataset.page)));
     });
 
+    document.getElementById('spark-list')?.addEventListener('click', (event) => {
+      const item = event.target.closest('.list-item');
+      if (!item) return;
+      const index = Number(item.dataset.index);
+      const entry = sparkApps[index];
+      if (entry?.action) executeIndexedAction(entry.action);
+    });
+
+    document.getElementById('runbook-list')?.addEventListener('click', (event) => {
+      const item = event.target.closest('.list-item');
+      if (!item) return;
+      const index = Number(item.dataset.index);
+      const entry = runbooks[index];
+      if (entry?.action) executeIndexedAction(entry.action);
+    });
+
     async function handleAction(action) {
-      if (!projectPath && action !== 'install') return;
+      if (!projectPath && !['install', 'spark-open', 'spark-url', 'runbook-spark-smoke', 'trace'].includes(action)) return;
       const output = document.getElementById('output');
       output.style.display = 'block';
       output.textContent = `Running: copilotbrowser ${action}...\n`;
 
-      const bin = process.platform === 'win32' ? 'npx.cmd' : 'npx';
+      const isWindows = navigator.userAgent.includes('Windows');
+      const bin = isWindows ? 'npx.cmd' : 'npx';
       const argMap = {
         codegen: ['copilotbrowser', 'codegen'],
         inspector: ['copilotbrowser', 'open', '--inspector'],
         trace: ['copilotbrowser', 'show-trace'],
         install: ['copilotbrowser', 'install'],
+        'spark-open': ['cmd', '/c', 'echo Use Tools > Open Spark App to select a local Spark build.'],
+        'spark-url': ['cmd', '/c', 'echo Use Tools > Open Spark URL to load a published Spark app.'],
+        'runbook-spark-smoke': ['cmd', '/c', 'echo Runbook: launch a Spark app, validate window.spark, then inspect output.'],
       };
 
       try {
-        const result = await window.copilotbrowser.runCommand(bin, argMap[action], projectPath || '.');
+        const result = await copilotbrowser.runCommand(bin, argMap[action], projectPath || '.');
         output.textContent += result.stdout || '';
         if (result.stderr) output.textContent += result.stderr;
         output.textContent += `\nExited with code ${result.code}`;
@@ -556,11 +728,11 @@
         }
       });
 
-      window.copilotbrowser.tabs.list().then((state) => {
+      copilotbrowser.tabs.list().then((state) => {
         if (!state.enabled) return;
         navbar.style.display = 'flex';
 
-        window.copilotbrowser.nav.onState((navState) => {
+        copilotbrowser.nav.onState((navState) => {
           currentNavState = {
             url: navState.url || '',
             canGoBack: Boolean(navState.canGoBack),
@@ -574,7 +746,7 @@
           updateNavUI();
         });
 
-        window.copilotbrowser.tabs.onState((tabState) => {
+        copilotbrowser.tabs.onState((tabState) => {
           if (!tabState.activeTabId) {
             currentNavState = {
               url: '',
@@ -591,6 +763,8 @@
         });
       });
     })();
+
+    initializeHomeData();
   </script>
 </body>
 </html>
