@@ -18,12 +18,16 @@ import common from './tools/common';
 import config from './tools/config';
 import console from './tools/console';
 import cookies from './tools/cookies';
+import clock from './tools/clock';
 import devtools from './tools/devtools';
 import dialogs from './tools/dialogs';
+import emulate from './tools/emulate';
 import evaluate from './tools/evaluate';
+import exportTools from './tools/export';
 import files from './tools/files';
 import form from './tools/form';
 import install from './tools/install';
+import intent from './tools/intent';
 import keyboard from './tools/keyboard';
 import mouse from './tools/mouse';
 import navigate from './tools/navigate';
@@ -46,6 +50,7 @@ import verify from './tools/verify';
 import video from './tools/video';
 import wait from './tools/wait';
 import webstorage from './tools/webstorage';
+import native from './tools/native';
 
 import type { Tool } from './tools/tool';
 import type { FullConfig } from './config';
@@ -55,12 +60,16 @@ export const browserTools: Tool<any>[] = [
   ...config,
   ...console,
   ...cookies,
+  ...clock,
   ...devtools,
   ...dialogs,
+  ...emulate,
   ...evaluate,
+  ...exportTools,
   ...files,
   ...form,
   ...install,
+  ...intent,
   ...keyboard,
   ...mouse,
   ...navigate,
@@ -83,6 +92,7 @@ export const browserTools: Tool<any>[] = [
   ...video,
   ...wait,
   ...webstorage,
+  ...native,
 ];
 
 export function filteredTools(config: FullConfig) {

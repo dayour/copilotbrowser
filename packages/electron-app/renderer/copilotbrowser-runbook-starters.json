@@ -1,0 +1,804 @@
+{
+  "source": "E:\\copilotbrowser\\runbooks\\PowerTask.md",
+  "schemaVersion": "1.0.0",
+  "description": "Starter adaptive-card runbooks derived from the PowerTask Copilot Studio selector guide and enriched with MCP-backed validation, export, and recovery guidance.",
+  "runbooks": [
+    {
+      "id": "powertask-create-blank-agent",
+      "name": "PowerTask: Create Blank Agent",
+      "label": "Starter",
+      "detail": "Create a new Copilot Studio agent from the Home or Agents surface and confirm the agent shell opens.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Create a blank Copilot Studio agent and verify the new agent workspace opens on the Overview surface.",
+      "sourceSections": [
+        "Top-Level Navigation",
+        "Agent Creation Elements"
+      ],
+      "steps": [
+        "Open Copilot Studio Home or Agents.",
+        "Select Create blank agent.",
+        "Enter an agent description if the creation flow requests one.",
+        "Wait for the new agent shell to load."
+      ],
+      "selectors": [
+        "button:has-text(\"Create blank agent\")",
+        "group:has-text(\"Create an agent\")",
+        "textbox[placeholder*=\"Start building by describing\"]",
+        "div[contenteditable=\"true\"]",
+        "button:has-text(\"Send\")",
+        "button[aria-label=\"Send\"]"
+      ],
+      "detailInputs": {
+        "agentDescription": "Create a support agent grounded on website knowledge and ready for topic authoring.",
+        "preferredCreationSelector": "button:has-text(\"Create blank agent\")",
+        "fallbackCreationSelector": "group:has-text(\"Create an agent\")",
+        "descriptionInputSelector": "textbox[placeholder*=\"Start building by describing\"]"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_navigate",
+          "args": {
+            "url": "{{startUrl}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Create blank agent button",
+            "ref": "{{preferredCreationSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_type",
+          "args": {
+            "element": "Agent description input",
+            "ref": "{{descriptionInputSelector}}",
+            "text": "{{agentDescription}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Send description button",
+            "ref": "button[aria-label=\"Send\"]"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "text": "Overview"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        }
+      ],
+      "validation": [
+        {
+          "type": "textPresent",
+          "value": "Overview"
+        },
+        {
+          "type": "textPresent",
+          "value": "Knowledge"
+        },
+        {
+          "type": "textPresent",
+          "value": "Topics"
+        }
+      ],
+      "defaultWaitMs": 1500,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "Use the Home card or Agents page entry point depending on the current experience.",
+        "If the conversational description box is absent, skip the typing step and validate the agent shell directly."
+      ],
+      "validationChecklist": [
+        "Confirm the intended Copilot Studio environment is visible before agent creation starts.",
+        "Verify the new agent shell opens on Overview and exposes the Knowledge and Topics tabs.",
+        "Capture both browser_snapshot and browser_take_screenshot after the shell is stable."
+      ],
+      "recoveryGuidance": [
+        "If the wrong environment is open, stop and switch environments before creating the agent.",
+        "If the conversational description box does not appear, skip the typing step and validate the shell directly.",
+        "If creation stalls or an error banner appears, capture browser_console_messages plus a screenshot before retrying."
+      ],
+      "exportGuidance": [
+        "After validating the shell, save a screenshot such as agent-created.png for the runbook evidence bundle.",
+        "If you refined selectors interactively, export the generated history with copilotbrowser-mcp-browser_export_playwright_test.",
+        "For CI packaging, export copilotbrowser-mcp-browser_export_github_actions into .github/workflows/copilotbrowser.yml."
+      ]
+    },
+    {
+      "id": "powertask-add-website-knowledge",
+      "name": "PowerTask: Add Website Knowledge",
+      "label": "Starter",
+      "detail": "Open the Knowledge tab for an existing agent, add a website URL, confirm ownership, and submit the source.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Attach a website knowledge source to the current agent and verify the knowledge entry is accepted.",
+      "sourceSections": [
+        "Agent-Level Tabs",
+        "Knowledge Source Elements"
+      ],
+      "steps": [
+        "Open the current agent.",
+        "Navigate to the Knowledge tab.",
+        "Enter the website URL.",
+        "Confirm ownership and add the source."
+      ],
+      "selectors": [
+        "tab:has-text(\"Knowledge\")",
+        "[data-testid=\"TopNavigationBar-Knowledge\"]",
+        "input[placeholder*=\"URL\"]",
+        "input[aria-label=\"Knowledge source URL\"]",
+        "input[type=\"url\"]",
+        "input[type=\"checkbox\"][aria-label*=\"Confirm\"]",
+        "button:has-text(\"Add\")"
+      ],
+      "detailInputs": {
+        "knowledgeUrl": "https://contoso.com/support",
+        "knowledgeTabSelector": "[data-testid=\"TopNavigationBar-Knowledge\"]",
+        "knowledgeUrlSelector": "input[aria-label=\"Knowledge source URL\"]",
+        "ownershipSelector": "input[type=\"checkbox\"][aria-label*=\"Confirm\"]",
+        "addButtonSelector": "button:has-text(\"Add\")"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Knowledge tab",
+            "ref": "{{knowledgeTabSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_type",
+          "args": {
+            "element": "Knowledge source URL input",
+            "ref": "{{knowledgeUrlSelector}}",
+            "text": "{{knowledgeUrl}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Ownership confirmation checkbox",
+            "ref": "{{ownershipSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Add knowledge button",
+            "ref": "{{addButtonSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "text": "{{knowledgeUrl}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        }
+      ],
+      "validation": [
+        {
+          "type": "textPresent",
+          "value": "Knowledge"
+        },
+        {
+          "type": "textPresent",
+          "value": "{{knowledgeUrl}}"
+        }
+      ],
+      "defaultWaitMs": 1500,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "This starter assumes an agent is already open in Copilot Studio.",
+        "If the ownership control uses a different accessible label, replace the checkbox selector in detail inputs."
+      ],
+      "validationChecklist": [
+        "Confirm the Knowledge tab stays selected after the source is added.",
+        "Verify the exact knowledge URL is shown in the source list.",
+        "Check that no visible Error or Failed to save banner remains on screen."
+      ],
+      "recoveryGuidance": [
+        "If Add stays disabled, verify the URL format and ownership confirmation state before retrying.",
+        "If the source is rejected, capture browser_snapshot, browser_take_screenshot, and browser_console_messages before changing inputs.",
+        "If the page appears stalled, refresh the page manually and reopen the Knowledge tab rather than continuing blindly."
+      ],
+      "exportGuidance": [
+        "Capture a final screenshot such as knowledge-added.png once the URL is visible.",
+        "Export the interaction history to a Playwright spec if this knowledge onboarding flow will be reused.",
+        "Attach the exported workflow template when handing the smoke test to CI or another operator."
+      ]
+    },
+    {
+      "id": "powertask-create-topic",
+      "name": "PowerTask: Create Custom Topic",
+      "label": "Starter",
+      "detail": "Create a new custom topic from blank, provide name and description, and save it into the current agent.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Create a new custom topic in the current Copilot Studio agent and confirm the topic appears in the Topics list.",
+      "sourceSections": [
+        "Agent-Level Tabs",
+        "Topic Management Elements",
+        "Topic Creation"
+      ],
+      "steps": [
+        "Open the Topics tab for the current agent.",
+        "Choose Add a topic and select From blank.",
+        "Fill in topic name and description.",
+        "Save and confirm the topic is listed."
+      ],
+      "selectors": [
+        "tab:has-text(\"Topics\")",
+        "[data-testid=\"TopNavigationBar-Topics\"]",
+        "button:has-text(\"Add a topic\")",
+        "[role=\"menuitem\"]:has-text(\"From blank\")",
+        "input[aria-label=\"Topic name\"]",
+        "textarea[aria-label=\"Description\"]",
+        "button:has-text(\"Save\")"
+      ],
+      "detailInputs": {
+        "topicName": "Website escalation",
+        "topicDescription": "Handle website escalation requests and collect the required follow-up details.",
+        "topicsTabSelector": "[data-testid=\"TopNavigationBar-Topics\"]",
+        "addTopicSelector": "button:has-text(\"Add a topic\")",
+        "fromBlankSelector": "[role=\"menuitem\"]:has-text(\"From blank\")"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Topics tab",
+            "ref": "{{topicsTabSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Add a topic button",
+            "ref": "{{addTopicSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "From blank menu item",
+            "ref": "{{fromBlankSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_type",
+          "args": {
+            "element": "Topic name input",
+            "ref": "input[aria-label=\"Topic name\"]",
+            "text": "{{topicName}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_type",
+          "args": {
+            "element": "Topic description input",
+            "ref": "textarea[aria-label=\"Description\"]",
+            "text": "{{topicDescription}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Save topic button",
+            "ref": "button:has-text(\"Save\")"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "text": "{{topicName}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        }
+      ],
+      "validation": [
+        {
+          "type": "textPresent",
+          "value": "{{topicName}}"
+        },
+        {
+          "type": "textPresent",
+          "value": "Custom"
+        }
+      ],
+      "defaultWaitMs": 1500,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "Use stable aria-label selectors where possible; only fall back to class-based selectors if the labels differ in your tenant.",
+        "If the topic editor opens in a canvas immediately, validate the save on the canvas before returning to the list."
+      ],
+      "validationChecklist": [
+        "Verify the Topics tab is active before opening the Add a topic menu.",
+        "Confirm the topic name is listed after save and, when present, the Custom label is visible.",
+        "Capture a post-save snapshot or screenshot once the editor returns to a stable state."
+      ],
+      "recoveryGuidance": [
+        "If Save remains disabled, capture evidence and re-check the required topic fields instead of clicking repeatedly.",
+        "If a Saving or loading banner lingers, wait for it to clear and then re-run validation before editing again.",
+        "If a save error appears, preserve console output and the current topic draft before navigating away."
+      ],
+      "exportGuidance": [
+        "Store a screenshot such as topic-{topicName}-created.png after the new topic is listed.",
+        "Export the browser interaction history if you want a reusable topic-authoring regression spec.",
+        "Bundle the runbook payload plus exported workflow when sharing the topic flow with other environments."
+      ]
+    },
+    {
+      "id": "powertask-add-dataverse-tool",
+      "name": "PowerTask: Add Dataverse MCP Tool",
+      "label": "Starter",
+      "detail": "Open the Tools tab, search for Dataverse MCP Server, add it to the agent, and confirm the tool is enabled.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Attach the Dataverse MCP Server tool to the current agent and confirm the tool is available in the tool list.",
+      "sourceSections": [
+        "Agent-Level Tabs",
+        "Tool Management"
+      ],
+      "steps": [
+        "Open the Tools tab inside the current agent.",
+        "Choose Add a tool.",
+        "Search for Dataverse MCP Server.",
+        "Add the tool to the agent and enable it if a toggle is shown."
+      ],
+      "selectors": [
+        "tab:has-text(\"Tools\")",
+        "[data-testid=\"TopNavigationBar-Tools\"]",
+        "button:has-text(\"Add a tool\")",
+        "input[aria-label=\"Search tools\"]",
+        "div:has-text(\"Dataverse MCP Server\")",
+        "button:has-text(\"Add to agent\")",
+        "div[role=\"switch\"]"
+      ],
+      "detailInputs": {
+        "toolName": "Dataverse MCP Server",
+        "toolsTabSelector": "[data-testid=\"TopNavigationBar-Tools\"]",
+        "addToolSelector": "button:has-text(\"Add a tool\")",
+        "toolSearchSelector": "input[aria-label=\"Search tools\"]",
+        "toolAddSelector": "button:has-text(\"Add to agent\")"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Tools tab",
+            "ref": "{{toolsTabSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Add a tool button",
+            "ref": "{{addToolSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_type",
+          "args": {
+            "element": "Tool search input",
+            "ref": "{{toolSearchSelector}}",
+            "text": "{{toolName}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "text": "{{toolName}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Add to agent button",
+            "ref": "{{toolAddSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        }
+      ],
+      "validation": [
+        {
+          "type": "textPresent",
+          "value": "{{toolName}}"
+        }
+      ],
+      "defaultWaitMs": 1500,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "If the tenant shows a toggle after adding the tool, add a click step for div[role=\"switch\"] or the specific enable control.",
+        "Keep the search text in detail inputs so the same starter can be reused for other tools."
+      ],
+      "validationChecklist": [
+        "Verify the exact Dataverse MCP Server result appears in tool search before clicking Add to agent.",
+        "Confirm the tool remains visible in the tool list after the add flow completes.",
+        "Capture evidence if an enable switch is required so the final configured state is documented."
+      ],
+      "recoveryGuidance": [
+        "If search returns no results, clear the query and retry with the exact tool name before changing anything else.",
+        "If the add dialog closes without the tool appearing, capture snapshot, screenshot, and console output before reopening it.",
+        "If a switch or consent prompt blocks completion, stop after evidence capture and resolve the prompt explicitly."
+      ],
+      "exportGuidance": [
+        "Capture a screenshot such as tool-added.png after the Dataverse tool appears in the configured list.",
+        "Export a Playwright spec once the final selector path is stable enough for regression coverage.",
+        "Export the GitHub Actions template when this tool-enablement smoke test needs automated scheduling."
+      ]
+    },
+    {
+      "id": "powertask-publish-agent",
+      "name": "PowerTask: Publish Agent",
+      "label": "Starter",
+      "detail": "Publish the current agent, confirm the publish dialog, wait for completion, and close the publish experience.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Publish the current Copilot Studio agent and confirm the publish flow completes without visible errors.",
+      "sourceSections": [
+        "Publishing Elements",
+        "Loading States",
+        "Notifications"
+      ],
+      "steps": [
+        "Open the publish dialog.",
+        "Confirm the publish action.",
+        "Wait for publishing feedback and success messaging.",
+        "Close the dialog."
+      ],
+      "selectors": [
+        "button:has-text(\"Publish\")",
+        "button[aria-label=\"Publish agent\"]",
+        "div[role=\"dialog\"]",
+        "div[role=\"dialog\"] button:has-text(\"Publish\")",
+        "div:has-text(\"Publishing...\")",
+        "button:has-text(\"Close\")"
+      ],
+      "detailInputs": {
+        "publishButtonSelector": "button:has-text(\"Publish\")",
+        "confirmPublishSelector": "div[role=\"dialog\"] button:has-text(\"Publish\")",
+        "closeDialogSelector": "button:has-text(\"Close\")"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Publish button",
+            "ref": "{{publishButtonSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "text": "Publish"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Publish confirmation button",
+            "ref": "{{confirmPublishSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "textGone": "Publishing..."
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Publish close button",
+            "ref": "{{closeDialogSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        }
+      ],
+      "validation": [
+        {
+          "type": "textAbsent",
+          "value": "Error"
+        },
+        {
+          "type": "textAbsent",
+          "value": "Publishing..."
+        }
+      ],
+      "defaultWaitMs": 2000,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "If the tenant keeps a success dialog open, capture the success text before closing it.",
+        "If policy checks block publish, preserve the failure screenshot and console output for triage."
+      ],
+      "validationChecklist": [
+        "Confirm the publish dialog opens and the final publish action is explicitly acknowledged.",
+        "Verify Publishing... disappears and no visible Error banner remains.",
+        "Capture a final screenshot once the publish flow reports success or returns to a stable state."
+      ],
+      "recoveryGuidance": [
+        "If Publishing... never clears, capture snapshot, screenshot, and browser_console_messages before halting the flow.",
+        "If policy or validation banners block publish, keep the dialog open long enough to preserve evidence before closing it.",
+        "If the dialog becomes unresponsive, stop after evidence capture instead of issuing repeated publish clicks."
+      ],
+      "exportGuidance": [
+        "Use a screenshot such as published-{timestamp}.png for the evidence bundle after successful publish.",
+        "Export the recorded interaction history to a Playwright test if publish verification should become a regression gate.",
+        "Export the GitHub Actions workflow to seed CI with the same publish smoke-test scaffolding."
+      ]
+    },
+    {
+      "id": "powertask-validate-environment",
+      "name": "PowerTask: Validate Environment",
+      "label": "Starter",
+      "detail": "Confirm the expected Copilot Studio environment is active before editing an agent and capture baseline evidence.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Open Copilot Studio, verify the expected environment label is visible, and preserve a baseline snapshot plus screenshot before any agent edits start.",
+      "sourceSections": [
+        "Environment Selection",
+        "Environment Validation"
+      ],
+      "steps": [
+        "Open Copilot Studio.",
+        "Wait for the expected environment name to become visible in the shell.",
+        "Capture a structured snapshot and a screenshot for the environment handoff record."
+      ],
+      "selectors": [
+        "button:has-text(\"{{environmentName}}\")",
+        "li:has-text(\"{{environmentName}}\")"
+      ],
+      "detailInputs": {
+        "environmentName": "darbottest"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_navigate",
+          "args": {
+            "url": "{{startUrl}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "text": "{{environmentName}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_take_screenshot",
+          "args": {
+            "filename": "environment-validation.png",
+            "type": "png"
+          }
+        }
+      ],
+      "validation": [
+        {
+          "type": "textPresent",
+          "value": "{{environmentName}}"
+        }
+      ],
+      "validationChecklist": [
+        "Verify the intended environment name is visible before opening any specific agent.",
+        "Capture both structured and visual evidence so later failures can be tied to the correct environment.",
+        "Do not proceed to agent edits until the environment label is stable."
+      ],
+      "recoveryGuidance": [
+        "If the expected environment is not visible, halt and switch environments manually before continuing.",
+        "If the shell partially loads, use snapshot plus screenshot evidence and retry navigation instead of guessing the active environment.",
+        "If the environment picker is ambiguous, stop after evidence capture and request operator confirmation."
+      ],
+      "exportGuidance": [
+        "Attach environment-validation.png to the runbook handoff so later task evidence can be correlated.",
+        "Export the interaction history to a Playwright spec if environment validation should run before every CI smoke test.",
+        "Export the GitHub Actions workflow when this baseline environment check should be automated."
+      ],
+      "defaultWaitMs": 1000,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "The pasted reference emphasized environment confirmation as a critical guardrail before agent changes.",
+        "This repo wait tool supports time, text, and textGone checks only, so environment validation is expressed as text visibility."
+      ]
+    },
+    {
+      "id": "powertask-test-agent-chat",
+      "name": "PowerTask: Test Agent Chat",
+      "label": "Starter",
+      "detail": "Send a smoke-test message to the current agent chat surface and capture the initial response state.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Enter a test message into the active agent chat, wait briefly for a response, and preserve evidence of the resulting conversation state.",
+      "sourceSections": [
+        "Publishing & Testing Commands",
+        "UI Element Interaction Commands"
+      ],
+      "steps": [
+        "Open the current agent test or chat surface.",
+        "Enter a smoke-test prompt and send it.",
+        "Wait for the chat surface to update, then capture evidence."
+      ],
+      "selectors": [
+        "textarea[placeholder=\"Type your message\"]",
+        "input[aria-label=\"Type a message\"]",
+        "button:has-text(\"Send\")",
+        "button[aria-label=\"Send\"]"
+      ],
+      "detailInputs": {
+        "testMessage": "Hello, confirm that you can answer a support request.",
+        "messageInputSelector": "textarea[placeholder=\"Type your message\"]",
+        "sendButtonSelector": "button:has-text(\"Send\")"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_type",
+          "args": {
+            "element": "Agent test chat input",
+            "ref": "{{messageInputSelector}}",
+            "text": "{{testMessage}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_click",
+          "args": {
+            "element": "Send test message button",
+            "ref": "{{sendButtonSelector}}"
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_wait_for",
+          "args": {
+            "time": 3
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_take_screenshot",
+          "args": {
+            "filename": "agent-chat-smoke.png",
+            "type": "png"
+          }
+        }
+      ],
+      "validation": [
+        {
+          "type": "textPresent",
+          "value": "{{testMessage}}"
+        },
+        {
+          "type": "textAbsent",
+          "value": "Error"
+        }
+      ],
+      "validationChecklist": [
+        "Confirm the test message appears in the conversation transcript.",
+        "Check that no visible Error banner appears after send.",
+        "Capture a snapshot and screenshot of the resulting chat state, even if the reply is still streaming."
+      ],
+      "recoveryGuidance": [
+        "If Send stays disabled, verify the correct chat input selector and preserve evidence before retrying.",
+        "If the chat surface does not update after the wait, capture browser_console_messages before sending the prompt again.",
+        "If the wrong tab is open, stop and navigate back to the agent test surface rather than typing into an unknown field."
+      ],
+      "exportGuidance": [
+        "Use agent-chat-smoke.png as the initial evidence artifact for chat validation.",
+        "Export the recorded history to a Playwright test when the smoke prompt and selectors stabilize.",
+        "Export the GitHub Actions workflow when this chat smoke test should run unattended."
+      ],
+      "defaultWaitMs": 1500,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "This starter intentionally uses a short fixed wait because the current wait tool does not support waiting on selectors.",
+        "If your tenant uses a different chat input control, update the detail input selectors before sending."
+      ]
+    },
+    {
+      "id": "powertask-capture-failure-evidence",
+      "name": "PowerTask: Capture Failure Evidence",
+      "label": "Starter",
+      "detail": "Capture snapshot, screenshot, and console evidence when a PowerTask flow fails or blocks on an unexpected banner.",
+      "targetKind": "currentTab",
+      "startUrl": "https://copilotstudio.microsoft.com/",
+      "goal": "Preserve the current browser state, a visual screenshot, and error-level console messages before anyone retries or refreshes a failed flow.",
+      "sourceSections": [
+        "Error Handling & Recovery Commands",
+        "Screenshot Documentation"
+      ],
+      "steps": [
+        "Leave the failing UI in place without additional clicks.",
+        "Capture a full browser snapshot.",
+        "Capture a screenshot and collect error-level console output for triage."
+      ],
+      "selectors": [
+        "div:has-text(\"Error\")",
+        "button[aria-label=\"Close\"]"
+      ],
+      "detailInputs": {
+        "evidenceScreenshot": "error-detected.png",
+        "consoleLevel": "error"
+      },
+      "mcpCommands": [
+        {
+          "tool": "copilotbrowser-mcp-browser_snapshot",
+          "args": {}
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_take_screenshot",
+          "args": {
+            "filename": "{{evidenceScreenshot}}",
+            "type": "png",
+            "fullPage": true
+          }
+        },
+        {
+          "tool": "copilotbrowser-mcp-browser_console_messages",
+          "args": {
+            "level": "{{consoleLevel}}",
+            "filename": "failure-console.log"
+          }
+        }
+      ],
+      "validation": [
+        {
+          "type": "textAbsent",
+          "value": "Unhandled promise rejection"
+        }
+      ],
+      "validationChecklist": [
+        "Capture evidence before any refresh, retry, or back navigation is attempted.",
+        "Ensure both the screenshot artifact and console log are saved with the incident record.",
+        "Leave the failing page open until another operator confirms evidence collection is complete."
+      ],
+      "recoveryGuidance": [
+        "After evidence capture, decide whether to retry, refresh, or back out based on the visible banner and console log.",
+        "If the page is clearly in the wrong state, use the evidence bundle to hand off before reloading anything.",
+        "Do not keep clicking the same action after evidence capture; halt and triage first."
+      ],
+      "exportGuidance": [
+        "Keep error-detected.png and failure-console.log together with the snapshot text for the incident bundle.",
+        "If you reproduce the same issue interactively, export the sequence to a Playwright spec for regression coverage.",
+        "Export the GitHub Actions template if the failure investigation should be reproduced in CI."
+      ],
+      "defaultWaitMs": 500,
+      "captureTrace": true,
+      "captureScreenshotOnFailure": true,
+      "notes": [
+        "This starter translates the paste reference recovery guidance into repo-supported tools only.",
+        "Use this runbook before any manual refresh or retry so the original failure state is preserved."
+      ]
+    }
+  ]
+}

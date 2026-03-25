@@ -90,6 +90,17 @@ copilotbrowser-cli screenshot --filename=page.png
 copilotbrowser-cli pdf --filename=page.pdf
 ```
 
+### PDF extraction
+
+```bash
+copilotbrowser-cli pdf-text ./document.pdf
+copilotbrowser-cli pdf-metadata ./document.pdf --filename=document.json
+copilotbrowser-cli pdf-markdown ./document.pdf --filename=document.md
+copilotbrowser-cli pdf-convert ./document.pdf --output-dir=document-bundle
+copilotbrowser-cli pdf-image ./document.pdf 1 --filename=page-1.png
+copilotbrowser-cli pdf-images ./document.pdf --filename-prefix=pages/page --max-pages=3
+```
+
 ### Tabs
 
 ```bash
@@ -270,6 +281,7 @@ copilotbrowser-cli close
 ## Specific tasks
 
 * **Request mocking** [references/request-mocking.md](references/request-mocking.md)
+* **PDF extraction and conversion** [references/pdf-extraction.md](references/pdf-extraction.md)
 * **Running copilotbrowser code** [references/running-code.md](references/running-code.md)
 * **Browser session management** [references/session-management.md](references/session-management.md)
 * **Storage state (cookies, localStorage)** [references/storage-state.md](references/storage-state.md)

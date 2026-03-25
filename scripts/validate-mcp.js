@@ -50,6 +50,8 @@ const { StdioClientTransport } = require(stdioPath);
     'browser_network_requests',
     'browser_console_messages',
     'browser_tabs',
+    'browser_native_navigate',
+    'browser_native_tab_cycle',
   ];
   requiredTools.forEach(ensureTool);
 

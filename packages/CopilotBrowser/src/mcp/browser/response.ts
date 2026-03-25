@@ -93,6 +93,8 @@ export class Response {
   }
 
   async addFileResult(resolvedFile: ResolvedFile, data: Buffer | string | null) {
+    if (data !== null)
+      await fs.promises.mkdir(path.dirname(resolvedFile.fileName), { recursive: true });
     if (typeof data === 'string')
       await fs.promises.writeFile(resolvedFile.fileName, data, 'utf-8');
     else if (data)
@@ -115,6 +117,10 @@ export class Response {
 
   addCode(code: string) {
     this._code.push(code);
+  }
+
+  codeSnippets(): string[] {
+    return [...this._code];
   }
 
   setIncludeSnapshot() {

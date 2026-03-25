@@ -153,12 +153,20 @@
       gap: 16px;
       max-width: 720px;
       width: 100%;
+      align-items: start;
     }
     .detail-panel {
       border: 1px solid #313244;
       border-radius: 10px;
       background: #181825;
       overflow: hidden;
+    }
+    .detail-home {
+      justify-content: flex-start;
+    }
+    .detail-home .welcome {
+      max-width: 720px;
+      width: 100%;
     }
     .panel-header {
       display: flex;
@@ -221,6 +229,7 @@
       transition: background 0.1s;
     }
     .list-item:hover { background: #1e1e2e; }
+    .list-item.active { background: #313244; }
     .list-item .item-label {
       display: inline-flex;
       align-items: center;
@@ -237,6 +246,52 @@
     }
     .list-item .item-name { font-size: 13px; font-weight: 500; }
     .list-item .item-detail { font-size: 11px; color: #6c7086; }
+    .preview-panel {
+      max-width: 720px;
+      width: 100%;
+      margin-top: 16px;
+    }
+    .detail-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .preview-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: #cdd6f4;
+    }
+    .preview-meta {
+      display: grid;
+      gap: 6px;
+      font-size: 12px;
+      color: #a6adc8;
+      line-height: 1.5;
+    }
+    .preview-description {
+      font-size: 13px;
+      color: #cdd6f4;
+      line-height: 1.6;
+    }
+    .preview-steps {
+      margin-left: 18px;
+      display: grid;
+      gap: 6px;
+      color: #cdd6f4;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .preview-json {
+      background: #11111b;
+      border: 1px solid #313244;
+      border-radius: 6px;
+      padding: 12px;
+      color: #a6adc8;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+    }
     .navbar {
       background: #181825;
       padding: 6px 12px;
@@ -309,6 +364,11 @@
     }
     .address-bar:focus { border-color: #89b4fa; }
     .address-bar::placeholder { color: #6c7086; }
+    @media (max-width: 760px) {
+      .detail-panels {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -371,10 +431,9 @@
       <span class="dot active" data-page="1"></span>
       <span class="dot" data-page="2"></span>
     </div>
-    <pre id="output"></pre>
   </div>
 
-  <div class="main" id="home-page-2" style="display:none;">
+  <div class="main detail-home" id="home-page-2" style="display:none;">
     <div class="welcome">
       <h2>Spark Apps &amp; Runbooks</h2>
       <p>Detailed view of your Spark applications and automation runbooks.</p>
@@ -385,7 +444,7 @@
         <div class="panel-header">
           <span class="panel-label">Spark</span>
           <h3>Spark Apps</h3>
-          <button class="panel-action" id="btn-spark-new">+ New Spark</button>
+          <button class="panel-action" id="btn-spark-new">Open Selected</button>
         </div>
         <div class="panel-body" id="spark-list">
           <div class="empty-state">Loading Spark app index...</div>
@@ -396,10 +455,23 @@
         <div class="panel-header">
           <span class="panel-label">Runbook</span>
           <h3>Runbooks</h3>
-          <button class="panel-action" id="btn-runbook-new">+ New Runbook</button>
+          <button class="panel-action" id="btn-runbook-new">Send Selected</button>
         </div>
         <div class="panel-body" id="runbook-list">
           <div class="empty-state">Loading runbook index...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-panel preview-panel">
+      <div class="panel-header">
+        <span class="panel-label">Detail</span>
+        <h3>Selected Item</h3>
+        <button class="panel-action" id="btn-preview-action" style="display:none;">Open</button>
+      </div>
+      <div class="panel-body">
+        <div id="detail-preview" class="detail-preview">
+          <div class="empty-state">Select a Spark app or runbook to see details.</div>
         </div>
       </div>
     </div>
@@ -409,6 +481,8 @@
       <span class="dot active" data-page="2"></span>
     </div>
   </div>
+
+  <pre id="output"></pre>
 
   <div class="status-bar">
     <span>copilotbrowser v2.0.0</span>
@@ -441,85 +515,404 @@
         set: async () => ({}),
         delete: async () => ({}),
       },
+      workspace: {
+        listSparks: async () => ({ ok: false, error: 'copilotbrowser bridge unavailable in browser preview', apps: [] }),
+      },
+      runbooks: {
+        getAdaptiveCard: async () => ({ ok: false, error: 'copilotbrowser bridge unavailable in browser preview' }),
+        getStarters: async () => ({ ok: false, error: 'copilotbrowser bridge unavailable in browser preview', runbooks: [] }),
+      },
     };
 
-    const sparkApps = [
-      {
-        name: 'Open Local Spark App',
-        detail: 'Load a built Spark app from disk into a native Spark tab',
-        type: 'action',
-        action: 'spark-open',
-        label: 'Open',
-      },
-      {
-        name: 'Published Spark URL',
-        detail: 'Open a published github.app Spark site in a Spark-enabled tab',
-        type: 'action',
-        action: 'spark-url',
-        label: 'URL',
-      },
-      {
-        name: 'copilotspark Runtime',
-        detail: 'Use the rebuilt window.spark runtime backed by GitHub APIs',
-        type: 'info',
-        label: 'Runtime',
-      },
-    ];
+    let sparkApps = [];
+    let sparkInventory = {
+      root: 'E:\\copilotspark',
+      totalApps: 0,
+      totalSizeMb: null,
+      generatedAt: null,
+    };
+    let adaptiveCardCache = null;
+    let starterRunbookCache = null;
+    let selectedItem = { kind: null, index: null };
+    const schemaRunbook = {
+      name: 'copilotbrowser MCP Card Schema',
+      detail: 'Structured Adaptive Card template for browser UI runbooks with MCP command JSON inputs',
+      type: 'schema',
+      action: 'show-adaptive-card',
+      label: 'Schema',
+      steps: [
+        'Choose the target page or current browser tab.',
+        'Describe the browser goal in plain language with the expected result.',
+        'Provide MCP command JSON and validation JSON for the runbook.',
+      ],
+    };
+    const traceRunbook = {
+      name: 'Trace Review',
+      detail: 'Open trace viewer output for fast debugging and replay',
+      type: 'action',
+      action: 'trace',
+      label: 'Trace',
+      steps: [
+        'Capture a trace while running a runbook or copilotbrowser test.',
+        'Open Trace Viewer to inspect actions, selectors, and timings.',
+        'Refine MCP commands using the trace before rerunning.',
+      ],
+    };
+    let runbooks = [schemaRunbook, traceRunbook];
 
-    const runbooks = [
-      {
-        name: 'Spark App Smoke Test',
-        detail: 'Launch, inspect, and verify a local Spark app in copilotbrowser',
-        type: 'action',
-        action: 'runbook-spark-smoke',
-        label: 'Smoke',
-      },
-      {
-        name: 'Recorder to Runbook',
-        detail: 'Record browser actions and promote them into a reusable runbook',
-        type: 'info',
-        label: 'Record',
-      },
-      {
-        name: 'Trace Review',
-        detail: 'Open trace viewer output for fast debugging and replay',
-        type: 'action',
-        action: 'trace',
-        label: 'Trace',
-      },
-    ];
+    const output = document.getElementById('output');
+    const detailPreview = document.getElementById('detail-preview');
+    const previewActionButton = document.getElementById('btn-preview-action');
+    const runbookPanelActionButton = document.getElementById('btn-runbook-new');
+
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function showOutput(text) {
+      if (!output) return;
+      output.style.display = 'block';
+      output.textContent = text;
+    }
+
+    function formatSparkSize(totalSizeKb) {
+      if (typeof totalSizeKb !== 'number' || Number.isNaN(totalSizeKb)) return 'Unknown size';
+      if (totalSizeKb >= 1024) return `${(totalSizeKb / 1024).toFixed(1)} MB`;
+      return `${totalSizeKb} KB`;
+    }
 
     function renderList(containerId, items, emptyMessage) {
       const container = document.getElementById(containerId);
       if (!container) return;
 
       if (!items.length) {
-        container.innerHTML = `<div class="empty-state">${emptyMessage}</div>`;
+        container.innerHTML = `<div class="empty-state">${escapeHtml(emptyMessage)}</div>`;
         return;
       }
 
+      const activeKind = containerId === 'spark-list' ? 'spark' : 'runbook';
       container.innerHTML = items.map((item, index) => `
-        <div class="list-item" data-list="${containerId}" data-index="${index}">
-          <span class="item-label">${item.label}</span>
+        <div class="list-item ${selectedItem.kind === activeKind && selectedItem.index === index ? 'active' : ''}" data-list="${containerId}" data-index="${index}">
+          <span class="item-label">${escapeHtml(item.label)}</span>
           <div>
-            <div class="item-name">${item.name}</div>
-            <div class="item-detail">${item.detail}</div>
+            <div class="item-name">${escapeHtml(item.name)}</div>
+            <div class="item-detail">${escapeHtml(item.detail)}</div>
           </div>
         </div>
       `).join('');
     }
 
+    function renderIndexedLists() {
+      renderList('spark-list', sparkApps, 'No Spark apps indexed.');
+      renderList('runbook-list', runbooks, 'No runbooks indexed.');
+    }
+
+    function setPreviewAction(config) {
+      if (!previewActionButton) return;
+      if (!config) {
+        previewActionButton.style.display = 'none';
+        previewActionButton.dataset.action = '';
+        previewActionButton.dataset.kind = '';
+        previewActionButton.dataset.index = '';
+        return;
+      }
+
+      previewActionButton.style.display = 'inline-flex';
+      previewActionButton.textContent = config.title;
+      previewActionButton.dataset.action = config.action;
+      previewActionButton.dataset.kind = config.kind;
+      previewActionButton.dataset.index = String(config.index);
+    }
+
+    function setRunbookPanelAction(config) {
+      if (!runbookPanelActionButton) return;
+      runbookPanelActionButton.dataset.action = config?.action || '';
+      runbookPanelActionButton.dataset.index = config ? String(config.index) : '';
+      runbookPanelActionButton.textContent = config?.title || 'Send Selected';
+      runbookPanelActionButton.disabled = !config;
+    }
+
     function updateTileMeta() {
       const sparkMeta = document.getElementById('spark-meta');
       const runbookMeta = document.getElementById('runbook-meta');
-      if (sparkMeta) sparkMeta.textContent = `${sparkApps.length} indexed items`;
-      if (runbookMeta) runbookMeta.textContent = `${runbooks.length} indexed items`;
+      if (sparkMeta) {
+        sparkMeta.textContent = sparkApps.length
+          ? `${sparkApps.length} apps | ${sparkInventory.totalSizeMb ?? 'unknown'} MB indexed`
+          : `No apps loaded from ${sparkInventory.root}`;
+      }
+      if (runbookMeta) runbookMeta.textContent = `${runbooks.length} runbooks | PowerTask starters ready`;
     }
 
-    function initializeHomeData() {
+    function renderSparkPreview(app, index) {
+      selectedItem = { kind: 'spark', index };
+      renderIndexedLists();
+      setPreviewAction(app.entryUrl ? {
+        title: 'Open Spark App',
+        action: 'open-spark-app',
+        kind: 'spark',
+        index,
+      } : null);
+
+      detailPreview.innerHTML = `
+        <div class="preview-title">${escapeHtml(app.name)}</div>
+        <div class="preview-meta">
+          <div><strong>Slug:</strong> ${escapeHtml(app.slug)}</div>
+          <div><strong>Folder:</strong> ${escapeHtml(app.appPath || app.local_path)}</div>
+          <div><strong>Entry:</strong> ${escapeHtml(app.entryPath || 'No launchable index.html found')}</div>
+          <div><strong>Updated:</strong> ${escapeHtml(app.updated || 'Unknown')}</div>
+          <div><strong>Inventory:</strong> ${escapeHtml(app.inventoryDetail || `${app.file_count || 0} files`)}</div>
+          <div><strong>Review:</strong> ${app.has_review ? 'Review metadata present' : 'No review metadata present'}</div>
+        </div>
+        <div class="preview-description">${escapeHtml(app.description || 'No description provided.')}</div>
+      `;
+    }
+
+    async function getAdaptiveCard() {
+      if (adaptiveCardCache) return adaptiveCardCache;
+      const response = await copilotbrowser.runbooks.getAdaptiveCard();
+      if (response?.ok) adaptiveCardCache = response;
+      return response;
+    }
+
+    async function getStarterRunbooks() {
+      if (starterRunbookCache) return starterRunbookCache;
+      const response = await copilotbrowser.runbooks.getStarters();
+      if (response?.ok) starterRunbookCache = response;
+      return response;
+    }
+
+    function renderRunbookSteps(steps = []) {
+      if (!steps.length) return '';
+      return `
+        <ol class="preview-steps">
+          ${steps.map((step) => `<li>${escapeHtml(step)}</li>`).join('')}
+        </ol>
+      `;
+    }
+
+    function renderRunbookBullets(title, items = []) {
+      if (!items.length) return '';
+      return `
+        <div class="preview-meta">
+          <div><strong>${escapeHtml(title)}:</strong></div>
+        </div>
+        <ul class="preview-steps">
+          ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join('')}
+        </ul>
+      `;
+    }
+
+    function prettyJson(value) {
+      return JSON.stringify(value, null, 2);
+    }
+
+    function mapStarterRunbook(runbook) {
+      return {
+        ...runbook,
+        type: 'starter',
+        action: 'show-runbook-starter',
+        source: runbook.source || starterRunbookCache?.source || 'E:\\copilotbrowser\\runbooks\\PowerTask.md',
+        label: runbook.label || 'Starter',
+      };
+    }
+
+    function buildStarterExportGuidance(runbook) {
+      if (Array.isArray(runbook.exportGuidance) && runbook.exportGuidance.length) return runbook.exportGuidance;
+      return [
+        'Capture browser_snapshot and browser_take_screenshot after the final validation state.',
+        'If you refined selectors interactively, export the generated history with copilotbrowser-mcp-browser_export_copilotbrowser_test.',
+        'For CI packaging, export copilotbrowser-mcp-browser_export_github_actions into .github/workflows/copilotbrowser.yml.',
+      ];
+    }
+
+    function summarizeValidationRules(validation) {
+      return (validation || []).map((rule) => {
+        const suffix = rule?.value ? `: ${rule.value}` : '';
+        return `${rule?.type || 'validation'}${suffix}`;
+      });
+    }
+
+    function buildStarterCardPayload(runbook) {
+      return {
+        kind: 'copilotbrowser-runbook',
+        schemaVersion: '1.0.0',
+        commandStyle: 'toolname_command_args',
+        starterId: runbook.id,
+        starterName: runbook.name,
+        source: runbook.source || 'E:\\copilotbrowser\\runbooks\\PowerTask.md',
+        adaptiveCardData: {
+          runbookTitle: runbook.name,
+          targetKind: runbook.targetKind || 'currentTab',
+          sparkSlug: runbook.sparkSlug || '',
+          startUrl: runbook.startUrl || '',
+          goal: runbook.goal || '',
+          detailInputsJson: prettyJson(runbook.detailInputs || {}),
+          mcpCommandsJson: prettyJson(runbook.mcpCommands || []),
+          validationJson: prettyJson(runbook.validation || []),
+          defaultWaitMs: typeof runbook.defaultWaitMs === 'number' ? runbook.defaultWaitMs : 1500,
+          captureTrace: String(runbook.captureTrace !== false),
+          captureScreenshotOnFailure: String(runbook.captureScreenshotOnFailure !== false),
+        },
+        sourceSections: runbook.sourceSections || [],
+        selectors: runbook.selectors || [],
+        notes: runbook.notes || [],
+        steps: runbook.steps || [],
+        validationChecklist: runbook.validationChecklist || [],
+        recoveryGuidance: runbook.recoveryGuidance || [],
+        exportGuidance: buildStarterExportGuidance(runbook),
+        validationRules: summarizeValidationRules(runbook.validation),
+      };
+    }
+
+    async function renderRunbookPreview(runbook, index) {
+      selectedItem = { kind: 'runbook', index };
+      renderIndexedLists();
+
+      let extraMarkup = renderRunbookSteps(runbook.steps);
+      let previewAction = null;
+
+      if (runbook.action === 'show-adaptive-card') {
+        const schema = await getAdaptiveCard();
+        const schemaJson = schema?.ok ? JSON.stringify(schema.card, null, 2) : (schema?.error || 'Adaptive card schema unavailable.');
+        previewAction = schema?.ok ? {
+          title: 'Send Schema',
+          action: 'show-adaptive-card',
+          kind: 'runbook',
+          index,
+        } : null;
+        extraMarkup += `
+          <div class="preview-meta">
+            <div><strong>Schema file:</strong> ${escapeHtml(schema?.path || 'Unavailable')}</div>
+          </div>
+          <pre class="preview-json">${escapeHtml(schemaJson)}</pre>
+        `;
+      } else if (runbook.action === 'show-runbook-starter') {
+        const payload = buildStarterCardPayload(runbook);
+        previewAction = {
+          title: 'Send Starter Payload',
+          action: 'show-runbook-starter',
+          kind: 'runbook',
+          index,
+        };
+        extraMarkup += `
+          <div class="preview-meta">
+            <div><strong>Source:</strong> ${escapeHtml(payload.source)}</div>
+            <div><strong>Target:</strong> ${escapeHtml(payload.adaptiveCardData.targetKind)}</div>
+            <div><strong>Start URL:</strong> ${escapeHtml(payload.adaptiveCardData.startUrl || 'Current tab')}</div>
+            <div><strong>Wait:</strong> ${escapeHtml(String(payload.adaptiveCardData.defaultWaitMs))} ms</div>
+            <div><strong>Trace:</strong> ${payload.adaptiveCardData.captureTrace === 'true' ? 'Capture enabled' : 'Capture disabled'}</div>
+            <div><strong>Commands:</strong> ${escapeHtml(String((runbook.mcpCommands || []).length))} | <strong>Validation rules:</strong> ${escapeHtml(String((runbook.validation || []).length))}</div>
+          </div>
+          ${renderRunbookBullets('Source sections', payload.sourceSections)}
+          ${renderRunbookBullets('Selectors', payload.selectors)}
+          ${renderRunbookBullets('Validation rules', payload.validationRules)}
+          ${renderRunbookBullets('Validation checklist', payload.validationChecklist)}
+          ${renderRunbookBullets('Safe recovery guidance', payload.recoveryGuidance)}
+          ${renderRunbookBullets('Export and evidence', payload.exportGuidance)}
+          ${renderRunbookBullets('Notes', payload.notes)}
+          <pre class="preview-json">${escapeHtml(prettyJson(payload))}</pre>
+        `;
+      } else if (runbook.action) {
+        previewAction = {
+          title: runbook.action === 'trace' ? 'Open Trace Viewer' : 'Run Runbook',
+          action: runbook.action,
+          kind: 'runbook',
+          index,
+        };
+      }
+
+      setPreviewAction(previewAction);
+      setRunbookPanelAction(previewAction);
+      detailPreview.innerHTML = `
+        <div class="preview-title">${escapeHtml(runbook.name)}</div>
+        <div class="preview-description">${escapeHtml(runbook.detail)}</div>
+        ${extraMarkup}
+      `;
+    }
+
+    async function loadRunbooks() {
+      const response = await getStarterRunbooks();
+      if (!response?.ok) {
+        runbooks = [schemaRunbook, traceRunbook];
+        renderIndexedLists();
+        updateTileMeta();
+        showOutput(response?.error || 'Unable to load starter runbooks.');
+        return;
+      }
+
+      runbooks = [
+        ...(response.runbooks || []).map(mapStarterRunbook),
+        schemaRunbook,
+        traceRunbook,
+      ];
+      renderIndexedLists();
       updateTileMeta();
-      renderList('spark-list', sparkApps, 'No Spark apps indexed.');
-      renderList('runbook-list', runbooks, 'No runbooks indexed.');
+    }
+
+    async function loadSparkInventory() {
+      const response = await copilotbrowser.workspace.listSparks();
+      if (!response?.ok) {
+        sparkApps = [];
+        sparkInventory = {
+          root: response?.root || sparkInventory.root,
+          totalApps: 0,
+          totalSizeMb: null,
+          generatedAt: null,
+        };
+        renderIndexedLists();
+        updateTileMeta();
+        showOutput(response?.error || 'Unable to load Spark inventory.');
+        return;
+      }
+
+      sparkInventory = response;
+      sparkApps = (response.apps || []).map((app) => ({
+        ...app,
+        label: app.inventoryLabel || `Spark ${String(app.index).padStart(2, '0')}`,
+        detail: app.inventoryDetail || `${app.file_count || 0} files`,
+      }));
+      renderIndexedLists();
+      updateTileMeta();
+
+      if (!selectedItem.kind) {
+        if (sparkApps.length) {
+          renderSparkPreview(sparkApps[0], 0);
+        } else {
+          renderRunbookPreview(runbooks[0], 0);
+        }
+      }
+    }
+
+    async function openSparkApp(app) {
+      if (!app?.entryUrl) {
+        showOutput(`Spark app "${app?.name || 'Unknown'}" does not have a launchable index.html entry.`);
+        return;
+      }
+
+      const result = await copilotbrowser.tabs.create({
+        url: app.entryUrl,
+        title: app.name,
+        spark: true,
+      });
+
+      if (result?.ok === false) {
+        showOutput(`Unable to open Spark app "${app.name}".\n${result.reason || 'Tab manager is not available.'}`);
+        return;
+      }
+
+      showOutput(`Opened Spark app: ${app.name}\n${app.entryUrl}`);
+    }
+
+    async function initializeHomeData() {
+      updateTileMeta();
+      renderIndexedLists();
+      await loadRunbooks();
+      await loadSparkInventory();
     }
 
     function switchPage(pageNum) {
@@ -528,21 +921,6 @@
       document.querySelectorAll('.dot').forEach(dot => {
         dot.classList.toggle('active', Number(dot.dataset.page) === pageNum);
       });
-    }
-
-    async function executeIndexedAction(action) {
-      switch (action) {
-        case 'spark-open':
-          return handleAction('spark-open');
-        case 'spark-url':
-          return handleAction('spark-url');
-        case 'runbook-spark-smoke':
-          return handleAction('runbook-spark-smoke');
-        case 'trace':
-          return handleAction('trace');
-        default:
-          return Promise.resolve();
-      }
     }
 
     copilotbrowser.onProjectOpened((path) => {
@@ -565,23 +943,34 @@
 
     // --- Spark tile ---
     document.getElementById('btn-spark').addEventListener('click', () => {
-      // Open Spark detail page
       switchPage(2);
+      if (sparkApps.length) renderSparkPreview(sparkApps[0], 0);
     });
 
     // --- Runbook tile ---
     document.getElementById('btn-runbooks').addEventListener('click', () => {
-      // Open Runbook detail page
       switchPage(2);
+      renderRunbookPreview(runbooks[0], 0);
     });
 
     // --- Page 2 buttons ---
     document.getElementById('btn-spark-new')?.addEventListener('click', () => {
-      // Trigger the same action as Tools > Open Spark App
-      handleAction('spark-open');
+      const app = selectedItem.kind === 'spark' ? sparkApps[selectedItem.index] : sparkApps[0];
+      handleAction('open-spark-app', { app });
     });
     document.getElementById('btn-runbook-new')?.addEventListener('click', () => {
-      handleAction('runbook-new');
+      const action = runbookPanelActionButton?.dataset.action;
+      const index = Number(runbookPanelActionButton?.dataset.index);
+      if (!action) return;
+      handleAction(action, { runbook: runbooks[index] });
+    });
+    previewActionButton?.addEventListener('click', () => {
+      const action = previewActionButton.dataset.action;
+      const kind = previewActionButton.dataset.kind;
+      const index = Number(previewActionButton.dataset.index);
+      if (!action) return;
+      const app = kind === 'spark' ? sparkApps[index] : undefined;
+      handleAction(action, { app, runbook: runbooks[index] });
     });
 
     // --- Page switching ---
@@ -594,20 +983,62 @@
       if (!item) return;
       const index = Number(item.dataset.index);
       const entry = sparkApps[index];
-      if (entry?.action) executeIndexedAction(entry.action);
+      if (entry) renderSparkPreview(entry, index);
     });
 
-    document.getElementById('runbook-list')?.addEventListener('click', (event) => {
+    document.getElementById('runbook-list')?.addEventListener('click', async (event) => {
       const item = event.target.closest('.list-item');
       if (!item) return;
       const index = Number(item.dataset.index);
       const entry = runbooks[index];
-      if (entry?.action) executeIndexedAction(entry.action);
+      if (entry) await renderRunbookPreview(entry, index);
     });
 
-    async function handleAction(action) {
+    async function handleAction(action, context = {}) {
+      if (action === 'open-spark-app') {
+        return openSparkApp(context.app || sparkApps[selectedItem.index]);
+      }
+
+      if (action === 'show-adaptive-card') {
+        const schema = await getAdaptiveCard();
+        const outputText = schema?.ok
+          ? `Adaptive card schema: ${schema.path}\n\n${JSON.stringify(schema.card, null, 2)}`
+          : (schema?.error || 'Adaptive card schema unavailable.');
+        showOutput(outputText);
+        return;
+      }
+
+      if (action === 'show-runbook-starter') {
+        const runbook = context.runbook || runbooks[selectedItem.index];
+        if (!runbook) {
+          showOutput('Starter runbook unavailable.');
+          return;
+        }
+        const payload = buildStarterCardPayload(runbook);
+        const sections = [
+          `Starter adaptive-card runbook: ${runbook.name}`,
+          `Source: ${payload.source}`,
+          payload.validationChecklist.length ? `Validation checklist:\n- ${payload.validationChecklist.join('\n- ')}` : '',
+          payload.recoveryGuidance.length ? `Safe recovery guidance:\n- ${payload.recoveryGuidance.join('\n- ')}` : '',
+          payload.exportGuidance.length ? `Export and evidence:\n- ${payload.exportGuidance.join('\n- ')}` : '',
+          prettyJson(payload),
+        ].filter(Boolean);
+        showOutput(sections.join('\n\n'));
+        return;
+      }
+
+      if (action === 'runbook-recorder-guide') {
+        showOutput([
+          'Recorder to Runbook',
+          '',
+          '1. Use "Record Test" to capture the browser flow.',
+          '2. Review the generated selectors and timing details.',
+          '3. Convert those steps into MCP command JSON for the Adaptive Card schema.',
+        ].join('\n'));
+        return;
+      }
+
       if (!projectPath && !['install', 'spark-open', 'spark-url', 'runbook-spark-smoke', 'trace'].includes(action)) return;
-      const output = document.getElementById('output');
       output.style.display = 'block';
       output.textContent = `Running: copilotbrowser ${action}...\n`;
 
@@ -620,7 +1051,7 @@
         install: ['copilotbrowser', 'install'],
         'spark-open': ['cmd', '/c', 'echo Use Tools > Open Spark App to select a local Spark build.'],
         'spark-url': ['cmd', '/c', 'echo Use Tools > Open Spark URL to load a published Spark app.'],
-        'runbook-spark-smoke': ['cmd', '/c', 'echo Runbook: launch a Spark app, validate window.spark, then inspect output.'],
+        'runbook-spark-smoke': ['cmd', '/c', 'echo Runbook: open a Spark app, validate window.spark.kv plus window.spark.user, then inspect output.'],
       };
 
       try {
@@ -632,6 +1063,8 @@
         output.textContent += `Error: ${err}`;
       }
     }
+
+    initializeHomeData();
 
     // --- Navigation UI ---
     (function initNavigation() {
@@ -728,39 +1161,56 @@
         }
       });
 
-      copilotbrowser.tabs.list().then((state) => {
-        if (!state.enabled) return;
-        navbar.style.display = 'flex';
+      function resetNavState() {
+        currentNavState = {
+          url: '',
+          canGoBack: false,
+          canGoForward: false,
+          isLoading: false,
+          scheme: '',
+          isSecure: false,
+          certificateError: null,
+          loadError: null,
+        };
+      }
 
-        copilotbrowser.nav.onState((navState) => {
-          currentNavState = {
-            url: navState.url || '',
-            canGoBack: Boolean(navState.canGoBack),
-            canGoForward: Boolean(navState.canGoForward),
-            isLoading: Boolean(navState.isLoading),
-            scheme: navState.scheme || '',
-            isSecure: Boolean(navState.isSecure),
-            certificateError: navState.certificateError || null,
-            loadError: navState.loadError || null,
-          };
+      copilotbrowser.nav.onState((navState) => {
+        currentNavState = {
+          url: navState.url || '',
+          canGoBack: Boolean(navState.canGoBack),
+          canGoForward: Boolean(navState.canGoForward),
+          isLoading: Boolean(navState.isLoading),
+          scheme: navState.scheme || '',
+          isSecure: Boolean(navState.isSecure),
+          certificateError: navState.certificateError || null,
+          loadError: navState.loadError || null,
+        };
+        updateNavUI();
+      });
+
+      copilotbrowser.tabs.onState((tabState) => {
+        if (tabState?.enabled) {
+          navbar.style.display = 'flex';
+        } else {
+          navbar.style.display = 'none';
+          resetNavState();
           updateNavUI();
-        });
+          return;
+        }
 
-        copilotbrowser.tabs.onState((tabState) => {
-          if (!tabState.activeTabId) {
-            currentNavState = {
-              url: '',
-              canGoBack: false,
-              canGoForward: false,
-              isLoading: false,
-              scheme: '',
-              isSecure: false,
-              certificateError: null,
-              loadError: null,
-            };
-            updateNavUI();
-          }
-        });
+        if (!tabState.activeTabId) {
+          resetNavState();
+          updateNavUI();
+        }
+      });
+
+      copilotbrowser.tabs.list().then((state) => {
+        if (state?.enabled) {
+          navbar.style.display = 'flex';
+        } else {
+          resetNavState();
+          updateNavUI();
+        }
       });
     })();
 

@@ -4,9 +4,11 @@
  */
 
 const { app, BrowserWindow, Menu, ipcMain, dialog } = require('electron');
+const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
-const { spawn } = require('child_process');
+const { spawn, spawnSync } = require('child_process');
+const { pathToFileURL } = require('url');
 
 const { getFlags } = require('./lib/feature-flags');
 const { createTabContentView } = require('./lib/tab-content-view');
@@ -24,6 +26,187 @@ let TAB_FEATURE_ENABLED;
 
 let mainWindow;
 let tabManager;
+
+const LOCAL_SPARK_ROOT = 'E:\\copilotspark';
+const LOCAL_SPARK_CATALOG = path.join(LOCAL_SPARK_ROOT, 'catalog.json');
+const LOCAL_SPARK_WORKBENCH = path.join(LOCAL_SPARK_ROOT, 'workbench.json');
+const copilotbrowserRD_PATH = path.join(__dirname, 'renderer', 'copcopilotbrowserr-runbook-card.json');
+const copilotbrowserARTERS_PATH = path.join(__dirname, 'renderer', 'copilotbrowcopilotbrowserk-starters.json');
+
+function formatInventorySize(totalSizeKb) {
+  if (typeof totalSizeKb !== 'number' || Number.isNaN(totalSizeKb)) return null;
+  if (totalSizeKb >= 1024) return `${(totalSizeKb / 1024).toFixed(1)} MB`;
+  return `${totalSizeKb} KB`;
+}
+
+function resolveSparkEntry(appRecord) {
+  const relativePath = (appRecord.local_path || '').split('/').join(path.sep);
+  const appPath = path.join(LOCAL_SPARK_ROOT, relativePath);
+  const candidates = [
+    path.join(appPath, 'dist', 'app.html'),
+    path.join(appPath, 'dist', 'index.html'),
+    path.join(appPath, 'app.html'),
+    path.join(appPath, 'index.html'),
+    path.join(appPath, 'dist', 'index.htm'),
+    path.join(appPath, 'index.htm'),
+  ];
+  const entryPath = candidates.find((candidate) => fs.existsSync(candidate)) || null;
+
+  return {
+    appPath,
+    entryPath,
+    entryUrl: entryPath ? pathToFileURL(entryPath).toString() : null,
+  };
+}
+
+function getLocalSparkInventory() {
+  try {
+    const inventoryPath = fs.existsSync(LOCAL_SPARK_CATALOG)
+      ? LOCAL_SPARK_CATALOG
+      : LOCAL_SPARK_WORKBENCH;
+
+    if (!fs.existsSync(inventoryPath)) {
+      return {
+        ok: false,
+        error: `Spark inventory file not found: ${LOCAL_SPARK_CATALOG}`,
+        root: LOCAL_SPARK_ROOT,
+        apps: [],
+      };
+    }
+
+    const inventory = JSON.parse(fs.readFileSync(inventoryPath, 'utf8'));
+    const rawApps = Array.isArray(inventory.apps) ? inventory.apps : [];
+    const apps = rawApps.map((appRecord) => {
+      const { appPath, entryPath, entryUrl } = resolveSparkEntry(appRecord);
+      return {
+        ...appRecord,
+        appPath,
+        entryPath,
+        entryUrl,
+        inventoryLabel: `Spark ${String(appRecord.index).padStart(2, '0')}`,
+        inventoryDetail: [
+          appRecord.updated ? `Updated ${appRecord.updated.slice(0, 10)}` : null,
+          typeof appRecord.file_count === 'number' ? `${appRecord.file_count} files` : null,
+          formatInventorySize(appRecord.total_size_kb),
+        ].filter(Boolean).join(' | '),
+      };
+    });
+
+    return {
+      ok: true,
+      root: LOCAL_SPARK_ROOT,
+      inventoryPath,
+      workbenchPath: inventoryPath,
+      generatedAt: inventory.generated_at || null,
+      totalApps: typeof inventory.total_apps === 'number'
+        ? inventory.total_apps
+        : typeof inventory.totalApps === 'number'
+          ? inventory.totalApps
+          : apps.length,
+      totalFiles: typeof inventory.total_files === 'number' ? inventory.total_files : null,
+      totalSizeMb: typeof inventory.total_size_mb === 'number'
+        ? inventory.total_size_mb
+        : typeof inventory.totalSizeMb === 'number'
+          ? inventory.totalSizeMb
+          : null,
+      apps,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      error: `Unable to read Spark inventory: ${err.message}`,
+      root: LOCAL_SPARK_ROOT,
+      apps: [],
+    };
+  }
+}
+
+function readJsonAsset(assetPath, assetLabel) {
+  try {
+    if (!fs.existsSync(assetPath)) {
+      return {
+        ok: false,
+        error: `${assetLabel} not found: ${assetPath}`,
+        path: assetPath,
+      };
+    }
+
+    const raw = fs.readFileSync(assetPath, 'utf8');
+    return {
+      ok: true,
+      path: assetPath,
+      data: JSON.parse(raw),
+      raw,
+    };
+  } catch (err) {
+    return {
+      ok: false,
+      error: `Unable to read ${assetLabel}: ${err.message}`,
+      path: assetPath,
+    };
+  }
+}
+
+function getAdaptiveCardSchema() {
+  const result = readJsonAsset(copilotbrowserRD_PATH, 'adaptive card schema');
+  if (!result.ok) return result;
+  return {
+    ok: true,
+    path: result.path,
+    card: result.data,
+    raw: result.raw,
+  };
+}
+
+function getStarterRunbooks() {
+  const result = readJsonAsset(copilotbrowserARTERS_PATH, 'starter runbooks');
+  if (!result.ok) return result;
+
+  const runbooks = Array.isArray(result.data?.runbooks) ? result.data.runbooks : null;
+  if (!runbooks) {
+    return {
+      ok: false,
+      error: `Starter runbooks file is missing a runbooks array: ${copilotbrowserARTERS_PATH}`,
+      path: copilotbrowserARTERS_PATH,
+    };
+  }
+
+  return {
+    ok: true,
+    path: result.path,
+    source: result.data.source || null,
+    schemaVersion: result.data.schemaVersion || null,
+    description: result.data.description || null,
+    runbooks,
+    raw: result.raw,
+  };
+}
+
+function readCommandOutput(command, args) {
+  try {
+    const result = spawnSync(command, args, {
+      encoding: 'utf8',
+      windowsHide: true,
+    });
+    if (result.status !== 0) return '';
+    return (result.stdout || '').trim();
+  } catch (err) {
+    return '';
+  }
+}
+
+function resolveSparkRuntimeConfig() {
+  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || readCommandOutput('gh', ['auth', 'token']);
+  if (!token) return null;
+
+  const owner = process.env.SPARK_OWNER || readCommandOutput('gh', ['api', 'user', '--jq', '.login']);
+  return {
+    token,
+    owner,
+    repo: process.env.SPARK_REPO || 'copilotspark-store',
+    defaultModel: process.env.SPARK_MODEL || 'gpt-4o',
+  };
+}
 
 function safeParseScheme(url) {
   try {
@@ -406,6 +589,18 @@ class TabManager {
   }
 }
 
+function ensureTabManagerEnabled() {
+  if (!mainWindow || mainWindow.isDestroyed()) return false;
+  if (tabManager && tabManager.isEnabled()) return true;
+
+  tabManager?.teardown();
+  tabManager = new TabManager(mainWindow, true, { ...(flags || {}), enableTabs: true });
+  tabManager.publishState();
+  tabManager.publishNavState(null);
+  console.log('[tabs] Tab manager enabled on demand');
+  return true;
+}
+
 function createWindow() {
   mainWindow = new BrowserWindow({
     width: 1280,
@@ -502,9 +697,9 @@ function createMenu() {
               return;
             }
 
-            if (tabManager && tabManager.isEnabled()) {
+            if (ensureTabManagerEnabled()) {
               tabManager.createTab({
-                url: `file://${indexPath}`,
+                url: pathToFileURL(indexPath).toString(),
                 title: `Spark: ${path.basename(appDir)}`,
                 spark: true,
               });
@@ -518,7 +713,7 @@ function createMenu() {
           click: async () => {
             // Prompt for a Spark app URL and open in a Spark-enabled tab.
             // This supports loading published Spark apps from github.app domain.
-            if (tabManager && tabManager.isEnabled()) {
+            if (ensureTabManagerEnabled()) {
               tabManager.createTab({
                 url: 'about:blank',
                 title: 'Spark App',
@@ -588,7 +783,7 @@ ipcMain.handle('run-command', async (event, { command, args, cwd }) => {
 });
 
 ipcMain.handle('tabs:create', (event, payload) => {
-  if (!tabManager || !tabManager.isEnabled()) return { ok: false, reason: 'disabled' };
+  if (!ensureTabManagerEnabled()) return { ok: false, reason: 'disabled' };
   return tabManager.createTab(payload);
 });
 
@@ -639,6 +834,18 @@ ipcMain.handle('webview2:status', () => {
 // IPC: Feature flags query (renderer can adapt UI based on active flags).
 ipcMain.handle('flags:get', () => {
   return flags || {};
+});
+
+ipcMain.handle('workspace:sparks', () => {
+  return getLocalSparkInventory();
+});
+
+ipcMain.handle('runbooks:adaptive-card', () => {
+  return getAdaptiveCardSchema();
+});
+
+ipcMain.handle('runbooks:starters', () => {
+  return getStarterRunbooks();
 });
 
 // ---------------------------------------------------------------------------
@@ -704,18 +911,16 @@ app.whenReady().then(() => {
   }
 
   // Register Spark IPC handlers if a GitHub token is available.
-  const sparkToken = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-  if (sparkToken) {
-    const sparkOwner = process.env.SPARK_OWNER || '';
-    const sparkRepo = process.env.SPARK_REPO || 'copilotspark-store';
+  const sparkRuntime = resolveSparkRuntimeConfig();
+  if (sparkRuntime) {
     registerSparkIPC({
-      token: sparkToken,
-      owner: sparkOwner,
-      repo: sparkRepo,
-      defaultModel: process.env.SPARK_MODEL || 'gpt-4o',
+      token: sparkRuntime.token,
+      owner: sparkRuntime.owner,
+      repo: sparkRuntime.repo,
+      defaultModel: sparkRuntime.defaultModel,
     });
   } else {
-    console.log('[spark] No GITHUB_TOKEN — Spark IPC handlers not registered. Set GITHUB_TOKEN to enable.');
+    console.log('[spark] No GitHub token available from environment or gh auth — Spark IPC handlers not registered.');
   }
 
   createMenu();

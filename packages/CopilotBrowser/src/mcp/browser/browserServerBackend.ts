@@ -110,6 +110,7 @@ export class BrowserServerBackend implements ServerBackend {
     let responseObject: mcpServer.CallToolResult;
     try {
       await tool.handle(context, parsedArguments, response);
+      context.appendGeneratedCode(response.codeSnippets());
       // Force writeback: action tools must always include page state validation
       // This prevents blind fire-and-forget from aggressive LLM clients
       if (tool.schema.type === 'action')

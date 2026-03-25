@@ -4,7 +4,8 @@ Control Chrome, Firefox, Edge, and WebKit from **GitHub Copilot Chat** and any M
 
 ## Features
 
-- **MCP Server** — Automatically registers copilotbrowser as an MCP server so Copilot Chat can navigate pages, click, type, screenshot, and more without any manual config.
+- **MCP Server** — Automatically registers copilotbrowser as a stdio MCP server so Copilot Chat can navigate pages, click, type, screenshot, and more without any manual config.
+- **Optional HTTP endpoint** — Exposes the same MCP server over HTTP/SSE for external tools that prefer a network endpoint; this is separate from VS Code's built-in stdio MCP entry.
 - **Auto-config** — On activation, writes `.vscode/mcp.json` (and `.github/copilot/mcp.json` if the repo has a `.github/` folder) so the server is discovered by VS Code and GitHub Copilot out of the box.
 - **Headed or headless** — Launch a visible browser window on your desktop or run silently in the background.
 - **32 browser tools** — navigate, click, type, screenshot, observe, fill forms, run JavaScript, record interactions, manage tabs, and more.
@@ -37,7 +38,7 @@ Control Chrome, Firefox, Edge, and WebKit from **GitHub Copilot Chat** and any M
 | `copilotbrowser.showBrowser` | `false` | Show browser during test runs |
 | `copilotbrowser.reuseBrowser` | `true` | Reuse browser context between test runs |
 | `copilotbrowser.env` | `{}` | Extra environment variables |
-| `copilotbrowser.autoStart` | `true` | Automatically start the MCP server on VS Code startup |
+| `copilotbrowser.autoStart` | `true` | Automatically start the optional HTTP/SSE MCP endpoint on VS Code startup |
 | `copilotbrowser.autoConfigureMCP` | `true` | Automatically configure MCP settings on first activation |
 
 ## Commands
@@ -45,10 +46,10 @@ Control Chrome, Firefox, Edge, and WebKit from **GitHub Copilot Chat** and any M
 | Command | Description |
 |---|---|
 | `copilotbrowser: Install Browsers` | Download browser binaries |
-| `copilotbrowser: Start MCP Server` | Start the MCP server |
-| `copilotbrowser: Stop MCP Server` | Stop the MCP server |
-| `copilotbrowser: Restart MCP Server` | Restart the MCP server |
-| `copilotbrowser: Show MCP Server Status` | Show current server status |
+| `copilotbrowser: Start HTTP MCP Endpoint` | Start the optional HTTP/SSE MCP endpoint |
+| `copilotbrowser: Stop HTTP MCP Endpoint` | Stop the optional HTTP/SSE MCP endpoint |
+| `copilotbrowser: Restart HTTP MCP Endpoint` | Restart the optional HTTP/SSE MCP endpoint |
+| `copilotbrowser: Show MCP Status` | Show stdio readiness and HTTP endpoint status |
 | `copilotbrowser: Refresh MCP Server` | Re-register the MCP server with updated config |
 | `copilotbrowser: Show MCP Server Configuration` | Quick-pick showing current server config |
 | `copilotbrowser: Set Browser` | Choose which browser to use |

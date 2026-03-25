@@ -51,6 +51,12 @@ test('test capabilities (pdf)', async ({ startClient }) => {
   const { tools } = await client.listTools();
   const toolNames = tools.map(t => t.name);
   expect(toolNames).toContain('browser_pdf_save');
+  expect(toolNames).toContain('browser_pdf_extract_text');
+  expect(toolNames).toContain('browser_pdf_extract_metadata');
+  expect(toolNames).toContain('browser_pdf_convert_to_markdown');
+  expect(toolNames).toContain('browser_pdf_convert_to_bundle');
+  expect(toolNames).toContain('browser_pdf_extract_page_image');
+  expect(toolNames).toContain('browser_pdf_extract_images');
 });
 
 test('test capabilities (vision)', async ({ startClient }) => {

@@ -79,6 +79,7 @@ export class Context {
   private _closeBrowserContextPromise: Promise<void> | undefined;
   private _runningToolName: string | undefined;
   private _abortController = new AbortController();
+  private _generatedCodeSnippets: string[] = [];
 
   constructor(options: ContextOptions) {
     this.config = options.config;
@@ -238,6 +239,21 @@ export class Context {
 
   setRunningTool(name: string | undefined) {
     this._runningToolName = name;
+  }
+
+  appendGeneratedCode(snippets: string[]) {
+    for (const snippet of snippets) {
+      const trimmed = snippet.trim();
+      if (!trimmed)
+        continue;
+      if (this._generatedCodeSnippets[this._generatedCodeSnippets.length - 1] === trimmed)
+        continue;
+      this._generatedCodeSnippets.push(trimmed);
+    }
+  }
+
+  generatedCode(): string[] {
+    return [...this._generatedCodeSnippets];
   }
 
   private async _closeBrowserContextImpl() {

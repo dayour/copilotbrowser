@@ -445,7 +445,81 @@ const stateSave = declareCommand({
   args: z.object({
     filename: z.string().optional().describe('File name to save the storage state to.'),
   }),
+  options: z.object({
+    indexedDb: z.boolean().optional().describe('Include IndexedDB in the saved storage state.'),
+  }),
   toolName: 'browser_storage_state',
+  toolParams: ({ filename, indexedDb }) => ({ filename, includeIndexedDB: !!indexedDb }),
+});
+
+const sessionSave = declareCommand({
+  name: 'session-save',
+  description: 'Save the current browser storage as a named workspace session',
+  category: 'storage',
+  args: z.object({
+    name: z.string().describe('Saved session name'),
+  }),
+  options: z.object({
+    description: z.string().optional().describe('Optional description for the session'),
+    indexedDb: z.boolean().optional().describe('Include IndexedDB in the saved session'),
+  }),
+  toolName: 'browser_session_save',
+  toolParams: ({ name, description, indexedDb }) => ({ name, description, includeIndexedDB: indexedDb !== false }),
+});
+
+const sessionRestore = declareCommand({
+  name: 'session-restore',
+  description: 'Restore a named workspace session into the current browser context',
+  category: 'storage',
+  args: z.object({
+    name: z.string().describe('Saved session name'),
+  }),
+  toolName: 'browser_session_restore',
+  toolParams: ({ name }) => ({ name }),
+});
+
+const sessionDelete = declareCommand({
+  name: 'session-delete',
+  description: 'Delete a named workspace session',
+  category: 'storage',
+  args: z.object({
+    name: z.string().describe('Saved session name'),
+  }),
+  toolName: 'browser_session_delete',
+  toolParams: ({ name }) => ({ name }),
+});
+
+const savedSessionsList = declareCommand({
+  name: 'session-list',
+  description: 'List saved workspace sessions',
+  category: 'storage',
+  args: z.object({}),
+  toolName: 'browser_session_list',
+  toolParams: () => ({}),
+});
+
+const exportcopilotbrowserst = declareCommand({
+  name: 'export-test',
+  description: 'Export the current MCP interaction history as a copilotbrowserwser test file',
+  category: 'export',
+  args: z.object({
+    filename: z.string().optional().describe('Target file for the exported test'),
+  }),
+  options: z.object({
+    testName: z.string().optional().describe('Name of the exported test'),
+  }),
+  toolName: 'browser_export_copilotbrowser_test',
+  toolParams:({ filename, testName }) => ({ filename, testName }),
+});
+
+const exportGithubWorkflow = declareCommand({
+  name: 'export-workflow',
+  description: 'Write a GitHub Actions workflow for copilotbrowser into the workspace',
+  category: 'export',
+  args: z.object({
+    filename: z.string().optional().describe('Workflow path to write'),
+  }),
+  toolName: 'browser_export_github_actions',
   toolParams: ({ filename }) => ({ filename }),
 });
 
@@ -699,6 +773,100 @@ const pdfSave = declareCommand({
   toolParams: ({ filename }) => ({ filename }),
 });
 
+const pdfText = declareCommand({
+  name: 'pdf-text',
+  description: 'Extract text from a PDF file',
+  category: 'export',
+  args: z.object({
+    file: z.string().describe('Path to the PDF file, absolute or relative to the workspace'),
+  }),
+  options: z.object({
+    filename: z.string().optional().describe('Optional file name to save the extracted text to'),
+  }),
+  toolName: 'browser_pdf_extract_text',
+  toolParams: ({ file: pdfPath, filename }) => ({ pdfPath, filename }),
+});
+
+const pdfMetadata = declareCommand({
+  name: 'pdf-metadata',
+  description: 'Extract metadata from a PDF file',
+  category: 'export',
+  args: z.object({
+    file: z.string().describe('Path to the PDF file, absolute or relative to the workspace'),
+  }),
+  options: z.object({
+    filename: z.string().optional().describe('Optional file name to save the metadata JSON to'),
+  }),
+  toolName: 'browser_pdf_extract_metadata',
+  toolParams: ({ file: pdfPath, filename }) => ({ pdfPath, filename }),
+});
+
+const pdfMarkdown = declareCommand({
+  name: 'pdf-markdown',
+  description: 'Convert a PDF file to Markdown',
+  category: 'export',
+  args: z.object({
+    file: z.string().describe('Path to the PDF file, absolute or relative to the workspace'),
+  }),
+  options: z.object({
+    filename: z.string().optional().describe('Optional file name to save the generated Markdown to'),
+  }),
+  toolName: 'browser_pdf_convert_to_markdown',
+  toolParams: ({ file: pdfPath, filename }) => ({ pdfPath, filename }),
+});
+
+const pdfConvert = declareCommand({
+  name: 'pdf-convert',
+  description: 'Create a structured PDF conversion bundle',
+  category: 'export',
+  args: z.object({
+    file: z.string().describe('Path to the PDF file, absolute or relative to the workspace'),
+  }),
+  options: z.object({
+    ['output-dir']: z.string().optional().describe('Optional directory for the conversion bundle'),
+    ['page-images']: z.boolean().optional().describe('Include rendered page images in the bundle'),
+    ['max-pages']: numberArg.optional().describe('Optional maximum number of pages to render when page images are enabled'),
+    type: z.enum(['png', 'jpeg']).optional().describe('Image format for bundle page images. Defaults to png.'),
+    scale: numberArg.optional().describe('Optional render scale multiplier for bundle page images. Defaults to 2.'),
+  }),
+  toolName: 'browser_pdf_convert_to_bundle',
+  toolParams: ({ file: pdfPath, ['output-dir']: outputDir, ['page-images']: includePageImages, ['max-pages']: maxPages, type, scale }) => ({ pdfPath, outputDir, includePageImages, maxPages, type, scale }),
+});
+
+const pdfImage = declareCommand({
+  name: 'pdf-image',
+  description: 'Render a single PDF page as an image',
+  category: 'export',
+  args: z.object({
+    file: z.string().describe('Path to the PDF file, absolute or relative to the workspace'),
+    page: numberArg.describe('1-based PDF page number to render'),
+  }),
+  options: z.object({
+    filename: z.string().optional().describe('Optional file name for the rendered image'),
+    type: z.enum(['png', 'jpeg']).optional().describe('Image format for the rendered page. Defaults to png.'),
+    scale: numberArg.optional().describe('Optional render scale multiplier for higher-fidelity page images. Defaults to 2.'),
+  }),
+  toolName: 'browser_pdf_extract_page_image',
+  toolParams: ({ file: pdfPath, page: pageNumber, filename, type, scale }) => ({ pdfPath, pageNumber, filename, type, scale }),
+});
+
+const pdfImages = declareCommand({
+  name: 'pdf-images',
+  description: 'Render PDF pages as images',
+  category: 'export',
+  args: z.object({
+    file: z.string().describe('Path to the PDF file, absolute or relative to the workspace'),
+  }),
+  options: z.object({
+    ['filename-prefix']: z.string().optional().describe('Optional prefix for rendered page images. Each page appends `-<pageNumber>.{png|jpeg}`'),
+    ['max-pages']: numberArg.optional().describe('Optional maximum number of pages to render'),
+    type: z.enum(['png', 'jpeg']).optional().describe('Image format for rendered pages. Defaults to png.'),
+    scale: numberArg.optional().describe('Optional render scale multiplier for higher-fidelity page images. Defaults to 2.'),
+  }),
+  toolName: 'browser_pdf_extract_images',
+  toolParams: ({ file: pdfPath, ['filename-prefix']: filenamePrefix, ['max-pages']: maxPages, type, scale }) => ({ pdfPath, filenamePrefix, maxPages, type, scale }),
+});
+
 // DevTools
 
 const consoleList = declareCommand({
@@ -905,7 +1073,15 @@ const commandsArray: AnyCommandSchema[] = [
 
   // export category
   screenshot,
+  exportcopilotbrowserst,
+  exportGithubWorkflow,
   pdfSave,
+  pdfText,
+  pdfMetadata,
+  pdfMarkdown,
+  pdfConvert,
+  pdfImage,
+  pdfImages,
 
   // tabs category
   tabList,
@@ -916,6 +1092,10 @@ const commandsArray: AnyCommandSchema[] = [
   // storage category
   stateLoad,
   stateSave,
+  sessionSave,
+  sessionRestore,
+  sessionDelete,
+  savedSessionsList,
   cookieList,
   cookieGet,
   cookieSet,

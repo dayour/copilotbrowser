@@ -1,7 +1,7 @@
 {
   "name": "copilotbrowser",
   "private": true,
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "A high-level API to automate web browsers",
   "repository": {
     "type": "git",

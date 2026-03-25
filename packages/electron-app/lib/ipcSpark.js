@@ -20,6 +20,7 @@ const GITHUB_API = 'https://api.github.com';
 const GITHUB_MODELS = 'https://models.inference.ai.azure.com';
 
 let _config = null;
+let _cachedRawUser = null;
 
 /**
  * Make an authenticated GitHub API request.
@@ -47,12 +48,26 @@ async function ghFetch(url, options = {}) {
   return text ? JSON.parse(text) : undefined;
 }
 
+async function getRawUser() {
+  if (_cachedRawUser) return _cachedRawUser;
+  _cachedRawUser = await ghFetch('/user');
+  return _cachedRawUser;
+}
+
+async function ensureOwner() {
+  if (_config.owner) return _config.owner;
+  const rawUser = await getRawUser();
+  _config.owner = rawUser.login;
+  return _config.owner;
+}
+
 // ---------------------------------------------------------------------------
 // KV Store — backed by a JSON file in a GitHub repo via Contents API.
 // ---------------------------------------------------------------------------
 
 async function kvReadStore() {
-  const { owner, repo, branch, kvPath } = _config;
+  const owner = await ensureOwner();
+  const { repo, branch, kvPath } = _config;
   try {
     const res = await ghFetch(`/repos/${owner}/${repo}/contents/${kvPath}?ref=${branch}`);
     const decoded = Buffer.from(res.content, 'base64').toString('utf-8');
@@ -64,7 +79,8 @@ async function kvReadStore() {
 }
 
 async function kvWriteStore(data, sha) {
-  const { owner, repo, branch, kvPath } = _config;
+  const owner = await ensureOwner();
+  const { repo, branch, kvPath } = _config;
   const content = Buffer.from(JSON.stringify(data, null, 2)).toString('base64');
   const body = { message: 'copilotspark: update kv store', content, branch };
   if (sha) body.sha = sha;
@@ -113,13 +129,14 @@ let _cachedUser = null;
 
 async function getUser() {
   if (_cachedUser) return _cachedUser;
-  const raw = await ghFetch('/user');
+  const raw = await getRawUser();
 
   let isOwner = false;
-  if (_config.owner && _config.repo) {
+  if (_config.repo) {
     try {
-      await ghFetch(`/repos/${_config.owner}/${_config.repo}`);
-      isOwner = raw.login === _config.owner;
+      const owner = await ensureOwner();
+      await ghFetch(`/repos/${owner}/${_config.repo}`);
+      isOwner = raw.login === owner;
     } catch { isOwner = false; }
   }
 
@@ -156,9 +173,11 @@ function registerSparkIPC(config) {
     defaultModel: 'gpt-4o',
     ...config,
   };
+  _cachedUser = null;
+  _cachedRawUser = null;
 
   // Ensure KV repo exists (fire and forget at startup).
-  ghFetch(`/repos/${_config.owner}/${_config.repo}`).catch(async () => {
+  ensureOwner().then((owner) => ghFetch(`/repos/${owner}/${_config.repo}`)).catch(async () => {
     try {
       await ghFetch('/user/repos', {
         method: 'POST',
@@ -169,7 +188,8 @@ function registerSparkIPC(config) {
           auto_init: true,
         }),
       });
-      console.log(`[spark] Created KV repo: ${_config.owner}/${_config.repo}`);
+      const owner = await ensureOwner();
+      console.log(`[spark] Created KV repo: ${owner}/${_config.repo}`);
     } catch (err) {
       console.warn(`[spark] Could not create KV repo: ${err.message}`);
     }

@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import fs from 'fs';
+
 import { test, expect } from './cli-fixtures';
 
 test('screenshot', async ({ cli, server, mcpBrowser }) => {
@@ -60,5 +62,66 @@ test('pdf --filename', async ({ cli, server, mcpBrowser }) => {
   const { output, attachments } = await cli('pdf', '--filename=pdf.pdf');
   expect(output).toContain('[Page as pdf](pdf.pdf)');
   expect(attachments[0].name).toEqual('Page as pdf');
+  expect(attachments[0].data).toEqual(expect.any(Buffer));
+});
+
+test('pdf-text <file>', async ({ cli, server, mcpBrowser }) => {
+  test.skip(mcpBrowser !== 'chromium' && mcpBrowser !== 'chrome', 'PDF extraction test requires generating a source PDF in Chromium or Chrome');
+  await cli('open', server.HELLO_WORLD);
+  await cli('pdf', '--filename=source.pdf');
+  const { output } = await cli('pdf-text', 'source.pdf');
+  expect(output).toContain('Hello, world!');
+});
+
+test('pdf-metadata <file> --filename', async ({ cli, server, mcpBrowser }) => {
+  test.skip(mcpBrowser !== 'chromium' && mcpBrowser !== 'chrome', 'PDF extraction test requires generating a source PDF in Chromium or Chrome');
+  await cli('open', server.HELLO_WORLD);
+  await cli('pdf', '--filename=source.pdf');
+  const { output, attachments } = await cli('pdf-metadata', 'source.pdf', '--filename=metadata.json');
+  expect(output).toContain('[Extracted PDF metadata](metadata.json)');
+  expect(attachments[0].name).toEqual('Extracted PDF metadata');
+  expect(attachments[0].data?.toString()).toContain('"pages": 1');
+});
+
+test('pdf-markdown <file> --filename', async ({ cli, server, mcpBrowser }) => {
+  test.skip(mcpBrowser !== 'chromium' && mcpBrowser !== 'chrome', 'PDF extraction test requires generating a source PDF in Chromium or Chrome');
+  await cli('open', server.HELLO_WORLD);
+  await cli('pdf', '--filename=source.pdf');
+  const { output, attachments } = await cli('pdf-markdown', 'source.pdf', '--filename=source.md');
+  expect(output).toContain('[PDF as Markdown](source.md)');
+  expect(attachments[0].name).toEqual('PDF as Markdown');
+  expect(attachments[0].data?.toString()).toContain('Hello, world!');
+});
+
+test('pdf-convert <file>', async ({ cli, server, mcpBrowser }, testInfo) => {
+  test.skip(mcpBrowser !== 'chromium' && mcpBrowser !== 'chrome', 'PDF extraction test requires generating a source PDF in Chromium or Chrome');
+  await cli('open', server.HELLO_WORLD);
+  await cli('pdf', '--filename=source.pdf');
+  const { output } = await cli('pdf-convert', 'source.pdf', '--output-dir=bundle', '--page-images', '--max-pages=1', '--scale=3');
+  expect(output).toContain('manifest.json');
+  expect(output).toContain('document.md');
+  expect(fs.existsSync(testInfo.outputPath('bundle', 'manifest.json'))).toBeTruthy();
+  expect(fs.existsSync(testInfo.outputPath('bundle', 'document.md'))).toBeTruthy();
+  expect(fs.existsSync(testInfo.outputPath('bundle', 'images', 'page-001.png'))).toBeTruthy();
+});
+
+test('pdf-image <file> <page>', async ({ cli, server, mcpBrowser }) => {
+  test.skip(mcpBrowser !== 'chromium' && mcpBrowser !== 'chrome', 'PDF extraction test requires generating a source PDF in Chromium or Chrome');
+  await cli('open', server.HELLO_WORLD);
+  await cli('pdf', '--filename=source.pdf');
+  const { output, attachments } = await cli('pdf-image', 'source.pdf', '1', '--scale=3', '--filename=page-1.png');
+  expect(output).toContain('[PDF page 1](page-1.png)');
+  expect(attachments[0].name).toEqual('PDF page 1');
+  expect(attachments[0].data).toEqual(expect.any(Buffer));
+});
+
+test('pdf-images <file>', async ({ cli, server, mcpBrowser }) => {
+  test.skip(mcpBrowser !== 'chromium' && mcpBrowser !== 'chrome', 'PDF extraction test requires generating a source PDF in Chromium or Chrome');
+  await cli('open', server.HELLO_WORLD);
+  await cli('pdf', '--filename=source.pdf');
+  const { output, attachments } = await cli('pdf-images', 'source.pdf', '--filename-prefix=pages/page', '--max-pages=1', '--scale=3');
+  expect(output).toContain('Extracted 1 page image');
+  expect(output).toContain('[PDF page 1](pages/page-1.png)');
+  expect(attachments[0].name).toEqual('PDF page 1');
   expect(attachments[0].data).toEqual(expect.any(Buffer));
 });

@@ -126,3 +126,27 @@ test('state-save and state-load roundtrip', async ({ cli, server, mcpBrowser }, 
   const { output: restoredResult } = await cli('eval', '() => document.cookie + "|" + localStorage.getItem("roundtripKey")');
   expect(restoredResult).toContain('roundtripCookie=roundtripValue');
 });
+
+test('session-save/list/restore/delete manages named sessions', async ({ cli, server }, testInfo) => {
+  const config = { capabilities: ['storage'] };
+  await fs.promises.writeFile(testInfo.outputPath('.copilotbrowser', 'cli.config.json'), JSON.stringify(config, null, 2));
+
+  await cli('open', server.EMPTY_PAGE);
+  await cli('eval', '() => { document.cookie = "cliCookie=cliValue"; localStorage.setItem("cliKey", "cliValue"); }');
+
+  const { output: saveOutput } = await cli('session-save', 'CLI Session');
+  expect(saveOutput).toContain('CLI Session');
+
+  const { output: listOutput } = await cli('session-list');
+  expect(listOutput).toContain('CLI Session');
+
+  await cli('eval', '() => { document.cookie = "cliCookie=; expires=Thu, 01 Jan 1970 00:00:00 GMT"; localStorage.clear(); }');
+  await cli('session-restore', 'CLI Session');
+  await cli('goto', server.EMPTY_PAGE);
+
+  const { output: restoredOutput } = await cli('eval', '() => document.cookie + "|" + localStorage.getItem("cliKey")');
+  expect(restoredOutput).toContain('cliCookie=cliValue|cliValue');
+
+  const { output: deleteOutput } = await cli('session-delete', 'CLI Session');
+  expect(deleteOutput).toContain('Deleted session');
+});

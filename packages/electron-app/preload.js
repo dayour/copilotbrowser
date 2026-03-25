@@ -50,4 +50,11 @@ contextBridge.exposeInMainWorld('copilotbrowser', {
     set: (patch) => ipcRenderer.invoke('settings:set', patch),
     delete: (key) => ipcRenderer.invoke('settings:delete', { key }),
   },
+  workspace: {
+    listSparks: () => ipcRenderer.invoke('workspace:sparks'),
+  },
+  runbooks: {
+    getAdaptiveCard: () => ipcRenderer.invoke('runbooks:adaptive-card'),
+    getStarters: () => ipcRenderer.invoke('runbooks:starters'),
+  },
 });

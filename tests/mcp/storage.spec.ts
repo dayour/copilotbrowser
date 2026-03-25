@@ -229,3 +229,74 @@ test('browser_storage_state and browser_set_storage_state roundtrip', async ({ s
     result: expect.stringContaining('roundtripCookie=roundtripValue'),
   });
 });
+
+test('browser_session_save/list/restore/delete manages named sessions', async ({ startClient, server }, testInfo) => {
+  const { client } = await startClient({
+    config: { capabilities: ['storage'] },
+  });
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.EMPTY_PAGE },
+  });
+
+  await client.callTool({
+    name: 'browser_evaluate',
+    arguments: { function: '() => { document.cookie = "savedCookie=savedValue"; localStorage.setItem("savedKey", "savedValue"); }' },
+  });
+
+  const saveResult = await client.callTool({
+    name: 'browser_session_save',
+    arguments: { name: 'Signed In Admin', description: 'Primary test session' },
+  });
+  expect(saveResult).toHaveResponse({
+    result: expect.stringContaining('Signed In Admin'),
+  });
+
+  const sessionFile = testInfo.outputPath('.copilotbrowser', 'sessions', 'signed-in-admin.json');
+  const metaFile = testInfo.outputPath('.copilotbrowser', 'sessions', 'signed-in-admin.meta.json');
+  expect(await fs.promises.stat(sessionFile).catch(() => null)).not.toBeNull();
+  expect(await fs.promises.stat(metaFile).catch(() => null)).not.toBeNull();
+
+  const listResult = await client.callTool({
+    name: 'browser_session_list',
+    arguments: {},
+  });
+  expect(listResult).toHaveResponse({
+    result: expect.stringContaining('Signed In Admin'),
+  });
+
+  await client.callTool({
+    name: 'browser_evaluate',
+    arguments: { function: '() => { document.cookie = "savedCookie=; expires=Thu, 01 Jan 1970 00:00:00 GMT"; localStorage.clear(); }' },
+  });
+
+  await client.callTool({
+    name: 'browser_session_restore',
+    arguments: { name: 'Signed In Admin' },
+  });
+
+  await client.callTool({
+    name: 'browser_navigate',
+    arguments: { url: server.EMPTY_PAGE },
+  });
+
+  const restoredResult = await client.callTool({
+    name: 'browser_evaluate',
+    arguments: { function: '() => document.cookie + "|" + localStorage.getItem("savedKey")' },
+  });
+  expect(restoredResult).toHaveResponse({
+    result: expect.stringContaining('savedCookie=savedValue|savedValue'),
+  });
+
+  const deleteResult = await client.callTool({
+    name: 'browser_session_delete',
+    arguments: { name: 'Signed In Admin' },
+  });
+  expect(deleteResult).toHaveResponse({
+    result: expect.stringContaining('Deleted session'),
+  });
+
+  expect(await fs.promises.stat(sessionFile).catch(() => null)).toBeNull();
+  expect(await fs.promises.stat(metaFile).catch(() => null)).toBeNull();
+});

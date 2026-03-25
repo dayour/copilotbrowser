@@ -1,0 +1,140 @@
+{
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "type": "AdaptiveCard",
+  "version": "1.6",
+  "metadata": {
+    "name": "copilotbrowser-playwright-mcp-runbook",
+    "description": "Adaptive Card template for collecting browser automation details that will be converted into Playwright-style MCP commands with validation, export, and recovery guidance."
+  },
+  "body": [
+    {
+      "type": "TextBlock",
+      "text": "copilotbrowser MCP Runbook",
+      "weight": "Bolder",
+      "size": "Large"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Describe the browser outcome, target Spark app, and MCP command JSON needed to complete the task through the UI. Use only repo-supported browser tool names and keep waits limited to time, text, or textGone.",
+      "wrap": true
+    },
+    {
+      "type": "Input.Text",
+      "id": "runbookTitle",
+      "label": "Runbook title",
+      "placeholder": "Validate local Spark runtime in copilotbrowser"
+    },
+    {
+      "type": "Input.ChoiceSet",
+      "id": "targetKind",
+      "label": "Target source",
+      "style": "expanded",
+      "value": "localSpark",
+      "choices": [
+        {
+          "title": "Local Spark inventory",
+          "value": "localSpark"
+        },
+        {
+          "title": "Published Spark URL",
+          "value": "publishedSpark"
+        },
+        {
+          "title": "Current browser tab",
+          "value": "currentTab"
+        }
+      ]
+    },
+    {
+      "type": "Input.Text",
+      "id": "sparkSlug",
+      "label": "Spark slug or local folder",
+      "placeholder": "09-mcp-inspector-with-g"
+    },
+    {
+      "type": "Input.Text",
+      "id": "startUrl",
+      "label": "Start URL or file path",
+      "placeholder": "file:///E:/copilotspark/sparks/09-mcp-inspector-with-g/index.html"
+    },
+    {
+      "type": "Input.Text",
+      "id": "goal",
+      "label": "Goal and reason",
+      "isMultiline": true,
+      "placeholder": "Describe WHAT the browser task should accomplish and WHY it matters. Do not describe implementation details."
+    },
+    {
+      "type": "Input.Text",
+      "id": "detailInputsJson",
+      "label": "Detail inputs JSON",
+      "isMultiline": true,
+      "placeholder": "{\"persona\":\"reviewer\",\"query\":\"window.spark user info\"}"
+    },
+    {
+      "type": "Input.Text",
+      "id": "mcpCommandsJson",
+      "label": "MCP commands JSON",
+      "isMultiline": true,
+      "placeholder": "[{\"tool\":\"copilotbrowser-mcp-browser_navigate\",\"args\":{\"url\":\"{{startUrl}}\"}},{\"tool\":\"copilotbrowser-mcp-browser_snapshot\",\"args\":{}},{\"tool\":\"copilotbrowser-mcp-browser_click\",\"args\":{\"ref\":\"submit-button\",\"element\":\"Submit button\"}}]"
+    },
+    {
+      "type": "Input.Text",
+      "id": "validationJson",
+      "label": "Validation JSON",
+      "isMultiline": true,
+      "placeholder": "[{\"type\":\"textPresent\",\"value\":\"Dashboard\"},{\"type\":\"textAbsent\",\"value\":\"Error\"}]"
+    },
+    {
+      "type": "Input.Number",
+      "id": "defaultWaitMs",
+      "label": "Default wait after each command (ms)",
+      "value": 1500
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "captureTrace",
+      "title": "Capture trace artifacts",
+      "value": "true",
+      "valueOn": "true",
+      "valueOff": "false"
+    },
+    {
+      "type": "Input.Toggle",
+      "id": "captureScreenshotOnFailure",
+      "title": "Capture screenshot on failure",
+      "value": "true",
+      "valueOn": "true",
+      "valueOff": "false"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Validation tips: prefer textPresent and textAbsent checks, then add browser_snapshot or browser_take_screenshot after major UI transitions.",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Recovery tips: if the UI stalls or shows an error banner, capture browser_snapshot, browser_take_screenshot, and browser_console_messages before retrying.",
+      "wrap": true,
+      "spacing": "Small"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Suggested MCP tools: browser_navigate, browser_snapshot, browser_click, browser_type, browser_select_option, browser_wait_for, browser_take_screenshot, browser_console_messages, browser_export_playwright_test, browser_export_github_actions.",
+      "wrap": true,
+      "spacing": "Medium"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Action.Submit",
+      "title": "Create runbook prompt",
+      "data": {
+        "kind": "copilotbrowser-runbook",
+        "schemaVersion": "1.0.0",
+        "commandStyle": "playwright-mcp"
+      }
+    }
+  ]
+}

@@ -20,6 +20,7 @@ export type ToolCapability =
   'config' |
   'core' |
   'core-follow-me' |
+  'core-native' |
   'core-navigation' |
   'core-tabs' |
   'core-input' |
@@ -29,7 +30,10 @@ export type ToolCapability =
   'storage' |
   'testing' |
   'vision' |
-  'devtools';
+  'devtools' |
+  'clock' |
+  'emulate' |
+  'autonomy';
 
 export type Config = {
   /**
