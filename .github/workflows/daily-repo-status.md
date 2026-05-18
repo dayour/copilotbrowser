@@ -6,10 +6,9 @@ description: |
   and project recommendations.
 
 on:
-  schedule:
-    # 5:00 AM Pacific (12:00 UTC PDT, 13:00 UTC PST)
-    - cron: "0 12 * * *"
+  schedule: daily
   workflow_dispatch:
+
 permissions:
   contents: read
   issues: read
@@ -32,10 +31,10 @@ safe-outputs:
     title-prefix: "[repo-status] "
     labels: [report, daily-status]
     close-older-issues: true
-source: githubnext/agentics/workflows/daily-repo-status.md@dcc45f7b7a2c54d652fa242c0d3964f8b15ac4bf
+source: githubnext/agentics/workflows/repo-status.md@main
 ---
 
-# Daily Repo Status
+# Repo Status
 
 Create an upbeat daily status report for the repo as a GitHub issue.
 
