@@ -64,7 +64,7 @@ Sample scripts for specific agent creation and extension scenarios are located i
 
 ## Usage
 
-To use this builder, adapt the MCP commands and steps to your specific agent and environment. Replace variables (e.g., `{agent_name}`, `{topic_name}`) with your specific values. Use the Playwright MCP tools in Visual Studio Code to execute commands.
+To use this builder, adapt the MCP commands and steps to your specific agent and environment. Replace variables (e.g., `{agent_name}`, `{topic_name}`) with your specific values. Use the copilotbrowser MCP tools in Visual Studio Code to execute commands.
 
 ## Notes
 

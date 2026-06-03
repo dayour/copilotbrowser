@@ -808,7 +808,7 @@ Completed with input: {
  "function": "() => { try { const cells = Array.from(document.querySelectorAll('[data-testid=\"bot-cell\"]')); const ids = {}; cells.slice(0,10).forEach(c => { const name = c.getAttribute('title'); const fiber = c._reactFiber || c.__reactFiber || c[Object.keys(c).find(k=>k.startsWith('__reactFiber'))]; if(fiber){ let f = fiber; for(let i=0;i<20;i++){ if(f && f.memoizedProps && f.memoizedProps.botId){ ids[name]=f.memoizedProps.botId; break; } if(f) f = f.return; } } }); return JSON.stringify(ids); } catch(e) { return 'error: '+e.message; } }"
 }
 
-Let me try using Playwright's locator to click on "Darbot Browser" text directly.
+Let me try using copilotbrowser's locator to click on "Darbot Browser" text directly.
 
 Ran Click
 Completed with input: {

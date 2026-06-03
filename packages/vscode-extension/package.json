@@ -39,8 +39,7 @@
     "chromium",
     "firefox",
     "webkit",
-    "copilotbrowser",
-    "playwright"
+    "copilotbrowser"
   ],
   "activationEvents": [
     "onStartupFinished"
@@ -51,7 +50,7 @@
       "activitybar": [
         {
           "id": "copilotbrowser",
-          "title": "CopilotBrowser Browser Automation",
+          "title": "copilotbrowser Browser Automation",
           "icon": "resources/icon.svg"
         }
       ]
@@ -306,7 +305,7 @@
         "copilotbrowser.mcp.connectedProfile": {
           "type": "string",
           "default": "",
-          "markdownDescription": "Edge/Chrome profile folder to use in **Connected** mode (e.g. `Default`, `Profile 1`, `Profile 2`). Leave blank to use the default profile. Run **CopilotBrowser: Select Connected Profile** to pick from your installed profiles."
+          "markdownDescription": "Edge/Chrome profile folder to use in **Connected** mode (e.g. `Default`, `Profile 1`, `Profile 2`). Leave blank to use the default profile. Run **copilotbrowser: Select Connected Profile** to pick from your installed profiles."
         },
         "copilotbrowser.autoStart": {
           "type": "boolean",

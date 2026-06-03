@@ -1141,7 +1141,7 @@ async function openInspector() {
   });
   if (url === undefined) return; // user cancelled
 
-  // PWDEBUG=1 activates the Playwright Inspector UI alongside the browser
+  // PWDEBUG=1 activates the copilotbrowser Inspector UI alongside the browser
   const config = vscode.workspace.getConfiguration('copilotbrowser');
   const env = { ...process.env, PWDEBUG: '1', ...config.get<Record<string, string>>('env', {}) };
   const bin = getcopilotbrowserBin(cwd);
@@ -1199,7 +1199,7 @@ async function configSetBrowser() {
     { label: 'webkit',   description: 'WebKit / Safari (bundled with extension)', picked: current === 'webkit' },
   ];
   const selected = await vscode.window.showQuickPick(options, {
-    title: 'CopilotBrowser: Select Browser',
+    title: 'copilotbrowser: Select Browser',
     placeHolder: `Current: ${current}`,
   });
   if (!selected) return;
@@ -1215,7 +1215,7 @@ async function configToggleHeadless() {
         { label: '$(eye) Visible (headed)', description: 'Show the browser window', picked: !current },
         { label: '$(eye-closed) Headless',  description: 'Run without a visible window', picked: current },
       ],
-      { title: 'CopilotBrowser: Headless Mode', placeHolder: `Current: ${current ? 'headless' : 'headed'}` },
+      { title: 'copilotbrowser: Headless Mode', placeHolder: `Current: ${current ? 'headless' : 'headed'}` },
   );
   if (!choice) return;
   const newValue = choice.label.includes('Headless');
@@ -1231,7 +1231,7 @@ async function configToggleNoSandbox() {
         { label: '$(shield) Sandbox enabled',  description: 'Normal security sandbox (recommended)', picked: !current },
         { label: '$(shield-x) No Sandbox',     description: 'Disable sandbox — use if you see sandbox errors', picked: current },
       ],
-      { title: 'CopilotBrowser: Sandbox', placeHolder: `Current: ${current ? 'no sandbox' : 'sandbox enabled'}` },
+      { title: 'copilotbrowser: Sandbox', placeHolder: `Current: ${current ? 'no sandbox' : 'sandbox enabled'}` },
   );
   if (!choice) return;
   const newValue = choice.label.includes('No Sandbox');
@@ -1260,7 +1260,7 @@ async function configSetCapabilities() {
     },
   ];
   const selected = await vscode.window.showQuickPick(options, {
-    title: 'CopilotBrowser: MCP Capabilities',
+    title: 'copilotbrowser: MCP Capabilities',
     placeHolder: `Current: ${current.length ? current.join(', ') : 'none'} — Space to toggle, Enter to confirm`,
     canPickMany: true,
   });
@@ -1276,7 +1276,7 @@ async function configToggleAutoStart() {
         { label: '$(zap) Auto Start enabled',  description: 'MCP server starts automatically with VS Code', picked: current },
         { label: '$(zap) Auto Start disabled', description: 'Start the MCP server manually when needed',    picked: !current },
       ],
-      { title: 'CopilotBrowser: Auto Start', placeHolder: `Current: ${current ? 'enabled' : 'disabled'}` },
+      { title: 'copilotbrowser: Auto Start', placeHolder: `Current: ${current ? 'enabled' : 'disabled'}` },
   );
   if (!choice) return;
   const newValue = choice.label.includes('enabled');
@@ -1308,7 +1308,7 @@ async function configToggleProfileMode() {
   ];
 
   const selected = await vscode.window.showQuickPick(items, {
-    title: 'CopilotBrowser: Profile Mode',
+    title: 'copilotbrowser: Profile Mode',
     placeHolder: `Current: ${current}`,
   });
   if (!selected) return;
@@ -1388,7 +1388,7 @@ async function configSetConnectedProfile() {
   });
 
   const selected = await vscode.window.showQuickPick(profileItems, {
-    title: 'CopilotBrowser: Select Connected Profile',
+    title: 'copilotbrowser: Select Connected Profile',
     placeHolder: currentProfile ? `Current: ${currentProfile}` : 'Select a profile to use',
   });
   if (!selected) return;
@@ -1396,7 +1396,7 @@ async function configSetConnectedProfile() {
   let profileFolder: string;
   if (selected.label.includes('Enter manually')) {
     const manual = await vscode.window.showInputBox({
-      title: 'CopilotBrowser: Profile Folder Name',
+      title: 'copilotbrowser: Profile Folder Name',
       prompt: 'Enter the profile folder name (e.g. "Default", "Profile 1", "Profile 2")',
       value: currentProfile,
       placeHolder: 'Default',
@@ -1417,7 +1417,7 @@ async function configSetConnectedProfile() {
   );
   if (uddChoice === 'Change Directory') {
     const customUdd = await vscode.window.showInputBox({
-      title: 'CopilotBrowser: User Data Directory',
+      title: 'copilotbrowser: User Data Directory',
       prompt: 'Enter the full path to the browser user data directory',
       value: userDataDir,
       placeHolder: getDefaultUserDataDir(browser),
@@ -1431,7 +1431,7 @@ async function configSetConnectedProfile() {
 // Sidebar Tree View Providers
 // ---------------------------------------------------------------------------
 
-class CopilotBrowserTreeItem extends vscode.TreeItem {
+class copilotbrowserTreeItem extends vscode.TreeItem {
   constructor(
       label: string,
       collapsibleState: vscode.TreeItemCollapsibleState = vscode.TreeItemCollapsibleState.None,
@@ -1453,15 +1453,15 @@ class CopilotBrowserTreeItem extends vscode.TreeItem {
 }
 
 /** TARGETS view — shows MCP server status with inline start/stop/restart buttons */
-class TargetsTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeItem> {
+class TargetsTreeProvider implements vscode.TreeDataProvider<copilotbrowserTreeItem> {
   private _onDidChangeTreeData = new vscode.EventEmitter<void>();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   refresh() { this._onDidChangeTreeData.fire(); }
 
-  getTreeItem(element: CopilotBrowserTreeItem): vscode.TreeItem { return element; }
+  getTreeItem(element: copilotbrowserTreeItem): vscode.TreeItem { return element; }
 
-  getChildren(element?: CopilotBrowserTreeItem): CopilotBrowserTreeItem[] {
+  getChildren(element?: copilotbrowserTreeItem): copilotbrowserTreeItem[] {
     if (element) return [];
 
     const running = httpServerRunning;
@@ -1476,7 +1476,7 @@ class TargetsTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeI
         ? 'copilotbrowser MCP is ready via stdio (bundled). Click ▶ to start an HTTP server.'
         : 'copilotbrowser MCP will use npx as a fallback. Click ▶ to start.';
 
-    const serverItem = new CopilotBrowserTreeItem('copilotbrowser MCP', vscode.TreeItemCollapsibleState.None, {
+    const serverItem = new copilotbrowserTreeItem('copilotbrowser MCP', vscode.TreeItemCollapsibleState.None, {
       contextValue: running ? 'mcpRunning' : 'mcpStopped',
       description: statusLabel,
       iconPath: running
@@ -1490,15 +1490,15 @@ class TargetsTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeI
 }
 
 /** CONFIGURATION view — shows current MCP settings with a link to open settings */
-class ConfigTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeItem> {
+class ConfigTreeProvider implements vscode.TreeDataProvider<copilotbrowserTreeItem> {
   private _onDidChangeTreeData = new vscode.EventEmitter<void>();
   readonly onDidChangeTreeData = this._onDidChangeTreeData.event;
 
   refresh() { this._onDidChangeTreeData.fire(); }
 
-  getTreeItem(element: CopilotBrowserTreeItem): vscode.TreeItem { return element; }
+  getTreeItem(element: copilotbrowserTreeItem): vscode.TreeItem { return element; }
 
-  getChildren(element?: CopilotBrowserTreeItem): CopilotBrowserTreeItem[] {
+  getChildren(element?: copilotbrowserTreeItem): copilotbrowserTreeItem[] {
     if (element) return [];
 
     const config = vscode.workspace.getConfiguration('copilotbrowser');
@@ -1510,29 +1510,29 @@ class ConfigTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeIt
     const profileMode = config.get<string>('mcp.profileMode', 'isolated');
     const connectedProfile = config.get<string>('mcp.connectedProfile', '');
 
-    const items: CopilotBrowserTreeItem[] = [
-      new CopilotBrowserTreeItem('Browser', vscode.TreeItemCollapsibleState.None, {
+    const items: copilotbrowserTreeItem[] = [
+      new copilotbrowserTreeItem('Browser', vscode.TreeItemCollapsibleState.None, {
         description: browser,
         iconPath: new vscode.ThemeIcon('globe'),
         tooltip: 'Click to change browser — copilotbrowser.mcp.browser',
         contextValue: 'configItem',
         command: { command: 'copilotbrowser.config.setBrowser', title: 'Set Browser' },
       }),
-      new CopilotBrowserTreeItem('Headless', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Headless', vscode.TreeItemCollapsibleState.None, {
         description: String(headless),
         iconPath: new vscode.ThemeIcon(headless ? 'eye-closed' : 'eye'),
         tooltip: 'Click to toggle headless mode — copilotbrowser.mcp.headless',
         contextValue: 'configItem',
         command: { command: 'copilotbrowser.config.toggleHeadless', title: 'Toggle Headless' },
       }),
-      new CopilotBrowserTreeItem('No Sandbox', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('No Sandbox', vscode.TreeItemCollapsibleState.None, {
         description: String(noSandbox),
         iconPath: new vscode.ThemeIcon('shield'),
         tooltip: 'Click to toggle sandbox — copilotbrowser.mcp.noSandbox',
         contextValue: 'configItem',
         command: { command: 'copilotbrowser.config.toggleNoSandbox', title: 'Toggle No Sandbox' },
       }),
-      new CopilotBrowserTreeItem('Profile Mode', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Profile Mode', vscode.TreeItemCollapsibleState.None, {
         description: profileMode,
         iconPath: new vscode.ThemeIcon(profileMode === 'connected' ? 'account' : 'lock'),
         tooltip: profileMode === 'connected'
@@ -1544,7 +1544,7 @@ class ConfigTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeIt
     ];
 
     if (profileMode === 'connected') {
-      items.push(new CopilotBrowserTreeItem('Connected Profile', vscode.TreeItemCollapsibleState.None, {
+      items.push(new copilotbrowserTreeItem('Connected Profile', vscode.TreeItemCollapsibleState.None, {
         description: connectedProfile || 'Default',
         iconPath: new vscode.ThemeIcon('person'),
         tooltip: 'Click to select which browser profile to connect to — copilotbrowser.mcp.connectedProfile',
@@ -1554,21 +1554,21 @@ class ConfigTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeIt
     }
 
     items.push(
-      new CopilotBrowserTreeItem('Capabilities', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Capabilities', vscode.TreeItemCollapsibleState.None, {
         description: caps.length ? caps.join(', ') : 'none',
         iconPath: new vscode.ThemeIcon('symbol-misc'),
         tooltip: 'Click to select capabilities (vision, pdf, devtools) — copilotbrowser.mcp.capabilities',
         contextValue: 'configItem',
         command: { command: 'copilotbrowser.config.setCapabilities', title: 'Set Capabilities' },
       }),
-      new CopilotBrowserTreeItem('Auto Start', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Auto Start', vscode.TreeItemCollapsibleState.None, {
         description: String(autoStart),
         iconPath: new vscode.ThemeIcon('zap'),
         tooltip: 'Click to toggle auto-start on VS Code startup — copilotbrowser.autoStart',
         contextValue: 'configItem',
         command: { command: 'copilotbrowser.config.toggleAutoStart', title: 'Toggle Auto Start' },
       }),
-      new CopilotBrowserTreeItem('Open Settings', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Open Settings', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('settings-gear'),
         command: { command: 'copilotbrowser.openSettings', title: 'Open Settings' },
         contextValue: 'openSettingsAction',
@@ -1581,43 +1581,43 @@ class ConfigTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeIt
 }
 
 /** TOOLS view — action buttons for browser automation tasks */
-class ToolsTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeItem> {
-  getTreeItem(element: CopilotBrowserTreeItem): vscode.TreeItem { return element; }
+class ToolsTreeProvider implements vscode.TreeDataProvider<copilotbrowserTreeItem> {
+  getTreeItem(element: copilotbrowserTreeItem): vscode.TreeItem { return element; }
 
-  getChildren(element?: CopilotBrowserTreeItem): CopilotBrowserTreeItem[] {
+  getChildren(element?: copilotbrowserTreeItem): copilotbrowserTreeItem[] {
     if (element) return [];
     return [
-      new CopilotBrowserTreeItem('Install Browsers', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Install Browsers', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('cloud-download'),
         command: { command: 'copilotbrowser.install', title: 'Install Browsers' },
         tooltip: 'Download and install browser binaries (Chromium, Firefox, WebKit)',
         contextValue: 'toolAction',
       }),
-      new CopilotBrowserTreeItem('Run Tests', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Run Tests', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('play'),
         command: { command: 'copilotbrowser.runTests', title: 'Run Tests' },
         tooltip: 'Run copilotbrowser tests in the current workspace',
         contextValue: 'toolAction',
       }),
-      new CopilotBrowserTreeItem('Show Trace Viewer', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Show Trace Viewer', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('graph'),
         command: { command: 'copilotbrowser.showTrace', title: 'Show Trace Viewer' },
         tooltip: 'Open the copilotbrowser trace viewer for a recorded test trace',
         contextValue: 'toolAction',
       }),
-      new CopilotBrowserTreeItem('Record New Test', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Record New Test', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('record'),
         command: { command: 'copilotbrowser.codegen', title: 'Record New Test' },
         tooltip: 'Open a browser and record interactions as a copilotbrowser test',
         contextValue: 'toolAction',
       }),
-      new CopilotBrowserTreeItem('Open Inspector', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Open Inspector', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('inspect'),
         command: { command: 'copilotbrowser.openInspector', title: 'Open Inspector' },
         tooltip: 'Open the copilotbrowser inspector for interactive browser exploration',
         contextValue: 'toolAction',
       }),
-      new CopilotBrowserTreeItem('Install CLI Skills', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Install CLI Skills', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('extensions'),
         command: { command: 'copilotbrowser.installCliSkills', title: 'Install CLI Skills' },
         tooltip: 'Install copilotbrowser-cli skills into the workspace for coding agents',
@@ -1628,31 +1628,31 @@ class ToolsTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeIte
 }
 
 /** HELPFUL LINKS view — documentation, issue tracker, and output channel */
-class HelpTreeProvider implements vscode.TreeDataProvider<CopilotBrowserTreeItem> {
-  getTreeItem(element: CopilotBrowserTreeItem): vscode.TreeItem { return element; }
+class HelpTreeProvider implements vscode.TreeDataProvider<copilotbrowserTreeItem> {
+  getTreeItem(element: copilotbrowserTreeItem): vscode.TreeItem { return element; }
 
-  getChildren(element?: CopilotBrowserTreeItem): CopilotBrowserTreeItem[] {
+  getChildren(element?: copilotbrowserTreeItem): copilotbrowserTreeItem[] {
     if (element) return [];
     return [
-      new CopilotBrowserTreeItem('Documentation', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Documentation', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('book'),
         command: { command: 'copilotbrowser.openDocumentation', title: 'Open Documentation' },
         tooltip: 'Open the copilotbrowser README and documentation on GitHub',
         contextValue: 'helpLink',
       }),
-      new CopilotBrowserTreeItem('Report a Bug', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Report a Bug', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('bug'),
         command: { command: 'copilotbrowser.reportBug', title: 'Report a Bug' },
         tooltip: 'Open the GitHub issue tracker to report a problem',
         contextValue: 'helpLink',
       }),
-      new CopilotBrowserTreeItem('Show Output', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('Show Output', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('output'),
         command: { command: 'copilotbrowser.showOutput', title: 'Show Output' },
         tooltip: 'Show the copilotbrowser output channel for logs and diagnostics',
         contextValue: 'helpLink',
       }),
-      new CopilotBrowserTreeItem('MCP Config Quick-Pick', vscode.TreeItemCollapsibleState.None, {
+      new copilotbrowserTreeItem('MCP Config Quick-Pick', vscode.TreeItemCollapsibleState.None, {
         iconPath: new vscode.ThemeIcon('settings-gear'),
         command: { command: 'copilotbrowser.showMcpConfig', title: 'Show MCP Config' },
         tooltip: 'Open the MCP server configuration quick-pick panel',
