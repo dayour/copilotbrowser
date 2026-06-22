@@ -16,6 +16,8 @@
 
 import type { AgentOptions, LLMProvider, LLMProviderAdapter, LLMProviderConfig, LLMProviderPolicy } from '../../types/test';
 
+export type { LLMProvider, LLMProviderAdapter, LLMProviderConfig, LLMProviderPolicy };
+
 export interface LLMProviderAdapterContext {
   agentOptions: AgentOptions;
 }

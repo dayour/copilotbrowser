@@ -143,14 +143,24 @@ const ROOT_PATH = path.join(__dirname, '..');
 const LICENCE_FILES = ['NOTICE', 'LICENSE'];
 const workspace = new Workspace(ROOT_PATH, [
   new PWPackage({
-    name: 'copilotbrowser',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser'),
+    name: '@copilotbrowser/copilotbrowser',
+    path: path.join(ROOT_PATH, 'packages', 'CopilotBrowser'),
     // We copy README.md additionally for copilotbrowser so that it looks nice on NPM.
     files: [...LICENCE_FILES, 'README.md'],
   }),
   new PWPackage({
-    name: 'copilotbrowser',
-    path: path.join(ROOT_PATH, 'packages', 'copilotbrowser'),
+    name: 'copilotbrowser-chromium',
+    path: path.join(ROOT_PATH, 'packages', 'CopilotBrowser-chromium'),
+    files: LICENCE_FILES,
+  }),
+  new PWPackage({
+    name: 'copilotbrowser-firefox',
+    path: path.join(ROOT_PATH, 'packages', 'CopilotBrowser-firefox'),
+    files: LICENCE_FILES,
+  }),
+  new PWPackage({
+    name: 'copilotbrowser-webkit',
+    path: path.join(ROOT_PATH, 'packages', 'CopilotBrowser-webkit'),
     files: LICENCE_FILES,
   }),
 ]);

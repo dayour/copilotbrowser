@@ -17,7 +17,7 @@
  */
 
 const path = require('path');
-const { Registry } = require('../packages/copilotbrowser/lib/server');
+const { Registry } = require('../packages/CopilotBrowser/lib/server');
 const fs = require('fs');
 const protocolGenerator = require('./protocol-types-generator');
 const {execSync} = require('child_process');

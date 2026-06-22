@@ -31,9 +31,9 @@ import { createConfig, frameworkConfig, hasJSComponents, populateComponentsFromT
 import type http from 'http';
 import type { AddressInfo } from 'net';
 import type { FullConfig, Suite } from '@copilotbrowser/copilotbrowser/types/testReporter';
-import type { PluginContext } from 'rollup';
+import type { NormalizedOutputOptions, OutputBundle, PluginContext, TransformPluginContext } from 'rolldown';
 import type { Plugin, ResolveFn, ResolvedConfig } from 'vite';
-import type { TestRunnerPlugin } from '../../copilotbrowser/src/plugins';
+import type { TestRunnerPlugin } from '../plugins';
 import type { ImportInfo } from './tsxTransform';
 import type { ComponentRegistry } from './viteUtils';
 
@@ -258,7 +258,7 @@ function vitePlugin(registerSource: string, templateDir: string, buildInfo: Buil
       moduleResolver = config.createResolver();
     },
 
-    async transform(this: PluginContext, content, id) {
+    async transform(this: TransformPluginContext, content, id) {
       const queryIndex = id.indexOf('?');
       const file = queryIndex !== -1 ? id.substring(0, queryIndex) : id;
       if (!buildInfo.sources[file]) {
@@ -272,7 +272,7 @@ function vitePlugin(registerSource: string, templateDir: string, buildInfo: Buil
       return transformIndexFile(id, content, templateDir, registerSource, importInfos);
     },
 
-    async writeBundle(this: PluginContext) {
+    async writeBundle(this: PluginContext, _outputOptions: NormalizedOutputOptions, _bundle: OutputBundle) {
       for (const importInfo of importInfos.values()) {
         const importPath = resolveHook(importInfo.filename, importInfo.importSource);
         if (!importPath)

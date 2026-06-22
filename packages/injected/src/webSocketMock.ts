@@ -258,7 +258,7 @@ export function inject(globalObj: GlobalThis) {
       if (this._ws.readyState === WebSocketMock.CONNECTING)
         this._wsBufferedMessages.push(message);
       else
-        this._ws.send(message);
+        this._ws.send(message as string | Blob | BufferSource);
     }
 
     _apiConnect() {
@@ -270,7 +270,7 @@ export function inject(globalObj: GlobalThis) {
 
       this._ws.onopen = () => {
         for (const message of this._wsBufferedMessages)
-          this._ws!.send(message);
+          this._ws!.send(message as string | Blob | BufferSource);
         this._wsBufferedMessages = [];
         this._ensureOpened();
       };
@@ -359,5 +359,5 @@ export function inject(globalObj: GlobalThis) {
         idToWebSocket.delete(this._id);
     }
   }
-  globalObj.WebSocket = class WebSocket extends WebSocketMock {};
+  (globalObj as any).WebSocket = class WebSocket extends WebSocketMock {};
 }

@@ -289,40 +289,40 @@ function copyFile(file, from, to) {
 const bundles = [];
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser/bundles/babel',
-  outdir: 'packages/copilotbrowser/lib/transform',
+  modulePath: 'packages/CopilotBrowser/bundles/babel',
+  outdir: 'packages/CopilotBrowser/lib/transform',
   entryPoints: ['src/babelBundleImpl.ts'],
   external: ['copilotbrowser'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser/bundles/expect',
-  outdir: 'packages/copilotbrowser/lib/common',
+  modulePath: 'packages/CopilotBrowser/bundles/expect',
+  outdir: 'packages/CopilotBrowser/lib/common',
   entryPoints: ['src/expectBundleImpl.ts'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser/bundles/utils',
-  outdir: 'packages/copilotbrowser/lib',
+  modulePath: 'packages/CopilotBrowser/bundles/utils',
+  outdir: 'packages/CopilotBrowser/lib',
   entryPoints: ['src/utilsBundleImpl.ts'],
   external: ['fsevents'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser/bundles/utils',
-  outfile: 'packages/copilotbrowser/lib/utilsBundleImpl/index.js',
+  modulePath: 'packages/CopilotBrowser/bundles/utils',
+  outfile: 'packages/CopilotBrowser/lib/utilsBundleImpl/index.js',
   entryPoints: ['src/utilsBundleImpl.ts'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser/bundles/zip',
-  outdir: 'packages/copilotbrowser/lib',
+  modulePath: 'packages/CopilotBrowser/bundles/zip',
+  outdir: 'packages/CopilotBrowser/lib',
   entryPoints: ['src/zipBundleImpl.ts'],
 });
 
 bundles.push({
-  modulePath: 'packages/copilotbrowser/bundles/mcp',
-  outfile: 'packages/copilotbrowser/lib/mcpBundleImpl/index.js',
+  modulePath: 'packages/CopilotBrowser/bundles/mcp',
+  outfile: 'packages/CopilotBrowser/lib/mcpBundleImpl/index.js',
   entryPoints: ['src/mcpBundleImpl.ts'],
   external: ['express', '@anthropic-ai/sdk'],
   alias: {
@@ -333,7 +333,7 @@ bundles.push({
 // Client web bundle (formerly @copilotbrowser/client)
 bundles.push({
   modulePath: 'packages/copilotbrowser',
-  outfile: 'packages/copilotbrowser/lib/clientWebBundle.js',
+  outfile: 'packages/CopilotBrowser/lib/clientWebBundle.js',
   entryPoints: ['src/client-web/index.ts'],
   minify: false,
   skipNpmCi: true,
@@ -502,12 +502,12 @@ for (const pkg of workspace.packages()) {
 }
 
 function copyXdgOpen() {
-  const outdir = filePath('packages/copilotbrowser/lib/utilsBundleImpl');
+  const outdir = filePath('packages/CopilotBrowser/lib/utilsBundleImpl');
   if (!fs.existsSync(outdir))
     fs.mkdirSync(outdir, { recursive: true });
 
   // 'open' package requires 'xdg-open' binary to be present, which does not get bundled by esbuild.
-  const xdgOpenPath = filePath('packages/copilotbrowser/bundles/utils/node_modules/open/xdg-open');
+  const xdgOpenPath = filePath('packages/CopilotBrowser/bundles/utils/node_modules/open/xdg-open');
   if (fs.existsSync(xdgOpenPath)) {
     fs.copyFileSync(xdgOpenPath, path.join(outdir, 'xdg-open'));
     console.log('==== Copied xdg-open to', path.join(outdir, 'xdg-open'));
@@ -613,8 +613,8 @@ for (const webPackage of ['html-reporter', 'recorder', 'trace-viewer', 'devtools
 // Generate CLI help.
 onChanges.push({
   inputs: [
-    'packages/copilotbrowser/src/mcp/terminal/commands.ts',
-    'packages/copilotbrowser/src/mcp/terminal/helpGenerator.ts',
+    'packages/CopilotBrowser/src/mcp/terminal/commands.ts',
+    'packages/CopilotBrowser/src/mcp/terminal/helpGenerator.ts',
     'utils/generate_cli_help.js',
   ],
   script: 'utils/generate_cli_help.js',
@@ -624,9 +624,9 @@ onChanges.push({
 onChanges.push({
   inputs: [
     'packages/injected/src/**',
-    'packages/copilotbrowser/src/third_party/**',
-    'packages/copilotbrowser/src/ct/injected/**',
-    'packages/copilotbrowser/src/utils/isomorphic/**',
+    'packages/CopilotBrowser/src/third_party/**',
+    'packages/CopilotBrowser/src/ct/injected/**',
+    'packages/CopilotBrowser/src/utils/isomorphic/**',
     'utils/generate_injected_builtins.js',
     'utils/generate_injected.js',
   ],
@@ -651,10 +651,10 @@ onChanges.push({
     'utils/generate_types/overrides-test.d.ts',
     'utils/generate_types/overrides-testReporter.d.ts',
     'utils/generate_types/exported.json',
-    'packages/copilotbrowser/src/server/chromium/protocol.d.ts',
+    'packages/CopilotBrowser/src/server/chromium/protocol.d.ts',
   ],
   mustExist: [
-    'packages/copilotbrowser/lib/server/deviceDescriptorsSource.json',
+    'packages/CopilotBrowser/lib/server/deviceDescriptorsSource.json',
   ],
   script: 'utils/generate_types/index.js',
 });
@@ -662,7 +662,7 @@ onChanges.push({
 if (watchMode && !disableInstall) {
   // Keep browser installs up to date.
   onChanges.push({
-    inputs: ['packages/copilotbrowser/browsers.json'],
+    inputs: ['packages/CopilotBrowser/browsers.json'],
     command: 'npx',
     args: ['copilotbrowser', 'install'],
   });
@@ -670,52 +670,52 @@ if (watchMode && !disableInstall) {
 
 // The recorder and trace viewer have an app_icon.png that needs to be copied.
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/server/chromium/*.png',
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  files: 'packages/CopilotBrowser/src/server/chromium/*.png',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
 });
 
 // esbuild doesn't touch JS files, so copy them manually.
 // For example: diff_match_patch.js
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/**/*.js',
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  files: 'packages/CopilotBrowser/src/**/*.js',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
   ignored: ['**/.eslintrc.js', '**/injected/**/*']
 });
 
 // Sometimes we require JSON files that esbuild ignores.
 // For example, deviceDescriptorsSource.json
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/**/*.json',
+  files: 'packages/CopilotBrowser/src/**/*.json',
   ignored: ['**/injected/**/*'],
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
 });
 
 
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/agents/*.md',
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  files: 'packages/CopilotBrowser/src/agents/*.md',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
 });
 
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/agents/*.yml',
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  files: 'packages/CopilotBrowser/src/agents/*.yml',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
 });
 
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/skill/**/*.md',
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  files: 'packages/CopilotBrowser/src/skill/**/*.md',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
 });
 
 copyFiles.push({
-  files: 'packages/copilotbrowser/src/cli/client/*.{png,ico}',
-  from: 'packages/copilotbrowser/src',
-  to: 'packages/copilotbrowser/lib',
+  files: 'packages/CopilotBrowser/src/cli/client/*.{png,ico}',
+  from: 'packages/CopilotBrowser/src',
+  to: 'packages/CopilotBrowser/lib',
 });
 
 if (watchMode) {

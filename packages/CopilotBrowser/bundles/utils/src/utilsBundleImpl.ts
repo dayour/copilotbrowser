@@ -69,3 +69,24 @@ export const wsSender = Sender;
 
 import yamlLibrary from 'yaml';
 export const yaml = yamlLibrary;
+
+import chokidarLibrary from 'chokidar';
+export const chokidar = chokidarLibrary;
+
+import * as sourceMapSupportLibrary from 'source-map-support';
+export const sourceMapSupport = sourceMapSupportLibrary;
+
+const stoppableLibrary = require('stoppable');
+export const stoppable = stoppableLibrary;
+
+const enquirerLibrary = require('enquirer');
+export const enquirer = enquirerLibrary;
+
+import { eastAsianWidth as getEastAsianWidthImpl } from 'get-east-asian-width';
+export const getEastAsianWidth = getEastAsianWidthImpl;
+
+import json5Library from 'json5';
+export const json5 = json5Library;
+
+import { fromMarkdown } from 'mdast-util-from-markdown';
+export const parseMarkdown = fromMarkdown;

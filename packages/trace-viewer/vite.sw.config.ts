@@ -17,7 +17,6 @@
 import path from 'path';
 
 import { defineConfig } from 'vite';
-// @ts-expect-error - resolved by bundler
 import react from '@vitejs/plugin-react';
 
 import { bundle } from './bundle';
@@ -55,12 +54,12 @@ export default defineConfig({
           // Replace import.meta.url with self.location.href so the service
           // worker bundle can be loaded as a classic (non-module) script.
           name: 'resolve-sw-import-meta-url',
-          resolveImportMeta(prop: string | null) {
+          resolveImportMeta(prop: string | null, _options: { chunkId: string; format: string; moduleId: string; attributes: Record<string, string> }) {
             if (prop === 'url')
               return '(typeof self !== "undefined" ? self.location.href : "")';
             return null;
           },
-        },
+        } as any,
       ],
       output: {
         entryFileNames: info => 'sw.bundle.js',

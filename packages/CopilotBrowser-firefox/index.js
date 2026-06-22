@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-module.exports = require('copilotbrowser');
+module.exports = require('@copilotbrowser/copilotbrowser');

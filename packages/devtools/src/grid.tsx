@@ -20,7 +20,7 @@ import { DevToolsClient } from './devtoolsClient';
 import { navigate } from './index';
 import { Screencast } from './screencast';
 
-import type { SessionConfig } from '../../copilotbrowser/src/cli/client/registry';
+import type { SessionConfig } from '../../CopilotBrowser/src/cli/client/registry';
 import type { Tab } from './devtoolsChannel';
 import type { SessionModel, SessionStatus } from './sessionModel';
 

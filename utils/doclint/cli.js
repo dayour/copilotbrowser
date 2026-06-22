@@ -80,7 +80,7 @@ async function run() {
   // since its version is hardcoded in copilotbrowser library rather then in browser builds.
   // @see https://github.com/dayour/copilotbrowser/issues/15702
   {
-    const browsersJSONPath = path.join(__dirname, '..', '..', 'packages/copilotbrowser/browsers.json');
+    const browsersJSONPath = path.join(__dirname, '..', '..', 'packages/CopilotBrowser/browsers.json');
     const browsersJSON = JSON.parse(await fs.promises.readFile(browsersJSONPath, 'utf8'));
     for (const browser of browsersJSON.browsers) {
       if (versions[browser.name])

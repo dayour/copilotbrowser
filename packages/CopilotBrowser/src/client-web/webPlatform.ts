@@ -15,9 +15,9 @@
  * limitations under the License.
  */
 
-import { emptyPlatform } from '../../../copilotbrowser/src/client/platform';
+import { emptyPlatform } from '../client/platform';
 
-import type { Platform } from '../../../copilotbrowser/src/client/platform';
+import type { Platform } from '../client/platform';
 
 export const webPlatform: Platform = {
   ...emptyPlatform,

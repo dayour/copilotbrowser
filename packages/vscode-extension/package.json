@@ -2,7 +2,7 @@
   "name": "copilotbrowser-vscode",
   "private": true,
   "displayName": "copilotbrowser automation suite",
-  "description": "Self-contained browser automation MCP server for VS Code — control Chrome, Firefox, Edge, and WebKit from AI coding assistants. No separate install needed.",
+  "description": "Self-contained browser automation MCP server for VS Code \u2014 control Chrome, Firefox, Edge, and WebKit from AI coding assistants. No separate install needed.",
   "version": "2.0.1",
   "publisher": "DarbotLabs",
   "icon": "icon.png",
@@ -252,7 +252,13 @@
         "copilotbrowser.mcp.browser": {
           "type": "string",
           "default": "msedge",
-          "enum": ["chromium", "chrome", "msedge", "firefox", "webkit"],
+          "enum": [
+            "chromium",
+            "chrome",
+            "msedge",
+            "firefox",
+            "webkit"
+          ],
           "enumDescriptions": [
             "Chromium (bundled)",
             "Google Chrome (system)",
@@ -271,14 +277,22 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["vision", "pdf", "devtools"]
+            "enum": [
+              "vision",
+              "pdf",
+              "devtools"
+            ]
           },
-          "default": ["vision"],
+          "default": [
+            "vision"
+          ],
           "description": "Additional MCP capabilities to enable: vision (screenshot-based), pdf, devtools."
         },
         "copilotbrowser.mcp.extraArgs": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Extra command-line arguments to pass to the copilotbrowser MCP server."
         },
@@ -290,12 +304,15 @@
         "copilotbrowser.mcp.profileMode": {
           "type": "string",
           "default": "isolated",
-          "enum": ["isolated", "connected"],
+          "enum": [
+            "isolated",
+            "connected"
+          ],
           "enumDescriptions": [
-            "Isolated: use a clean temporary browser profile — no saved cookies, logins, or extensions.",
+            "Isolated: use a clean temporary browser profile \u2014 no saved cookies, logins, or extensions.",
             "Connected: reuse your installed browser profile so you are already signed in with your accounts."
           ],
-          "markdownDescription": "Browser profile mode for the MCP server.\n\n- **isolated** — fresh temporary profile each session (safe, no side-effects).\n- **connected** — reuse your existing browser profile so you stay logged in. Requires Microsoft Edge or Chrome."
+          "markdownDescription": "Browser profile mode for the MCP server.\n\n- **isolated** \u2014 fresh temporary profile each session (safe, no side-effects).\n- **connected** \u2014 reuse your existing browser profile so you stay logged in. Requires Microsoft Edge or Chrome."
         },
         "copilotbrowser.mcp.connectedUserDataDir": {
           "type": "string",
@@ -438,11 +455,11 @@
     "package": "vsce package --no-dependencies"
   },
   "dependencies": {
-    "copilotbrowser": "2.0.0"
+    "@copilotbrowser/copilotbrowser": "2.0.1"
   },
   "devDependencies": {
-    "@types/vscode": "^1.99.0",
-    "@vscode/vsce": "^3.0.0",
-    "typescript": "^5.9.3"
+    "@types/vscode": "^1.125.0",
+    "@vscode/vsce": "^3.9.2",
+    "typescript": "^6.0.3"
   }
 }

@@ -50,7 +50,7 @@ export class copilotbrowser extends SdkObject {
   constructor(options: copilotbrowserOptions) {
     super(createRootSdkObject(), undefined, 'copilotbrowser');
     this.options = options;
-    this.attribution.copilotbrowser = this;
+    this.attribution.copilotbrowser = this as any;
     this.instrumentation.addListener({
       onBrowserOpen: browser => this._allBrowsers.add(browser),
       onBrowserClose: browser => this._allBrowsers.delete(browser),
@@ -60,9 +60,9 @@ export class copilotbrowser extends SdkObject {
     this.chromium = new Chromium(this, new BidiChromium(this));
     this.firefox = new Firefox(this, new BidiFirefox(this));
     this.webkit = new WebKit(this);
-    this.electron = new Electron(this);
+    this.electron = new Electron(this as any);
     this.android = new Android(this, new AdbBackend());
-    this.debugController = new DebugController(this);
+    this.debugController = new DebugController(this as any);
   }
 
   allBrowsers(): Browser[] {

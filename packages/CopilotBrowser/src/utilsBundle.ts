@@ -39,6 +39,14 @@ export const yaml: typeof import('../bundles/utils/node_modules/yaml') = require
 export type { Range as YAMLRange, Scalar as YAMLScalar, YAMLError, YAMLMap, YAMLSeq } from '../bundles/utils/node_modules/yaml';
 export type { Command } from '../bundles/utils/node_modules/commander';
 export type { EventEmitter as WebSocketEventEmitter, RawData as WebSocketRawData, WebSocket, WebSocketServer } from '../bundles/utils/node_modules/@types/ws';
+export const chokidar: typeof import('../bundles/utils/node_modules/chokidar') = require('./utilsBundleImpl').chokidar;
+export const sourceMapSupport: typeof import('../bundles/utils/node_modules/source-map-support') = require('./utilsBundleImpl').sourceMapSupport;
+export type { RawSourceMap } from '../bundles/utils/node_modules/source-map-support';
+export const stoppable: typeof import('../bundles/utils/node_modules/stoppable') = require('./utilsBundleImpl').stoppable;
+export const enquirer: typeof import('../bundles/utils/node_modules/enquirer') = require('./utilsBundleImpl').enquirer;
+export const getEastAsianWidth: typeof import('../bundles/utils/node_modules/get-east-asian-width').eastAsianWidth = require('./utilsBundleImpl').getEastAsianWidth;
+export const json5: typeof import('../bundles/utils/node_modules/json5') = require('./utilsBundleImpl').json5;
+export const parseMarkdown: typeof import('../bundles/utils/node_modules/mdast-util-from-markdown').fromMarkdown = require('./utilsBundleImpl').parseMarkdown;
 
 export function ms(ms: number): string {
   if (!isFinite(ms))

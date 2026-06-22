@@ -29,7 +29,7 @@ import type * as copilotbrowser from '../../../types/test';
 import type { FullConfig } from './config';
 import type { BrowserContextFactory, BrowserContextFactoryResult } from './browserContextFactory';
 import type { SessionLog } from './sessionLog';
-import type { Tracing } from '../../../../copilotbrowser/src/client/tracing';
+import type { Tracing } from '../../client/tracing';
 import type { ClientInfo } from '../sdk/server';
 
 const testDebug = debug('pw:mcp:test');

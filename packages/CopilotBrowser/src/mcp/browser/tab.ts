@@ -27,8 +27,8 @@ import { uploadFile } from './tools/files';
 import { requireOrImport } from '../../transform/transform';
 
 import type { Context } from './context';
-import type { Page } from '../../../../copilotbrowser/src/client/page';
-import type { Locator } from '../../../../copilotbrowser/src/client/locator';
+import type { Page } from '../../client/page';
+import type { Locator } from '../../client/locator';
 import type { FullConfig } from './config';
 
 const TabEvents = {
