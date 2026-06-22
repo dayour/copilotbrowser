@@ -10,6 +10,7 @@
     "strict": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "ignoreDeprecations": "6.0",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -19,11 +20,12 @@
     "paths": {
       "@protocol/*": ["../protocol/src/*"],
       "@web/*": ["../web/src/*"],
-      "@copilotbrowser/*": ["../copilotbrowser/src/*"],
+      "@copilotbrowser/test": ["../CopilotBrowser/test.d.ts"],
+      "@copilotbrowser/*": ["../CopilotBrowser/src/*"],
       "@recorder/*": ["../recorder/src/*"],
-      "@testIsomorphic/*": ["../copilotbrowser/src/isomorphic/*"],
-      "copilotbrowser/lib/*": ["../copilotbrowser/src/*"],
-      "copilotbrowser/lib/*": ["../copilotbrowser/src/*"],
+      "@testIsomorphic/types": ["../CopilotBrowser/src/isomorphic/types"],
+      "@testIsomorphic/*": ["../CopilotBrowser/src/utils/isomorphic/*"],
+      "copilotbrowser/lib/*": ["../CopilotBrowser/src/*"]
     }
   },
   "include": ["src", "../web/src"],

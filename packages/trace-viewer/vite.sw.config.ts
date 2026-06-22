@@ -59,7 +59,7 @@ export default defineConfig({
               return '(typeof self !== "undefined" ? self.location.href : "")';
             return null;
           },
-        },
+        } as any,
       ],
       output: {
         entryFileNames: info => 'sw.bundle.js',

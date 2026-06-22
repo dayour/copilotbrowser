@@ -34,7 +34,7 @@ export interface MountOptions {
 
 export type Component = JsxComponent | {
   __pw_type: 'object-component';
-  type: Function;
+  type: Function | import('../ct/injected/importRegistry').ImportRef;
   props?: Record<string, unknown>;
   slots?: Record<string, string | JsxComponent>;
   on?: Record<string, Function>;
