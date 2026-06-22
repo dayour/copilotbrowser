@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from 'copilotbrowser';
-import copilotbrowser from 'copilotbrowser';
+export * from '@copilotbrowser/copilotbrowser';
+import copilotbrowser from '@copilotbrowser/copilotbrowser';
 export default copilotbrowser;

@@ -1,6 +1,6 @@
 {
   "name": "@copilotbrowser/copilotbrowser",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A high-level API to automate web browsers",
   "publishConfig": {
     "access": "public"
@@ -138,33 +138,33 @@
     "install": "node install.js"
   },
   "author": {
-    "name": "Daryl Yourk"
+    "name": "copilot"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.27.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "colors": "1.4.0",
-    "commander": "^13.0.0",
-    "debug": "^4.3.4",
-    "diff": "^7.0.0",
-    "dotenv": "^16.4.5",
-    "https-proxy-agent": "7.0.6",
-    "ini": "^6.0.0",
+    "commander": "^15.0.0",
+    "debug": "^4.4.3",
+    "diff": "^9.0.0",
+    "dotenv": "^17.4.2",
+    "https-proxy-agent": "9.1.0",
+    "ini": "^7.0.0",
     "jpeg-js": "0.4.4",
-    "mime": "^3.0.0",
-    "minimatch": "^3.1.2",
-    "open": "8.4.0",
-    "playwright-core": "1.51.1",
-    "pngjs": "6.0.0",
+    "mime": "^4.1.0",
+    "minimatch": "^10.2.5",
+    "open": "11.0.0",
+    "playwright-core": "1.61.0",
+    "pngjs": "7.0.0",
     "progress": "2.0.3",
-    "proxy-from-env": "2.0.0",
-    "socks-proxy-agent": "8.0.5",
-    "ws": "8.19.0",
-    "yaml": "^2.6.0",
-    "zod": "^3.25.76",
-    "zod-to-json-schema": "^3.25.1"
+    "proxy-from-env": "2.1.0",
+    "socks-proxy-agent": "10.1.0",
+    "ws": "8.21.0",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3",
+    "zod-to-json-schema": "^3.25.2"
   },
   "optionalDependencies": {
-    "fsevents": "2.3.2"
+    "fsevents": "2.3.3"
   }
 }
