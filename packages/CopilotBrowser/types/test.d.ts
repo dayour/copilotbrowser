@@ -6611,14 +6611,26 @@ export interface copilotbrowserWorkerOptions {
 export type ScreenshotMode = 'off' | 'on' | 'only-on-failure' | 'on-first-failure';
 export type TraceMode = 'off' | 'on' | 'retain-on-failure' | 'on-first-retry' | 'on-all-retries' | 'retain-on-first-failure';
 export type VideoMode = 'off' | 'on' | 'retain-on-failure' | 'on-first-retry';
+export type LLMProviderConfig = {
+  api: 'openai' | 'openai-compatible' | 'anthropic' | 'google';
+  apiEndpoint?: string;
+  apiKey: string;
+  apiTimeout?: number;
+  model: string;
+};
+
+export type LLMProviderAdapter = {
+  name: string;
+  resolve: (context: { agentOptions: AgentOptions }) => LLMProviderConfig | undefined;
+};
+
+export type LLMProvider = LLMProviderConfig | LLMProviderAdapter;
+
+export type LLMProviderPolicy = (config: LLMProviderConfig) => LLMProviderConfig;
+
 export type AgentOptions = {
-  provider?: {
-    api: 'openai' | 'openai-compatible' | 'anthropic' | 'google';
-    apiEndpoint?: string;
-    apiKey: string;
-    apiTimeout?: number;
-    model: string;
-  },
+  provider?: LLMProvider,
+  providerPolicy?: LLMProviderPolicy | LLMProviderPolicy[];
   limits?: {
     maxTokens?: number;
     maxActions?: number;

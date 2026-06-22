@@ -40,6 +40,7 @@ export type SessionConfig = {
     persistent?: boolean;
     profile?: string;
     config?: string;
+    snapshotMode?: 'incremental' | 'full' | 'none';
   };
   userDataDirPrefix?: string;
   workspaceDir?: string;

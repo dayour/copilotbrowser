@@ -516,10 +516,10 @@ export abstract class APIRequestContext extends SdkObject {
                 const peerCertificate = socket.getPeerCertificate();
                 securityDetails = {
                   protocol: socket.getProtocol() ?? undefined,
-                  subjectName: peerCertificate.subject.CN,
+                  subjectName: Array.isArray(peerCertificate.subject.CN) ? peerCertificate.subject.CN[0] : peerCertificate.subject.CN,
                   validFrom: new Date(peerCertificate.valid_from).getTime() / 1000,
                   validTo: new Date(peerCertificate.valid_to).getTime() / 1000,
-                  issuer: peerCertificate.issuer.CN
+                  issuer: Array.isArray(peerCertificate.issuer.CN) ? peerCertificate.issuer.CN[0] : peerCertificate.issuer.CN
                 };
               }
             }),

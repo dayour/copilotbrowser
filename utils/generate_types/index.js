@@ -16,7 +16,7 @@
 
 // @ts-check
 const path = require('path');
-const devices = require('../../packages/copilotbrowser/lib/server/deviceDescriptorsSource.json');
+const devices = require('../../packages/CopilotBrowser/lib/server/deviceDescriptorsSource.json');
 const md = require('../markdown');
 const docs = require('../doclint/documentation');
 const PROJECT_DIR = path.join(__dirname, '..', '..');

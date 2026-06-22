@@ -54,7 +54,7 @@ export class Watcher {
     this._fsWatcher = chokidar.watch(watchedPaths, { ignoreInitial: true, ignored }).on('all', async (event, file) => {
       if (this._throttleTimer)
         clearTimeout(this._throttleTimer);
-      this._collector.push({ event, file });
+      this._collector.push({ event: event as FSEvent['event'], file });
       this._throttleTimer = setTimeout(() => this._reportEventsIfAny(), 250);
     }) as any;
 

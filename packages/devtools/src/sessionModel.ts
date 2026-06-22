@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { ClientInfo, SessionConfig } from '../../copilotbrowser/src/cli/client/registry';
+import type { ClientInfo, SessionConfig } from '../../CopilotBrowser/src/cli/client/registry';
 
 export type SessionStatus = {
   config: SessionConfig;

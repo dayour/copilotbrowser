@@ -19,7 +19,7 @@
 const fs = require('fs')
 const path = require('path')
 
-const { generateHelp, generateReadme, generateHelpJSON } = require('../packages/copilotbrowser/lib/cli/daemon/helpGenerator.js');
+const { generateHelp, generateReadme, generateHelpJSON } = require('../packages/CopilotBrowser/lib/cli/daemon/helpGenerator.js');
 
 if (process.argv[2] === '--readme') {
   console.log(generateReadme());
@@ -31,6 +31,6 @@ if (process.argv[2] === '--print') {
   process.exit(0);
 }
 
-const fileName = path.resolve(__dirname, '../packages/copilotbrowser/lib/cli/client/help.json');
+const fileName = path.resolve(__dirname, '../packages/CopilotBrowser/lib/cli/client/help.json');
 console.log('Writing ', path.relative(process.cwd(), fileName));
 fs.writeFileSync(fileName, JSON.stringify(generateHelpJSON(), null, 2));

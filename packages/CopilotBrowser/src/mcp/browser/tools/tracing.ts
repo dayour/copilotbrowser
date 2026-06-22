@@ -17,7 +17,7 @@
 import { z } from '@copilotbrowser/copilotbrowser/lib/mcpBundle';
 import { defineTool } from './tool';
 
-import type { Tracing } from '../../../../../copilotbrowser/src/client/tracing';
+import type { Tracing } from '../../../client/tracing';
 
 const tracingStart = defineTool({
   capability: 'devtools',

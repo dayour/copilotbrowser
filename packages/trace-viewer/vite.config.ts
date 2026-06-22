@@ -17,7 +17,6 @@
 import path from 'path';
 
 import { defineConfig } from 'vite';
-// @ts-expect-error - resolved by bundler
 import react from '@vitejs/plugin-react';
 
 import { bundle } from './bundle';

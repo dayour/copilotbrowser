@@ -17,11 +17,11 @@
 import { wrapObject } from './injected/serializers';
 import { Router } from './router';
 
-import type { ContextReuseMode, FullConfigInternal } from '../../copilotbrowser/src/common/config';
-import type { RouterFixture } from '../index';
+import type { ContextReuseMode, FullConfigInternal } from '../common/config';
+import type { RouterFixture } from '../../ct/core';
 import type { ImportRef } from './injected/importRegistry';
 import type { Component, JsxComponent, MountOptions, ObjectComponentOptions } from '../types/component';
-import type { Fixtures, Locator, Page, copilotbrowserTestArgs, copilotbrowserTestOptions, copilotbrowserWorkerArgs, copilotbrowserWorkerOptions } from '@copilotbrowser/copilotbrowser/test';
+import type { BrowserContext, Fixtures, Locator, Page, copilotbrowserTestArgs, copilotbrowserTestOptions, copilotbrowserWorkerArgs, copilotbrowserWorkerOptions } from '@copilotbrowser/copilotbrowser/test';
 import type { Page as PageImpl } from '@copilotbrowser/copilotbrowser/lib/client/page';
 
 let boundCallbacksForMount: Function[] = [];
@@ -83,7 +83,7 @@ export const fixtures: Fixtures<TestFixtures, WorkerFixtures, BaseTestFixtures> 
     boundCallbacksForMount = [];
   },
 
-  router: async ({ context, baseURL }, use) => {
+  router: async ({ context, baseURL }: { context: BrowserContext; baseURL: string | undefined }, use: (router: Router) => Promise<void>) => {
     const router = new Router(context, baseURL);
     await use(router);
     await router.dispose();

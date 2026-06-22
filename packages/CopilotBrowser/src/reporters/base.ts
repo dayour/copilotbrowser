@@ -617,7 +617,7 @@ export function prepareErrorStack(stack: string): {
 }
 
 function characterWidth(c: string) {
-  return getEastAsianWidth.eastAsianWidth(c.codePointAt(0)!);
+  return getEastAsianWidth(c.codePointAt(0)!);
 }
 
 function stringWidth(v: string) {

@@ -27,7 +27,7 @@ import { outputDir, outputFile } from './config';
 import { firstRootPath } from '../sdk/server';
 
 import type { FullConfig } from './config';
-import type { LaunchOptions, BrowserContextOptions } from '../../../../copilotbrowser/src/client/types';
+import type { LaunchOptions, BrowserContextOptions } from '../../client/types';
 import type { ClientInfo } from '../sdk/server';
 
 export function contextFactory(config: FullConfig): BrowserContextFactory {

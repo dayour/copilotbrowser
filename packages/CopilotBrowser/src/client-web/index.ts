@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-import { Connection } from '../../../copilotbrowser/src/client/connection';
+import { Connection } from '../client/connection';
 import { webPlatform } from './webPlatform';
 
-import type { Browser } from '../../../copilotbrowser/src/client/browser';
+import type { Browser } from '../client/browser';
 
 export type Options = {
   headless?: boolean;

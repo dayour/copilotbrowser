@@ -17,8 +17,8 @@ import { EventEmitter } from 'events';
 import * as copilotbrowser from '@copilotbrowser/copilotbrowser';
 import { ModalState } from './tools/tool';
 import type { Context } from './context';
-import type { Page } from '../../../../copilotbrowser/src/client/page';
-import type { Locator } from '../../../../copilotbrowser/src/client/locator';
+import type { Page } from '../../client/page';
+import type { Locator } from '../../client/locator';
 import type { FullConfig } from './config';
 type TabEventsInterface = {};
 type Download = {
