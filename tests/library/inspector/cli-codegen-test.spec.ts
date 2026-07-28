@@ -19,7 +19,7 @@ import { test, expect } from './inspectorTest';
 
 test('should print the correct imports and context options', async ({ runCLI, server }) => {
   const cli = runCLI([server.EMPTY_PAGE]);
-  const expectedResult = `import { test, expect } from '@copilotbrowser/test';
+  const expectedResult = `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await page.goto('${server.EMPTY_PAGE}');
@@ -29,7 +29,7 @@ test('test', async ({ page }) => {
 
 test('should print the correct context options for custom settings', async ({ runCLI, server }) => {
   const cli = runCLI(['--color-scheme=light', server.EMPTY_PAGE]);
-  const expectedResult = `import { test, expect } from '@copilotbrowser/test';
+  const expectedResult = `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   colorScheme: 'light'
@@ -44,7 +44,7 @@ test('should print the correct context options when using a device', async ({ br
   test.skip(browserName !== 'chromium');
 
   const cli = runCLI(['--device=Pixel 2', server.EMPTY_PAGE]);
-  const expectedResult = `import { test, expect, devices } from '@copilotbrowser/test';
+  const expectedResult = `import { test, expect, devices } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   ...devices['Pixel 2'],
@@ -58,7 +58,7 @@ test('should print the correct context options when using a device and additiona
   test.skip(browserName !== 'webkit');
 
   const cli = runCLI(['--color-scheme=light', '--device=iPhone 11', server.EMPTY_PAGE]);
-  const expectedResult = `import { test, expect, devices } from '@copilotbrowser/test';
+  const expectedResult = `import { test, expect, devices } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   ...devices['iPhone 11'],
@@ -73,7 +73,7 @@ test('should print load storageState', async ({ runCLI, server }, testInfo) => {
   const loadFileName = testInfo.outputPath('load.json');
   await fs.promises.writeFile(loadFileName, JSON.stringify({ cookies: [], origins: [] }), 'utf8');
   const cli = runCLI([`--load-storage=${loadFileName}`, server.EMPTY_PAGE]);
-  const expectedResult = `import { test, expect } from '@copilotbrowser/test';
+  const expectedResult = `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   storageState: '${loadFileName.replace(/\\/g, '\\\\')}'

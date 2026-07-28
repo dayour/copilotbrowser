@@ -3,8 +3,8 @@
   "type": "AdaptiveCard",
   "version": "1.6",
   "metadata": {
-    "name": "copilotbrowser-playwright-mcp-runbook",
-    "description": "Adaptive Card template for collecting browser automation details that will be converted into Playwright-style MCP commands with validation, export, and recovery guidance."
+    "name": "copilotbrowser-mcp-runbook",
+    "description": "Adaptive Card template for collecting browser automation details that will be converted into copilotbrowser-style MCP commands with validation, export, and recovery guidance."
   },
   "body": [
     {
@@ -121,7 +121,7 @@
     },
     {
       "type": "TextBlock",
-      "text": "Suggested MCP tools: browser_navigate, browser_snapshot, browser_click, browser_type, browser_select_option, browser_wait_for, browser_take_screenshot, browser_console_messages, browser_export_playwright_test, browser_export_github_actions.",
+      "text": "Suggested MCP tools: browser_navigate, browser_snapshot, browser_click, browser_type, browser_select_option, browser_wait_for, browser_take_screenshot, browser_console_messages, browser_export_test, browser_export_github_actions.",
       "wrap": true,
       "spacing": "Medium"
     }
@@ -133,7 +133,7 @@
       "data": {
         "kind": "copilotbrowser-runbook",
         "schemaVersion": "1.0.0",
-        "commandStyle": "playwright-mcp"
+        "commandStyle": "copilotbrowser-mcp"
       }
     }
   ]

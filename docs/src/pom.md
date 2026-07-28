@@ -16,7 +16,7 @@ Page objects **simplify authoring** by creating a higher-level API which suits y
 We will create a `copilotbrowserDevPage` helper class to encapsulate common operations on the `copilotbrowser.dev` page. Internally, it will use the `page` object.
 
 ```js tab=js-test title="copilotbrowser-dev-page.ts"
-import { expect, type Locator, type Page } from '@copilotbrowser/test';
+import { expect, type Locator, type Page } from '@copilotbrowser/copilotbrowser/test';
 
 export class copilotbrowserDevPage {
   readonly page: Page;
@@ -85,7 +85,7 @@ module.exports = { copilotbrowserDevPage };
 Now we can use the `copilotbrowserDevPage` class in our tests.
 
 ```js tab=js-test title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import { copilotbrowserDevPage } from './copilotbrowser-dev-page';
 
 test('getting started should contain table of contents', async ({ page }) => {

@@ -1,6 +1,6 @@
 /* eslint-disable notice/notice */
 
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 
 test.describe.configure({ mode: 'parallel' });

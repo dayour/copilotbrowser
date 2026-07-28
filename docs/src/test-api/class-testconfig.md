@@ -12,7 +12,7 @@ copilotbrowser Test provides many options to configure how your tests are collec
 copilotbrowser Test supports running multiple test projects at the same time. Project-specific options should be put to **TestConfig.projects**, but top-level `TestConfig` can also define base options shared between all projects.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   timeout: 30000,
@@ -32,7 +32,7 @@ copilotbrowser transpiler configuration.
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   build: {
@@ -52,7 +52,7 @@ These settings control whether git information is captured and stored in the con
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   captureGitInfo: { commit: true, diff: true }
@@ -101,7 +101,7 @@ Configuration for the `expect` assertion library. Learn more about [various time
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   expect: {
@@ -124,7 +124,7 @@ Also available in the [command line](../test-cli.md) with the `--fail-on-flaky-t
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   failOnFlakyTests: !!process.env.CI,
@@ -140,7 +140,7 @@ Whether to exit with an error if any tests or groups are marked as **Test.only()
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   forbidOnly: !!process.env.CI,
@@ -159,7 +159,7 @@ You can configure entire test run to concurrently execute all tests in all files
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   fullyParallel: true,
@@ -177,7 +177,7 @@ Learn more about [global setup and teardown](../test-global-setup-teardown.md).
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   globalSetup: './global-setup',
@@ -195,7 +195,7 @@ Learn more about [global setup and teardown](../test-global-setup-teardown.md).
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   globalTeardown: './global-teardown',
@@ -211,7 +211,7 @@ Maximum time in milliseconds the whole test suite can run. Zero timeout (default
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   globalTimeout: process.env.CI ? 60 * 60 * 1000 : undefined,
@@ -229,7 +229,7 @@ Filter to only run tests with a title matching one of the patterns. For example,
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   grep: /smoke/,
@@ -247,7 +247,7 @@ Filter to only run tests with a title **not** matching one of the patterns. This
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   grepInvert: /manual/,
@@ -263,7 +263,7 @@ Whether to skip snapshot expectations, such as `expect(value).toMatchSnapshot()`
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   ignoreSnapshots: !process.env.CI,
@@ -281,7 +281,7 @@ Also available in the [command line](../test-cli.md) with the `--max-failures` a
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   maxFailures: process.env.CI ? 1 : 0,
@@ -297,7 +297,7 @@ Metadata contains key-value pairs to be included in the report. For example, the
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   metadata: { title: 'acceptance tests' },
@@ -313,7 +313,7 @@ Config name is visible in the report and during test execution, unless overridde
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   name: 'acceptance tests',
@@ -329,7 +329,7 @@ The output directory for files created during test execution. Defaults to `<pack
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   outputDir: './test-results',
@@ -343,7 +343,7 @@ This directory is cleaned at the start. When running a test, a unique subdirecto
 Here is an example that uses **TestInfo.outputPath()** to create a temporary file.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 
 test('example test', async ({}, testInfo) => {
@@ -363,7 +363,7 @@ The base directory, relative to the config file, for snapshot files created with
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   snapshotDir: './snapshots',
@@ -392,7 +392,7 @@ Whether to preserve test output in the **TestConfig.outputDir**. Defaults to `'a
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   preserveOutput: 'always',
@@ -409,7 +409,7 @@ copilotbrowser Test supports running multiple test projects at the same time. Se
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -427,7 +427,7 @@ Whether to suppress stdio and stderr output from the tests.
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   quiet: !!process.env.CI,
@@ -443,7 +443,7 @@ The number of times to repeat each test, useful for debugging flaky tests.
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   repeatEach: 3,
@@ -468,7 +468,7 @@ Learn more in the [reporters guide](../test-reporters.md).
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'line',
@@ -486,7 +486,7 @@ Whether to report slow test files. Pass `null` to disable this feature.
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reportSlowTests: null,
@@ -512,7 +512,7 @@ The maximum number of retry attempts given to failed tests. By default failing t
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   retries: 2,
@@ -541,7 +541,7 @@ Learn more about [parallelism and sharding](../test-parallel.md) with copilotbro
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   shard: { total: 10, current: 3 },
@@ -560,7 +560,7 @@ Note that each tag must start with `@` symbol. Learn more about [tagging](../tes
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   tag: process.env.CI_ENVIRONMENT_NAME,  // for example "@APIv2"
@@ -577,7 +577,7 @@ Directory that will be recursively scanned for test files. Defaults to the direc
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testDir: './tests/copilotbrowser',
@@ -595,7 +595,7 @@ For example, `'**/test-assets/**'` will ignore any files in the `test-assets` di
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testIgnore: '**/test-assets/**',
@@ -613,7 +613,7 @@ By default, copilotbrowser looks for files matching the following glob pattern: 
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testMatch: /.*\.e2e\.js/,
@@ -631,7 +631,7 @@ This is a base timeout for all tests. In addition, each test can configure its o
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   timeout: 5 * 60 * 1000,
@@ -647,7 +647,7 @@ Path to a single `tsconfig` applicable to all imported files. By default, `tscon
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   tsconfig: './tsconfig.test.json',
@@ -669,7 +669,7 @@ Learn more about [snapshots](../test-snapshots.md).
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   updateSnapshots: 'missing',
@@ -694,7 +694,7 @@ Global options for all tests, for example **TestOptions.browserName**. Learn mor
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -730,7 +730,7 @@ Launch a development web server (or multiple) during the tests.
 
 If the port is specified, copilotbrowser Test will wait for it to be available on `127.0.0.1` or `::1`, before running the tests. If the url is specified, copilotbrowser Test will wait for the URL to return a 2xx, 3xx, 400, 401, 402, or 403 status code before running the tests.
 
-For continuous integration, you may want to use the `reuseExistingServer: !process.env.CI` option which does not use an existing server on the CI. To see the stdout, you can set the `DEBUG=pw:webserver` environment variable.
+For continuous integration, you may want to use the `reuseExistingServer: !process.env.CI` option which does not use an existing server on the CI. To see the stdout, you can set the `DEBUG=cb:webserver` environment variable.
 
 The `port` (but not the `url`) gets passed over to copilotbrowser as a **TestOptions.baseURL**. For example port `8080` produces `baseURL` equal `http://localhost:8080`. If `webServer` is specified as an array, you must explicitly configure the `baseURL` (even if it only has one entry).
 
@@ -741,7 +741,7 @@ It is also recommended to specify **TestOptions.baseURL** in the config, so that
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   webServer: {
     command: 'npm run start',
@@ -758,7 +758,7 @@ export default defineConfig({
 Now you can use a relative path when navigating the page:
 
 ```js title="test.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   // This will result in http://localhost:3000/foo
@@ -769,7 +769,7 @@ test('test', async ({ page }) => {
 Multiple web servers (or background processes) can be launched:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   webServer: [
     {
@@ -796,7 +796,7 @@ export default defineConfig({
 If your webserver runs on varying ports, use `wait` to capture the port:
 
 ```js
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   webServer: {
@@ -809,7 +809,7 @@ export default defineConfig({
 ```
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ baseUrl: `http://localhost:${process.env.MY_SERVER_PORT ?? 3000}` });
 
@@ -831,7 +831,7 @@ Defaults to half of the number of logical CPU cores. Learn more about [paralleli
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   workers: 3,

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Fixtures } from '@copilotbrowser/test';
+import type { Fixtures } from '@copilotbrowser/copilotbrowser/test';
 import path from 'path';
 import { TestServer } from './testserver';
 import { TestProxy } from './proxy';

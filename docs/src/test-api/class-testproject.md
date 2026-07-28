@@ -14,7 +14,7 @@ copilotbrowser Test supports running multiple test projects at the same time. Th
 Here is an example configuration that runs every test in Chromium, Firefox and WebKit, both Desktop and Mobile versions.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Options shared for all projects.
@@ -64,7 +64,7 @@ see the setup steps in the test report, etc.
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -154,7 +154,7 @@ Whether to skip snapshot expectations, such as `expect(value).toMatchSnapshot()`
 The following example will only perform screenshot assertions on Chromium.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -216,7 +216,7 @@ This directory is cleaned at the start. When running a test, a unique subdirecto
 Here is an example that uses **TestInfo.outputPath()** to create a temporary file.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 
 test('example test', async ({}, testInfo) => {
@@ -265,7 +265,7 @@ Passing `--no-deps` argument ignores **TestProject.teardown** and behaves as if 
 A common pattern is a "setup" dependency that has a corresponding "teardown":
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -306,7 +306,7 @@ Directory that will be recursively scanned for test files. Defaults to the direc
 Each project can use a different directory. Here is an example that runs smoke tests in three browsers and all other tests in stable Chrome browser.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -382,7 +382,7 @@ Use **TestConfig.timeout** to change this option for all projects.
 Options for all tests in this project, for example **TestOptions.browserName**. Learn more about [configuration](../test-configuration.md) and see [available options]`TestOptions`.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -413,7 +413,7 @@ By default, there is no limit per project. See **TestConfig.workers** for the de
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   workers: 10,  // total workers limit

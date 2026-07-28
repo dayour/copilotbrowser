@@ -8,7 +8,7 @@ sidebar_label: "Library (JavaScript)"
 
 copilotbrowser Library provides unified APIs for launching and interacting with browsers, while copilotbrowser Test provides all this plus a fully managed end-to-end Test Runner and experience.
 
-Under most circumstances, for end-to-end testing, you'll want to use `@copilotbrowser/test` (copilotbrowser Test), and not `copilotbrowser` (copilotbrowser Library) directly. To get started with copilotbrowser Test, follow the [Getting Started Guide](./intro.md).
+Under most circumstances, for end-to-end testing, you'll want to use `@copilotbrowser/copilotbrowser/test` (copilotbrowser Test), and not `copilotbrowser` (copilotbrowser Library) directly. To get started with copilotbrowser Test, follow the [Getting Started Guide](./intro.md).
 
 ## Differences when using library
 
@@ -68,7 +68,7 @@ Run it with `node my-script.js`.
 A test to achieve similar behavior, would look like:
 
 ```js tab=js-ts
-import { expect, test, devices } from '@copilotbrowser/test';
+import { expect, test, devices } from '@copilotbrowser/copilotbrowser/test';
 
 test.use(devices['iPhone 11']);
 
@@ -81,7 +81,7 @@ test('should be titled', async ({ page, context }) => {
 ```
 
 ```js tab=js-js
-const { expect, test, devices } = require('@copilotbrowser/test');
+const { expect, test, devices } = require('@copilotbrowser/copilotbrowser/test');
 
 test.use(devices['iPhone 11']);
 
@@ -103,7 +103,7 @@ The key differences to note are as follows:
 | - | - | - |
 | Installation | `npm install copilotbrowser` | `npm init copilotbrowser@latest` - note `install` vs. `init` |
 | Install browsers | Install `@copilotbrowser-chromium`, `@copilotbrowser-firefox` and/or `@copilotbrowser-webkit` | `npx copilotbrowser install` or `npx copilotbrowser install chromium` for a single one |
-| `import` from | `copilotbrowser` | `@copilotbrowser/test` |
+| `import` from | `copilotbrowser` | `@copilotbrowser/copilotbrowser/test` |
 | Initialization | Explicitly need to: <ol><li>Pick a browser to use, e.g. `chromium`</li><li>Launch browser with **BrowserType.launch()**</li><li>Create a context with **Browser.newContext()**, <em>and</em> pass any context options explicitly, e.g. `devices['iPhone 11']`</li><li>Create a page with **BrowserContext.newPage()**</li></ol> | An isolated `page` and `context` are provided to each test out-of the box, along with other [built-in fixtures](./test-fixtures.md#built-in-fixtures). No explicit creation. If referenced by the test in its arguments, the Test Runner will create them for the test. (i.e. lazy-initialization) |
 | Assertions | No built-in Web-First Assertions | [Web-First assertions](./test-assertions.md) like: <ul><li>**PageAssertions.toHaveTitle()**</li><li>**PageAssertions.toHaveScreenshot()**</li></ul> which auto-wait and retry for the condition to be met.|
 | Timeouts | Defaults to 30s for most operations. | Most operations don't time out, but every test has a timeout that makes it fail (30s by default). |

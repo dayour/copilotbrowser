@@ -29,7 +29,7 @@ The same timeout value also applies to `beforeAll` and `afterAll` hooks, but the
 ### Set test timeout in the config
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   timeout: 120_000,
@@ -41,7 +41,7 @@ API reference: **TestConfig.timeout**.
 ### Set timeout for a single test
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('slow test', async ({ page }) => {
   test.slow(); // Easy way to triple the default timeout
@@ -59,7 +59,7 @@ API reference: **Test.setTimeout()** and **Test.slow()**.
 ### Change timeout from a `beforeEach` hook
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ page }, testInfo) => {
   // Extend timeout for all tests running this hook by 30 seconds.
@@ -74,7 +74,7 @@ API reference: **TestInfo.setTimeout()**.
 `beforeAll` and `afterAll` hooks have a separate timeout, by default equal to test timeout. You can change it separately for each hook by calling **TestInfo.setTimeout()** inside the hook.
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeAll(async () => {
   // Set timeout for this hook.
@@ -103,7 +103,7 @@ Call log:
 ### Set expect timeout in the config
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   expect: {
@@ -117,7 +117,7 @@ API reference: **TestConfig.expect**.
 ### Specify expect timeout for a single assertion
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('example', async ({ page }) => {
   await expect(locator).toHaveText('hello', { timeout: 10_000 });
@@ -139,7 +139,7 @@ Running 1000 tests using 10 workers
 You can set global timeout in the config.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   globalTimeout: 3_600_000,
@@ -165,7 +165,7 @@ If you happen to be in this section because your test are flaky, it is very like
 ### Set action and navigation timeouts in the config
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -180,7 +180,7 @@ API reference: **TestOptions.actionTimeout** and **TestOptions.navigationTimeout
 ### Set timeout for a single action
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('https://copilotbrowser.dev', { timeout: 30000 });
@@ -193,7 +193,7 @@ test('basic test', async ({ page }) => {
 By default, [fixture](./test-fixtures) shares timeout with the test. However, for slow fixtures, especially [worker-scoped](./test-fixtures#worker-scoped-fixtures) ones, it is convenient to have a separate timeout. This way you can keep the overall test timeout small, and give the slow fixture more time.
 
 ```js title="example.spec.ts"
-import { test as base, expect } from '@copilotbrowser/test';
+import { test as base, expect } from '@copilotbrowser/copilotbrowser/test';
 
 const test = base.extend<{ slowFixture: string }>({
   slowFixture: [async ({}, use) => {

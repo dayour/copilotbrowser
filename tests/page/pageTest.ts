@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { TestType } from '@copilotbrowser/test';
+import type { TestType } from '@copilotbrowser/copilotbrowser/test';
 import type { PlatformWorkerFixtures } from '../config/platformFixtures';
 import type { TestModeTestFixtures, TestModeWorkerFixtures, TestModeWorkerOptions } from '../config/testModeFixtures';
 import { androidTest } from '../android/androidTest';
@@ -22,14 +22,14 @@ import { browserTest } from '../config/browserTest';
 import { electronTest } from '../electron/electronTest';
 import type { PageTestFixtures, PageWorkerFixtures } from './pageTestApi';
 import type { ServerFixtures, ServerWorkerOptions } from '../config/serverFixtures';
-import { expect as baseExpect } from '@copilotbrowser/test';
+import { expect as baseExpect } from '@copilotbrowser/copilotbrowser/test';
 export { rafraf } from '../config/utils';
 
 let impl: TestType<PageTestFixtures & ServerFixtures & TestModeTestFixtures, PageWorkerFixtures & PlatformWorkerFixtures & TestModeWorkerFixtures & TestModeWorkerOptions & ServerWorkerOptions> = browserTest;
 
-if (process.env.PWPAGE_IMPL === 'android')
+if (process.env.CBPAGE_IMPL === 'android')
   impl = androidTest;
-if (process.env.PWPAGE_IMPL === 'electron')
+if (process.env.CBPAGE_IMPL === 'electron')
   impl = electronTest;
 
 export const test = impl;

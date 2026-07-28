@@ -18,12 +18,12 @@ import { baseTest } from '../config/baseTest';
 import path from 'path';
 import fs from 'fs';
 import os from 'os';
-import type { ElectronApplication, Page, Electron } from '@copilotbrowser/test';
+import type { ElectronApplication, Page, Electron } from '@copilotbrowser/copilotbrowser/test';
 import type { PageTestFixtures, PageWorkerFixtures } from '../page/pageTestApi';
 import type { TraceViewerFixtures } from '../config/traceViewerFixtures';
 import { traceViewerFixtures } from '../config/traceViewerFixtures';
 import { removeFolders } from '../../packages/copilotbrowser/lib/server/utils/fileUtils';
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 
 type ElectronTestFixtures = PageTestFixtures & {
   electronApp: ElectronApplication;
@@ -64,7 +64,7 @@ export const electronTest = baseTest.extend<TraceViewerFixtures>(traceViewerFixt
         args: [path.join(__dirname, appFile), ...args],
         env: {
           ...process.env,
-          PWTEST_ELECTRON_USER_DATA_DIR: userDataDir,
+          CBTEST_ELECTRON_USER_DATA_DIR: userDataDir,
         }
       });
       apps.push(app);

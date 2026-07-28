@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Page, Frame, ElementHandle } from '@copilotbrowser/test';
+import type { Page, Frame, ElementHandle } from '@copilotbrowser/copilotbrowser/test';
 import { contextTest as it, expect } from '../config/browserTest';
 import { attachFrame } from '../config/utils';
 import type { TestServer } from '../config/testserver';

@@ -334,9 +334,9 @@ recorded test flow.
 aria snapshot for a selected locator, letting you explore, inspect, and verify element roles, attributes, and
 accessible names to aid snapshot creation and review.
 
-### Updating snapshots with `@copilotbrowser/test` and the `--update-snapshots` flag
+### Updating snapshots with `@copilotbrowser/copilotbrowser/test` and the `--update-snapshots` flag
 
-When using the copilotbrowser test runner (`@copilotbrowser/test`), you can automatically update snapshots with the `--update-snapshots` flag, `-u` for short.
+When using the copilotbrowser test runner (`@copilotbrowser/copilotbrowser/test`), you can automatically update snapshots with the `--update-snapshots` flag, `-u` for short.
 
 Running tests with the `--update-snapshots` flag will update snapshots that did not match. Matching snapshots will not be updated.
 

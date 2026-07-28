@@ -1,4 +1,4 @@
-const { test, expect } = require('@copilotbrowser/test');
+const { test, expect } = require('@copilotbrowser/copilotbrowser/test');
 
 const { spawn, execSync } = require('child_process');
 const fs = require('fs');

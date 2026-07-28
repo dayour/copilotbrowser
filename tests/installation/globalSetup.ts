@@ -27,10 +27,10 @@ async function globalSetup() {
   console.log(`Temporary workspaces will be created in ${TMP_WORKSPACES}. They will not be removed at the end. Set DEBUG=itest to determine which sub-dir a specific test is using.`);
   await fs.promises.mkdir(TMP_WORKSPACES, { recursive: true });
 
-  if (process.env.PWTEST_INSTALLATION_TEST_SKIP_PACKAGE_BUILDS) {
-    console.log('Skipped building packages. Unset PWTEST_INSTALLATION_TEST_SKIP_PACKAGE_BUILDS to build packages.');
+  if (process.env.CBTEST_INSTALLATION_TEST_SKIP_PACKAGE_BUILDS) {
+    console.log('Skipped building packages. Unset CBTEST_INSTALLATION_TEST_SKIP_PACKAGE_BUILDS to build packages.');
   } else {
-    console.log('Building packages. Set PWTEST_INSTALLATION_TEST_SKIP_PACKAGE_BUILDS to skip.');
+    console.log('Building packages. Set CBTEST_INSTALLATION_TEST_SKIP_PACKAGE_BUILDS to skip.');
     const outputDir = path.join(__dirname, 'output');
     await removeFolders([outputDir]);
     await fs.promises.mkdir(outputDir, { recursive: true });
@@ -46,7 +46,7 @@ async function globalSetup() {
 
     const builds = await Promise.all([
       build('copilotbrowser'),
-      build('copilotbrowser-test', '@copilotbrowser/test'),
+      build('copilotbrowser-test', '@copilotbrowser/copilotbrowser/test'),
       build('copilotbrowser'),
       build('copilotbrowser-chromium'),
       build('copilotbrowser-firefox'),

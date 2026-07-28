@@ -50,7 +50,7 @@ This is the **recommended** approach for tests **without server-side state**. Au
 Create `tests/auth.setup.ts` that will prepare authenticated browser state for all other tests.
 
 ```js title="tests/auth.setup.ts"
-import { test as setup, expect } from '@copilotbrowser/test';
+import { test as setup, expect } from '@copilotbrowser/copilotbrowser/test';
 import path from 'path';
 
 const authFile = path.join(__dirname, '../copilotbrowser/.auth/user.json');
@@ -78,7 +78,7 @@ setup('authenticate', async ({ page }) => {
 Create a new `setup` project in the config and declare it as a [dependency](./test-projects.md#dependencies) for all your testing projects. This project will always run and authenticate before all the tests. All testing projects should use the authenticated state as `storageState`.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -111,7 +111,7 @@ export default defineConfig({
 Tests start already authenticated because we specified `storageState` in the config.
 
 ```js title="tests/example.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   // page is authenticated
@@ -144,11 +144,11 @@ We will authenticate once per [worker process](./test-parallel.md#worker-process
 Create `copilotbrowser/fixtures.ts` file that will [override `storageState` fixture](./test-fixtures.md#overriding-fixtures) to authenticate once per worker. Use **TestInfo.parallelIndex** to differentiate between workers.
 
 ```js title="copilotbrowser/fixtures.ts"
-import { test as baseTest, expect } from '@copilotbrowser/test';
+import { test as baseTest, expect } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 import path from 'path';
 
-export * from '@copilotbrowser/test';
+export * from '@copilotbrowser/copilotbrowser/test';
 export const test = baseTest.extend<{}, { workerStorageState: string }>({
   // Use the same storage state for all tests in this worker.
   storageState: ({ workerStorageState }, use) => use(workerStorageState),
@@ -196,7 +196,7 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
 });
 ```
 
-Now, each test file should import `test` from our fixtures file instead of `@copilotbrowser/test`. No changes are needed in the config.
+Now, each test file should import `test` from our fixtures file instead of `@copilotbrowser/copilotbrowser/test`. No changes are needed in the config.
 
 ```js title="tests/example.spec.ts"
 // Important: import our fixtures.
@@ -327,7 +327,7 @@ We will send the API request with `APIRequestContext` and then save authenticate
 In the [setup project](#basic-shared-account-in-all-tests):
 
 ```js title="tests/auth.setup.ts"
-import { test as setup } from '@copilotbrowser/test';
+import { test as setup } from '@copilotbrowser/copilotbrowser/test';
 
 const authFile = 'copilotbrowser/.auth/user.json';
 
@@ -346,11 +346,11 @@ setup('authenticate', async ({ request }) => {
 Alternatively, in a [worker fixture](#moderate-one-account-per-parallel-worker):
 
 ```js title="copilotbrowser/fixtures.ts"
-import { test as baseTest, request } from '@copilotbrowser/test';
+import { test as baseTest, request } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 import path from 'path';
 
-export * from '@copilotbrowser/test';
+export * from '@copilotbrowser/copilotbrowser/test';
 export const test = baseTest.extend<{}, { workerStorageState: string }>({
   // Use the same storage state for all tests in this worker.
   storageState: ({ workerStorageState }, use) => use(workerStorageState),
@@ -401,7 +401,7 @@ export const test = baseTest.extend<{}, { workerStorageState: string }>({
 We will authenticate multiple times in the setup project.
 
 ```js title="tests/auth.setup.ts"
-import { test as setup, expect } from '@copilotbrowser/test';
+import { test as setup, expect } from '@copilotbrowser/copilotbrowser/test';
 
 const adminFile = 'copilotbrowser/.auth/admin.json';
 
@@ -449,7 +449,7 @@ setup('authenticate as user', async ({ page }) => {
 After that, specify `storageState` for each test file or test group, **instead of** setting it in the config.
 
 ```js title="tests/example.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ storageState: 'copilotbrowser/.auth/admin.json' });
 
@@ -478,7 +478,7 @@ See also about [authenticating in the UI mode](#authenticating-in-ui-mode).
 Use multiple `BrowserContext`s and `Page`s with different storage states in the same test.
 
 ```js title="tests/example.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('admin and user', async ({ browser }) => {
   // adminContext and all pages inside, including adminPage, are signed in as "admin".
@@ -508,7 +508,7 @@ You can introduce fixtures that will provide a page authenticated as each role.
 Below is an example that [creates fixtures](./test-fixtures.md#creating-a-fixture) for two [Page Object Models](./pom.md) - admin POM and user POM. It assumes `adminStorageState.json` and `userStorageState.json` files were created in the global setup.
 
 ```js title="copilotbrowser/fixtures.ts"
-import { test as base, type Page, type Locator } from '@copilotbrowser/test';
+import { test as base, type Page, type Locator } from '@copilotbrowser/copilotbrowser/test';
 
 // Page Object Model for the "admin" page.
 // Here you can add locators and helper methods specific to the admin page.
@@ -546,7 +546,7 @@ type MyFixtures = {
   userPage: UserPage;
 };
 
-export * from '@copilotbrowser/test';
+export * from '@copilotbrowser/copilotbrowser/test';
 export const test = base.extend<MyFixtures>({
   adminPage: async ({ browser }, use) => {
     const context = await browser.newContext({ storageState: 'copilotbrowser/.auth/admin.json' });
@@ -671,7 +671,7 @@ await context.AddInitScriptAsync(@"(storage => {
 You can reset storage state in a test file to avoid authentication that was set up for the whole project.
 
 ```js title="not-signed-in.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 // Reset storage state for this file to avoid being authenticated
 test.use({ storageState: { cookies: [], origins: [] } });

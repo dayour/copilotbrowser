@@ -109,7 +109,7 @@ To run tests with custom browser executable, specify `CRPATH`, `WKPATH` or `FFPA
 CRPATH=<path-to-executable> npm run ctest
 ```
 
-You will also find `DEBUG=pw:browser` useful for debugging custom-builds.
+You will also find `DEBUG=cb:browser` useful for debugging custom-builds.
 
 **Building documentation site**
 

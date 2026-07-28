@@ -16,7 +16,7 @@
  */
 
 import { contextTest as it, expect } from '../config/browserTest';
-import type { JSHandle } from '@copilotbrowser/test';
+import type { JSHandle } from '@copilotbrowser/copilotbrowser/test';
 
 it('expose binding should work', async ({ context }) => {
   let bindingSource: any;

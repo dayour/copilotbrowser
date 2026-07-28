@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Fixtures, FrameLocator, Locator, Page, Browser, BrowserContext } from '@copilotbrowser/test';
+import type { Fixtures, FrameLocator, Locator, Page, Browser, BrowserContext } from '@copilotbrowser/copilotbrowser/test';
 import { step } from './baseTest';
 import path from 'path';
 import { CommonFixtures, TestChildProcess } from './commonFixtures';
@@ -27,7 +27,7 @@ type BaseWorkerFixtures = {
   headless: boolean;
   browser: Browser;
   browserName: 'chromium' | 'firefox' | 'webkit';
-  copilotbrowser: typeof import('@copilotbrowser/test');
+  copilotbrowser: typeof import('@copilotbrowser/copilotbrowser/test');
 };
 
 export type TraceViewerFixtures = {

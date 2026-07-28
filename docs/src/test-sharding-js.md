@@ -171,7 +171,7 @@ If you want to run the same tests in multiple environments, as opposed to shard 
 In this case, it is useful to specify the **TestConfig.tag** property, to tag all tests with the environment name. This tag will be automatically picked up by the blob report and later on by the merge tool.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: process.env.CI ? 'blob' : 'html',

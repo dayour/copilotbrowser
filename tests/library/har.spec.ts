@@ -48,7 +48,7 @@ it('should have version and creator', async ({ contextFactory, server }, testInf
   const log = await getLog();
   expect(log.version).toBe('1.2');
   expect(log.creator.name).toBe('copilotbrowser');
-  expect(log.creator.version).toContain(process.env.PW_VERSION_OVERRIDE || require('../../package.json')['version']);
+  expect(log.creator.version).toContain(process.env.CB_VERSION_OVERRIDE || require('../../package.json')['version']);
 });
 
 it('should have browser', async ({ browserName, browser, contextFactory, server }, testInfo) => {

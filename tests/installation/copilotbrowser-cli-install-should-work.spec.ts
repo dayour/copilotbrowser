@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 import { test, expect } from './npmTest';
-import { chromium } from '@copilotbrowser/test';
+import { chromium } from '@copilotbrowser/copilotbrowser/test';
 import path from 'path';
 import http from 'http';
 import https from 'https';
@@ -169,7 +169,7 @@ test('should print the right install command without browsers', async ({ exec })
       const result = await exec('npx copilotbrowser codegen', {
         expectToExitWithError: true,
         env: {
-          PW_LANG_NAME: langName,
+          CB_LANG_NAME: langName,
         }
       });
       expect(result).toContain(installCommand);

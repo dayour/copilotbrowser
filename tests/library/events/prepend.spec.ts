@@ -21,7 +21,7 @@
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import { EventEmitter } from './utils';
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('EventEmitter functionality', () => {
   const myEE = new EventEmitter();

@@ -14,8 +14,8 @@ const { StdioClientTransport } = require(stdioPath);
     args: [path.join(__dirname, '..', 'packages', 'copilotbrowser', 'cli.js'), 'run-mcp-server', '--headless', '--browser=msedge'],
     env: {
       ...process.env,
-      PW_TMPDIR_FOR_TEST: profilesDir,
-      PWMCP_PROFILES_DIR_FOR_TEST: profilesDir,
+      CB_TMPDIR_FOR_TEST: profilesDir,
+      CBMCP_PROFILES_DIR_FOR_TEST: profilesDir,
       // Skip downloads; rely on system Edge/Chrome installed on Windows
       COPILOTBROWSER_SKIP_BROWSER_DOWNLOAD: '1',
     },

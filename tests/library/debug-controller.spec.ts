@@ -18,7 +18,7 @@ import { expect, copilotbrowserTest as baseTest } from '../config/browserTest';
 import { copilotbrowserServer } from '../../packages/copilotbrowser/lib/remote/copilotbrowserServer';
 import { createGuid } from '../../packages/copilotbrowser/lib/server/utils/crypto';
 import { Backend } from '../config/debugControllerBackend';
-import type { Browser, BrowserContext } from '@copilotbrowser/test';
+import type { Browser, BrowserContext } from '@copilotbrowser/copilotbrowser/test';
 import type * as channels from '@protocol/channels';
 import { roundBox } from '../config/utils';
 
@@ -33,7 +33,7 @@ type Fixtures = {
 const test = baseTest.extend<Fixtures>({
   wsEndpoint: async ({ headless }, use) => {
     if (headless)
-      process.env.PW_DEBUG_CONTROLLER_HEADLESS = '1';
+      process.env.CB_DEBUG_CONTROLLER_HEADLESS = '1';
     const server = new copilotbrowserServer({ mode: 'extension', path: '/' + createGuid(), maxConnections: Number.MAX_VALUE, enableSocksProxy: false });
     const wsEndpoint = await server.listen();
     await use(wsEndpoint);
@@ -184,7 +184,7 @@ test('should record', async ({ backend, connectedBrowser }) => {
   await page.getByRole('button').click();
 
   await expect.poll(() => events[events.length - 1]).toEqual({
-    header: `import { test, expect } from '@copilotbrowser/test';
+    header: `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {`,
     footer: `});`,
@@ -192,7 +192,7 @@ test('test', async ({ page }) => {`,
       `  await page.goto('about:blank');`,
       `  await page.getByRole('button', { name: 'Submit' }).click();`,
     ],
-    text: `import { test, expect } from '@copilotbrowser/test';
+    text: `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await page.goto('about:blank');
@@ -226,14 +226,14 @@ test('should record custom data-testid', async ({ backend, connectedBrowser }) =
 
   // 4. Expect "getByTestId" locator.
   await expect.poll(() => events[events.length - 1]).toEqual({
-    header: `import { test, expect } from '@copilotbrowser/test';
+    header: `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {`,
     footer: `});`,
     actions: [
       `  await page.getByTestId('one').click();`,
     ],
-    text: `import { test, expect } from '@copilotbrowser/test';
+    text: `import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await page.getByTestId('one').click();

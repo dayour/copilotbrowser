@@ -19,7 +19,7 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-import { expect } from '@copilotbrowser/test';
+import { expect } from '@copilotbrowser/copilotbrowser/test';
 import { EventEmitter as OriginalEventEmitter } from '../../../packages/copilotbrowser/lib/client/eventEmitter';
 import { nodePlatform } from '../../../packages/copilotbrowser/lib/server/utils/nodePlatform';
 

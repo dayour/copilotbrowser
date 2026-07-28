@@ -10,7 +10,7 @@ id: class-testinfo
 `TestInfo` contains information about currently running test. It is available to test functions, **Test.beforeEach()**, **Test.afterEach()**, **Test.beforeAll()** and **Test.afterAll()** hooks, and test-scoped fixtures. `TestInfo` provides utilities to control test execution: attach files, update test timeout, determine which test is currently running and whether it was retried, etc.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }, testInfo) => {
   expect(testInfo.title).toBe('basic test');
@@ -52,7 +52,7 @@ Attach a value or a file from disk to the current test. Some reporters show test
 For example, you can attach a screenshot to the test:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }, testInfo) => {
   await page.goto('https://copilotbrowser.dev');
@@ -64,7 +64,7 @@ test('basic test', async ({ page }, testInfo) => {
 Or you can attach files returned by your APIs:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import { download } from './my-custom-helpers';
 
 test('basic test', async ({}, testInfo) => {
@@ -156,7 +156,7 @@ Expected status for the currently running test. This is usually `'passed'`, exce
 Expected status is usually compared with the actual **TestInfo.status**:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.afterEach(async ({}, testInfo) => {
   if (testInfo.status !== testInfo.expectedStatus)
@@ -273,7 +273,7 @@ Absolute path to the output directory for this specific test run. Each test run 
 Returns a path inside the **TestInfo.outputDir** where the test can safely put a temporary file. Guarantees that tests running in parallel will not interfere with each other.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 
 test('example test', async ({}, testInfo) => {
@@ -324,7 +324,7 @@ Specifies a unique repeat index when running in "repeat each" mode. This mode is
 Specifies the retry number when the test is retried after a failure. The first test run has **TestInfo.retry** equal to zero, the first retry has it equal to one, and so on. Learn more about [retries](../test-retries.md#retries).
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({}, testInfo) => {
   // You can access testInfo.retry in any hook or fixture.
@@ -348,7 +348,7 @@ Changes the timeout for the currently running test. Zero means no timeout. Learn
 Timeout is usually specified in the [configuration file](../test-configuration.md), but it could be useful to change the timeout in certain scenarios:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ page }, testInfo) => {
   // Extend timeout for all tests running this hook by 30 seconds.
@@ -472,7 +472,7 @@ Actual status for the currently running test. Available after the test has finis
 Status is usually compared with the **TestInfo.expectedStatus**:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.afterEach(async ({}, testInfo) => {
   if (testInfo.status !== testInfo.expectedStatus)
@@ -490,7 +490,7 @@ Timeout in milliseconds for the currently running test. Zero means no timeout. L
 Timeout is usually specified in the [configuration file](../test-configuration.md)
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ page }, testInfo) => {
   // Extend timeout for all tests running this hook by 30 seconds.

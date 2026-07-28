@@ -22,7 +22,7 @@ test('export-test writes recorded test file', async ({ cli, server }, testInfo) 
   await cli('export-test', 'recorded-cli.spec.ts');
 
   const content = await fs.promises.readFile(testInfo.outputPath('recorded-cli.spec.ts'), 'utf-8');
-  expect(content).toContain(`import { test, expect } from '@copilotbrowser/test';`);
+  expect(content).toContain(`import { test, expect } from '@copilotbrowser/copilotbrowser/test';`);
   expect(content).toContain('await page.goto(');
 });
 

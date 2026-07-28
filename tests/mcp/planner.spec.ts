@@ -25,7 +25,7 @@ test.use({ mcpServerType: 'test-mcp' });
 test('planner_setup_page', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -74,7 +74,7 @@ test('planner_setup_page seed resolution', async ({ startClient }) => {
       };
     `,
     'tests/seed.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('template', async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -108,7 +108,7 @@ test('planner_setup_page seed resolution - rootPath', async ({ startClient }) =>
       };
     `,
     'packages/my-app/tests/seed.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('template', async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -140,13 +140,13 @@ test('planner_setup_page with dependencies', async ({ startClient }) => {
       };
     `,
     'auth.setup.ts': `
-      import { test as setup, expect } from '@copilotbrowser/test';
+      import { test as setup, expect } from '@copilotbrowser/copilotbrowser/test';
       setup('auth', async ({ page }, testInfo) => {
         require('fs').writeFileSync(testInfo.outputPath('auth.txt'), 'done');
       });
     `,
     'seed.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('template', async ({ page }, testInfo) => {
         require('fs').writeFileSync(testInfo.outputPath('template.txt'), 'done');
       });
@@ -238,7 +238,7 @@ test('planner_setup_page without location respects testsDir', async ({ startClie
     `,
 
     'tests/a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('existing', async ({ page }) => {
       });
     `,

@@ -12,7 +12,7 @@ With copilotbrowser you can test your app on any browser as well as emulate a re
 copilotbrowser comes with a [registry of device parameters](https://github.com/dayour/copilotbrowser/blob/main/packages/copilotbrowser/src/server/deviceDescriptorsSource.json) using **copilotbrowser.devices** for selected desktop, tablet and mobile devices. It can be used to simulate browser behavior for a specific device such as user agent, screen size, viewport and if it has touch enabled. All tests will run with the specified device parameters.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test'; // import devices
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test'; // import devices
 
 export default defineConfig({
   projects: [
@@ -99,7 +99,7 @@ copilotbrowser can emulate various devices by specifying `setDeviceScaleFactor`,
 The viewport is included in the device but you can override it for some tests with **Page.setViewportSize()**.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -126,7 +126,7 @@ const context = await browser.newContext({
 Test file:
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   viewport: { width: 1600, height: 1200 },
@@ -156,7 +156,7 @@ const context = await browser.newContext({
 The same works inside a test file.
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('specific viewport block', () => {
   test.use({ viewport: { width: 1600, height: 1200 } });
@@ -244,7 +244,7 @@ await using var context = await browser.NewContextAsync(new()
 Whether the meta viewport tag is taken into account and touch events are enabled.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -290,7 +290,7 @@ await using var context = await browser.NewContextAsync(new()
 Emulate the browser Locale and Timezone which can be set globally for all tests in the config and then overridden for particular tests.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -304,7 +304,7 @@ export default defineConfig({
 ```
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   locale: 'de-DE',
@@ -364,7 +364,7 @@ To set the test runner timezone, you can use the [`TZ` environment variable](htt
 Allow app to show system notifications.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -400,7 +400,7 @@ context = browser.new_context(
 Allow notifications for a specific domain.
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ context }) => {
   // Runs before each test and signs in each page.
@@ -461,7 +461,7 @@ await context.ClearPermissionsAsync();
 Grant `"geolocation"` permissions and set geolocation to a specific area.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -473,7 +473,7 @@ export default defineConfig({
 ```
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   geolocation: { longitude: 41.890221, latitude: 12.492348 },
@@ -526,7 +526,7 @@ await using var context = await browser.NewContextAsync(new()
 Change the location later:
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   geolocation: { longitude: 41.890221, latitude: 12.492348 },
@@ -565,7 +565,7 @@ await context.SetGeolocationAsync(new Geolocation() { Longitude = 48.858455, Lat
 Emulate the users `"colorScheme"`. Supported values are 'light' and 'dark'. You can also emulate the media type with **Page.emulateMedia()**.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -575,7 +575,7 @@ export default defineConfig({
 ```
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   colorScheme: 'dark' // or 'light'
@@ -688,7 +688,7 @@ await page.EmulateMediaAsync(new()
 The User Agent is included in the device and therefore you  will rarely need to change it however if you do need to test a different user agent you can override it with the `userAgent` property.
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ userAgent: 'My user agent' });
 
@@ -729,7 +729,7 @@ var context = await browser.NewContextAsync(new() { UserAgent = "My User Agent" 
 Emulate the network being offline.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -763,7 +763,7 @@ var context = await browser.NewContextAsync(new() { Offline = true });
 Emulate a user scenario where JavaScript is disabled.
 
 ```js tab=js-test title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ javaScriptEnabled: false });
 

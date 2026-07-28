@@ -17,7 +17,7 @@
 import type { TestServer } from 'tests/config/testserver';
 import type { Recorder } from './inspectorTest';
 import { test, expect } from './inspectorTest';
-import type { Page } from '@copilotbrowser/test';
+import type { Page } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('cli codegen', () => {
   test.skip(({ mode }) => mode !== 'default');

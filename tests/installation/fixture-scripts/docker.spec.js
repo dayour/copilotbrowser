@@ -1,4 +1,4 @@
-const { test, expect } = require('@copilotbrowser/test');
+const { test, expect } = require('@copilotbrowser/copilotbrowser/test');
 
 test('platform', async ({ page }) => {
   console.log('@' + page.context().browser().browserType().name(), await page.evaluate(() => navigator.platform));

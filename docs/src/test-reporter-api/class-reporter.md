@@ -14,7 +14,7 @@ You can create a custom reporter by implementing a class with some of the report
 ```js tab=js-js title="my-awesome-reporter.js"
 // @ts-check
 
-/** @implements {import('@copilotbrowser/test/reporter').Reporter} */
+/** @implements {import('@copilotbrowser/copilotbrowser/reporter').Reporter} */
 class MyReporter {
   constructor(options) {
     console.log(`my-awesome-reporter setup with customOption set to ${options.customOption}`);
@@ -43,7 +43,7 @@ module.exports = MyReporter;
 ```js tab=js-ts title="my-awesome-reporter.ts"
 import type {
   Reporter, FullConfig, Suite, TestCase, TestResult, FullResult
-} from '@copilotbrowser/test/reporter';
+} from '@copilotbrowser/copilotbrowser/reporter';
 
 class MyReporter implements Reporter {
   constructor(options: { customOption?: string } = {}) {
@@ -72,7 +72,7 @@ export default MyReporter;
 Now use this reporter with **TestConfig.reporter**. Learn more about [using reporters](../test-reporters.md).
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['./my-awesome-reporter.ts', { customOption: 'some value' }]],

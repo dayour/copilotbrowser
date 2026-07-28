@@ -21,9 +21,9 @@ import * as path from 'path';
 import fs from 'fs';
 import type { Source } from '../../../packages/recorder/src/recorderTypes';
 import type { CommonFixtures, TestChildProcess } from '../../config/commonFixtures';
-import { expect } from '@copilotbrowser/test';
+import { expect } from '@copilotbrowser/copilotbrowser/test';
 import { nodePlatform } from '../../../packages/copilotbrowser/lib/server/utils/nodePlatform';
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 
 type CLITestArgs = {
   recorderPageGetter: () => Promise<Page>;
@@ -264,10 +264,10 @@ class CLIMock {
     this._process = childProcess({
       command: nodeArgs,
       env: {
-        PWTEST_CLI_IS_UNDER_TEST: '1',
-        PWTEST_CLI_HEADLESS: options.headless ? '1' : undefined,
-        PWTEST_CLI_EXECUTABLE_PATH: options.executablePath,
-        DEBUG: (process.env.DEBUG ?? '') + ',pw:browser*',
+        CBTEST_CLI_IS_UNDER_TEST: '1',
+        CBTEST_CLI_HEADLESS: options.headless ? '1' : undefined,
+        CBTEST_CLI_EXECUTABLE_PATH: options.executablePath,
+        DEBUG: (process.env.DEBUG ?? '') + ',cb:browser*',
       },
     });
   }

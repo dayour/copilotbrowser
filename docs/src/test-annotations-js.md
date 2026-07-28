@@ -52,7 +52,7 @@ test('skip this test', async ({ page, browserName }) => {
 You can group tests to give them a logical name or to scope before/after hooks to the group.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('two tests', () => {
   test('one', async ({ page }) => {
@@ -72,7 +72,7 @@ Sometimes you want to tag your tests as `@fast` or `@slow`, and then filter by t
 To tag a test, either provide an additional details object when declaring a test, or add `@`-token to the test title. Note that tags must start with `@` symbol.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test login page', {
   tag: '@fast',
@@ -88,7 +88,7 @@ test('test full report @slow', async ({ page }) => {
 You can also tag all tests in a group or provide multiple tags:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('group', {
   tag: '@report',
@@ -164,7 +164,7 @@ If you would like to annotate your tests with something more substantial than a 
 For example, to annotate a test with an issue url:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test login page', {
   annotation: {
@@ -179,7 +179,7 @@ test('test login page', {
 You can also annotate all tests in a group or provide multiple annotations:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('report tests', {
   annotation: { type: 'category', description: 'report' },

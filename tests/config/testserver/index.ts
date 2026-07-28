@@ -113,7 +113,7 @@ export class TestServer {
     });
     this._server.listen(port);
     this._dirPath = dirPath;
-    this.debugServer = require('debug')('pw:testserver');
+    this.debugServer = require('debug')('cb:testserver');
 
     this._startTime = new Date();
     this._cachedPathPrefix = null;

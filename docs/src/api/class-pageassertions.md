@@ -8,7 +8,7 @@ id: class-pageassertions
 The `PageAssertions` class provides assertion methods that can be used to make assertions about the `Page` state in the tests.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('navigates to login', async ({ page }) => {
   // ...

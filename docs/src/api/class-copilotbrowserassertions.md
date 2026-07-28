@@ -12,7 +12,7 @@ copilotbrowser gives you Web-First Assertions with convenience methods for creat
 Consider the following example:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('status becomes submitted', async ({ page }) => {
   // ...

@@ -52,8 +52,8 @@ test('pnpm: copilotbrowser/ct/react should work', async ({ exec, tmpWorkspace, w
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'), '--validate-chromium-project-only');
 });
 
-test('pnpm: JSX inside a @copilotbrowser/test should work', async ({ exec, tmpWorkspace, writeFiles }) => {
-  await exec('pnpm add @copilotbrowser/test');
+test('pnpm: JSX inside a @copilotbrowser/copilotbrowser should work', async ({ exec, tmpWorkspace, writeFiles }) => {
+  await exec('pnpm add @copilotbrowser/copilotbrowser');
   await exec('pnpm exec copilotbrowser install');
   await writeFiles({
     'Button.tsx': `
@@ -62,7 +62,7 @@ test('pnpm: JSX inside a @copilotbrowser/test should work', async ({ exec, tmpWo
       }
     `,
     'example.spec.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       import { Button } from './Button';
 
       test('sample test', async ({ page }) => {
@@ -70,6 +70,6 @@ test('pnpm: JSX inside a @copilotbrowser/test should work', async ({ exec, tmpWo
       });
     `,
   });
-  await exec(`node node_modules/@copilotbrowser/test/cli.js test --browser=chromium --reporter=list,json example.spec.ts`, { env: { copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
+  await exec(`node node_modules/@copilotbrowser/copilotbrowser/cli.js test --browser=chromium --reporter=list,json example.spec.ts`, { env: { copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'), '--validate-chromium-project-only');
 });

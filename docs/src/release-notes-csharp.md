@@ -1243,7 +1243,7 @@ The following does now work:
   <RunConfiguration>
     <EnvironmentVariables>
       <!-- For debugging selectors, it's recommend to set the following environment variable -->
-      <DEBUG>pw:api</DEBUG>
+      <DEBUG>cb:api</DEBUG>
     </EnvironmentVariables>
   </RunConfiguration>
 </RunSettings>

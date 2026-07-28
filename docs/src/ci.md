@@ -50,7 +50,7 @@ configurations for common CI providers.
 We recommend setting [workers](./api/class-testconfig.md#test-config-workers) to "1" in CI environments to prioritize stability and reproducibility. Running tests sequentially ensures each test gets the full system resources, avoiding potential conflicts. However, if you have a powerful self-hosted CI system, you may enable [parallel](./test-parallel.md) tests. For wider parallelization, consider [sharding](./test-parallel.md#shard-tests-between-multiple-machines) - distributing tests across multiple CI jobs.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Opt out of parallel tests on CI.
@@ -594,7 +594,7 @@ steps:
 ```
 Note: The JUnit reporter needs to be configured accordingly via
 ```js
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['junit', { outputFile: 'test-results/e2e-junit-results.xml' }]],
@@ -991,21 +991,21 @@ If you still want to cache the browser binaries between CI runs, cache [these di
 
 ## Debugging browser launches
 
-copilotbrowser supports the `DEBUG` environment variable to output debug logs during execution. Setting it to `pw:browser` is helpful while debugging `Error: Failed to launch browser` errors.
+copilotbrowser supports the `DEBUG` environment variable to output debug logs during execution. Setting it to `cb:browser` is helpful while debugging `Error: Failed to launch browser` errors.
 
 ```bash js
-DEBUG=pw:browser npx copilotbrowser test
+DEBUG=cb:browser npx copilotbrowser test
 ```
 ```bash python
-DEBUG=pw:browser pytest
+DEBUG=cb:browser pytest
 ```
 
 ```bash java
-DEBUG=pw:browser mvn test
+DEBUG=cb:browser mvn test
 ```
 
 ```bash csharp
-DEBUG=pw:browser dotnet test
+DEBUG=cb:browser dotnet test
 ```
 
 ## Running headed

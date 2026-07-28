@@ -36,7 +36,7 @@ type TestOptions = {
 
 const test = base.extend<TestOptions>({
   startCCServer: async ({ asset }, use) => {
-    process.env.PWTEST_UNSUPPORTED_CUSTOM_CA = asset('client-certificates/server/server_cert.pem');
+    process.env.CBTEST_UNSUPPORTED_CUSTOM_CA = asset('client-certificates/server/server_cert.pem');
     let server: http.Server | http2.Http2SecureServer | undefined;
     await use(async options => {
       server = (options?.http2 ? createHttp2Server : createHttpsServer)({

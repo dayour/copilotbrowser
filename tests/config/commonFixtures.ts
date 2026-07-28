@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Fixtures } from '@copilotbrowser/test';
+import type { Fixtures } from '@copilotbrowser/copilotbrowser/test';
 import type { ChildProcess } from 'child_process';
 import { execSync, spawn } from 'child_process';
 import net from 'net';
@@ -122,7 +122,7 @@ export class TestChildProcess {
       // @see https://nodejs.org/api/child_process.html#child_process_options_detached
       detached: process.platform !== 'win32',
     });
-    if (process.env.PWTEST_DEBUG)
+    if (process.env.CBTEST_DEBUG)
       process.stdout.write(`\n\nLaunching ${params.command.join(' ')}\n`);
     this.onOutput = params.onOutput;
 
@@ -132,7 +132,7 @@ export class TestChildProcess {
         this.stderr += String(chunk);
       else
         this.stdout += String(chunk);
-      if (process.env.PWTEST_DEBUG)
+      if (process.env.CBTEST_DEBUG)
         process.stdout.write(String(chunk));
       else
         this.fullOutput += String(chunk);
@@ -251,7 +251,7 @@ export const commonFixtures: Fixtures<CommonFixtures, CommonWorkerFixtures> = {
       return process;
     });
     await Promise.all(processes.map(async child => child.kill()));
-    if (testInfo.status !== 'passed' && testInfo.status !== 'skipped' && !process.env.PWTEST_DEBUG) {
+    if (testInfo.status !== 'passed' && testInfo.status !== 'skipped' && !process.env.CBTEST_DEBUG) {
       for (const process of processes) {
         console.log('====== ' + process.params.command.join(' '));
         console.log(process.fullOutput.replace(/\x1Bc/g, ''));

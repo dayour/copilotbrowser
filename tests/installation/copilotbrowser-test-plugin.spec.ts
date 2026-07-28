@@ -25,14 +25,14 @@ function patchPackageJsonForPreReleaseIfNeeded(tmpWorkspace: string) {
   //
   // Workaround per https://stackoverflow.com/questions/71479750/npm-install-pre-release-versions-for-peer-dependency.
   const pkg = JSON.parse(fs.readFileSync(path.resolve(tmpWorkspace, 'package.json'), 'utf-8'));
-  if (pkg.dependencies['@copilotbrowser/test'].match(/\d+\.\d+-\w+/)) {
-    pkg.overrides = { '@copilotbrowser/test': '$@copilotbrowser/test' };
+  if (pkg.dependencies['@copilotbrowser/copilotbrowser/test'].match(/\d+\.\d+-\w+/)) {
+    pkg.overrides = { '@copilotbrowser/copilotbrowser/test': '$@copilotbrowser/copilotbrowser' };
     fs.writeFileSync(path.resolve(tmpWorkspace, 'package.json'), JSON.stringify(pkg, null, 2));
   }
 }
 
-test('npm: @copilotbrowser/test plugin should work', async ({ exec, tmpWorkspace }) => {
-  await exec('npm i @copilotbrowser/test');
+test('npm: @copilotbrowser/copilotbrowser plugin should work', async ({ exec, tmpWorkspace }) => {
+  await exec('npm i @copilotbrowser/copilotbrowser');
   patchPackageJsonForPreReleaseIfNeeded(tmpWorkspace);
   await exec('npm i copilotbrowser-test-plugin');
   await exec('npx copilotbrowser install chromium');
@@ -45,8 +45,8 @@ test('npm: @copilotbrowser/test plugin should work', async ({ exec, tmpWorkspace
   await exec('npx tsc copilotbrowser-test-plugin-types.ts');
 });
 
-test('pnpm: @copilotbrowser/test plugin should work', async ({ exec, tmpWorkspace }) => {
-  await exec('pnpm add @copilotbrowser/test');
+test('pnpm: @copilotbrowser/copilotbrowser plugin should work', async ({ exec, tmpWorkspace }) => {
+  await exec('pnpm add @copilotbrowser/copilotbrowser');
   patchPackageJsonForPreReleaseIfNeeded(tmpWorkspace);
   await exec('pnpm add copilotbrowser-test-plugin');
   await exec('pnpm exec copilotbrowser install chromium');
@@ -59,8 +59,8 @@ test('pnpm: @copilotbrowser/test plugin should work', async ({ exec, tmpWorkspac
   await exec('pnpm exec tsc copilotbrowser-test-plugin-types.ts');
 });
 
-test('yarn: @copilotbrowser/test plugin should work', async ({ exec, tmpWorkspace }) => {
-  await exec('yarn add @copilotbrowser/test');
+test('yarn: @copilotbrowser/copilotbrowser plugin should work', async ({ exec, tmpWorkspace }) => {
+  await exec('yarn add @copilotbrowser/copilotbrowser');
   patchPackageJsonForPreReleaseIfNeeded(tmpWorkspace);
   await exec('yarn add copilotbrowser-test-plugin');
   await exec('yarn copilotbrowser install chromium');

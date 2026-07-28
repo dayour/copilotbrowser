@@ -15,7 +15,7 @@
  */
 
 import { browserTest as it, expect } from '../config/browserTest';
-import type { Route } from '@copilotbrowser/test';
+import type { Route } from '@copilotbrowser/copilotbrowser/test';
 import { ManualPromise } from '../../packages/copilotbrowser/lib/utils/isomorphic/manualPromise';
 
 it('context.unroute should not wait for pending handlers to complete', async ({ page, context, server }) => {

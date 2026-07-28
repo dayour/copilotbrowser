@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2017 Google Inc. All rights reserved.
  * Modifications copyright (c) Microsoft Corporation.
  *
@@ -1072,7 +1072,7 @@ test.describe('launchServer only', () => {
 
 test('should refuse connecting when versions do not match', async ({ connect, childProcess }) => {
   const server = new RunServer();
-  await server.start(childProcess, 'default', { PW_VERSION_OVERRIDE: '1.2.3' });
+  await server.start(childProcess, 'default', { CB_VERSION_OVERRIDE: '1.2.3' });
   const error = await connect(server.wsEndpoint()).catch(e => e);
   await server.close();
   expect(error.message).toContain('copilotbrowser version mismatch');

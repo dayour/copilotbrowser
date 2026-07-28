@@ -64,7 +64,7 @@ Here is an example `tsconfig.json` that works with copilotbrowser:
 You can now import using the mapped paths:
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import { username, password } from '@myhelper/credentials';
 
 test('example', async ({ page }) => {
@@ -92,7 +92,7 @@ npx copilotbrowser test --tsconfig=tsconfig.test.json
 You can specify a single tsconfig file in the config file, that will be used for loading test files, reporters, etc. However, it will not be used while loading the copilotbrowser config itself or any files imported from it.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   tsconfig: './tsconfig.test.json',

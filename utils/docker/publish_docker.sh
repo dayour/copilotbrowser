@@ -7,12 +7,12 @@ trap "cd $(pwd -P)" EXIT
 cd "$(dirname "$0")"
 
 MCR_IMAGE_NAME="copilotbrowser"
-PW_VERSION=$(node ../../utils/workspace.js --get-version)
+CB_VERSION=$(node ../../utils/workspace.js --get-version)
 
 RELEASE_CHANNEL="$1"
 if [[ "${RELEASE_CHANNEL}" == "stable" ]]; then
-  if [[ "${PW_VERSION}" == *-* ]]; then
-    echo "ERROR: cannot publish stable docker with copilotbrowser version '${PW_VERSION}'"
+  if [[ "${CB_VERSION}" == *-* ]]; then
+    echo "ERROR: cannot publish stable docker with copilotbrowser version '${CB_VERSION}'"
     exit 1
   fi
 else
@@ -23,13 +23,13 @@ fi
 
 # Ubuntu 22.04
 JAMMY_TAGS=(
-  "v${PW_VERSION}-jammy"
+  "v${CB_VERSION}-jammy"
 )
 
 # Ubuntu 24.04
 NOBLE_TAGS=(
-  "v${PW_VERSION}"
-  "v${PW_VERSION}-noble"
+  "v${CB_VERSION}"
+  "v${CB_VERSION}-noble"
 )
 
 tag_and_push() {

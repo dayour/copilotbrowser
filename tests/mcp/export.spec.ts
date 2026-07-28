@@ -36,7 +36,7 @@ test('browser_export_copilotbrowser_test writes a recorded test file', async ({ 
 
   const content = await fs.promises.readFile(testInfo.outputPath('recorded-flow.spec.ts'), 'utf-8');
   expect(content).toContain(`test('smoke flow'`);
-  expect(content).toContain(`import { test, expect } from '@copilotbrowser/test';`);
+  expect(content).toContain(`import { test, expect } from '@copilotbrowser/copilotbrowser/test';`);
   expect(content).toContain('await page.goto(');
 });
 

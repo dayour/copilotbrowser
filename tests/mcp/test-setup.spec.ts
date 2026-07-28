@@ -49,7 +49,7 @@ const workspace = {
     };
   `,
   'a.test.ts': `
-    import { test, expect } from '@copilotbrowser/test';
+    import { test, expect } from '@copilotbrowser/copilotbrowser/test';
     test('test', async ({ page }) => {
       console.log('test');
       console.error('test');

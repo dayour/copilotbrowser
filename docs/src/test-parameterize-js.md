@@ -73,7 +73,7 @@ copilotbrowser Test supports running multiple test projects at the same time. In
 We declare the option `person` and set the value in the config. The first project runs with the value `Alice` and the second with the value `Bob`.
 
 ```js tab=js-js title="my-test.js"
-const base = require('@copilotbrowser/test');
+const base = require('@copilotbrowser/copilotbrowser/test');
 
 exports.test = base.test.extend({
   // Define an option and provide a default value.
@@ -83,7 +83,7 @@ exports.test = base.test.extend({
 ```
 
 ```js tab=js-ts title="my-test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export type TestOptions = {
   person: string;
@@ -128,7 +128,7 @@ module.exports = defineConfig({
 ```
 
 ```js tab=js-ts title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 import type { TestOptions } from './my-test';
 
 export default defineConfig<TestOptions>({
@@ -148,7 +148,7 @@ export default defineConfig<TestOptions>({
 We can also use the option in a fixture. Learn more about [fixtures](./test-fixtures.md).
 
 ```js tab=js-js title="my-test.js"
-const base = require('@copilotbrowser/test');
+const base = require('@copilotbrowser/copilotbrowser/test');
 
 exports.test = base.test.extend({
   // Define an option and provide a default value.
@@ -168,7 +168,7 @@ exports.test = base.test.extend({
 ```
 
 ```js tab=js-ts title="my-test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export type TestOptions = {
   person: string;
@@ -230,7 +230,7 @@ npx copilotbrowser test
 Similarly, configuration file can also read environment variables passed through the command line.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -260,7 +260,7 @@ npx copilotbrowser test
 To make environment variables easier to manage, consider something like `.env` files. Here is an example that uses [`dotenv`](https://www.npmjs.com/package/dotenv) package to read environment variables directly in the configuration file.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -311,7 +311,7 @@ Based on this we'll generate some tests by using the [csv-parse](https://www.npm
 ```js title="test.spec.ts"
 import fs from 'fs';
 import path from 'path';
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 import { parse } from 'csv-parse/sync';
 
 const records = parse(fs.readFileSync(path.join(__dirname, 'input.csv')), {

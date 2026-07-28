@@ -16,62 +16,62 @@
 import { test, expect } from './npmTest';
 import path from 'path';
 
-test('npm: @copilotbrowser/test should work', async ({ exec, tmpWorkspace }) => {
-  await exec('npm i @copilotbrowser/test');
+test('npm: @copilotbrowser/copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
+  await exec('npm i @copilotbrowser/copilotbrowser');
   await exec('npx copilotbrowser install');
   await exec('npx copilotbrowser test -c . --browser=all --reporter=list,json sample.spec.js', { env: {  copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'));
-  await exec('node sanity.js @copilotbrowser/test chromium firefox webkit');
+  await exec('node sanity.js @copilotbrowser/copilotbrowser chromium firefox webkit');
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });
 
-test('npm: copilotbrowser + @copilotbrowser/test should work', async ({ exec, tmpWorkspace }) => {
+test('npm: copilotbrowser + @copilotbrowser/copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
   await exec('npm i copilotbrowser');
-  await exec('npm i @copilotbrowser/test');
+  await exec('npm i @copilotbrowser/copilotbrowser');
   await exec('npx copilotbrowser install');
   await exec('npx copilotbrowser test -c . --browser=all --reporter=list,json sample.spec.js', { env: {  copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'));
-  await exec('node sanity.js @copilotbrowser/test chromium firefox webkit');
+  await exec('node sanity.js @copilotbrowser/copilotbrowser chromium firefox webkit');
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });
 
-test('npm: @copilotbrowser/test + copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
-  await exec('npm i @copilotbrowser/test');
+test('npm: @copilotbrowser/copilotbrowser + copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
+  await exec('npm i @copilotbrowser/copilotbrowser');
   await exec('npm i copilotbrowser');
   await exec('npx copilotbrowser install');
   await exec('npx copilotbrowser test -c . --browser=all --reporter=list,json sample.spec.js', { env: {  copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'));
-  await exec('node sanity.js @copilotbrowser/test chromium firefox webkit');
+  await exec('node sanity.js @copilotbrowser/copilotbrowser chromium firefox webkit');
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });
 
-test('npm: @copilotbrowser/test should install copilotbrowser bin', async ({ exec, tmpWorkspace }) => {
-  await exec('npm i @copilotbrowser/test');
+test('npm: @copilotbrowser/copilotbrowser should install copilotbrowser bin', async ({ exec, tmpWorkspace }) => {
+  await exec('npm i @copilotbrowser/copilotbrowser');
   const result = await exec('npx copilotbrowser --version');
   expect(result).toContain('Version 1.');
 });
 
 test('npm: uninstalling copilotbrowser removes copilotbrowser bin', async ({ exec, tmpWorkspace }) => {
-  await exec('npm i @copilotbrowser/test');
+  await exec('npm i @copilotbrowser/copilotbrowser');
   await exec('npm i copilotbrowser');
   await exec('npm uninstall copilotbrowser');
   await exec('npx copilotbrowser test', { expectToExitWithError: true, message: 'command not found' });
 });
 
-test('yarn: @copilotbrowser/test should work', async ({ exec, tmpWorkspace }) => {
-  await exec('yarn add @copilotbrowser/test');
+test('yarn: @copilotbrowser/copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
+  await exec('yarn add @copilotbrowser/copilotbrowser');
   await exec('yarn copilotbrowser install');
   await exec('yarn copilotbrowser test -c . --browser=all --reporter=list,json sample.spec.js', { env: {  copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'));
-  await exec('node sanity.js @copilotbrowser/test chromium firefox webkit');
+  await exec('node sanity.js @copilotbrowser/copilotbrowser chromium firefox webkit');
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });
 
-test('pnpm: @copilotbrowser/test should work', async ({ exec, tmpWorkspace }) => {
-  await exec('pnpm add @copilotbrowser/test');
+test('pnpm: @copilotbrowser/copilotbrowser should work', async ({ exec, tmpWorkspace }) => {
+  await exec('pnpm add @copilotbrowser/copilotbrowser');
   await exec('pnpm exec copilotbrowser install');
   await exec('pnpm exec copilotbrowser test -c . --browser=all --reporter=list,json sample.spec.js', { env: {  copilotbrowser_JSON_OUTPUT_NAME: 'report.json' } });
   await exec('node read-json-report.js', path.join(tmpWorkspace, 'report.json'));
-  await exec('node sanity.js @copilotbrowser/test chromium firefox webkit');
+  await exec('node sanity.js @copilotbrowser/copilotbrowser chromium firefox webkit');
   await exec('node', 'esm-copilotbrowser-test.mjs');
 });

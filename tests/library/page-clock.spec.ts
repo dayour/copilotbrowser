@@ -16,7 +16,7 @@
 
 import { browserTest as test, expect } from '../config/browserTest';
 
-test.skip(!!process.env.PW_CLOCK);
+test.skip(!!process.env.CB_CLOCK);
 
 declare global {
   interface Window {

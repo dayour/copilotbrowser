@@ -13,6 +13,11 @@ yarn.lock
 /packages/copilotbrowser/src/generated
 /packages/copilotbrowser-ct-core/src/generated
 packages/*/lib/
+
+# Compiled output must never be committed inside src/ — the build emits to packages/*/lib/.
+# Stray .js next to a .ts source shadows the real module at resolution time.
+packages/copilotbrowser/src/**/*.js
+!packages/copilotbrowser/src/third_party/pixelmatch.js
 drivers/
 .android-sdk/
 .gradle/

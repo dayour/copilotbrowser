@@ -8,6 +8,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@copilotbrowser/test": "^1.17.1"
+    "@copilotbrowser/copilotbrowser": "^2.1.0"
   }
 }

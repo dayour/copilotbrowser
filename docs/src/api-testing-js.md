@@ -31,7 +31,7 @@ The following example demonstrates how to use copilotbrowser to test issues crea
 GitHub API requires authorization, so we'll configure the token once for all tests. While at it, we'll also set the `baseURL` to simplify the tests. You can either put them in the configuration file, or in the test file with `test.use()`.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   use: {
     // All requests we send go to this API endpoint.
@@ -53,7 +53,7 @@ If your tests need to run behind a proxy, you can specify this in the config and
 will pick it up automatically:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   use: {
     proxy: {
@@ -136,7 +136,7 @@ test.afterAll(async ({ request }) => {
 Behind the scenes, [`request` fixture](./api/class-fixtures#fixtures-request) will actually call **APIRequest.newContext()**. You can always do that manually if you'd like more control. Below is a standalone script that does the same as `beforeAll` and `afterAll` from above.
 
 ```js
-import { request } from '@copilotbrowser/test';
+import { request } from '@copilotbrowser/copilotbrowser/test';
 const REPO = 'test-repo-1';
 const USER = 'github-username';
 
@@ -179,7 +179,7 @@ The following test creates a new issue via API and then navigates to the list of
 project to check that it appears at the top of the list.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 const REPO = 'test-repo-1';
 const USER = 'github-username';
@@ -226,7 +226,7 @@ The following test creates a new issue via user interface in the browser and the
 it was created via API:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 const REPO = 'test-repo-1';
 const USER = 'github-username';

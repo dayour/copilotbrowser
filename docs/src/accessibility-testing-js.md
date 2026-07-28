@@ -36,7 +36,7 @@ This example demonstrates how to test an entire page for automatically detectabl
 1. Uses normal copilotbrowser Test [assertions](./test-assertions) to verify that there are no violations in the returned scan results
 
 ```js tab=js-ts
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import AxeBuilder from '@axe-core/copilotbrowser'; // 1
 
 test.describe('homepage', () => { // 2
@@ -51,7 +51,7 @@ test.describe('homepage', () => { // 2
 ```
 
 ```js tab=js-js
-const { test, expect } = require('@copilotbrowser/test');
+const { test, expect } = require('@copilotbrowser/copilotbrowser/test');
 const AxeBuilder = require('@axe-core/copilotbrowser').default; // 1
 
 test.describe('homepage', () => { // 2
@@ -233,7 +233,7 @@ The following example demonstrates creating and using a test fixture that covers
 This example fixture creates an `AxeBuilder` object which is pre-configured with shared `withTags()` and `exclude()` configuration.
 
 ```js tab=js-ts title="axe-test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 import AxeBuilder from '@axe-core/copilotbrowser';
 
 type AxeFixture = {
@@ -253,11 +253,11 @@ export const test = base.extend<AxeFixture>({
     await use(makeAxeBuilder);
   }
 });
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 ```
 
 ```js tab=js-js title="axe-test.js"
-const base = require('@copilotbrowser/test');
+const base = require('@copilotbrowser/copilotbrowser/test');
 const AxeBuilder = require('@axe-core/copilotbrowser').default;
 
 // Extend base test by providing "makeAxeBuilder"

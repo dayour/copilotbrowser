@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { _baseTest as _test, expect as _expect } from '@copilotbrowser/test';
+import { _baseTest as _test, expect as _expect } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';

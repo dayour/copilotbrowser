@@ -15,12 +15,12 @@
  */
 
 import { copilotbrowserTest as test, expect } from '../config/browserTest';
-import type { TestInfo } from '@copilotbrowser/test';
+import type { TestInfo } from '@copilotbrowser/copilotbrowser/test';
 import path from 'path';
 import fs from 'fs';
 import { start } from '../../packages/copilotbrowser/lib/outofprocess';
 
-const chromeDriver = process.env.PWTEST_CHROMEDRIVER;
+const chromeDriver = process.env.CBTEST_CHROMEDRIVER;
 const brokenDriver = path.join(__dirname, '..', 'assets', 'selenium-grid', 'broken-selenium-driver.js');
 let standalone_3_141_59: string;
 let selenium_4_8_3: string;
@@ -38,8 +38,8 @@ test.skip(!chromeDriver);
 test.slow();
 
 test.beforeAll(() => {
-  standalone_3_141_59 = path.join(process.env.PWTEST_SELENIUM!, 'selenium-server-standalone-3.141.59.jar');
-  selenium_4_8_3 = path.join(process.env.PWTEST_SELENIUM!, 'selenium-server-4.8.3.jar');
+  standalone_3_141_59 = path.join(process.env.CBTEST_SELENIUM!, 'selenium-server-standalone-3.141.59.jar');
+  selenium_4_8_3 = path.join(process.env.CBTEST_SELENIUM!, 'selenium-server-4.8.3.jar');
 });
 
 test('selenium grid 3.141.59 standalone chromium', async ({ browserName, childProcess, waitForPort, browserType }, testInfo) => {

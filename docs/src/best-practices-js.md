@@ -20,7 +20,7 @@ Each test should be completely isolated from another test and should run indepen
 In order to avoid repetition for a particular part of your test you can use [before and after hooks](/api/class-test.md). Within your test file add a before hook to run a part of your test before each test such as going to a particular URL or logging in to a part of your app. This keeps your tests isolated as no test relies on another. However it is also ok to have a little duplication when tests are simple enough especially if it keeps your tests clearer and easier to read and maintain.
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ page }) => {
   // Runs before each test and signs in each page.
@@ -298,7 +298,7 @@ copilotbrowser comes with a range of tooling to help you write tests.
 copilotbrowser makes it easy to test your site across all [browsers](./test-projects.md#configure-projects-for-multiple-browsers) no matter what platform you are on. Testing across all browsers ensures your app works for all users. In your config file you can set up projects adding the name and which browser or device to use.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -324,19 +324,19 @@ By keeping your copilotbrowser version up to date you will be able to test your 
 
 
 ```bash
-npm install -D @copilotbrowser/test@latest
+npm install -D @copilotbrowser/copilotbrowser@latest
 ```
 
 
 
 ```bash
-yarn add --dev @copilotbrowser/test@latest
+yarn add --dev @copilotbrowser/copilotbrowser@latest
 ```
 
 
 
 ```bash
-pnpm install --save-dev @copilotbrowser/test@latest
+pnpm install --save-dev @copilotbrowser/copilotbrowser@latest
 ```
 
 
@@ -394,7 +394,7 @@ We recommend TypeScript and linting with ESLint for your tests to catch errors e
 copilotbrowser runs tests in [parallel](./test-parallel.md) by default. Tests in a single file are run in order, in the same worker process. If you have many independent tests in a single file, you might want to run them in parallel
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe.configure({ mode: 'parallel' });
 

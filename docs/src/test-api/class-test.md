@@ -10,7 +10,7 @@ id: class-test
 copilotbrowser Test provides a `test` function to declare tests and `expect` function to write assertions.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('https://dayour.github.io/copilotbrowser/');
@@ -30,7 +30,7 @@ Declares a test.
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('https://dayour.github.io/copilotbrowser/');
@@ -43,7 +43,7 @@ test('basic test', async ({ page }) => {
 You can tag tests by providing additional test details. Alternatively, you can include tags in the test title. Note that each tag must start with `@` symbol.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', {
   tag: '@smoke',
@@ -71,7 +71,7 @@ Learn more about [tagging](../test-annotations.md#tag-tests).
 You can annotate tests by providing additional test details.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', {
   annotation: {
@@ -186,7 +186,7 @@ copilotbrowser will continue running all applicable hooks even if some of them h
 
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.afterEach(async ({ page }) => {
   console.log(`Finished ${test.info().title} with status ${test.info().status}`);
@@ -247,7 +247,7 @@ copilotbrowser will continue running all applicable hooks even if some of them h
 
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeAll(async () => {
   console.log('Before tests');
@@ -307,7 +307,7 @@ copilotbrowser will continue running all applicable hooks even if some of them h
 **Usage**
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ page }) => {
   console.log(`Running ${test.info().title}`);
@@ -390,7 +390,7 @@ test.describe(() => {
 You can tag all tests in a group by providing additional details. Note that each tag must start with `@` symbol.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('two tagged tests', {
   tag: '@smoke',
@@ -412,7 +412,7 @@ Learn more about [tagging](../test-annotations.md#tag-tests).
 You can annotate all tests in a group by providing additional details.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('two annotated tests', {
   annotation: {
@@ -946,7 +946,7 @@ Extends the `test` object by defining fixtures and/or options that can be used i
 First define a fixture and/or an option.
 
 ```js tab=js-js title="my-test.js"
-const base = require('@copilotbrowser/test');
+const base = require('@copilotbrowser/copilotbrowser/test');
 const { TodoPage } = require('./todo-page');
 
 // Extend basic test by providing a "defaultItem" option and a "todoPage" fixture.
@@ -968,7 +968,7 @@ exports.test = base.test.extend({
 ```
 
 ```js tab=js-ts
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 import { TodoPage } from './todo-page';
 
 export type Options = { defaultItem: string };
@@ -1022,7 +1022,7 @@ module.exports = defineConfig({
 ```
 
 ```js tab=js-ts title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 import type { Options } from './my-test';
 
 export default defineConfig<Options>({
@@ -1069,7 +1069,7 @@ To annotate test as "failing" at runtime:
 You can declare a test as failing, so that copilotbrowser ensures it actually fails.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.fail('not yet ready', async ({ page }) => {
   // ...
@@ -1079,7 +1079,7 @@ test.fail('not yet ready', async ({ page }) => {
 If your test fails in some configurations, but not all, you can mark the test as failing inside the test body based on some condition. We recommend passing a `description` argument in this case.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('fail in WebKit', async ({ page, browserName }) => {
   test.fail(browserName === 'webkit', 'This feature is not implemented for Mac yet');
@@ -1090,7 +1090,7 @@ test('fail in WebKit', async ({ page, browserName }) => {
 You can mark all tests in a file or **Test.describe()** group as "should fail" based on some condition with a single `test.fail(callback, description)` call.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.fail(({ browserName }) => browserName === 'webkit', 'not implemented yet');
 
@@ -1105,7 +1105,7 @@ test('fail in WebKit 2', async ({ page }) => {
 You can also call `test.fail()` without arguments inside the test body to always mark the test as failed. We recommend declaring a failing test with `test.fail(title, body)` instead.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('less readable', async ({ page }) => {
   test.fail();
@@ -1169,7 +1169,7 @@ To declare a focused "failing" test:
 You can declare a focused failing test, so that copilotbrowser runs only this test and ensures it actually fails.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.fail.only('focused failing test', async ({ page }) => {
   // This test is expected to fail
@@ -1225,7 +1225,7 @@ To annotate test as "fixme" at runtime:
 You can declare a test as to be fixed, and copilotbrowser will not run it.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.fixme('to be fixed', async ({ page }) => {
   // ...
@@ -1235,7 +1235,7 @@ test.fixme('to be fixed', async ({ page }) => {
 If your test should be fixed in some configurations, but not all, you can mark the test as "fixme" inside the test body based on some condition. We recommend passing a `description` argument in this case. copilotbrowser will run the test, but abort it immediately after the `test.fixme` call.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('to be fixed in Safari', async ({ page, browserName }) => {
   test.fixme(browserName === 'webkit', 'This feature breaks in Safari for some reason');
@@ -1246,7 +1246,7 @@ test('to be fixed in Safari', async ({ page, browserName }) => {
 You can mark all tests in a file or **Test.describe()** group as "fixme" based on some condition with a single `test.fixme(callback, description)` call.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.fixme(({ browserName }) => browserName === 'webkit', 'Should figure out the issue');
 
@@ -1261,7 +1261,7 @@ test('to be fixed in Safari 2', async ({ page }) => {
 You can also call `test.fixme()` without arguments inside the test body to always mark the test as failed. We recommend using `test.fixme(title, body)` instead.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('less readable', async ({ page }) => {
   test.fixme();
@@ -1447,7 +1447,7 @@ To skip a test at runtime:
 You can declare a skipped test, and copilotbrowser will not run it.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.skip('never run', async ({ page }) => {
   // ...
@@ -1457,7 +1457,7 @@ test.skip('never run', async ({ page }) => {
 If your test should be skipped in some configurations, but not all, you can skip the test inside the test body based on some condition. We recommend passing a `description` argument in this case. copilotbrowser will run the test, but abort it immediately after the `test.skip` call.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('Safari-only test', async ({ page, browserName }) => {
   test.skip(browserName !== 'webkit', 'This feature is Safari-only');
@@ -1468,7 +1468,7 @@ test('Safari-only test', async ({ page, browserName }) => {
 You can skip all tests in a file or **Test.describe()** group based on some condition with a single `test.skip(callback, description)` call.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.skip(({ browserName }) => browserName !== 'webkit', 'Safari-only');
 
@@ -1483,7 +1483,7 @@ test('Safari-only test 2', async ({ page }) => {
 You can also call `test.skip()` without arguments inside the test body to always skip the test. However, we recommend using `test.skip(title, body)` instead.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('less readable', async ({ page }) => {
   test.skip();
@@ -1551,7 +1551,7 @@ Note that **Test.slow()** cannot be used in a `beforeAll` or `afterAll` hook. Us
 You can mark a test as slow by calling `test.slow()` inside the test body.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('slow test', async ({ page }) => {
   test.slow();
@@ -1562,7 +1562,7 @@ test('slow test', async ({ page }) => {
 If your test is slow in some configurations, but not all, you can mark it as slow based on a condition. We recommend passing a `description` argument in this case.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('slow in Safari', async ({ page, browserName }) => {
   test.slow(browserName === 'webkit', 'This feature is slow in Safari');
@@ -1573,7 +1573,7 @@ test('slow in Safari', async ({ page, browserName }) => {
 You can mark all tests in a file or **Test.describe()** group as "slow" based on some condition by passing a callback.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.slow(({ browserName }) => browserName === 'webkit', 'all tests are slow in Safari');
 
@@ -1614,7 +1614,7 @@ Declares a test step that is shown in the report.
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await test.step('Log in', async () => {
@@ -1636,7 +1636,7 @@ test('test', async ({ page }) => {
 The method returns the value returned by the step callback.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   const user = await test.step('Log in', async () => {
@@ -1797,7 +1797,7 @@ We recommend **TestStepInfo.skip()** instead.
 You can declare a skipped step, and copilotbrowser will not run it.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('my test', async ({ page }) => {
   // ...
@@ -1851,7 +1851,7 @@ Specifies options or fixtures to use in a single test file or a **Test.describe(
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ locale: 'en-US' });
 
@@ -1867,7 +1867,7 @@ test('test with locale', async ({ page }) => {
 It is also possible to override a fixture by providing a function.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({
   locale: async ({}, use) => {

@@ -16,7 +16,7 @@
  */
 
 import { browserTest as it, expect } from '../config/browserTest';
-import type { Request, Response } from '@copilotbrowser/test';
+import type { Request, Response } from '@copilotbrowser/copilotbrowser/test';
 
 it('BrowserContext.Events.Request', async ({ context, server }) => {
   const page = await context.newPage();

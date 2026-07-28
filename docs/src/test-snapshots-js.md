@@ -8,7 +8,7 @@ title: "Visual comparisons"
 copilotbrowser Test includes the ability to produce and visually compare screenshots using `await expect(page).toHaveScreenshot()`. On first execution, copilotbrowser test will generate reference screenshots. Subsequent runs will compare against the reference.
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('example test', async ({ page }) => {
   await page.goto('https://copilotbrowser.dev');
@@ -69,7 +69,7 @@ npx copilotbrowser test --update-snapshots
 copilotbrowser Test uses the [pixelmatch](https://github.com/mapbox/pixelmatch) library. You can [pass various options](./api/class-pageassertions.md#page-assertions-to-have-screenshot-1) to modify its behavior:
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('example test', async ({ page }) => {
   await page.goto('https://copilotbrowser.dev');
@@ -80,7 +80,7 @@ test('example test', async ({ page }) => {
 If you'd like to share the default value among all the tests in the project, you can specify it in the copilotbrowser config, either globally or per project:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   expect: {
     toHaveScreenshot: { maxDiffPixels: 100 },
@@ -101,7 +101,7 @@ iframe {
 ```
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('example test', async ({ page }) => {
   await page.goto('https://copilotbrowser.dev');
@@ -112,7 +112,7 @@ test('example test', async ({ page }) => {
 If you'd like to share the default value among all the tests in the project, you can specify it in the copilotbrowser config, either globally or per project:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   expect: {
     toHaveScreenshot: {
@@ -129,7 +129,7 @@ Apart from screenshots, you can use `expect(value).toMatchSnapshot(snapshotName)
 Here we compare text content against the reference.
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('example test', async ({ page }) => {
   await page.goto('https://copilotbrowser.dev');

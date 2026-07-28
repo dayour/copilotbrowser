@@ -9,7 +9,7 @@
  * 3. Delete the repo.
  */
 
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 const user = process.env.GITHUB_USER;
 const repo = 'Test-Repo-1';

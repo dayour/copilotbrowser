@@ -55,7 +55,7 @@ test('generator tools intent', async ({ startClient }) => {
 test('generator_setup_page', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -105,7 +105,7 @@ Test plan
 \`\`\`ts
 
 
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -130,7 +130,7 @@ await page.getByRole('button', { name: 'Submit' }).click();
 test('click after generator_log_action', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -172,7 +172,7 @@ Test plan
 \`\`\`ts
 
 
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -197,7 +197,7 @@ await page.getByRole('button', { name: 'Submit' }).click();
 test('generator_setup_page is required', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -239,7 +239,7 @@ test('generator_setup_page is required', async ({ startClient }) => {
 test('generator_write_test', async ({ startClient }, testInfo) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button>Submit</button>');
       });
@@ -275,7 +275,7 @@ test('generator_write_test', async ({ startClient }, testInfo) => {
 test('should respect custom test id', async ({ startClient }) => {
   await writeFiles({
     'copilotbrowser.config.ts': `
-      import { defineConfig } from '@copilotbrowser/test';
+      import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
       export default defineConfig({
         use: {
           testIdAttribute: 'data-tid'
@@ -283,7 +283,7 @@ test('should respect custom test id', async ({ startClient }) => {
       });
     `,
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test.beforeEach(async ({ page }) => {
         await page.setContent('<button data-tid="submit">Submit</button>');
       });

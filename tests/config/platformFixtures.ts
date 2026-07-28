@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 import os from 'os';
 
 export type PlatformWorkerFixtures = {

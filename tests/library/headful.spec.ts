@@ -157,7 +157,7 @@ it('should(not) block third party cookies', async ({ page, server, allowsThirdPa
 
 it('should not block third party SameSite=None cookies', async ({ httpsServer, browserName, browser }) => {
   it.skip(browserName === 'webkit', 'No third party cookies in WebKit');
-  it.skip(process.env.PW_CLOCK === 'frozen');
+  it.skip(process.env.CB_CLOCK === 'frozen');
   const page = await browser.newPage({
     ignoreHTTPSErrors: true,
   });

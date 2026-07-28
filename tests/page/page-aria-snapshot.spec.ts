@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { Locator } from '@copilotbrowser/test';
+import type { Locator } from '@copilotbrowser/copilotbrowser/test';
 import { test as it, expect } from './pageTest';
 import { unshift } from '../config/utils';
 

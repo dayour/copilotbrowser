@@ -124,10 +124,10 @@ docker run -p 3000:3000 --rm --init -it --workdir /home/pwuser --user pwuser mcr
 
 There are two ways to connect to the remote copilotbrowser server:
 
-1. Using environment variable with `@copilotbrowser/test`:
+1. Using environment variable with `@copilotbrowser/copilotbrowser/test`:
 
 ```bash
-PW_TEST_CONNECT_WS_ENDPOINT=ws://127.0.0.1:3000/ npx copilotbrowser test
+CB_TEST_CONNECT_WS_ENDPOINT=ws://127.0.0.1:3000/ npx copilotbrowser test
 ```
 
 2. Using the **BrowserType.connect()** API for other applications:

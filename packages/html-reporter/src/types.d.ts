@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import type { TestAnnotation, Metadata } from '@copilotbrowser/test';
+import type { TestAnnotation, Metadata } from '@copilotbrowser/copilotbrowser/test';
 
 export type Stats = {
   total: number;

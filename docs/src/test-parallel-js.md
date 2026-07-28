@@ -33,7 +33,7 @@ npx copilotbrowser test --workers 4
 In the configuration file:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Limit the number of workers on CI, use default locally
@@ -56,7 +56,7 @@ By default, tests in a single file are run in order. If you have many independen
 Note that parallel tests are executed in separate worker processes and cannot share any state or global variables. Each test executes all relevant hooks just for itself, including `beforeAll` and `afterAll`.
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe.configure({ mode: 'parallel' });
 
@@ -67,7 +67,7 @@ test('runs in parallel 2', async ({ page }) => { /* ... */ });
 Alternatively, you can opt-in all tests into this fully-parallel mode in the configuration file:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   fullyParallel: true,
@@ -77,7 +77,7 @@ export default defineConfig({
 You can also opt in for fully-parallel mode for just a few projects:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // runs all tests in all files of a specific project in parallel
@@ -101,7 +101,7 @@ Using serial is not recommended. It is usually better to make your tests isolate
 :::
 
 ```js
-import { test, type Page } from '@copilotbrowser/test';
+import { test, type Page } from '@copilotbrowser/copilotbrowser/test';
 
 // Annotate entire file as serial.
 test.describe.configure({ mode: 'serial' });
@@ -159,7 +159,7 @@ npx copilotbrowser test --max-failures=10
 Setting in the configuration file:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Limit the number of failures on CI to save resources
@@ -184,11 +184,11 @@ and initialize a new user in the test database. Use **TestInfo.workerIndex** to 
 between workers.
 
 ```js title="copilotbrowser/fixtures.ts"
-import { test as baseTest, expect } from '@copilotbrowser/test';
+import { test as baseTest, expect } from '@copilotbrowser/copilotbrowser/test';
 // Import project utils for managing users in the test database.
 import { createUserInTestDatabase, deleteUserFromTestDatabase } from './my-db-utils';
 
-export * from '@copilotbrowser/test';
+export * from '@copilotbrowser/copilotbrowser/test';
 export const test = baseTest.extend<{}, { dbUserName: string }>({
   // Returns db user name unique for the worker.
   dbUserName: [async ({ }, use) => {
@@ -203,7 +203,7 @@ export const test = baseTest.extend<{}, { dbUserName: string }>({
 });
 ```
 
-Now, each test file should import `test` from our fixtures file instead of `@copilotbrowser/test`.
+Now, each test file should import `test` from our fixtures file instead of `@copilotbrowser/copilotbrowser/test`.
 
 ```js title="tests/example.spec.ts"
 // Important: import our fixtures.
@@ -234,7 +234,7 @@ Tests lists are discouraged and supported as a best-effort only. Some features s
 You can put your tests in helper functions in multiple files. Consider the following example where tests are not defined directly in the file, but rather in a wrapper function.
 
 ```js title="feature-a.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 export default function createTests() {
   test('feature-a example test', async ({ page }) => {
@@ -245,7 +245,7 @@ export default function createTests() {
 ```
 
 ```js title="feature-b.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 export default function createTests() {
   test.use({ viewport: { width: 500, height: 500 } });
@@ -260,7 +260,7 @@ You can create a test list file that will control the order of tests - first run
 
 
 ```js title="test.list.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 import featureBTests from './feature-b.spec.ts';
 import featureATests from './feature-a.spec.ts';
 
@@ -271,7 +271,7 @@ test.describe(featureATests);
 Now **disable parallel execution** by setting workers to one, and specify your test list file.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   workers: 1,

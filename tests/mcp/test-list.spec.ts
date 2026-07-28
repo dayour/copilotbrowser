@@ -24,7 +24,7 @@ test('test_list', async ({ startClient }) => {
       module.exports = { projects: [{ name: 'foo' }, {}] };
     `,
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('example1', async ({}) => {
         expect(1 + 1).toBe(2);
       });
@@ -49,7 +49,7 @@ Total: 4 tests in 1 file`);
 test('test_list config in cwd', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('passes', () => {});
     `,
   });

@@ -86,7 +86,7 @@ Traces should be run on continuous integration on the first retry of a failed te
 by setting the `trace: 'on-first-retry'` option in the test configuration file. This will produce a `trace.zip` file for each test that was retried.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   retries: 1,
   use: {

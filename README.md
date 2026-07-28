@@ -37,7 +37,7 @@ This scaffolds a new project (or augments an existing one) with a `copilotbrowse
 To add copilotbrowser to an existing project manually:
 
 ```bash
-npm install --save-dev @copilotbrowser/test
+npm install --save-dev @copilotbrowser/copilotbrowser
 npx copilotbrowser install
 ```
 
@@ -144,7 +144,7 @@ const { chromium } = require('copilotbrowser');
 ### End-to-End Tests
 
 ```ts
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('homepage has title', async ({ page }) => {
   await page.goto('https://example.com');

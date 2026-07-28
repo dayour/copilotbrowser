@@ -554,7 +554,7 @@ By default, **Page.getByTestId()** will locate elements based on the `data-testi
 Set the test id to use a custom data attribute for your tests.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {

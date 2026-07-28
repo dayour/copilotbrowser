@@ -21,7 +21,7 @@ test.use({ mcpServerType: 'test-mcp' });
 test('test_run', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('passes', () => {});
       test('fails', () => { expect(1).toBe(2); });
       test.describe('suite', () => {
@@ -30,12 +30,12 @@ test('test_run', async ({ startClient }) => {
       });
     `,
     'b.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('passes', () => {});
       test('fails', () => { expect(1).toBe(2); });
     `,
     'c.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('passes', () => {});
       test.skip('skipped', () => {});
     `,
@@ -67,7 +67,7 @@ test('test_run', async ({ startClient }) => {
 test('test_run for a failed tests is not an error', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fails', () => { expect(1).toBe(2); });
     `,
   });
@@ -90,7 +90,7 @@ test('test_run filters', async ({ startClient }) => {
       module.exports = { projects: [{ name: 'foo' }, { name: 'bar' }] };
     `,
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('example1', async ({}) => {
         expect(1 + 1).toBe(2);
       });
@@ -99,7 +99,7 @@ test('test_run filters', async ({ startClient }) => {
       });
     `,
     'b.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('example1', async ({}) => {
         expect(1 + 1).toBe(2);
       });
@@ -134,13 +134,13 @@ test('test_run should include dependencies', async ({ startClient }) => {
       };
     `,
     'auth.setup.ts': `
-      import { test as setup, expect } from '@copilotbrowser/test';
+      import { test as setup, expect } from '@copilotbrowser/copilotbrowser/test';
       setup('auth', async ({}) => {
         expect(1 + 1).toBe(2);
       });
     `,
     'example.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('example1', async ({}) => {
         expect(1 + 1).toBe(2);
       });

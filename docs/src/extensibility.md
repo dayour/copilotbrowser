@@ -23,9 +23,9 @@ An example of registering selector engine that queries elements based on a tag n
 
 
 ```js title="baseTest.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 
 // Must be a function that evaluates to a selector engine instance.
 const createTagNameEngine = () => ({

@@ -591,7 +591,7 @@ async function testThirdPartyCookiesAreBlocked(page: Page, context: BrowserConte
 
 test('should not block third party SameSite=None cookies', async ({ contextFactory, httpsServer, browserName }) => {
   test.skip(browserName === 'webkit', 'No third party cookies in WebKit');
-  test.skip(process.env.PW_CLOCK === 'frozen');
+  test.skip(process.env.CB_CLOCK === 'frozen');
   const context = await contextFactory({
     ignoreHTTPSErrors: true,
   });

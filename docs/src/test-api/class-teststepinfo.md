@@ -10,7 +10,7 @@ id: class-teststepinfo
 `TestStepInfo` contains information about currently running test step. It is passed as an argument to the step function. `TestStepInfo` provides utilities to control test step execution.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page, browserName }) => {
   await test.step('check some behavior', async step => {
@@ -28,7 +28,7 @@ Attach a value or a file from disk to the current test step. Some reporters show
 For example, you can attach a screenshot to the test step:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('https://copilotbrowser.dev');
@@ -42,7 +42,7 @@ test('basic test', async ({ page }) => {
 Or you can attach files returned by your APIs:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import { download } from './my-custom-helpers';
 
 test('basic test', async ({}) => {
@@ -92,7 +92,7 @@ Abort the currently running step and mark it as skipped. Useful for steps that a
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('my test', async ({ page }) => {
   await test.step('check expectations', async step => {
@@ -111,7 +111,7 @@ Conditionally abort the currently running step and mark it as skipped with an op
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('my test', async ({ page, isMobile }) => {
   await test.step('check desktop expectations', async step => {

@@ -22,7 +22,7 @@
  * All Tool objects are minimal stubs that satisfy the interface shape.
  */
 
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 // Import from compiled output (consistent with other tests in this directory).
 import { ToolRouter, passthroughStrategy } from '../../packages/copilotbrowser/lib/mcp/browser/toolRouter';

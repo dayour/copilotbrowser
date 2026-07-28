@@ -27,7 +27,7 @@ import type { PageTestFixtures, PageWorkerFixtures } from '../page/pageTestApi';
 import type { RemoteServerOptions, copilotbrowserServer } from './remoteServer';
 import type { BrowserContext, BrowserContextOptions, BrowserType, Page } from 'copilotbrowser';
 import type { Log } from '../../packages/trace/src/har';
-import type { TestInfo } from '@copilotbrowser/test';
+import type { TestInfo } from '@copilotbrowser/copilotbrowser/test';
 
 export type BrowserTestWorkerFixtures = PageWorkerFixtures & {
   browserVersion: string;
@@ -212,4 +212,4 @@ export const copilotbrowserTest = test;
 export const browserTest = test;
 export const contextTest = test;
 
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';

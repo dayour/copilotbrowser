@@ -383,7 +383,7 @@ it('should properly serialize PerformanceMeasure object', async ({ page }) => {
 });
 
 it('should properly serialize window.performance object', async ({ page }) => {
-  it.skip(!!process.env.PW_CLOCK);
+  it.skip(!!process.env.CB_CLOCK);
 
   expect(await page.evaluate(() => performance)).toEqual(expect.objectContaining({
     'navigation': {

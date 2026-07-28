@@ -119,7 +119,7 @@ describe('copilotbrowser homepage', () => {
 Line-by-line migration to copilotbrowser Test:
 
 ```js
-import { test, expect } from '@copilotbrowser/test'; // 1
+import { test, expect } from '@copilotbrowser/copilotbrowser/test'; // 1
 
 test.describe('copilotbrowser homepage', () => {
   test('contains hero title', async ({ page }) => { // 2, 3

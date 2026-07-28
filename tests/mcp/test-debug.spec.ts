@@ -21,7 +21,7 @@ test.use({ mcpServerType: 'test-mcp' });
 test('test_debug (passed)', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('pass', async ({}) => {
         expect(1 + 1).toBe(2);
       });
@@ -89,7 +89,7 @@ Try recovering from the error prior to continuing`);
 
 test('test_debug (browser_snapshot/network/console)', async ({ startClient, server }) => {
   const { client, id } = await prepareDebugTest(startClient, `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         await page.goto(${JSON.stringify(server.HELLO_WORLD)});
         await page.evaluate(async () => {
@@ -125,7 +125,7 @@ test('test_debug (browser_snapshot/network/console)', async ({ startClient, serv
 
 test('test_debug (multiple pages and custom error)', async ({ startClient, server }) => {
   const { client, id } = await prepareDebugTest(startClient, `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         const page2 = await page.context().newPage();
         await page.goto(${JSON.stringify(server.EMPTY_PAGE)});
@@ -314,7 +314,7 @@ test('test_debug / generate_locator', async ({ startClient }) => {
 
 test('test_debug w/ console.log in test', async ({ startClient }) => {
   const { client, id } = await prepareDebugTest(startClient, `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         console.log('console.log');
         console.error('console.error');
@@ -337,7 +337,7 @@ Error: expect(locator).toBeVisible() failed`));
 
 test('test_debug w/ console_messages', async ({ startClient }) => {
   const { client, id } = await prepareDebugTest(startClient, `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         await page.evaluate(() => {
           console.error('console.error');
@@ -381,7 +381,7 @@ Error: failure
 
 test('test_debug w/ network_requests', async ({ startClient, server }) => {
   const { client, id } = await prepareDebugTest(startClient, `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         await page.goto(${JSON.stringify(server.HELLO_WORLD)});
         await page.evaluate(async () => {
@@ -410,7 +410,7 @@ Error: expect(locator).toBeVisible() failed`));
 
 test('test_debug w/ route', async ({ startClient, server }) => {
   const { client, id } = await prepareDebugTest(startClient, `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         let counter = 0;
         await page.route('**', route => route.fulfill({ body: '<title>Title' + (++counter) + '</title><div>mocked</div>', contentType: 'text/html' }));

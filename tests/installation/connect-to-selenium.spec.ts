@@ -27,8 +27,8 @@ test('connect to selenium', async ({ exec, tmpWorkspace }, testInfo) => {
   await exec(`npm run test -- --reporter=list selenium.spec --output=${testInfo.outputPath('tmp-test-results')}`, {
     cwd: path.join(__dirname, '..', '..'),
     env: {
-      PWTEST_CHROMEDRIVER: path.join(tmpWorkspace, 'chromedriver'),
-      PWTEST_SELENIUM: seleniumPath,
+      CBTEST_CHROMEDRIVER: path.join(tmpWorkspace, 'chromedriver'),
+      CBTEST_SELENIUM: seleniumPath,
     },
   });
 });

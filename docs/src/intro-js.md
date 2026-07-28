@@ -132,17 +132,17 @@ See the [detailed guide on UI Mode](./test-ui-mode.md) for watch filters, step d
 Update copilotbrowser and download new browser binaries and their dependencies:
 
 ```bash
-npm install -D @copilotbrowser/test@latest
+npm install -D @copilotbrowser/copilotbrowser@latest
 npx copilotbrowser install --with-deps
 ```
 
 ```bash
-yarn add --dev @copilotbrowser/test@latest
+yarn add --dev @copilotbrowser/copilotbrowser@latest
 yarn copilotbrowser install --with-deps
 ```
 
 ```bash
-pnpm install --save-dev @copilotbrowser/test@latest
+pnpm install --save-dev @copilotbrowser/copilotbrowser@latest
 pnpm exec copilotbrowser install --with-deps
 ```
 

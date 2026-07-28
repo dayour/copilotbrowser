@@ -78,7 +78,7 @@ On Arm64 Linux, copilotbrowser continues to use Chromium.
 **TestConfig.webServer** added a `wait` field. Pass a regular expression, and copilotbrowser will wait until the webserver logs match it.
 
 ```js
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   webServer: {
@@ -93,7 +93,7 @@ export default defineConfig({
 If you include a named capture group into the expression, then copilotbrowser will provide the capture group contents via environment variables:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ baseURL: `http://localhost:${process.env.MY_SERVER_PORT ?? 3000}` });
 
@@ -215,7 +215,7 @@ This version was also tested against the following stable channels:
 
 - New option `noSnippets` to disable code snippets in the html report.
   ```js
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     reporter: [['html', { noSnippets: true }]]
@@ -260,7 +260,7 @@ This version was also tested against the following stable channels:
   ![New Trace Viewer Steps](https://github.com/user-attachments/assets/1963ff7d-4070-41be-a79b-4333176921a2)
 - New option in `'html'` reporter to set the title of a specific test run:
   ```js
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     reporter: [['html', { title: 'Custom test run #1028' }]]
@@ -348,7 +348,7 @@ This version was also tested against the following stable channels:
   Here is an example following the [authentication guide](./auth.md#basic-shared-account-in-all-tests):
 
   ```js title="tests/auth.setup.ts"
-  import { test as setup, expect } from '@copilotbrowser/test';
+  import { test as setup, expect } from '@copilotbrowser/copilotbrowser/test';
   import path from 'path';
 
   const authFile = path.join(__dirname, '../copilotbrowser/.auth/user.json');
@@ -386,7 +386,7 @@ New option **Locator.filter.visible** for **Locator.filter()** allows matching o
 Set option **TestConfig.captureGitInfo** to capture git information into **TestConfig.metadata**.
 
   ```js title="copilotbrowser.config.ts"
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     captureGitInfo: { commit: true, diff: true }
@@ -559,7 +559,7 @@ You can opt into the new headless mode by using `'chromium'` channel. As [offici
 See [issue #33566](https://github.com/dayour/copilotbrowser/issues/33566) for the list of possible breakages you could encounter and more details on Chromium headless. Please file an issue if you see any problems after opting in.
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -704,7 +704,7 @@ copilotbrowser now allows you to supply client-side certificates, so that server
 The following snippet sets up a client certificate for `https://example.com`:
 
 ```js
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // ...
@@ -834,7 +834,7 @@ See [the clock guide](./clock.md) for more details.
 
 - New property `timeout` is now available for custom expect matchers. This property takes into account `copilotbrowser.config.ts` and `expect.configure()`.
   ```js
-  import { expect as baseExpect } from '@copilotbrowser/test';
+  import { expect as baseExpect } from '@copilotbrowser/copilotbrowser/test';
 
   export const expect = baseExpect.extend({
     async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }) {
@@ -996,7 +996,7 @@ This version was also tested against the following stable channels:
 - New mode `retain-on-first-failure` for **TestOptions.trace**. In this mode, trace is recorded for the first run of each test, but not for retires. When test run fails, the trace file is retained, otherwise it is removed.
 
   ```js title=copilotbrowser.config.ts
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     use: {
@@ -1168,7 +1168,7 @@ New tools to generate assertions:
 Here is an example of a generated test with assertions:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await page.goto('https://dayour.github.io/copilotbrowser/');
@@ -1210,7 +1210,7 @@ This version was also tested against the following stable channels:
 You can extend copilotbrowser assertions by providing custom matchers. These matchers will be available on the expect object.
 
 ```js title="test.spec.ts"
-import { expect as baseExpect } from '@copilotbrowser/test';
+import { expect as baseExpect } from '@copilotbrowser/copilotbrowser/test';
 export const expect = baseExpect.extend({
   async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }) {
     // ... see documentation for how to write matchers.
@@ -1229,7 +1229,7 @@ See the documentation [for a full example](./test-assertions#add-custom-matchers
 You can now merge test fixtures from multiple files or modules:
 
 ```js title="fixtures.ts"
-import { mergeTests } from '@copilotbrowser/test';
+import { mergeTests } from '@copilotbrowser/copilotbrowser/test';
 import { test as dbTest } from 'database-test-utils';
 import { test as a11yTest } from 'a11y-test-utils';
 
@@ -1249,7 +1249,7 @@ test('passes', async ({ database, page, a11y }) => {
 You can now merge custom expect matchers from multiple files or modules:
 
 ```js title="fixtures.ts"
-import { mergeTests, mergeExpects } from '@copilotbrowser/test';
+import { mergeTests, mergeExpects } from '@copilotbrowser/copilotbrowser/test';
 import { test as dbTest, expect as dbExpect } from 'database-test-utils';
 import { test as a11yTest, expect as a11yExpect } from 'a11y-test-utils';
 
@@ -1331,19 +1331,19 @@ This version was also tested against the following stable channels:
 
 ### Breaking Changes: copilotbrowser no longer downloads browsers automatically
 
-> **Note**: If you are using `@copilotbrowser/test` package, this change does not affect you.
+> **Note**: If you are using `@copilotbrowser/copilotbrowser/test` package, this change does not affect you.
 
-copilotbrowser recommends to use `@copilotbrowser/test` package and download browsers via `npx copilotbrowser install` command. If you are following this recommendation, nothing has changed for you.
+copilotbrowser recommends to use `@copilotbrowser/copilotbrowser/test` package and download browsers via `npx copilotbrowser install` command. If you are following this recommendation, nothing has changed for you.
 
-However, up to v1.38, installing the `copilotbrowser` package instead of `@copilotbrowser/test` did automatically download browsers. This is no longer the case, and we recommend to explicitly download browsers via `npx copilotbrowser install` command.
+However, up to v1.38, installing the `copilotbrowser` package instead of `@copilotbrowser/copilotbrowser/test` did automatically download browsers. This is no longer the case, and we recommend to explicitly download browsers via `npx copilotbrowser install` command.
 
 **v1.37 and earlier**
 
-`copilotbrowser` package was downloading browsers during `npm install`, while `@copilotbrowser/test` was not.
+`copilotbrowser` package was downloading browsers during `npm install`, while `@copilotbrowser/copilotbrowser/test` was not.
 
 **v1.38 and later**
 
-`copilotbrowser` and `@copilotbrowser/test` packages do not download browsers during `npm install`.
+`copilotbrowser` and `@copilotbrowser/copilotbrowser/test` packages do not download browsers during `npm install`.
 
 **Recommended migration**
 
@@ -1496,7 +1496,7 @@ This version was also tested against the following stable channels:
   $ npx copilotbrowser install # the new way to install browsers when using copilotbrowser
   ```
 
-  This change **does not** affect `@copilotbrowser/test` and `copilotbrowser` package users.
+  This change **does not** affect `@copilotbrowser/copilotbrowser/test` and `copilotbrowser` package users.
 
 ### Browser Versions
 
@@ -1521,7 +1521,7 @@ This version was also tested against the following stable channels:
 
   A common pattern would be a `setup` dependency with a corresponding `teardown`:
   ```js title="copilotbrowser.config.ts"
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     projects: [
@@ -1567,7 +1567,7 @@ This version was also tested against the following stable channels:
 * New options `stderr` and `stdout`  in **TestConfig.webServer** to configure output handling:
 
   ```js title="copilotbrowser.config.ts"
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     // Run your local dev server before starting the tests
@@ -1592,11 +1592,11 @@ This version was also tested against the following stable channels:
 
 ### ⚠️ Breaking changes
 
-* `npx copilotbrowser test` no longer works if you install both `copilotbrowser` and `@copilotbrowser/test`. There's no need
-  to install both, since you can always import browser automation APIs from `@copilotbrowser/test` directly:
+* `npx copilotbrowser test` no longer works if you install both `copilotbrowser` and `@copilotbrowser/copilotbrowser/test`. There's no need
+  to install both, since you can always import browser automation APIs from `@copilotbrowser/copilotbrowser/test` directly:
 
   ```js title="automation.ts"
-  import { chromium, firefox, webkit } from '@copilotbrowser/test';
+  import { chromium, firefox, webkit } from '@copilotbrowser/copilotbrowser/test';
   /* ... */
   ```
 * Node.js 14 is no longer supported since it [reached its end-of-life](https://nodejs.dev/en/about/releases/) on April 30, 2023.
@@ -1721,7 +1721,7 @@ This version was also tested against the following stable channels:
   see the setup steps in the test report and more.
 
   ```js title="copilotbrowser.config.ts"
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     projects: [
@@ -1883,7 +1883,7 @@ This version was also tested against the following stable channels:
 
 - Automatically capture **full page screenshot** on test failure:
     ```js title="copilotbrowser.config.ts"
-    import { defineConfig } from '@copilotbrowser/test';
+    import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
     export default defineConfig({
       use: {
         screenshot: {
@@ -1944,7 +1944,7 @@ This version was also tested against the following stable channels:
 * Use **TestProject.snapshotPathTemplate** and **TestConfig.snapshotPathTemplate** to configure a template controlling location of snapshots generated by **PageAssertions.toHaveScreenshot()** and **SnapshotAssertions.toMatchSnapshot()**.
 
     ```js title="copilotbrowser.config.ts"
-    import { defineConfig } from '@copilotbrowser/test';
+    import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
     export default defineConfig({
       testDir: './tests',
       snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}',
@@ -2006,7 +2006,7 @@ All the same methods are also available on `Locator`, `FrameLocator` and `Frame`
 
 - New options `host` and `port` for the html reporter.
   ```js
-  import { defineConfig } from '@copilotbrowser/test';
+  import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
   export default defineConfig({
     reporter: [['html', { host: 'localhost', port: '9223' }]],
@@ -2139,7 +2139,7 @@ This version was also tested against the following stable channels:
 Launch multiple web servers, databases, or other processes by passing an array of configurations:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   webServer: [
     {
@@ -2654,11 +2654,11 @@ This version was also tested against the following stable channels:
 ### Improved TypeScript Support
 
 1. copilotbrowser Test now respects `tsconfig.json`'s [`baseUrl`](https://www.typescriptlang.org/tsconfig#baseUrl) and [`paths`](https://www.typescriptlang.org/tsconfig#paths), so you can use aliases
-1. There is a new environment variable `PW_EXPERIMENTAL_TS_ESM` that allows importing ESM modules in your TS code, without the need for the compile step. Don't forget the `.js` suffix when you are importing your esm modules. Run your tests as follows:
+1. There is a new environment variable `CB_EXPERIMENTAL_TS_ESM` that allows importing ESM modules in your TS code, without the need for the compile step. Don't forget the `.js` suffix when you are importing your esm modules. Run your tests as follows:
 
 ```bash
-npm i --save-dev @copilotbrowser/test@1.18.0-rc1
-PW_EXPERIMENTAL_TS_ESM=1 npx copilotbrowser test
+npm i --save-dev @copilotbrowser/copilotbrowser@1.18.0-rc1
+CB_EXPERIMENTAL_TS_ESM=1 npx copilotbrowser test
 ```
 
 ### Create copilotbrowser
@@ -2809,7 +2809,7 @@ Now you can:
 To do a request on behalf of copilotbrowser's Page, use **new **Page.request** API**:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('context fetch', async ({ page }) => {
   // Do a GET request on behalf of page
@@ -2821,7 +2821,7 @@ test('context fetch', async ({ page }) => {
 To do a stand-alone request from node.js to an API endpoint, use **new [`request` fixture](./api/class-fixtures#fixtures-request)**:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('context fetch', async ({ request }) => {
   // Do a GET request on behalf of page
@@ -2839,7 +2839,7 @@ It is now possible to do response interception by combining [API Testing](./api-
 For example, we can blur all the images on the page:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import jimp from 'jimp'; // image processing library
 
 test('response interception', async ({ page }) => {
@@ -2885,7 +2885,7 @@ Defaults to the `state: 'visible'`.
 Comes especially handy when working with lists:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('context fetch', async ({ page }) => {
   const completeness = page.locator('text=Success');
@@ -3095,7 +3095,7 @@ Learn more in the [documentation](./api/class-test#test-describe-serial).
 Split long tests into multiple steps using `test.step()` API:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await test.step('Log in', async () => {
@@ -3114,7 +3114,7 @@ Step information is exposed in reporters API.
 To launch a server during the tests, use the [`webServer`](./test-webserver) option in the configuration file. The server will wait for a given url to be available before running the tests, and the url will be passed over to copilotbrowser as a [`baseURL`](./api/class-testoptions#test-options-base-url) when creating a context.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   webServer: {
     command: 'npm run start', // command to launch
@@ -3192,13 +3192,13 @@ Learn more in the [documentation](./test-webserver).
 
 Installation:
 ```bash
-npm i -D @copilotbrowser/test
+npm i -D @copilotbrowser/copilotbrowser
 ```
 
 Simple test `tests/foo.spec.ts`:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('https://dayour.github.io/copilotbrowser/');

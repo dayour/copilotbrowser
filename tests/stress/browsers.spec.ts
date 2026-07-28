@@ -15,7 +15,7 @@
  */
 
 import { baseTest as test } from '../config/baseTest';
-import { expect } from '@copilotbrowser/test';
+import { expect } from '@copilotbrowser/copilotbrowser/test';
 
 for (let i = 0; i < 100; ++i) {
   test('cycle browsers ' + i, async ({ copilotbrowser, browserName, server }) => {

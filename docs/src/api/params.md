@@ -1484,8 +1484,8 @@ await page.GetByTestId("directions").ClickAsync();
 By default, the `data-testid` attribute is used as a test id. Use **Selectors.setTestIdAttribute()** to configure a different test id attribute if necessary.
 
 ```js
-// Set custom test id attribute from @copilotbrowser/test config:
-import { defineConfig } from '@copilotbrowser/test';
+// Set custom test id attribute from @copilotbrowser/copilotbrowser config:
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -1838,7 +1838,7 @@ You can configure templates for each assertion separately in **TestConfig.expect
 **Usage**
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testDir: './tests',
@@ -1874,7 +1874,7 @@ tests/
 And the following `page-click.spec.ts` that uses `toHaveScreenshot()` call:
 
 ```js title="page-click.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('suite', () => {
   test('test should work', async ({ page }) => {
@@ -1910,7 +1910,7 @@ Each token can be preceded with a single character that will be used **only if**
 Consider the following config:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   snapshotPathTemplate: '__screenshots__{/projectName}/{testFilePath}/{arg}{ext}',

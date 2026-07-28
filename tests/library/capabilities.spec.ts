@@ -447,7 +447,7 @@ it('should not auto play audio', {
   }
 }, async ({ page, browserName, isWindows }) => {
   it.fixme(browserName === 'webkit' && isWindows);
-  it.skip(process.env.PW_CLOCK === 'frozen', 'no way to inject real setTimeout');
+  it.skip(process.env.CB_CLOCK === 'frozen', 'no way to inject real setTimeout');
   await page.route('**/*', async route => {
     await route.fulfill({
       status: 200,

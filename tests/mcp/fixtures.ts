@@ -19,7 +19,7 @@ import path from 'path';
 import { chromium } from 'copilotbrowser';
 import { Loop } from '@lowire/loop';
 
-import { test as baseTest, expect as baseExpect } from '@copilotbrowser/test';
+import { test as baseTest, expect as baseExpect } from '@copilotbrowser/copilotbrowser/test';
 import { StdioClientTransport } from '@modelcontextprotocol/sdk/client/stdio.js';
 import { Client } from '@modelcontextprotocol/sdk/client/index.js';
 import { ListRootsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
@@ -137,7 +137,7 @@ export const test = serverTest.extend<TestFixtures & TestOptions, WorkerFixtures
       }
       const env = {
         ...process.env,
-        PW_TMPDIR_FOR_TEST: testInfo.outputPath('tmp'),
+        CB_TMPDIR_FOR_TEST: testInfo.outputPath('tmp'),
         ...options?.env
       };
       const { transport, stderr } = await createTransport(mcpServerType, { args, env, cwd: options?.cwd || test.info().outputPath() });
@@ -218,7 +218,7 @@ async function createTransport(mcpServerType: TestOptions['mcpServerType'], opti
       ...options.env,
       DEBUG_COLORS: '0',
       DEBUG_HIDE_DATE: '1',
-      PWMCP_PROFILES_DIR_FOR_TEST: profilesDir,
+      CBMCP_PROFILES_DIR_FOR_TEST: profilesDir,
     },
   });
   return {
@@ -287,7 +287,7 @@ export const expect = baseExpect.extend({
 });
 
 export function formatOutput(output: string): string[] {
-  return output.split('\n').map(line => line.replace(/^pw:mcp:test /, '').replace(/user data dir.*/, 'user data dir').trim()).filter(Boolean);
+  return output.split('\n').map(line => line.replace(/^cb:mcp:test /, '').replace(/user data dir.*/, 'user data dir').trim()).filter(Boolean);
 }
 
 export const mcpServerPath = [path.join(__dirname, '../../packages/copilotbrowser/cli.js'), 'run-mcp-server'];
@@ -326,7 +326,7 @@ export async function writeFiles(files: Files, options?: { update?: boolean }) {
 export async function prepareDebugTest(startClient: StartClient, testFile?: string, clientArgs?: Parameters<StartClient>[0]) {
   await writeFiles({
     'a.test.ts': testFile || `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('fail', async ({ page }) => {
         await page.setContent('<button>Submit</button>');
         await expect(page.getByRole('button', { name: 'Missing' })).toBeVisible({ timeout: 1000 });

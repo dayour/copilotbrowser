@@ -141,7 +141,7 @@ By keeping your copilotbrowser version up to date you will be able to use new fe
 
 ```bash
 # Update copilotbrowser
-npm install -D @copilotbrowser/test@latest
+npm install -D @copilotbrowser/copilotbrowser@latest
 
 # Install new browsers
 npx copilotbrowser install
@@ -162,7 +162,7 @@ copilotbrowser can run tests on Chromium, WebKit and Firefox browsers as well as
 copilotbrowser can run your tests in multiple browsers and configurations by setting up **projects** in the config. You can also add [different options](./test-configuration) for each project.
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -367,7 +367,7 @@ You can opt into the new headless mode by using `'chromium'` channel. As [offici
 See [issue #33566](https://github.com/dayour/copilotbrowser/issues/33566) for details.
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -450,7 +450,7 @@ Google Chrome and Microsoft Edge have switched to a [new headless mode](https://
 :::
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [

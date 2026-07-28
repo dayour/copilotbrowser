@@ -25,14 +25,14 @@ import path from 'path';
 import type http from 'http';
 import { pathToFileURL } from 'url';
 import { expect, copilotbrowserTest } from '../config/browserTest';
-import type { FrameLocator } from '@copilotbrowser/test';
+import type { FrameLocator } from '@copilotbrowser/copilotbrowser/test';
 import { parseTrace, rafraf, roundBox } from '../config/utils';
 
 const test = copilotbrowserTest.extend<TraceViewerFixtures>(traceViewerFixtures);
 
 test.skip(({ trace }) => trace === 'on');
 test.skip(({ mode }) => mode.startsWith('service'));
-test.skip(process.env.PW_CLOCK === 'frozen');
+test.skip(process.env.CB_CLOCK === 'frozen');
 test.slow();
 
 let traceFile: string;

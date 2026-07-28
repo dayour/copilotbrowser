@@ -16,7 +16,7 @@
  */
 
 import { test as it, expect } from './pageTest';
-import type { Worker as PwWorker } from '@copilotbrowser/test';
+import type { Worker as PwWorker } from '@copilotbrowser/copilotbrowser/test';
 import { attachFrame } from '../config/utils';
 import type { ConsoleMessage } from 'copilotbrowser';
 import fs from 'fs';

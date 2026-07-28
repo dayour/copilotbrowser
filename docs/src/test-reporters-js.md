@@ -15,7 +15,7 @@ npx copilotbrowser test --reporter=line
 For more control, you can specify reporters programmatically in the [configuration file](./test-configuration.md).
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'line',
@@ -27,7 +27,7 @@ export default defineConfig({
 You can use multiple reporters at the same time. For example  you can use `'list'` for nice terminal output and `'json'` to get a comprehensive json file with the test results.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [
@@ -42,7 +42,7 @@ export default defineConfig({
 You can use different reporters locally and on CI. For example, using concise `'dot'` reporter avoids too much output. This is the default on CI.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Concise 'dot' for CI, default 'list' when running locally
@@ -63,7 +63,7 @@ npx copilotbrowser test --reporter=list
 ```
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'list',
@@ -90,7 +90,7 @@ Running 124 tests using 6 workers
 You can opt into the step rendering via passing the following config option:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['list', { printSteps: true }]],
@@ -115,7 +115,7 @@ npx copilotbrowser test --reporter=line
 ```
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'line',
@@ -153,7 +153,7 @@ npx copilotbrowser test --reporter=dot
 ```
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'dot',
@@ -200,7 +200,7 @@ By default, HTML report is opened automatically if some of the tests failed. You
 You can also configure `host` and `port` that are used to serve the HTML report.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['html', { open: 'never' }]],
@@ -213,7 +213,7 @@ that location using the `copilotbrowser_HTML_OUTPUT_DIR` environment variable or
 In configuration file, pass options directly:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['html', { outputFolder: 'my-report' }]],
@@ -223,7 +223,7 @@ export default defineConfig({
 If you are uploading attachments from a data folder to another location, you can use `attachmentsBaseURL` option to let html report know where to look for them.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['html', { attachmentsBaseURL: 'https://external-storage.com/' }]],
@@ -272,7 +272,7 @@ The report file name looks like `report-<hash>.zip` or `report-<hash>-<shard_num
 When using blob report to merge multiple shards, you don't have to pass any options.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'blob',
@@ -284,7 +284,7 @@ export default defineConfig({
 When running tests in different environments, you might want to use **TestConfig.tag** to add a global tag corresponding to the environment. This tag will bring clarity to the merged report, and it will be used to produce a unique blob report name.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: 'blob',
@@ -325,7 +325,7 @@ npx copilotbrowser test --reporter=json
 In configuration file, pass options directly:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['json', { outputFile: 'results.json' }]],
@@ -363,7 +363,7 @@ npx copilotbrowser test --reporter=junit
 In configuration file, pass options directly:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: [['junit', { outputFile: 'results.xml' }]],
@@ -391,7 +391,7 @@ use this annotation type if running your tests with a matrix strategy as the sta
 GitHub file view.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // 'github' for GitHub Actions CI to generate annotations, plus a concise 'dot'
@@ -407,7 +407,7 @@ You can create a custom reporter by implementing a class with some of the report
 ```js title="my-awesome-reporter.ts"
 import type {
   FullConfig, FullResult, Reporter, Suite, TestCase, TestResult
-} from '@copilotbrowser/test/reporter';
+} from '@copilotbrowser/copilotbrowser/reporter';
 
 class MyReporter implements Reporter {
   onBegin(config: FullConfig, suite: Suite) {
@@ -433,7 +433,7 @@ export default MyReporter;
 Now use this reporter with **TestConfig.reporter**.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   reporter: './my-awesome-reporter.ts',

@@ -1,8 +1,8 @@
 /* eslint-disable notice/notice */
 
-import { test as baseTest } from '@copilotbrowser/test';
+import { test as baseTest } from '@copilotbrowser/copilotbrowser/test';
 
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = baseTest.extend({
   agentOptions: {

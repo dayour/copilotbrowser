@@ -1,5 +1,5 @@
 // @ts-check
-const { test, expect } = require('@copilotbrowser/test');
+const { test, expect } = require('@copilotbrowser/copilotbrowser/test');
 
 test.beforeEach(async ({page}) => {
   await page.addInitScript(() => {

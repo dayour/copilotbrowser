@@ -16,7 +16,7 @@
 
 import { test, expect } from './inspectorTest';
 
-import type { Page } from '@copilotbrowser/test';
+import type { Page } from '@copilotbrowser/copilotbrowser/test';
 import type * as actions from '@recorder/actions';
 
 class RecorderLog {

@@ -39,7 +39,7 @@ import './workbench.css';
 import { testStatusIcon, testStatusText } from './testUtils';
 import type { UITestStatus } from './testUtils';
 import type { HighlightedElement } from './snapshotTab';
-import type { TestAnnotation } from '@copilotbrowser/test';
+import type { TestAnnotation } from '@copilotbrowser/copilotbrowser/test';
 import { MetadataWithCommitInfo } from '@testIsomorphic/types';
 import type { ActionGroup } from '@isomorphic/protocolFormatter';
 import { DialogToolbarButton } from '@web/components/dialogToolbarButton';

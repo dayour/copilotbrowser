@@ -50,7 +50,7 @@ test('seed test runs in first top-level project by default', async ({ startClien
 test('respects provided seed test', async ({ startClient }) => {
   await writeFiles({
     'a.test.ts': `
-      import { test, expect } from '@copilotbrowser/test';
+      import { test, expect } from '@copilotbrowser/copilotbrowser/test';
       test('test', async ({ page }) => {});
     `,
   });

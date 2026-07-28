@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-import { chromium, firefox, webkit, selectors, devices, errors, request, test, expect } from '@copilotbrowser/test';
-import * as copilotbrowser from '@copilotbrowser/test';
-import defaultExport from '@copilotbrowser/test';
+import { chromium, firefox, webkit, selectors, devices, errors, request, test, expect } from '@copilotbrowser/copilotbrowser/test';
+import * as copilotbrowser from '@copilotbrowser/copilotbrowser/test';
+import defaultExport from '@copilotbrowser/copilotbrowser/test';
 import testESM from './esm.mjs';
 
 if (defaultExport !== test) {

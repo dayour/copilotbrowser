@@ -12,7 +12,7 @@ copilotbrowser Test is based on the concept of test fixtures. Test fixtures are 
 You have already used test fixtures in your first test.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('https://dayour.github.io/copilotbrowser/');
@@ -44,7 +44,7 @@ Here is how a typical test environment setup differs between the traditional tes
   <div>
 
 ```js title="todo-page.ts"
-import type { Page, Locator } from '@copilotbrowser/test';
+import type { Page, Locator } from '@copilotbrowser/copilotbrowser/test';
 
 export class TodoPage {
   private readonly inputBox: Locator;
@@ -83,7 +83,7 @@ export class TodoPage {
 </details>
 
 ```js title="todo.spec.ts"
-const { test } = require('@copilotbrowser/test');
+const { test } = require('@copilotbrowser/copilotbrowser/test');
 const { TodoPage } = require('./todo-page');
 
 test.describe('todo tests', () => {
@@ -127,7 +127,7 @@ Fixtures have a number of advantages over before/after hooks:
   <div>
 
 ```js title="todo-page.ts"
-import type { Page, Locator } from '@copilotbrowser/test';
+import type { Page, Locator } from '@copilotbrowser/copilotbrowser/test';
 
 export class TodoPage {
   private readonly inputBox: Locator;
@@ -165,7 +165,7 @@ export class TodoPage {
 </details>
 
 ```js title="example.spec.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 import { TodoPage } from './todo-page';
 
 // Extend basic test by providing a "todoPage" fixture.
@@ -202,7 +202,7 @@ Below we create two fixtures `todoPage` and `settingsPage` that follow the [Page
   <div>
 
 ```js title="todo-page.ts"
-import type { Page, Locator } from '@copilotbrowser/test';
+import type { Page, Locator } from '@copilotbrowser/copilotbrowser/test';
 
 export class TodoPage {
   private readonly inputBox: Locator;
@@ -240,7 +240,7 @@ export class TodoPage {
 SettingsPage is similar:
 
 ```js title="settings-page.ts"
-import type { Page } from '@copilotbrowser/test';
+import type { Page } from '@copilotbrowser/copilotbrowser/test';
 
 export class SettingsPage {
   constructor(public readonly page: Page) {
@@ -256,7 +256,7 @@ export class SettingsPage {
 </details>
 
 ```js title="my-test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 import { TodoPage } from './todo-page';
 import { SettingsPage } from './settings-page';
 
@@ -287,7 +287,7 @@ export const test = base.extend<MyFixtures>({
     await use(new SettingsPage(page));
   },
 });
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 ```
 
 :::note
@@ -318,7 +318,7 @@ test('basic test', async ({ todoPage, page }) => {
 In addition to creating your own fixtures, you can also override existing fixtures to fit your needs. Consider the following example which overrides the `page` fixture by automatically navigating to the `baseURL`:
 
 ```js
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend({
   page: async ({ baseURL, page }, use) => {
@@ -338,7 +338,7 @@ test.use({ baseURL: 'https://copilotbrowser.dev' });
 Fixtures can also be overridden, causing the base fixture to be completely replaced with something different. For example, we could override the **TestOptions.storageState** fixture to provide our own data.
 
 ```js
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend({
   storageState: async ({}, use) => {
@@ -357,7 +357,7 @@ Below we'll create an `account` fixture that will be shared by all tests in the 
 In addition to only being run once per worker, worker-scoped fixtures also get a separate timeout equal to the default test timeout. You can change it by passing the `timeout` option. See [fixture timeout](#fixture-timeout) for more details.
 
 ```js title="my-test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 type Account = {
   username: string;
@@ -399,7 +399,7 @@ export const test = base.extend<{}, { account: Account }>({
     await use(page);
   },
 });
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 ```
 
 ## Automatic fixtures
@@ -411,7 +411,7 @@ Here is an example fixture that automatically attaches debug logs when the test 
 ```js title="my-test.ts"
 import debug from 'debug';
 import fs from 'fs';
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend<{ saveLogs: void }>({
   saveLogs: [async ({}, use, testInfo) => {
@@ -431,7 +431,7 @@ export const test = base.extend<{ saveLogs: void }>({
     }
   }, { auto: true }],
 });
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 ```
 
 ## Fixture timeout
@@ -439,7 +439,7 @@ export { expect } from '@copilotbrowser/test';
 Fixture is considered to be a part of a test, and so its setup and teardown running time counts towards the test timeout. Therefore, a slow fixture may cause test timeouts. You can set a separate larger timeout for such a fixture, and keep the overall test timeout small.
 
 ```js
-import { test as base, expect } from '@copilotbrowser/test';
+import { test as base, expect } from '@copilotbrowser/copilotbrowser/test';
 
 const test = base.extend<{ slowFixture: string }>({
   slowFixture: [async ({}, use) => {
@@ -466,7 +466,7 @@ Below we'll create a `defaultItem` option in addition to the `todoPage` fixture 
   <div>
 
 ```js title="todo-page.ts"
-import type { Page, Locator } from '@copilotbrowser/test';
+import type { Page, Locator } from '@copilotbrowser/copilotbrowser/test';
 
 export class TodoPage {
   private readonly inputBox: Locator;
@@ -505,7 +505,7 @@ export class TodoPage {
 </details>
 
 ```js title="my-test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 import { TodoPage } from './todo-page';
 
 // Declare your options to type-check your configuration.
@@ -531,13 +531,13 @@ export const test = base.extend<MyOptions & MyFixtures>({
     await todoPage.removeAll();
   },
 });
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 ```
 
 We can now use the `todoPage` fixture as usual, and set the `defaultItem` option in the configuration file.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 import type { MyOptions } from './my-test';
 
 export default defineConfig<MyOptions>({
@@ -583,7 +583,7 @@ test.use({
 You can reset an option to the value defined in the config file by setting it to `undefined`. Consider the following config that sets a `baseURL`:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -595,7 +595,7 @@ export default defineConfig({
 You can now configure `baseURL` for a file, and also opt-out for a single test.
 
 ```js title="intro.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 // Configure baseURL for this file.
 test.use({ baseURL: 'https://dayour.github.io/copilotbrowser/docs/intro' });
@@ -617,7 +617,7 @@ test.describe(() => {
 If you would like to completely reset the value to `undefined`, use a long-form fixture notation.
 
 ```js title="intro.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 // Completely unset baseURL for this file.
 test.use({
@@ -641,7 +641,7 @@ Fixtures follow these rules to determine the execution order:
 Consider the following example:
 
 ```js
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 const test = base.extend<{
   testFixture: string,
@@ -732,7 +732,7 @@ A few observations:
 You can merge test fixtures from multiple files or modules:
 
 ```js title="fixtures.ts"
-import { mergeTests } from '@copilotbrowser/test';
+import { mergeTests } from '@copilotbrowser/copilotbrowser/test';
 import { test as dbTest } from 'database-test-utils';
 import { test as a11yTest } from 'a11y-test-utils';
 
@@ -752,7 +752,7 @@ test('passes', async ({ database, page, a11y }) => {
 Usually, custom fixtures are reported as separate steps in the UI mode, Trace Viewer and various test reports. They also appear in error messages from the test runner. For frequently used fixtures, this can mean lots of noise. You can stop the fixtures steps from being shown in the UI by "boxing" it.
 
 ```js
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend({
   helperFixture: [async ({}, use, testInfo) => {
@@ -770,7 +770,7 @@ You can also mark the fixture as `box: 'self'` to only hide that particular fixt
 Instead of the usual fixture name, you can give fixtures a custom title that will be shown in test reports and error messages.
 
 ```js
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend({
   innerFixture: [async ({}, use, testInfo) => {
@@ -784,7 +784,7 @@ export const test = base.extend({
 **Test.beforeEach()** and **Test.afterEach()** hooks run before/after each test declared in the same file and same **Test.describe()** block (if any). If you want to declare hooks that run before/after each test globally, you can declare them as auto fixtures like this:
 
 ```js title="fixtures.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend<{ forEachTest: void }>({
   forEachTest: [async ({ page }, use) => {
@@ -801,7 +801,7 @@ And then import the fixtures in all your tests:
 
 ```js title="mytest.spec.ts"
 import { test } from './fixtures';
-import { expect } from '@copilotbrowser/test';
+import { expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic', async ({ page }) => {
   expect(page).toHaveURL('http://localhost:8000');
@@ -815,7 +815,7 @@ test('basic', async ({ page }) => {
 that run before/after all tests in every file, you can declare them as auto fixtures with `scope: 'worker'` as follows:
 
 ```js title="fixtures.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = base.extend<{}, { forEachWorker: void }>({
   forEachWorker: [async ({}, use) => {
@@ -832,7 +832,7 @@ And then import the fixtures in all your tests:
 
 ```js title="mytest.spec.ts"
 import { test } from './fixtures';
-import { expect } from '@copilotbrowser/test';
+import { expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic', async ({ }) => {
   // ...

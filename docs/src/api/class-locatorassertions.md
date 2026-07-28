@@ -8,7 +8,7 @@ id: class-locatorassertions
 The `LocatorAssertions` class provides assertion methods that can be used to make assertions about the `Locator` state in the tests.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('status becomes submitted', async ({ page }) => {
   // ...

@@ -26,7 +26,7 @@ There are two different strategies when it comes to Test Isolation: start from s
 copilotbrowser uses browser contexts to achieve Test Isolation. Each test has its own Browser Context. Running the test creates a new browser context each time.  When using copilotbrowser as a Test Runner, browser contexts are created by default. Otherwise, you can create browser contexts manually.
 
 ```js tab=js-test
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('example test', async ({ page, context }) => {
   // "context" is an isolated BrowserContext, created for this specific test.
@@ -77,7 +77,7 @@ Browser contexts can also be used to emulate multi-page scenarios involving mobi
 copilotbrowser can create multiple browser contexts within a single scenario. This is useful when you want to test for multi-user functionality, like a chat.
 
 ```js tab=js-test
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('admin and user', async ({ browser }) => {
   // Create two isolated browser contexts

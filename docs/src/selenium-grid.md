@@ -94,22 +94,22 @@ SELENIUM_REMOTE_URL=http://<selenium-hub-ip>:4444 SELENIUM_REMOTE_HEADERS="{'Aut
 
 ### Detailed logs
 
-Run with `DEBUG=pw:browser*` environment variable to see how copilotbrowser is connecting to Selenium Grid.
+Run with `DEBUG=cb:browser*` environment variable to see how copilotbrowser is connecting to Selenium Grid.
 
 ```bash js
-DEBUG=pw:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 npx copilotbrowser test
+DEBUG=cb:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 npx copilotbrowser test
 ```
 
 ```bash python
-DEBUG=pw:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 pytest --browser chromium
+DEBUG=cb:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 pytest --browser chromium
 ```
 
 ```bash java
-DEBUG=pw:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 mvn test
+DEBUG=cb:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 mvn test
 ```
 
 ```bash csharp
-DEBUG=pw:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 dotnet test
+DEBUG=cb:browser* SELENIUM_REMOTE_URL=http://internal.grid:4444 dotnet test
 ```
 
 If you file an issue, please include this log.

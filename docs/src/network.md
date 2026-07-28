@@ -20,7 +20,7 @@ Check out our [API mocking guide](./mock.md) to learn more on how to
 You don't have to configure anything to mock network requests. Just define a custom `Route` that mocks network for a browser context.
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.beforeEach(async ({ context }) => {
   // Block any css requests for each test in this file.
@@ -36,7 +36,7 @@ test('loads page without css', async ({ page }) => {
 Alternatively, you can use **Page.route()** to mock network in a single page.
 
 ```js title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('loads page without images', async ({ page }) => {
   // Block png and jpeg images.
@@ -52,7 +52,7 @@ test('loads page without images', async ({ page }) => {
 Perform HTTP Authentication.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   use: {
     httpCredentials: {
@@ -119,7 +119,7 @@ You can optionally specify username and password for HTTP(S) proxy, you can also
 Here is an example of a global proxy:
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   use: {
     proxy: {
@@ -180,7 +180,7 @@ await using var browser = await BrowserType.LaunchAsync(new()
 Its also possible to specify it per context:
 
 ```js tab=js-test title="example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('should use custom proxy on a new context', async ({ browser }) => {
   const context = await browser.newContext({

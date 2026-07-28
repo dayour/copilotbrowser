@@ -16,7 +16,7 @@
 
 import { attachFrame, detachFrame } from '../config/utils';
 import { contextTest as test, expect } from '../config/browserTest';
-import type { Frame, Page, WebSocketRoute } from '@copilotbrowser/test';
+import type { Frame, Page, WebSocketRoute } from '@copilotbrowser/copilotbrowser/test';
 import { TestServer } from '../config/testserver';
 
 declare global {

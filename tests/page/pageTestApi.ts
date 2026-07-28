@@ -15,8 +15,8 @@
  */
 
 import type { Page, ViewportSize } from 'copilotbrowser';
-import type { PageScreenshotOptions, ScreenshotMode, VideoMode } from '@copilotbrowser/test';
-export { expect } from '@copilotbrowser/test';
+import type { PageScreenshotOptions, ScreenshotMode, VideoMode } from '@copilotbrowser/copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 
 // Page test does not guarantee an isolated context, just a new page (because Android).
 export type PageTestFixtures = {

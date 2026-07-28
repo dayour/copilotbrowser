@@ -23,7 +23,7 @@ test('typescript types should work', async ({ exec, tsc, writeFiles }) => {
     'copilotbrowser-webkit',
     'copilotbrowser-chromium',
   ];
-  await exec('npm i @copilotbrowser/test', ...libraryPackages, { env: { copilotbrowser_SKIP_BROWSER_DOWNLOAD: '1' } });
+  await exec('npm i @copilotbrowser/copilotbrowser', ...libraryPackages, { env: { copilotbrowser_SKIP_BROWSER_DOWNLOAD: '1' } });
 
   for (const libraryPackage of libraryPackages) {
     const filename = libraryPackage + '.ts';

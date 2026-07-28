@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "peerDependencies": {
-    "@copilotbrowser/test": "1.x"
+    "@copilotbrowser/copilotbrowser": "2.x"
   },
   "keywords": [],
   "author": "",

@@ -17,7 +17,7 @@
 
 import { test as it, expect } from './pageTest';
 
-it.skip(!!process.env.PW_TEST_CONNECT_WS_ENDPOINT, 'selectors.register does not support reuse');
+it.skip(!!process.env.CB_TEST_CONNECT_WS_ENDPOINT, 'selectors.register does not support reuse');
 
 it('textContent should be atomic', async ({ copilotbrowser, page }) => {
   const createDummySelector = () => ({

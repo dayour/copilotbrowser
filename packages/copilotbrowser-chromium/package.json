@@ -1,0 +1,33 @@
+{
+  "name": "copilotbrowser-chromium",
+  "version": "2.0.0",
+  "description": "Deprecated: use copilotbrowser instead. This package re-exports copilotbrowser for backward compatibility.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dayour/copilotbrowser.git"
+  },
+  "homepage": "https://github.com/dayour/copilotbrowser",
+  "engines": {
+    "node": ">=25.6.1"
+  },
+  "author": {
+    "name": "Daryl Yourk"
+  },
+  "license": "Apache-2.0",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.mjs",
+      "require": "./index.js",
+      "default": "./index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "copilotbrowser": "cli.js"
+  },
+  "deprecated": "This package is deprecated. Use copilotbrowser instead, which now installs all browsers.",
+  "dependencies": {
+    "copilotbrowser": "file:../copilotbrowser"
+  }
+}

@@ -39,7 +39,7 @@ test('should emit new service worker on update', async ({ context, page, server 
   let version = 0;
   server.setRoute('/worker.js', (req, res) => {
     res.writeHead(200, 'OK', { 'Content-Type': 'text/javascript' });
-    res.write(`self.PW_VERSION = ${version++};`);
+    res.write(`self.CB_VERSION = ${version++};`);
     res.end();
   });
 
@@ -73,14 +73,14 @@ test('should emit new service worker on update', async ({ context, page, server 
     page.goto(server.PREFIX + '/home'),
   ]);
 
-  await expect.poll(() => sw.evaluate(() => self['PW_VERSION'])).toBe(0);
+  await expect.poll(() => sw.evaluate(() => self['CB_VERSION'])).toBe(0);
 
   const [updatedSW] = await Promise.all([
     context.waitForEvent('serviceworker'),
     page.click('#update'),
   ]);
 
-  await expect.poll(() => updatedSW.evaluate(() => self['PW_VERSION'])).toBe(1);
+  await expect.poll(() => updatedSW.evaluate(() => self['CB_VERSION'])).toBe(1);
 });
 
 test.describe('http credentials', () => {
@@ -541,7 +541,7 @@ test('should intercept service worker update requests', async ({ context, page, 
   let version = 0;
   server.setRoute('/worker.js', (req, res) => {
     res.writeHead(200, 'OK', { 'Content-Type': 'text/javascript' });
-    res.write(`self.PW_VERSION = ${version++};`);
+    res.write(`self.CB_VERSION = ${version++};`);
     res.end();
   });
 
@@ -575,13 +575,13 @@ test('should intercept service worker update requests', async ({ context, page, 
     page.goto(server.PREFIX + '/home'),
   ]);
 
-  await expect.poll(() => sw.evaluate(() => self['PW_VERSION'])).toBe(0);
+  await expect.poll(() => sw.evaluate(() => self['CB_VERSION'])).toBe(0);
 
   // Before triggering, let's intercept the update request
   await context.route('**/worker.js', async route => {
     await route.fulfill({
       status: 200,
-      body: `self.PW_VERSION = "intercepted";`,
+      body: `self.CB_VERSION = "intercepted";`,
       contentType: 'text/javascript',
     });
   });
@@ -593,7 +593,7 @@ test('should intercept service worker update requests', async ({ context, page, 
     page.click('#update'),
   ]);
 
-  await expect.poll(() => updatedSW.evaluate(() => self['PW_VERSION'])).toBe('intercepted');
+  await expect.poll(() => updatedSW.evaluate(() => self['CB_VERSION'])).toBe('intercepted');
 });
 
 test('setOffline', async ({ context, page, server }) => {

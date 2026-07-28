@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import { createClock as rawCreateClock, install as rawInstall } from '../../../packages/injected/src/clock';
 import type { InstallConfig, ClockController } from '../../../packages/injected/src/clock';
 import type { Builtins } from '../../../packages/injected/src/utilityScript';

@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { mergeTests } from '@copilotbrowser/test';
-import { test } from '@copilotbrowser/test';
+import { mergeTests } from '@copilotbrowser/copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 import type { CommonFixtures, CommonWorkerFixtures } from './commonFixtures';
 import { commonFixtures } from './commonFixtures';
 import type { ServerFixtures, ServerWorkerOptions } from './serverFixtures';

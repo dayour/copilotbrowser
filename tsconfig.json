@@ -11,6 +11,11 @@
          - @foo/* is for importing types only,
          - .../lib/* means require dependency
       */
+      /* vite 8 exposes types only through its exports map, which the
+         commonjs/node10 resolver used here cannot read. The "#types/*" entry
+         bridges vite's internal subpath imports for the same reason. */
+      "vite": ["./node_modules/vite/dist/node/index.d.ts"],
+      "#types/*": ["./node_modules/vite/types/*.d.ts"],
       "@devtools/*": ["./packages/devtools/src/*"],
       "@html-reporter/*": ["./packages/html-reporter/src/*"],
       "@injected/*": ["./packages/injected/src/*"],

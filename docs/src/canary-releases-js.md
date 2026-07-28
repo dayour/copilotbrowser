@@ -23,7 +23,7 @@ A canary release passes all automated tests and is used to test e.g. the HTML re
 
 For any code-related commit on `main`, the continuous integration will publish a daily canary release under the `@next` npm dist tag.
 
-You can see on [npm](https://www.npmjs.com/package/@copilotbrowser/test?activeTab=versions) the current dist tags:
+You can see on [npm](https://www.npmjs.com/package/@copilotbrowser/copilotbrowser?activeTab=versions) the current dist tags:
 
 - `latest`: stable releases
 - `next`: next releases, published daily
@@ -32,7 +32,7 @@ You can see on [npm](https://www.npmjs.com/package/@copilotbrowser/test?activeTa
 ## Using a Canary Release
 
 ```bash
-npm install -D @copilotbrowser/test@next
+npm install -D @copilotbrowser/copilotbrowser@next
 ```
 
 ## Documentation

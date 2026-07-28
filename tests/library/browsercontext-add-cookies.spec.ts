@@ -16,7 +16,7 @@
  */
 
 import type { IncomingHttpHeaders } from 'http';
-import type { Cookie } from '@copilotbrowser/test';
+import type { Cookie } from '@copilotbrowser/copilotbrowser/test';
 import { contextTest as it, copilotbrowserTest, expect } from '../config/browserTest';
 
 it('should work @smoke', async ({ context, page, server }) => {

@@ -252,7 +252,13 @@
         "copilotbrowser.mcp.browser": {
           "type": "string",
           "default": "msedge",
-          "enum": ["chromium", "chrome", "msedge", "firefox", "webkit"],
+          "enum": [
+            "chromium",
+            "chrome",
+            "msedge",
+            "firefox",
+            "webkit"
+          ],
           "enumDescriptions": [
             "Chromium (bundled)",
             "Google Chrome (system)",
@@ -271,14 +277,22 @@
           "type": "array",
           "items": {
             "type": "string",
-            "enum": ["vision", "pdf", "devtools"]
+            "enum": [
+              "vision",
+              "pdf",
+              "devtools"
+            ]
           },
-          "default": ["vision"],
+          "default": [
+            "vision"
+          ],
           "description": "Additional MCP capabilities to enable: vision (screenshot-based), pdf, devtools."
         },
         "copilotbrowser.mcp.extraArgs": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Extra command-line arguments to pass to the copilotbrowser MCP server."
         },
@@ -290,7 +304,10 @@
         "copilotbrowser.mcp.profileMode": {
           "type": "string",
           "default": "isolated",
-          "enum": ["isolated", "connected"],
+          "enum": [
+            "isolated",
+            "connected"
+          ],
           "enumDescriptions": [
             "Isolated: use a clean temporary browser profile — no saved cookies, logins, or extensions.",
             "Connected: reuse your installed browser profile so you are already signed in with your accounts."
@@ -438,11 +455,11 @@
     "package": "vsce package --no-dependencies"
   },
   "dependencies": {
-    "copilotbrowser": "2.0.0"
+    "copilotbrowser": "file:../copilotbrowser"
   },
   "devDependencies": {
-    "@types/vscode": "^1.99.0",
-    "@vscode/vsce": "^3.0.0",
+    "@types/vscode": "^1.125.0",
+    "@vscode/vsce": "^3.9.2",
     "typescript": "^5.9.3"
   }
 }

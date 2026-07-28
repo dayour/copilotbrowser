@@ -382,58 +382,58 @@ copilotbrowser.selector($0)
 copilotbrowser supports verbose logging with the `DEBUG` environment variable.
 
 ```bash tab=bash-bash lang=js
-DEBUG=pw:api npx copilotbrowser test
+DEBUG=cb:api npx copilotbrowser test
 ```
 
 ```batch tab=bash-batch lang=js
-set DEBUG=pw:api
+set DEBUG=cb:api
 npx copilotbrowser test
 ```
 
 ```powershell tab=bash-powershell lang=js
-$env:DEBUG="pw:api"
+$env:DEBUG="cb:api"
 npx copilotbrowser test
 ```
 
 ```bash tab=bash-bash lang=java
-DEBUG=pw:api mvn test
+DEBUG=cb:api mvn test
 ```
 
 ```batch tab=bash-batch lang=java
-set DEBUG=pw:api
+set DEBUG=cb:api
 mvn test
 ```
 
 ```powershell tab=bash-powershell lang=java
-$env:DEBUG="pw:api"
+$env:DEBUG="cb:api"
 mvn test
 ```
 
 ```bash tab=bash-bash lang=python
-DEBUG=pw:api pytest -s
+DEBUG=cb:api pytest -s
 ```
 
 ```batch tab=bash-batch lang=python
-set DEBUG=pw:api
+set DEBUG=cb:api
 pytest -s
 ```
 
 ```powershell tab=bash-powershell lang=python
-$env:DEBUG="pw:api"
+$env:DEBUG="cb:api"
 pytest -s
 ```
 
 ```bash tab=bash-bash lang=csharp
-DEBUG=pw:api dotnet run
+DEBUG=cb:api dotnet run
 ```
 
 ```batch tab=bash-batch lang=csharp
-set DEBUG=pw:api
+set DEBUG=cb:api
 dotnet run
 ```
 
 ```powershell tab=bash-powershell lang=csharp
-$env:DEBUG="pw:api"
+$env:DEBUG="cb:api"
 dotnet run
 ```
 

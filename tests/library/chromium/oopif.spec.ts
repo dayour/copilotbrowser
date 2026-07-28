@@ -15,7 +15,7 @@
  */
 
 import { contextTest as it, expect } from '../../config/browserTest';
-import type { Frame, Browser } from '@copilotbrowser/test';
+import type { Frame, Browser } from '@copilotbrowser/copilotbrowser/test';
 
 it.use({
   launchOptions: async ({ launchOptions }, use) => {

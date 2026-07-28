@@ -588,7 +588,7 @@ test('example test', async ({ mount, router }) => {
 
 ## Frequently asked questions
 
-### What's the difference between `@copilotbrowser/test` and `@copilotbrowser/experimental-ct-{react,svelte,vue}`?
+### What's the difference between `@copilotbrowser/copilotbrowser/test` and `@copilotbrowser/experimental-ct-{react,svelte,vue}`?
 
 ```js
 test('…', async ({ mount, page, context }) => {
@@ -596,7 +596,7 @@ test('…', async ({ mount, page, context }) => {
 });
 ```
 
-`@copilotbrowser/experimental-ct-{react,svelte,vue}` wrap `@copilotbrowser/test` to provide an additional built-in component-testing specific fixture called `mount`:
+`@copilotbrowser/experimental-ct-{react,svelte,vue}` wrap `@copilotbrowser/copilotbrowser/test` to provide an additional built-in component-testing specific fixture called `mount`:
 
 
 ```js
@@ -652,7 +652,7 @@ test('should work', async ({ mount }) => {
 Additionally, it adds some config options you can use in your `copilotbrowser-ct.config.{ts,js}`.
 
 Finally, under the hood, each test re-uses the `context` and `page` fixture as a speed optimization for Component Testing.
-It resets them in between each test so it should be functionally equivalent to `@copilotbrowser/test`'s guarantee that you get a new, isolated `context` and `page` fixture per-test.
+It resets them in between each test so it should be functionally equivalent to `@copilotbrowser/copilotbrowser/test`'s guarantee that you get a new, isolated `context` and `page` fixture per-test.
 
 ### I have a project that already uses Vite. Can I reuse the config?
 

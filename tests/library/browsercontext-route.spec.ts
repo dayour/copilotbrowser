@@ -16,7 +16,7 @@
  */
 
 import { browserTest as it, expect } from '../config/browserTest';
-import type { Route } from '@copilotbrowser/test';
+import type { Route } from '@copilotbrowser/copilotbrowser/test';
 
 it('should intercept', async ({ browser, server }) => {
   const context = await browser.newContext();

@@ -33,7 +33,7 @@ test('should validate dependencies correctly if skipped during install', async (
   const result = await exec('npx copilotbrowser install chromium', {
     env: {
       copilotbrowser_SKIP_VALIDATE_HOST_REQUIREMENTS: '1',
-      DEBUG: 'pw:install',
+      DEBUG: 'cb:install',
     }
   });
   expect(result).toContain(`Skipping host requirements validation logic because`);
@@ -55,7 +55,7 @@ test('should validate dependencies correctly if skipped during install', async (
   await test.step('should validate dependencies (skipped during install)', async () => {
     const result = await exec('node test.js', {
       env: {
-        DEBUG: 'pw:install',
+        DEBUG: 'cb:install',
       },
     });
     expect(result).toContain(`validating host requirements for "chromium-headless-shell"`);
@@ -79,7 +79,7 @@ test('should not validate dependencies on launch if validated during install', a
 
   const result = await exec('npx copilotbrowser install chromium', {
     env: {
-      DEBUG: 'pw:install',
+      DEBUG: 'cb:install',
     }
   });
   expect(result).toContain(`validating host requirements for "chromium"`);
@@ -89,7 +89,7 @@ test('should not validate dependencies on launch if validated during install', a
   await test.step('should not validate dependencies on launch if already validated', async () => {
     const result = await exec('node test.js', {
       env: {
-        DEBUG: 'pw:install',
+        DEBUG: 'cb:install',
       },
     });
     expect(result).not.toContain(`validating host requirements for "chromium"`);

@@ -14,7 +14,7 @@
   limitations under the License.
 */
 
-import type { TestAnnotation } from '@copilotbrowser/test';
+import type { TestAnnotation } from '@copilotbrowser/copilotbrowser/test';
 import type { TestCase, TestCaseSummary } from './types';
 import * as React from 'react';
 import { TabbedPane } from './tabbedPane';

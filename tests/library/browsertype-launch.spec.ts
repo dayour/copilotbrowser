@@ -16,7 +16,7 @@
  */
 
 import { copilotbrowserTest as it, expect } from '../config/browserTest';
-import type { Browser, BrowserContext, Page } from '@copilotbrowser/test';
+import type { Browser, BrowserContext, Page } from '@copilotbrowser/copilotbrowser/test';
 import { kTargetClosedErrorMessage } from '../config/errors';
 
 it('should reject all promises when browser is closed', async ({ browserType }) => {

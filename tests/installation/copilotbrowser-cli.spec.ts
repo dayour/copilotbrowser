@@ -26,12 +26,12 @@ test('cli should work', async ({ exec, tmpWorkspace }) => {
     const outputFile = test.info().outputPath('codegen.output');
     await exec(`npx copilotbrowser codegen --output=${outputFile}`, {
       env: {
-        PWTEST_CLI_IS_UNDER_TEST: '1',
-        PWTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
+        CBTEST_CLI_IS_UNDER_TEST: '1',
+        CBTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
       }
     });
     const contents = fs.readFileSync(outputFile, 'utf-8');
-    expect(contents).toContain(`@copilotbrowser/test`);
+    expect(contents).toContain(`@copilotbrowser/copilotbrowser/test`);
     expect(contents).toContain(`{ page }`);
   });
 
@@ -42,8 +42,8 @@ test('cli should work', async ({ exec, tmpWorkspace }) => {
     try {
       await exec(`npx copilotbrowser codegen  --output=${outputFile} --user-data-dir ${userDataDir} about:blank`, {
         env: {
-          PWTEST_CLI_IS_UNDER_TEST: '1',
-          PWTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
+          CBTEST_CLI_IS_UNDER_TEST: '1',
+          CBTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
         }
       });
       expect(fs.readdirSync(userDataDir).length).toBeGreaterThan(0);
@@ -59,8 +59,8 @@ test('cli should work', async ({ exec, tmpWorkspace }) => {
     const outputFile = test.info().outputPath('codegen.output');
     await exec(`npx copilotbrowser codegen --target=javascript --output=${outputFile}`, {
       env: {
-        PWTEST_CLI_IS_UNDER_TEST: '1',
-        PWTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
+        CBTEST_CLI_IS_UNDER_TEST: '1',
+        CBTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
       }
     });
     const contents = fs.readFileSync(outputFile, 'utf-8');
@@ -72,8 +72,8 @@ test('cli should work', async ({ exec, tmpWorkspace }) => {
     const outputFile = test.info().outputPath('codegen.output');
     await exec(`npx copilotbrowser codegen --target=python --output=${outputFile}`, {
       env: {
-        PWTEST_CLI_IS_UNDER_TEST: '1',
-        PWTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
+        CBTEST_CLI_IS_UNDER_TEST: '1',
+        CBTEST_CLI_EXIT_AFTER_TIMEOUT: '10000',
       },
     });
     const contents = fs.readFileSync(outputFile, 'utf-8');

@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@copilotbrowser/test": "^1.19.1",
+    "@copilotbrowser/copilotbrowser": "^2.1.0",
     "http-server": "^14.1.0"
   }
 }

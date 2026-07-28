@@ -14,7 +14,7 @@ By setting up projects you can also run a group of tests with different timeouts
 By using **projects** you can run your tests in multiple browsers such as chromium, webkit and firefox as well as branded browsers such as Google Chrome and Microsoft Edge. copilotbrowser can also run on emulated tablet and mobile devices. See the [registry of device parameters](https://github.com/dayour/copilotbrowser/blob/main/packages/copilotbrowser/src/server/deviceDescriptorsSource.json) for a complete list of selected desktop, tablet and mobile devices.
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -104,7 +104,7 @@ Choose a specific profile, various profiles or all profiles to run tests on.
 By setting up projects we can also run a group of tests with different timeouts or retries or run a group of tests against different environments. For example we can run our tests against a staging environment with 2 retries as well as against a production environment with 0 retries.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   timeout: 60000, // Timeout is shared between all tests.
@@ -134,7 +134,7 @@ We can split tests into projects and use filters to run a subset of tests. For e
 Here is an example that defines a common timeout and two projects. The "Smoke" project runs a small subset of tests without retries, and "Default" project runs all other tests with retries.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   timeout: 60000, // Timeout is shared between all tests.
@@ -160,7 +160,7 @@ Dependencies are a list of projects that need to run before the tests in another
 In this example the chromium, firefox and webkit projects depend on the setup project.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [

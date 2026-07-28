@@ -27,7 +27,7 @@ There are two ways to configure global setup and teardown: using a global setup 
 First we add a new project with the name 'setup db'. We then give it a **TestProject.testMatch** property in order to match the file called `global.setup.ts`:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testDir: './tests',
@@ -46,7 +46,7 @@ export default defineConfig({
 Then we add the **TestProject.dependencies** property to our projects that depend on the setup project and pass into the array the name of our dependency project, which we defined in the previous step:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testDir: './tests',
@@ -68,7 +68,7 @@ export default defineConfig({
 In this example the 'chromium with db' project depends on the 'setup db' project. We then create a setup test, stored at root level of your project (note that setup and teardown code must be defined as regular tests by calling [test()](./api/class-test#test-call) function):
 
 ```js title="tests/global.setup.ts"
-import { test as setup } from '@copilotbrowser/test';
+import { test as setup } from '@copilotbrowser/copilotbrowser/test';
 
 setup('create new database', async ({ }) => {
   console.log('creating new database...');
@@ -77,7 +77,7 @@ setup('create new database', async ({ }) => {
 ```
 
 ```js title="tests/menu.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('menu', async ({ page }) => {
   // Your test that depends on the database
@@ -91,7 +91,7 @@ You can teardown your setup by adding a **TestProject.teardown** property to you
 First we add the **TestProject.teardown** property to our setup project with the name 'cleanup db' which is the name we gave to our teardown project in the previous step:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   testDir: './tests',
@@ -118,7 +118,7 @@ export default defineConfig({
 Then we create a `global.teardown.ts` file in the tests directory of your project. This will be used to delete the data from the database after all tests have run.
 
 ```js title="tests/global.teardown.ts"
-import { test as teardown } from '@copilotbrowser/test';
+import { test as teardown } from '@copilotbrowser/copilotbrowser/test';
 
 teardown('delete database', async ({ }) => {
   console.log('deleting test database...');
@@ -150,7 +150,7 @@ Beware that `globalSetup` and `globalTeardown` lack some features — see the [i
 :::
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   globalSetup: require.resolve('./global-setup'),
@@ -163,7 +163,7 @@ export default defineConfig({
 Here is a global setup example that authenticates once and reuses authentication state in tests. It uses the `baseURL` and `storageState` options from the configuration file.
 
 ```js title="global-setup.ts"
-import { chromium, type FullConfig } from '@copilotbrowser/test';
+import { chromium, type FullConfig } from '@copilotbrowser/copilotbrowser/test';
 
 async function globalSetup(config: FullConfig) {
   const { baseURL, storageState } = config.projects[0].use;
@@ -183,7 +183,7 @@ export default globalSetup;
 Specify `globalSetup`, `baseURL` and `storageState` in the configuration file.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   globalSetup: require.resolve('./global-setup'),
   use: {
@@ -196,7 +196,7 @@ export default defineConfig({
 Tests start already authenticated because we specify `storageState` that was populated by global setup.
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   await page.goto('/');
@@ -207,7 +207,7 @@ test('test', async ({ page }) => {
 You can make arbitrary data available in your tests from your global setup file by setting them as environment variables via `process.env`.
 
 ```js title="global-setup.ts"
-import type { FullConfig } from '@copilotbrowser/test';
+import type { FullConfig } from '@copilotbrowser/copilotbrowser/test';
 
 async function globalSetup(config: FullConfig) {
   process.env.FOO = 'some data';
@@ -221,7 +221,7 @@ export default globalSetup;
 Tests have access to the `process.env` properties set in the global setup.
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   // environment variables which are set in globalSetup are only available inside test().
@@ -240,7 +240,7 @@ test('test', async ({ page }) => {
 In some instances, it may be useful to capture a trace of failures encountered during the global setup. In order to do this, you must [start tracing](./api/class-tracing.md#tracing-start) in your setup, and you must ensure that you [stop tracing](./api/class-tracing.md#tracing-stop) if an error occurs before that error is thrown. This can be achieved by wrapping your setup in a `try...catch` block.  Here is an example that expands the global setup example to capture a trace.
 
 ```js title="global-setup.ts"
-import { chromium, type FullConfig } from '@copilotbrowser/test';
+import { chromium, type FullConfig } from '@copilotbrowser/copilotbrowser/test';
 
 async function globalSetup(config: FullConfig) {
   const { baseURL, storageState } = config.projects[0].use;

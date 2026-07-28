@@ -1,6 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "@copilotbrowser/test": "file:../../../packages/copilotbrowser-test"
-  }
-}

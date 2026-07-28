@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { ElementHandle } from '@copilotbrowser/test';
+import type { ElementHandle } from '@copilotbrowser/copilotbrowser/test';
 import { test as it, expect } from './pageTest';
 
 it('should work with large DOM @smoke', async ({ page, server }) => {

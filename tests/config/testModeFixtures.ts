@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 import type { TestModeName } from './testMode';
 import { DefaultTestMode, DriverTestMode } from './testMode';
 
@@ -28,7 +28,7 @@ export type TestModeTestFixtures = {
 
 export type TestModeWorkerFixtures = {
   toImplInWorkerScope: (rpcObject?: any) => any;
-  copilotbrowser: typeof import('@copilotbrowser/test');
+  copilotbrowser: typeof import('@copilotbrowser/copilotbrowser/test');
 };
 
 export const testModeTest = test.extend<TestModeTestFixtures, TestModeWorkerOptions & TestModeWorkerFixtures>({
@@ -52,7 +52,7 @@ export const testModeTest = test.extend<TestModeTestFixtures, TestModeWorkerOpti
   }, { scope: 'worker' }],
 
   toImpl: async ({ toImplInWorkerScope: toImplWorker, mode }, use, testInfo) => {
-    if (mode !== 'default' || process.env.PW_TEST_REUSE_CONTEXT)
+    if (mode !== 'default' || process.env.CB_TEST_REUSE_CONTEXT)
       testInfo.skip();
     await use(toImplWorker);
   },

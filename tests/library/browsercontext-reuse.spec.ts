@@ -16,7 +16,7 @@
 
 import { browserTest, expect } from '../config/browserTest';
 import { verifyViewport } from '../config/utils';
-import type { Browser, BrowserServer, BrowserContext, Page, BrowserContextOptions, BrowserType } from '@copilotbrowser/test';
+import type { Browser, BrowserServer, BrowserContext, Page, BrowserContextOptions, BrowserType } from '@copilotbrowser/copilotbrowser/test';
 
 class LaunchScenario {
   private _browserType: BrowserType;

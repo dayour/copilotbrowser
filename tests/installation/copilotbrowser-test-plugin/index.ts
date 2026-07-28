@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-import { test as baseTest, expect as expectBase } from '@copilotbrowser/test';
-import type { Page } from '@copilotbrowser/test';
+import { test as baseTest, expect as expectBase } from '@copilotbrowser/copilotbrowser/test';
+import type { Page } from '@copilotbrowser/copilotbrowser/test';
 
 export const test = baseTest.extend<{ plugin: string }>({
   plugin: async ({}, use) => {

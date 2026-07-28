@@ -40,7 +40,7 @@ const extraInstalledSoftware = process.platform === 'win32' ? ['winldd' as const
 for (const cdn of CDNS) {
   test(`copilotbrowser cdn failover should work (${cdn})`, async ({ exec, checkInstalledSoftwareOnDisk }) => {
     await exec('npm i copilotbrowser');
-    const result = await exec('npx copilotbrowser install', { env: { PW_TEST_CDN_THAT_SHOULD_WORK: cdn, DEBUG: 'pw:install' } });
+    const result = await exec('npx copilotbrowser install', { env: { CB_TEST_CDN_THAT_SHOULD_WORK: cdn, DEBUG: 'cb:install' } });
     expect(result).toHaveLoggedSoftwareDownload(['chromium', 'chromium-headless-shell', 'ffmpeg', 'firefox', 'webkit', ...extraInstalledSoftware]);
     await checkInstalledSoftwareOnDisk((['chromium', 'chromium-headless-shell', 'ffmpeg', 'firefox', 'webkit', ...extraInstalledSoftware]));
     const dls = parsedDownloads(result);
@@ -59,7 +59,7 @@ test(`copilotbrowser cdn should race with a timeout`, async ({ exec }) => {
     const result = await exec('npx copilotbrowser install', {
       env: {
         copilotbrowser_DOWNLOAD_HOST: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-        DEBUG: 'pw:install',
+        DEBUG: 'cb:install',
         copilotbrowser_DOWNLOAD_CONNECTION_TIMEOUT: '1000',
       },
       expectToExitWithError: true
@@ -115,13 +115,13 @@ test(`copilotbrowser cdn should not timeout on redirect`, {
     const result = await exec('npx copilotbrowser install chromium', {
       env: {
         copilotbrowser_DOWNLOAD_HOST: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-        DEBUG: 'pw:install',
+        DEBUG: 'cb:install',
         copilotbrowser_DOWNLOAD_CONNECTION_TIMEOUT: '1000',
       },
       expectToExitWithError: true
     });
     // Steps after the extraction will fail, but the download should succeed without timeouts.
-    expect(result).toContain(`pw:install SUCCESS downloading Chrome`);
+    expect(result).toContain(`cb:install SUCCESS downloading Chrome`);
     expect(result).not.toContain(`timed out after 1000ms`);
   } finally {
     await new Promise(resolve => server.close(resolve));
@@ -144,7 +144,7 @@ test(`npx copilotbrowser install should not hang when CDN closes the connection`
     const result = await exec('npx copilotbrowser install', {
       env: {
         copilotbrowser_DOWNLOAD_HOST: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-        DEBUG: 'pw:install',
+        DEBUG: 'cb:install',
       },
       expectToExitWithError: true
     });
@@ -173,7 +173,7 @@ test(`npx copilotbrowser install should not hang when CDN TCP connection stalls`
     const result = await exec('npx copilotbrowser install', {
       env: {
         copilotbrowser_DOWNLOAD_HOST: `http://127.0.0.1:${(server.address() as AddressInfo).port}`,
-        DEBUG: 'pw:install',
+        DEBUG: 'cb:install',
         copilotbrowser_DOWNLOAD_CONNECTION_TIMEOUT: '1000',
       },
       expectToExitWithError: true

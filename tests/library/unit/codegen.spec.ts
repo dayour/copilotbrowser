@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import { getAPIRequestCodeGen } from '../../../packages/trace-viewer/src/ui/codegen';
 
 test.describe('javascript', () => {

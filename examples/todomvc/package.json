@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@copilotbrowser/test": "^1.38.0",
+    "@copilotbrowser/copilotbrowser": "^2.1.0",
     "dotenv": "^17.2.3"
   }
 }

@@ -17,11 +17,11 @@
 import { browserTest as it, expect } from '../config/browserTest';
 
 it('clock should be frozen', async ({ page }) => {
-  it.skip(process.env.PW_CLOCK !== 'frozen');
+  it.skip(process.env.CB_CLOCK !== 'frozen');
   expect(await page.evaluate('Date.now()')).toBe(1000);
 });
 
 it('clock should be realtime', async ({ page }) => {
-  it.skip(process.env.PW_CLOCK !== 'realtime');
+  it.skip(process.env.CB_CLOCK !== 'realtime');
   expect(await page.evaluate('Date.now()')).toBeLessThan(10000);
 });

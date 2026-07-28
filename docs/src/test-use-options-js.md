@@ -12,7 +12,7 @@ In addition to configuring the test runner you can also configure [Emulation](#e
 Set the base URL and storage state for all tests:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -37,7 +37,7 @@ With copilotbrowser you can emulate a real device such as a mobile phone or tabl
 
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -76,7 +76,7 @@ export default defineConfig({
 Available options to configure networking:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -130,7 +130,7 @@ With copilotbrowser you can capture screenshots, record videos as well as traces
 Trace files, screenshots and videos will appear in the test output directory, typically `test-results`.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -156,7 +156,7 @@ export default defineConfig({
 ### Other Options
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -195,7 +195,7 @@ export default defineConfig({
 Any options accepted by **BrowserType.launch()**, **Browser.newContext()** or **BrowserType.connect()** can be put into `launchOptions`, `contextOptions` or `connectOptions` respectively in the `use` section.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -213,7 +213,7 @@ However, most common ones like `headless` or `viewport` are available directly i
 If using the built-in `browser` fixture, calling **Browser.newContext()** will create a context with options inherited from the config:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -243,7 +243,7 @@ You can configure copilotbrowser globally, per project, or per test. For example
 
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -255,7 +255,7 @@ export default defineConfig({
 You can override options for a specific project using the `project` option in the copilotbrowser config.
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   projects: [
@@ -273,7 +273,7 @@ export default defineConfig({
 You can override options for a specific test file by using the `test.use()` method and passing in the options. For example to run tests with the French locale for a specific test:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.use({ locale: 'fr-FR' });
 
@@ -285,7 +285,7 @@ test('example', async ({ page }) => {
 The same works inside a describe block. For example to run tests in a describe block with the French locale:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('french language block', () => {
 
@@ -302,7 +302,7 @@ test.describe('french language block', () => {
 You can reset an option to the value defined in the config file. Consider the following config that sets a `baseURL`:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {
@@ -314,7 +314,7 @@ export default defineConfig({
 You can now configure `baseURL` for a file, and also opt-out for a single test.
 
 ```js title="intro.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 // Configure baseURL for this file.
 test.use({ baseURL: 'https://dayour.github.io/copilotbrowser/docs/intro' });
@@ -336,7 +336,7 @@ test.describe(() => {
 If you would like to completely reset the value to `undefined`, use a long-form fixture notation.
 
 ```js title="intro.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 // Completely unset baseURL for this file.
 test.use({

@@ -53,7 +53,7 @@ Line-by-line migration to copilotbrowser Test:
 
 
 ```js
-const { test, expect } = require('@copilotbrowser/test'); // 1
+const { test, expect } = require('@copilotbrowser/copilotbrowser/test'); // 1
 
 test.describe('angularjs homepage todo list', () => {
   test('should add a todo', async ({ page }) => { // 2, 3

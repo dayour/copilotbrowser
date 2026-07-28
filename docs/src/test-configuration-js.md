@@ -12,7 +12,7 @@ copilotbrowser has many options to configure how your tests are run. You can spe
 Here are some of the most common configuration options.
 
 ```js
-import { defineConfig, devices } from '@copilotbrowser/test';
+import { defineConfig, devices } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Look for test files in the "tests" directory, relative to this configuration file.
@@ -73,7 +73,7 @@ export default defineConfig({
 Filter tests by glob patterns or regular expressions.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Glob patterns or regular expressions to ignore test files.
@@ -92,7 +92,7 @@ export default defineConfig({
 ## Advanced Configuration
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Folder for test artifacts such as screenshots, videos, traces, etc.
@@ -122,7 +122,7 @@ export default defineConfig({
 Configuration for the expect assertion library.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   expect: {

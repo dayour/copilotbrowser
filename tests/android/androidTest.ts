@@ -17,7 +17,7 @@
 import { baseTest } from '../config/baseTest';
 import type { PageTestFixtures, PageWorkerFixtures } from '../page/pageTestApi';
 import type { AndroidDevice, BrowserContext } from 'copilotbrowser';
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 
 type AndroidTestFixtures = {
   androidDevice: AndroidDevice;

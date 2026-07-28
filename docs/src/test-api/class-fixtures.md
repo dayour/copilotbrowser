@@ -12,7 +12,7 @@ copilotbrowser Test is based on the concept of the [test fixtures](../test-fixtu
 copilotbrowser Test looks at each test declaration, analyses the set of fixtures the test needs and prepares those fixtures specifically for the test. Values prepared by the fixtures are merged into a single object that is available to the `test`, hooks, annotations and other fixtures as a first parameter.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   // ...
@@ -94,7 +94,7 @@ This is the most common fixture used in a test.
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ page }) => {
   await page.goto('/signin');
@@ -115,7 +115,7 @@ Isolated `APIRequestContext` instance for each test.
 **Usage**
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('basic test', async ({ request }) => {
   await request.post('/signin', {

@@ -12,7 +12,7 @@ copilotbrowser comes with a `webServer` option in the config file which gives yo
 Use the `webServer` property in your copilotbrowser config to launch a development web server during the tests.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Run your local dev server before starting the tests
@@ -48,7 +48,7 @@ export default defineConfig({
 Webservers can sometimes take longer to boot up. In this case, you can increase the timeout to wait for the server to start.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Rest of your config...
@@ -70,7 +70,7 @@ It is also recommended to specify the `baseURL` in the `use: {}` section of your
 When using **Page.goto()**, **Page.route()**, **Page.waitForURL()**, **Page.waitForRequest()**, or **Page.waitForResponse()** it takes the base URL in consideration by using the [`URL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/URL) constructor for building the corresponding URL. For Example, by setting the baseURL to `http://localhost:3000` and navigating to `/login` in your tests, copilotbrowser will run the test using `http://localhost:3000/login`.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Rest of your config...
@@ -90,7 +90,7 @@ export default defineConfig({
 Now you can use a relative path when navigating the page:
 
 ```js title="test.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('test', async ({ page }) => {
   // This will navigate to http://localhost:3000/login
@@ -104,7 +104,7 @@ Multiple web servers (or background processes) can be launched simultaneously by
 
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   webServer: [

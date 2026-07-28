@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { devices } from '@copilotbrowser/test';
+import { devices } from '@copilotbrowser/copilotbrowser/test';
 import { contextTest as it, expect } from '../config/browserTest';
 import { browserTest } from '../config/browserTest';
 import { verifyViewport } from '../config/utils';

@@ -27,7 +27,7 @@ copilotbrowser allows to disable Service Workers during testing. This makes test
 To disable service workers, set **TestOptions.serviceWorkers** to `'block'`.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   use: {

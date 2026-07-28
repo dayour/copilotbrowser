@@ -22,7 +22,7 @@ copilotbrowser Trace Viewer is a GUI tool that lets you explore recorded copilot
 By default the [copilotbrowser.config](./trace-viewer.md#tracing-on-ci) file contains the configuration needed to create a `trace.zip` file for each test. Traces are setup to run `on-first-retry`, meaning they run on the first retry of a failed test. Also `retries` are set to 2 when running on CI and 0 locally. This means the traces are recorded on the first retry of a failed test but not on the first run and not on the second retry.
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   retries: process.env.CI ? 2 : 0, // set to 2 when running on CI
   // ...

@@ -405,7 +405,7 @@ pwsh bin/Debug/netX/copilotbrowser.ps1 codegen --user-data-dir=/path/to/your/bro
 If you would like to use codegen in some non-standard setup (for example, use **BrowserContext.route()**), it is possible to call **Page.pause()** that will open a separate window with codegen controls.
 
 ```js
-const { chromium } = require('@copilotbrowser/test');
+const { chromium } = require('@copilotbrowser/copilotbrowser/test');
 
 (async () => {
   // Make sure to run headed.

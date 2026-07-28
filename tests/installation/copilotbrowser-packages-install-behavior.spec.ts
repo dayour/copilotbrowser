@@ -62,7 +62,7 @@ test(`copilotbrowser should work`, async ({ exec, checkInstalledSoftwareOnDisk }
   expect(result1).toHaveLoggedSoftwareDownload([]);
   await checkInstalledSoftwareOnDisk([]);
   const stdio = await exec('npx copilotbrowser', 'test', '-c', '.', { expectToExitWithError: true });
-  expect(stdio).toContain(`Please install @copilotbrowser/test package`);
+  expect(stdio).toContain(`Please install @copilotbrowser/copilotbrowser package`);
 });
 
 test(`copilotbrowser should work`, async ({ exec, checkInstalledSoftwareOnDisk }) => {
@@ -96,8 +96,8 @@ test(`copilotbrowser should work with chromium --only-shell`, async ({ exec, che
   await checkInstalledSoftwareOnDisk(['chromium-headless-shell', 'ffmpeg', 'firefox', 'webkit', ...extraInstalledSoftware]);
 });
 
-test('@copilotbrowser/test should work', async ({ exec, checkInstalledSoftwareOnDisk }) => {
-  const result1 = await exec('npm i --foreground-scripts @copilotbrowser/test');
+test('@copilotbrowser/copilotbrowser should work', async ({ exec, checkInstalledSoftwareOnDisk }) => {
+  const result1 = await exec('npm i --foreground-scripts @copilotbrowser/copilotbrowser');
   expect(result1).toHaveLoggedSoftwareDownload([]);
   await checkInstalledSoftwareOnDisk([]);
 
@@ -107,13 +107,13 @@ test('@copilotbrowser/test should work', async ({ exec, checkInstalledSoftwareOn
   expect(result2).toHaveLoggedSoftwareDownload(['chromium', 'chromium-headless-shell', 'ffmpeg', 'firefox', 'webkit', ...extraInstalledSoftware]);
   await checkInstalledSoftwareOnDisk(['chromium', 'chromium-headless-shell', 'ffmpeg', 'firefox', 'webkit', ...extraInstalledSoftware]);
 
-  await exec('node sanity.js @copilotbrowser/test chromium firefox webkit');
+  await exec('node sanity.js @copilotbrowser/copilotbrowser chromium firefox webkit');
   await exec('node', 'esm-copilotbrowser-test.mjs');
 
   const result3 = await exec('npx copilotbrowser test -c . --browser=all --reporter=list sample.spec.js');
   expect(result3).toContain('3 passed');
 
-  const result4 = await exec('npx copilotbrowser test -c . failing.spec.js', { expectToExitWithError: true, env: { DEBUG: 'pw:api' } });
+  const result4 = await exec('npx copilotbrowser test -c . failing.spec.js', { expectToExitWithError: true, env: { DEBUG: 'cb:api' } });
   expect(result4).toContain('expect.toHaveText started');
   expect(result4).toContain('failing.spec.js:5:38');
 });

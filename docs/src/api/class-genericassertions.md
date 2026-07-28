@@ -10,7 +10,7 @@ id: class-genericassertions
 The `GenericAssertions` class provides assertion methods that can be used to make assertions about any values in the tests. A new instance of `GenericAssertions` is created by calling **copilotbrowserAssertions.expectGeneric()**:
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('assert a value', async ({ page }) => {
   const value = 1;

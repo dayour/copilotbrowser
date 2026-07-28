@@ -16,7 +16,7 @@
 
 import type {
   FullConfig, FullResult, Reporter, Suite
-} from '@copilotbrowser/test/reporter';
+} from '@copilotbrowser/copilotbrowser/reporter';
 import { stripAnsi } from '../config/utils';
 import fs from 'fs';
 import path from 'path';

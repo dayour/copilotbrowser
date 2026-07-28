@@ -1,4 +1,4 @@
-const { test, expect } = require('@copilotbrowser/test');
+const { test, expect } = require('@copilotbrowser/copilotbrowser/test');
 
 test('sample test', async ({ page }) => {
   await page.setContent(`<div>hello</div><span>world</span>`);

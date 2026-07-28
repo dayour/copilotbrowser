@@ -17,7 +17,7 @@
 
 import { ManualPromise } from '../../../packages/copilotbrowser/lib/utils/isomorphic/manualPromise';
 import { EventEmitter } from './utils';
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('should not throw with ignoreErrors', async () => {
   const ee = new EventEmitter();

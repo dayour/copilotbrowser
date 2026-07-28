@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import type { Page } from '@copilotbrowser/test';
+import type { Page } from '@copilotbrowser/copilotbrowser/test';
 import { test as it, expect, rafraf } from './pageTest';
 
 const giveItAChanceToResolve = (page: Page) => rafraf(page, 5);

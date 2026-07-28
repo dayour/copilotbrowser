@@ -388,7 +388,7 @@ Math.random = () => 42;
 Next, add init script to the page.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 import path from 'path';
 
 test.beforeEach(async ({ page }) => {
@@ -423,7 +423,7 @@ await Page.AddInitScriptAsync(scriptPath: "mocks/preload.js");
 Alternatively, you can pass a function instead of creating a preload script file. This is more convenient for short or one-off scripts. You can also pass an argument this way.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 // Add script for every test in the beforeEach hook.
 test.beforeEach(async ({ page }) => {

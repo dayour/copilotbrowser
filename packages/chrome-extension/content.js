@@ -115,5 +115,5 @@ function generateTestCode(actions) {
     return '';
   }).filter(Boolean);
 
-  return `import { test, expect } from '@copilotbrowser/test';\n\ntest('recorded test', async ({ page }) => {\n  await page.goto('${window.location.href}');\n${lines.join('\n')}\n});\n`;
+  return `import { test, expect } from '@copilotbrowser/copilotbrowser/test';\n\ntest('recorded test', async ({ page }) => {\n  await page.goto('${window.location.href}');\n${lines.join('\n')}\n});\n`;
 }

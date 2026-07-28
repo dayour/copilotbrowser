@@ -18,7 +18,7 @@ Step category to differentiate steps with different origin and verbosity. Built-
 * `expect` for expect calls
 * `fixture` for fixtures setup and teardown
 * `hook` for hooks initialization and teardown
-* `pw:api` for copilotbrowser API calls.
+* `cb:api` for copilotbrowser API calls.
 * `test.step` for test.step API calls.
 * `test.attach` for testInfo.attach API calls.
 

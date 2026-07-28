@@ -21,7 +21,7 @@ Video files will appear in the test output directory, typically `test-results`. 
 Videos are saved upon [browser context](./browser-contexts.md) closure at the end of a test. If you create a browser context manually, make sure to await **BrowserContext.close()**.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   use: {
     video: 'on-first-retry',
@@ -38,7 +38,7 @@ await context.close();
 You can also specify video size. The video size defaults to the viewport size scaled down to fit 800x800. The video of the viewport is placed in the top-left corner of the output video, scaled down to fit if necessary. You may need to set the viewport size to match your desired video size.
 
 ```js tab=js-test title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 export default defineConfig({
   use: {
     video: {

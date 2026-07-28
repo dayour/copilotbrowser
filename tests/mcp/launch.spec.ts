@@ -21,7 +21,7 @@ import { test, expect, formatOutput } from './fixtures';
 test('test reopen browser', async ({ startClient, server }) => {
   const { client, stderr } = await startClient({
     env: {
-      DEBUG: 'pw:mcp:test',
+      DEBUG: 'cb:mcp:test',
     }
   });
   await client.callTool({

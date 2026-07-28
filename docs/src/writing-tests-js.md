@@ -22,7 +22,7 @@ copilotbrowser automatically waits for [actionability](./actionability.md) check
 Take a look at the following example to see how to write a test.
 
 ```js title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('has title', async ({ page }) => {
   await page.goto('https://dayour.github.io/copilotbrowser/');
@@ -137,7 +137,7 @@ expect(success).toBeTruthy();
 copilotbrowser Test is based on the concept of [test fixtures](./test-fixtures.md) such as the [built in page fixture](./test-fixtures#built-in-fixtures), which is passed into your test. Pages are [isolated between tests due to the Browser Context](./browser-contexts), which is equivalent to a brand new browser profile. Every test gets a fresh environment, even when multiple tests run in a single browser.
 
 ```js title="tests/example.spec.ts"
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test('example test', async ({ page }) => {
   // "page" belongs to an isolated BrowserContext, created for this specific test.
@@ -153,7 +153,7 @@ test('another test', async ({ page }) => {
 You can use various [test hooks](./api/class-test.md) such as `test.describe` to declare a group of tests and `test.beforeEach` and `test.afterEach` which are executed before/after each test. Other hooks include the `test.beforeAll` and `test.afterAll` which are executed once per worker before/after all tests.
 
 ```js title="tests/example.spec.ts"
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('navigation', () => {
   test.beforeEach(async ({ page }) => {

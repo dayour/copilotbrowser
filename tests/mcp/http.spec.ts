@@ -44,7 +44,7 @@ const test = baseTest.extend<{ serverEndpoint: (options?: { args?: string[], noP
         stdio: 'pipe',
         env: {
           ...process.env,
-          DEBUG: 'pw:mcp:test',
+          DEBUG: 'cb:mcp:test',
           DEBUG_COLORS: '0',
           DEBUG_HIDE_DATE: '1',
         },

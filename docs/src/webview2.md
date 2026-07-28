@@ -71,7 +71,7 @@ Using the following, copilotbrowser will run your WebView2 application as a sub-
 <!-- source code is available here to verify that the examples are working https://github.com/mxschmitt/copilotbrowser-webview2-demo -->
 
 ```js title="webView2Test.ts"
-import { test as base } from '@copilotbrowser/test';
+import { test as base } from '@copilotbrowser/copilotbrowser/test';
 import fs from 'fs';
 import os from 'os';
 import path from 'path';
@@ -119,7 +119,7 @@ export const test = base.extend({
   },
 });
 
-export { expect } from '@copilotbrowser/test';
+export { expect } from '@copilotbrowser/copilotbrowser/test';
 ```
 
 ```js title="example.spec.ts"

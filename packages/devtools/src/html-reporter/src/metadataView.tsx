@@ -19,7 +19,7 @@ import './colors.css';
 import './common.css';
 import './theme.css';
 import './metadataView.css';
-import type { Metadata } from '@copilotbrowser/test';
+import type { Metadata } from '@copilotbrowser/copilotbrowser/test';
 import type { CIInfo, GitCommitInfo, MetadataWithCommitInfo } from '@testIsomorphic/types';
 import { CopyToClipboardContainer } from './copyToClipboard';
 import { linkifyText } from '@web/renderUtils';

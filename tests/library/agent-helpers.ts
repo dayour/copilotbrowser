@@ -18,7 +18,7 @@ import fs from 'fs';
 import path from 'path';
 
 import { browserTest as test } from '../config/browserTest';
-import type { BrowserContext, Page, PageAgent } from '@copilotbrowser/test';
+import type { BrowserContext, Page, PageAgent } from '@copilotbrowser/copilotbrowser/test';
 
 export function cacheFile() {
   return test.info().outputPath('agent-cache.json');

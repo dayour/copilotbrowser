@@ -1,4 +1,4 @@
-import { test as test1, expect as expect1, mergeTests, mergeExpects } from '@copilotbrowser/test';
+import { test as test1, expect as expect1, mergeTests, mergeExpects } from '@copilotbrowser/copilotbrowser/test';
 import { test as test2, expect as expect2 } from 'copilotbrowser-test-plugin';
 
 const test = mergeTests(test1, test2);

@@ -41,11 +41,11 @@ test('electron should work with special characters in path', async ({ exec, tmpW
   });
 });
 
-test('should work when wrapped inside @copilotbrowser/test and trace is enabled', async ({ exec, tmpWorkspace, writeFiles }) => {
-  await exec('npm i -D @copilotbrowser/test electron@31');
+test('should work when wrapped inside @copilotbrowser/copilotbrowser and trace is enabled', async ({ exec, tmpWorkspace, writeFiles }) => {
+  await exec('npm i -D @copilotbrowser/copilotbrowser electron@31');
   await writeFiles({
     'electron-with-tracing.spec.ts': `
-      import { test, expect, _electron } from '@copilotbrowser/test';
+      import { test, expect, _electron } from '@copilotbrowser/copilotbrowser/test';
 
       test('should work', async ({ trace }) => {
         const electronApp = await _electron.launch({ args: [${JSON.stringify(path.join(__dirname, '../electron/electron-window-app.js'))}] });

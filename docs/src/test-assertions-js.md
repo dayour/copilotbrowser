@@ -279,10 +279,10 @@ You can extend copilotbrowser assertions by providing custom matchers. These mat
 In this example we add a custom `toHaveAmount` function. Custom matcher should return a `pass` flag indicating whether the assertion passed, and a `message` callback that's used when the assertion fails.
 
 ```js title="fixtures.ts"
-import { expect as baseExpect } from '@copilotbrowser/test';
-import type { Locator } from '@copilotbrowser/test';
+import { expect as baseExpect } from '@copilotbrowser/copilotbrowser/test';
+import type { Locator } from '@copilotbrowser/copilotbrowser/test';
 
-export { test } from '@copilotbrowser/test';
+export { test } from '@copilotbrowser/copilotbrowser/test';
 
 export const expect = baseExpect.extend({
   async toHaveAmount(locator: Locator, expected: number, options?: { timeout?: number }) {
@@ -346,7 +346,7 @@ Do not confuse copilotbrowser's `expect` with the [`expect` library](https://jes
 You can combine custom matchers from multiple files or modules.
 
 ```js title="fixtures.ts"
-import { mergeTests, mergeExpects } from '@copilotbrowser/test';
+import { mergeTests, mergeExpects } from '@copilotbrowser/copilotbrowser/test';
 import { test as dbTest, expect as dbExpect } from 'database-test-utils';
 import { test as a11yTest, expect as a11yExpect } from 'a11y-test-utils';
 

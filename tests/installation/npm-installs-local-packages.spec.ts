@@ -18,7 +18,7 @@ import { test, expect } from './npmTest';
 import fs from 'fs';
 
 test('installs local packages', async ({ registry, exec, tmpWorkspace }) => {
-  const packages = ['copilotbrowser', 'copilotbrowser', 'copilotbrowser-chromium', 'copilotbrowser-firefox', 'copilotbrowser-webkit', '@copilotbrowser/test', '@copilotbrowser-chromium', '@copilotbrowser-firefox', '@copilotbrowser-webkit'];
+  const packages = ['copilotbrowser', 'copilotbrowser', 'copilotbrowser-chromium', 'copilotbrowser-firefox', 'copilotbrowser-webkit', '@copilotbrowser/copilotbrowser/test', '@copilotbrowser-chromium', '@copilotbrowser-firefox', '@copilotbrowser-webkit'];
   await exec('npm i --foreground-scripts', ...packages, { env: { copilotbrowser_SKIP_BROWSER_DOWNLOAD: '1' } });
 
   const output = await exec('node', path.join(__dirname, '..', '..', 'utils', 'workspace.js'), '--get-version');

@@ -260,7 +260,7 @@ For example, to specify the number of workers you can use `NUnit.NumberOfTestWor
   <RunConfiguration>
     <EnvironmentVariables>
       <!-- For debugging selectors, it's recommend to set the following environment variable -->
-      <DEBUG>pw:api</DEBUG>
+      <DEBUG>cb:api</DEBUG>
     </EnvironmentVariables>
   </RunConfiguration>
   <!-- copilotbrowser -->  
@@ -291,7 +291,7 @@ For example, to specify the number of workers, you can use `MSTest.Parallelize.W
   <RunConfiguration>
     <EnvironmentVariables>
       <!-- For debugging selectors, it's recommend to set the following environment variable -->
-      <DEBUG>pw:api</DEBUG>
+      <DEBUG>cb:api</DEBUG>
     </EnvironmentVariables>
   </RunConfiguration>
   <!-- copilotbrowser -->  
@@ -320,7 +320,7 @@ For example, to specify the number of workers, you can use `xUnit.MaxParallelThr
   <RunConfiguration>
     <EnvironmentVariables>
       <!-- For debugging selectors, it's recommend to set the following environment variable -->
-      <DEBUG>pw:api</DEBUG>
+      <DEBUG>cb:api</DEBUG>
     </EnvironmentVariables>
   </RunConfiguration>
   <!-- copilotbrowser -->  
@@ -348,7 +348,7 @@ For example, to specify the number of workers, you can use `xUnit.MaxParallelThr
   <RunConfiguration>
     <EnvironmentVariables>
       <!-- For debugging selectors, it's recommend to set the following environment variable -->
-      <DEBUG>pw:api</DEBUG>
+      <DEBUG>cb:api</DEBUG>
     </EnvironmentVariables>
   </RunConfiguration>
   <!-- copilotbrowser -->  

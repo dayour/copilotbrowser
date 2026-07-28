@@ -14,7 +14,7 @@ copilotbrowser Test runs tests in worker processes. These processes are OS proce
 Consider the following snippet:
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe('suite', () => {
   test.beforeAll(async () => { /* ... */ });
@@ -70,7 +70,7 @@ npx copilotbrowser test --retries=3
 You can configure retries in the configuration file:
 
 ```js title="copilotbrowser.config.ts"
-import { defineConfig } from '@copilotbrowser/test';
+import { defineConfig } from '@copilotbrowser/copilotbrowser/test';
 
 export default defineConfig({
   // Give failing tests 3 retry attempts
@@ -99,7 +99,7 @@ Running 3 tests using 1 worker
 You can detect retries at runtime with **TestInfo.retry**, which is accessible to any test, hook or fixture. Here is an example that clears some server-side state before a retry.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test('my test', async ({ page }, testInfo) => {
   if (testInfo.retry)
@@ -111,7 +111,7 @@ test('my test', async ({ page }, testInfo) => {
 You can specify retries for a specific group of tests or a single file with **Test.describe.configure()**.
 
 ```js
-import { test, expect } from '@copilotbrowser/test';
+import { test, expect } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe(() => {
   // All tests in this describe group will get 2 retry attempts.
@@ -134,7 +134,7 @@ Use **Test.describe.serial()** to group dependent tests to ensure they will alwa
 Consider the following snippet that uses `test.describe.serial`:
 
 ```js
-import { test } from '@copilotbrowser/test';
+import { test } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe.configure({ mode: 'serial' });
 
@@ -174,11 +174,11 @@ copilotbrowser Test creates an isolated `Page` object for each test. However, if
 ```js tab=js-js title="example.spec.js"
 // @ts-check
 
-const { test } = require('@copilotbrowser/test');
+const { test } = require('@copilotbrowser/copilotbrowser/test');
 
 test.describe.configure({ mode: 'serial' });
 
-/** @type {import('@copilotbrowser/test').Page} */
+/** @type {import('@copilotbrowser/copilotbrowser/test').Page} */
 let page;
 
 test.beforeAll(async ({ browser }) => {
@@ -199,7 +199,7 @@ test('runs second', async () => {
 ```
 
 ```js tab=js-ts title="example.spec.ts"
-import { test, type Page } from '@copilotbrowser/test';
+import { test, type Page } from '@copilotbrowser/copilotbrowser/test';
 
 test.describe.configure({ mode: 'serial' });
 

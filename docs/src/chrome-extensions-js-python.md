@@ -110,7 +110,7 @@ Note the use of the `chromium` channel that allows to run extensions in headless
 First, add fixtures that will load the extension:
 
 ```js title="fixtures.ts"
-import { test as base, chromium, type BrowserContext } from '@copilotbrowser/test';
+import { test as base, chromium, type BrowserContext } from '@copilotbrowser/copilotbrowser/test';
 import path from 'path';
 
 export const test = base.extend<{

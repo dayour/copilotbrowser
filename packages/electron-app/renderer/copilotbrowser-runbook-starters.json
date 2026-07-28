@@ -108,7 +108,7 @@
       ],
       "exportGuidance": [
         "After validating the shell, save a screenshot such as agent-created.png for the runbook evidence bundle.",
-        "If you refined selectors interactively, export the generated history with copilotbrowser-mcp-browser_export_playwright_test.",
+        "If you refined selectors interactively, export the generated history with copilotbrowser-mcp-browser_export_test.",
         "For CI packaging, export copilotbrowser-mcp-browser_export_github_actions into .github/workflows/copilotbrowser.yml."
       ]
     },
@@ -216,7 +216,7 @@
       ],
       "exportGuidance": [
         "Capture a final screenshot such as knowledge-added.png once the URL is visible.",
-        "Export the interaction history to a Playwright spec if this knowledge onboarding flow will be reused.",
+        "Export the interaction history to a copilotbrowser spec if this knowledge onboarding flow will be reused.",
         "Attach the exported workflow template when handing the smoke test to CI or another operator."
       ]
     },
@@ -444,7 +444,7 @@
       ],
       "exportGuidance": [
         "Capture a screenshot such as tool-added.png after the Dataverse tool appears in the configured list.",
-        "Export a Playwright spec once the final selector path is stable enough for regression coverage.",
+        "Export a copilotbrowser spec once the final selector path is stable enough for regression coverage.",
         "Export the GitHub Actions template when this tool-enablement smoke test needs automated scheduling."
       ]
     },
@@ -548,7 +548,7 @@
       ],
       "exportGuidance": [
         "Use a screenshot such as published-{timestamp}.png for the evidence bundle after successful publish.",
-        "Export the recorded interaction history to a Playwright test if publish verification should become a regression gate.",
+        "Export the recorded interaction history to a copilotbrowser test if publish verification should become a regression gate.",
         "Export the GitHub Actions workflow to seed CI with the same publish smoke-test scaffolding."
       ]
     },
@@ -619,7 +619,7 @@
       ],
       "exportGuidance": [
         "Attach environment-validation.png to the runbook handoff so later task evidence can be correlated.",
-        "Export the interaction history to a Playwright spec if environment validation should run before every CI smoke test.",
+        "Export the interaction history to a copilotbrowser spec if environment validation should run before every CI smoke test.",
         "Export the GitHub Actions workflow when this baseline environment check should be automated."
       ],
       "defaultWaitMs": 1000,
@@ -714,7 +714,7 @@
       ],
       "exportGuidance": [
         "Use agent-chat-smoke.png as the initial evidence artifact for chat validation.",
-        "Export the recorded history to a Playwright test when the smoke prompt and selectors stabilize.",
+        "Export the recorded history to a copilotbrowser test when the smoke prompt and selectors stabilize.",
         "Export the GitHub Actions workflow when this chat smoke test should run unattended."
       ],
       "defaultWaitMs": 1500,
@@ -789,7 +789,7 @@
       ],
       "exportGuidance": [
         "Keep error-detected.png and failure-console.log together with the snapshot text for the incident bundle.",
-        "If you reproduce the same issue interactively, export the sequence to a Playwright spec for regression coverage.",
+        "If you reproduce the same issue interactively, export the sequence to a copilotbrowser spec for regression coverage.",
         "Export the GitHub Actions template if the failure investigation should be reproduced in CI."
       ],
       "defaultWaitMs": 500,

@@ -78,7 +78,7 @@ test('sign in', async ({ mount }) => { // 2
 
 Migration highlights (see inline comments in the copilotbrowser Test code snippet):
 
-1. Import everything from `@copilotbrowser/experimental-ct-react` (or -vue, -svelte) for component tests, or from `@copilotbrowser/test` for end-to-end tests.
+1. Import everything from `@copilotbrowser/experimental-ct-react` (or -vue, -svelte) for component tests, or from `@copilotbrowser/copilotbrowser/test` for end-to-end tests.
 1. Test function is given a `page` that is isolated from other tests, and `mount` that renders a component in this page. These are two of the [useful fixtures](./api/class-fixtures) in copilotbrowser Test.
 1. Replace `render` with `mount` that returns a [component locator](./locators).
 1. Use locators created with **Locator.locator()** or **Page.locator()** to perform most of the actions.

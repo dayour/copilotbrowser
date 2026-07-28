@@ -55,11 +55,11 @@ it('should work', async ({ copilotbrowser, browser }) => {
 it('should work when registered on global', async ({ browser, mode }) => {
   it.skip(mode === 'driver', 'We expect registering selectors on the right copilotbrowser instance.');
 
-  await require('@copilotbrowser/test').selectors.register('oop-tag', `(${createTagSelector.toString()})()`);
+  await require('@copilotbrowser/copilotbrowser/test').selectors.register('oop-tag', `(${createTagSelector.toString()})()`);
 
   const context = await browser.newContext();
   // Register another engine after creating context.
-  await require('@copilotbrowser/test').selectors.register('oop-tag2', `(${createTagSelector.toString()})()`);
+  await require('@copilotbrowser/copilotbrowser/test').selectors.register('oop-tag2', `(${createTagSelector.toString()})()`);
 
   const page = await context.newPage();
   await page.setContent('<div><span></span></div><div></div>');
